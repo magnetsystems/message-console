@@ -1,0 +1,25 @@
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+
+pids
+logs
+results
+
+tmp
+log
+
+public-build
+
+npm-debug.log
+node_modules
+
+# Webstorm
+.idea
+
+.DS_Store

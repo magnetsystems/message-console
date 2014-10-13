@@ -1,0 +1,106 @@
+define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','views/AlertErrorView','views/GlobalView','views/LoginView',
+        'views/RegistrationView','views/CompleteRegistrationView','views/ForgotPasswordView','views/ResetPasswordView','views/MessagingView',
+        'views/ProfileView']
+    , function($, Backbone, AlertGeneralView, AlertConfirmView, AlertErrorView, GlobalView, LoginView,
+               RegistrationView, CompleteRegistrationView, ForgotPasswordView, ResetPasswordView, MessagingView,
+               ProfileView){
+    // bind alerts
+    Alerts.General = new AlertGeneralView();
+    Alerts.Confirm = new AlertConfirmView();
+    Alerts.Error = new AlertErrorView();
+    // main router
+    var Router = Backbone.Router.extend({
+        initialize: function(){
+            var me = this;
+            // establish event pub/sub 
+            this.eventPubSub = _.extend({}, Backbone.Events);
+            // init HTTP request methods
+            this.httpreq = new HTTPRequest('/rest/');
+            // init model connector for REST
+            this.mc = new ModelConnector(this.httpreq);
+            utils.setIndexOf();
+            this.GLOBAL = {};
+            // init site views
+            var gv = new GlobalView({eventPubSub:this.eventPubSub});
+            var lv = new LoginView({mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            var rv = new RegistrationView({mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            var crv = new CompleteRegistrationView({mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            var fpv = new ForgotPasswordView({mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            var rpv = new ResetPasswordView({mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            var mv = new MessagingView({mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            var pv = new ProfileView({mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            // override default backbone model sync method to be compatible with Magnet REST APIs
+            syncOverride(this.mc, this.eventPubSub);
+            Backbone.history.start();
+        },
+        routes: {
+            ''                  : 'messaging',
+            'login'             : 'login',
+            'register'          : 'register',
+            'complete-register' : 'completeRegister',
+            'forgot-password'   : 'forgotPassword',
+            'reset-password'    : 'resetPassword',
+            'messaging'         : 'messaging',
+            'messaging/:id'     : 'messaging',
+            'profile'           : 'profile',
+            '*notFound'         : 'messaging'
+        },
+        login: function(callback){
+            var me = this;
+            me.eventPubSub.trigger('resetGlobalPages', 'login-container');
+            me.eventPubSub.trigger('initLogin', callback);
+        },
+        register: function(callback){
+            var me = this;
+            me.eventPubSub.trigger('resetGlobalPages', 'registration-container');
+            me.eventPubSub.trigger('initRegistration', callback);
+        },
+        completeRegister: function(callback){
+            var me = this;
+            me.eventPubSub.trigger('resetGlobalPages', 'completeregistration-container');
+            me.eventPubSub.trigger('initCompleteRegistration', callback);
+        },
+        forgotPassword: function(callback){
+            var me = this;
+            me.eventPubSub.trigger('resetGlobalPages', 'forgotpassword-container');
+            me.eventPubSub.trigger('initForgotPassword', callback);
+        },
+        resetPassword: function(callback){
+            var me = this;
+            me.eventPubSub.trigger('resetGlobalPages', 'resetpassword-container');
+            me.eventPubSub.trigger('initResetPassword', callback);
+        },
+        messaging: function(id, view){
+            var me = this;
+            me.auth(function(){
+                me.eventPubSub.trigger('resetGlobalPages', 'mmx-container');
+                me.eventPubSub.trigger('initMessaging', {
+                    id : id
+                });
+            });
+        },
+        profile: function(){
+            var me = this;
+            me.auth(function(){
+                me.eventPubSub.trigger('resetGlobalPages', 'profile-container');
+                me.eventPubSub.trigger('initProfile');
+            });
+        },
+        auth: function(callback){
+            timer.stop();
+            var popover = $('#user-nav-popover');
+            popover.popover('hide');
+            var auth = Cookie.get('magnet_auth');
+            if(!auth || $.trim(auth).length < 1){
+                this.login(callback);
+            }else{
+                auth = auth.split(':');
+                popover.attr('data-content', '<b>'+auth[0]+' '+auth[1]+'</b><br />'+auth[2]);
+                $('#user-nav').removeClass('hidden');
+                callback();
+            }
+        }
+    });
+    return Router;
+});
+var Alerts = {};

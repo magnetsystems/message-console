@@ -1,0 +1,1035 @@
+<!doctype html>
+<html class="no-js fuelux" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Messaging Console</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/fuelux.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/account.css" />
+    <script src="js/libs/modernizr.js"></script>
+    <script data-main="js/account" src="js/libs/require.js"></script>
+</head>
+
+<body id="messaging">
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#user-nav">-->
+                <!--<span class="sr-only">Toggle navigation</span>-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+            <!--</button>-->
+            <a class="navbar-brand" href="#">
+                <img src="images/heading.png" />
+                Magnet Messaging Console
+                <span class="project-name-holder"></span>
+            </a>
+        </div>
+        <ul id="user-nav" class="nav navbar-nav pull-right hidden">
+            <li>
+                <a id="user-nav-popover" data-title="<div class='clearfix'><a href='#/profile' class='btn btn-sm btn-default pull-left'>Profile</a><button id='logout-btn' class='btn btn-sm btn-default pull-right'>Sign Out</button></div>" data-content="">
+                    <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span>
+                </a>
+            </li>
+        </ul>
+        <div id="server-restart-required" class="navbar-right hidden">
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <strong>Restart Server</strong> Some changes you made will only go into effect after a server restart. <a id="perform-restart" href="#">Click Here</a> to restart now.
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div id="login-container" class="app-view pre-login-containers fullpos" style="display:none">
+    <div class="centered-wrapper">
+        <div class="panel panel-default">
+            <h4>Sign In</h4>
+            <form id="login-form">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="username" placeholder="Username" />
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" placeholder="Password" />
+                </div>
+                <div class="form-group">
+                    <a href="#/forgot-password">Forgot Password?</a>
+                </div>
+                <div class="form-group">
+                    <a id="login-btn" class="btn btn-primary">Sign In</a>
+                </div>
+                <div class="form-group">
+                    <p>or <a href="#/register">Register</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="registration-container" class="app-view pre-login-containers fullpos" style="display:none">
+    <div class="centered-wrapper">
+        <div class="panel panel-default">
+            <h4>Register</h4>
+            <div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="firstName" placeholder="First Name*">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="lastName" placeholder="Last Name*">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="email" placeholder="Email Address*">
+                </div>
+                <div class="form-group">
+                    <a id="registration-btn" class="btn btn-primary">Register</a>
+                </div>
+                <span class="alert-container"></span>
+                <div class="form-group">
+                    <p><a href="#/login">I already have an account</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="completeregistration-container" class="app-view pre-login-containers fullpos" style="display:none">
+    <div class="centered-wrapper">
+        <div class="panel panel-default">
+            <h4>Complete Registration</h4>
+            <div>
+                <div class="form-group">
+                    <select class="form-control" name="roleWithinCompany" placeholder="Role at your company">
+                        <option value="" selected="selected">Role at your company</option>
+                        <option value="server-developer">Server Developer</option>
+                        <option value="client-developer">Client Developer</option>
+                        <option value="it-admin">IT Admin</option>
+                        <option value="management">Management</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" name="country" placeholder="Country"></select>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Password*">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password2" placeholder="Re-type Password*">
+                </div>
+                <span class="alert-container"></span>
+                <div class="form-group">
+                    <a id="completeregistration-btn" class="btn btn-primary">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="forgotpassword-container" class="app-view pre-login-containers fullpos" style="display:none">
+    <div class="centered-wrapper">
+        <div class="panel panel-default">
+            <h4>Forgot Password</h4>
+            <div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="email" placeholder="Email Address*">
+                </div>
+                <span class="alert-container"></span>
+                <div class="form-group">
+                    <a id="forgotpassword-btn" class="btn btn-primary">Request Password Recovery</a>
+                </div>
+                <div class="form-group">
+                    <p><a href="#/login">I suddenly remember now</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="resetpassword-container" class="app-view pre-login-containers fullpos" style="display:none">
+    <div class="centered-wrapper">
+        <div class="panel panel-default">
+            <h4>Reset Password</h4>
+            <div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Password*">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password2" placeholder="Re-type Password*">
+                </div>
+                <span class="alert-container"></span>
+                <div class="form-group">
+                    <a id="resetpassword-btn" class="btn btn-primary">Save Password</a>
+                </div>
+                <div class="form-group">
+                    <p><a href="#/login">I suddenly remember now</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mmx-container" class="app-view panel-containers fullpos" style="display:none">
+    <div class="panel panel-default fullpos">
+        <h4>App Projects</h4>
+        <p>Create your messaging app projects here and set up their certificates.</p>
+        <hr />
+        <div class="row-fluid">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input id="mmx-project-new-name" type="text" class="form-control" name="name" placeholder="Name app" value="" >
+                        <div id="create-messaging-app-btn" class="btn btn-primary input-group-addon glyphicon glyphicon-plus"></div>
+                    </div>
+                </div>
+                <div id="mmx-project-list-container" class="panel panel-default">
+                    <div id="mmx-app-list" class="list-group"></div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div id="mmx-active-project-container">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a did="Settings" href="#mmx-mgmt-tab" role="tab" data-toggle="tab">
+                            Settings
+                        </a></li>
+                        <!--<li><a href="#mmx-send-tab" role="tab" data-toggle="tab">-->
+                        <!--<span class="visible-xs-inline">Send</span>-->
+                        <!--<span class="hidden-xs">Send Message</span>-->
+                        <!--</a></li>-->
+                        <!--<li><a href="#mmx-test-tab" role="tab" data-toggle="tab">-->
+                        <!--<span class="visible-xs-inline">Test</span>-->
+                        <!--<span class="hidden-xs">Test Push</span>-->
+                        <!--</a></li>-->
+                        <li><a did="Users" href="#mmx-users-tab" role="tab" data-toggle="tab">
+                            Users
+                        </a></li>
+                        <li><a did="Messages" href="#mmx-msgs-tab" role="tab" data-toggle="tab">
+                            Message Log
+                        </a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="mmx-mgmt-tab">
+                            <div class="view-container"></div>
+                        </div>
+                        <div class="tab-pane clearfix" id="mmx-send-tab">
+                            <p>Add one or more filters to select recipients who will receive your message.</p>
+
+                            <div class="row-fluid">
+                                <div class="col-md-8">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Filter List</div>
+                                        <div id="project-messaging-filter-list" class="panel-body">No filters have been added.</div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Payload</div>
+                                        <div id="project-messaging-msg-payload-container" class="panel-body">
+                                            <textarea id="project-messaging-msg-payload" name="payload" placeholder="Payload">{"msg":"hello world"}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix fullwidth">
+                                        <button class="btn btn-primary">Send Message</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Add A Filter</div>
+                                        <div id="project-messaging-filter-add" class="panel-body">
+                                            <div class="list-group">
+                                                <a href="#" did="username" class="list-group-item">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                    Full Name
+                                                </a>
+                                                <a href="#" did="useremail" class="list-group-item">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                    Email Address
+                                                </a>
+                                                <a href="#" did="devicetype" class="list-group-item">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                    Device Type
+                                                </a>
+                                                <a href="#" did="devicemodel" class="list-group-item">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                    Device Model
+                                                </a>
+                                                <a href="#" did="georegion" class="list-group-item">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                    GeoRegion
+                                                </a>
+                                                <a href="#" did="geopoint" class="list-group-item">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                    GeoPoint
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane clearfix" id="mmx-test-tab">
+                            <div class="form-group clearfix">
+                                <span class="form-caption">Send Test GCM Push</span>
+                                <div class="well well-default clearfix">
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <label>Device Id</label>
+                                                <input type="text" class="form-control" name="gcm-push-id" placeholder="Device Id" value="" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Message</label>
+                                                <input type="text" class="form-control" name="gcm-push-msg" placeholder="Message" value="" />
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="button-group">
+                                                    <button type="button" class="btn btn-primary">Send</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <span class="form-caption">Send Test APNS Push</span>
+                                <div class="well well-default clearfix">
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <label>Device Id</label>
+                                                <input type="text" class="form-control" name="apns-push-id" placeholder="Device Id" value="" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Message</label>
+                                                <input type="text" class="form-control" name="apns-push-msg" placeholder="Message" value="" />
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="button-group">
+                                                    <button type="button" class="btn btn-primary">Send</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane clearfix" id="mmx-users-tab">
+                            <div class="view-container"></div>
+                        </div>
+                        <div class="tab-pane clearfix" id="mmx-msgs-tab">
+                            <div class="view-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="MessagingProjectSettingsView" type="text/template">
+    <div class="form-group clearfix">
+        <div class="row-fluid">
+            <div class="col-md-6">
+                <label>App Name</label>
+                <div class="controls">
+                    <input type="text" class="form-control" name="appName" value="<%- model.attributes.appName %>">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label>App ID</label>
+                <div class="controls">
+                    <input type="text" class="form-control" name="appId" readonly="readonly" value="<%- model.attributes.id %>">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <div class="row-fluid">
+            <div class="col-md-6">
+                <label>MMX API Key</label>
+                <div class="controls">
+                    <input type="text" class="form-control" name="apiKey" readonly="readonly" value="<%- model.attributes.apiKey %>">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="controls">
+                    <button did="regenerate" class="btn btn-primary">Generate</button>
+                    <button did="revoke" class="btn btn-primary">Revoke</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <span class="form-caption">GCM</span>
+        <div class="well well-default clearfix">
+            <form role="form">
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label>GCM ID</label>
+                        <input type="text" class="form-control" name="gcm-id" placeholder="GCM Id" value="" />
+                    </div>
+                    <div class="col-md-6">
+                        <label>API Key</label>
+                        <input type="text" class="form-control" name="gcm-apikey" placeholder="GCM API Key" value="" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <span class="form-caption">APNS</span>
+        <div class="well well-default clearfix">
+            <form role="form">
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label>Certificate</label>
+                        <input type="file" name="apns-cert" />
+                    </div>
+                    <div class="col-md-6">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="apns-pass" placeholder="APNS Password" value="" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <div class="controls">
+            <button did="save" class="btn btn-primary">Save</button>
+            <button did="delete" class="btn btn-danger">Delete App</button>
+        </div>
+    </div>
+</script>
+
+<script id="MessagingAppsListView" type="text/template">
+    <% if(col && col.length > 0){ %>
+    <% _.each(col, function(model, key){  %>
+    <a href="#/messaging/<%- model.attributes.id %>" class="list-group-item<% if(activeId === model.attributes.id){ %> active<% } %>"><%- model.attributes.appName %></a>
+    <% }); %>
+    <% }else{ %>
+    You have not created any projects.
+    <% } %>
+</script>
+
+<script id="MessagingUsersListTmpl" type="text/template">
+    <div class="repeater" id="mmx-users-list">
+        <div class="repeater-header">
+            <div class="clearfix">
+                <div class="repeater-header-left">
+                    <span class="repeater-title"></span>
+                    <div class="repeater-search">
+                        <div class="search input-group">
+                            <input type="search" class="form-control" name="searchtext" placeholder="Search"/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                    <span class="sr-only">Search</span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="repeater-header-right">
+                    <div class="btn-group selectlist repeater-filters" data-resize="auto">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="selected-label">&nbsp;</span>
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Filters</span>
+                        </button>
+                        <ul class="dropdown-menu hidden" role="menu">
+                            <li data-value="all" data-selected="true"><a href="#">All</a></li>
+                            <li data-value="errorsonly"><a href="#">Errors Only</a></li>
+                        </ul>
+                        <input class="hidden hidden-field" name="filterSelection" readonly="readonly" aria-hidden="true" type="text"/>
+                    </div>
+                    <div class="btn-group repeater-views hidden" data-toggle="buttons">
+                        <label class="btn btn-default active">
+                            <input name="repeaterViews" type="radio" value="datagrid">
+                            <span class="glyphicon glyphicon-list">
+                                <span class="sr-only">List View</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="repeater-viewport">
+            <div class="repeater-canvas"></div>
+            <div class="loader repeater-loader"></div>
+        </div>
+        <div class="repeater-footer">
+            <div class="repeater-footer-left">
+                <div class="repeater-itemization">
+                    <span><span class="repeater-start"></span> - <span class="repeater-end"></span> of <span class="repeater-count"></span> items</span>
+                    <div class="btn-group selectlist" data-resize="auto">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="selected-label">&nbsp;</span>
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li data-value="5"><a href="#">5</a></li>
+                            <li data-value="10" data-selected="true"><a href="#">10</a></li>
+                            <li data-value="20"><a href="#">20</a></li>
+                            <li data-value="50" data-foo="bar" data-fizz="buzz"><a href="#">50</a></li>
+                            <li data-value="100"><a href="#">100</a></li>
+                        </ul>
+                        <input class="hidden hidden-field" name="itemsPerPage" readonly="readonly" aria-hidden="true" type="text"/>
+                    </div>
+                    <span>Per Page</span>
+                </div>
+            </div>
+            <div class="repeater-footer-right">
+                <div class="repeater-pagination">
+                    <button type="button" class="btn btn-default btn-sm repeater-prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Previous Page</span>
+                    </button>
+                    <label id="MyPageLabel" class="page-label">Page</label>
+                    <div class="repeater-primaryPaging active">
+                        <div class="input-group input-append dropdown combobox">
+                            <input type="text" class="form-control" aria-labelledby="MyPageLabel">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control repeater-secondaryPaging" aria-labelledby="MyPageLabel">
+                    <span>of <span class="repeater-pages"></span></span>
+                    <button type="button" class="btn btn-default btn-sm repeater-next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next Page</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script id="MessagingUserDevicesView" type="text/template">
+    <tr did="el<%- uid %>" class="nohover">
+        <td colspan="1"></td>
+        <td colspan="6">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>Device ID</th>
+                    <th>OS Type</th>
+                    <th>Token Type</th>
+                    <th>Phone Number</th>
+                    <th>Carrier</th>
+                    <th>Test Message</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% if(devices && devices.length > 0){ %>
+                <% _.each(devices, function(device, key){  %>
+                <tr did="<%- device.id %>">
+                    <td><%- device.deviceId %></td>
+                    <td><%- device.osType %></td>
+                    <td><%- device.tokenType %></td>
+                    <td><%- device.phoneNumber %></td>
+                    <td><%- device.carrier %></td>
+                    <td><button btype="device" class="sendmessage btn btn-sm btn-primary">Send</button></td>
+                </tr>
+                <% }); %>
+                <% }else{ %>
+                <tr><td colspan="6">No devices associated with this user.</td></tr>
+                <% } %>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</script>
+
+<script id="MessagingMessagesListTmpl" type="text/template">
+    <div class="repeater" id="mmx-messages-list">
+        <div class="repeater-header">
+            <div class="clearfix">
+                <div class="repeater-header-left">
+                    <div class="repeater-search row-fluid clearfix">
+                        <!--<select class="form-control pull-left" name="searchby">-->
+                            <!--<option value="targetdevid" selected="selected">Search By Device Id</option>-->
+                            <!--<option value="datesent" selected="selected">Search By Date Sent</option>-->
+                            <!--<option value="dateack" selected="selected">Search By Date Acknowledged</option>-->
+                            <!--<option value="state">Search By State</option>-->
+                        <!--</select>-->
+                        <!--<div class="dt-container row-fluid clearfix">-->
+                            <!--<div class="col-sm-12">-->
+                                <!--<div class="search input-group">-->
+                                    <!--<input type="search" class="form-control" name="searchtext" placeholder="Search"/>-->
+                                <!--<span class="input-group-btn">-->
+                                    <!--<button class="btn btn-default" type="button">-->
+                                        <!--<span class="glyphicon glyphicon-search"></span>-->
+                                        <!--<span class="sr-only">Search</span>-->
+                                    <!--</button>-->
+                                <!--</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col-sm-6" style="display:none">-->
+                                <!--<div class="fromDt datepicker clearfix dropdown" data-initialize="datepicker">-->
+                                    <!--<div class="input-group">-->
+                                        <!--<input type="text" class="form-control" name="fromDt" placeholder="Start Date" />-->
+                                        <!--<div class="input-group-btn">-->
+                                            <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">-->
+                                                <!--<span class="glyphicon glyphicon-calendar"></span>-->
+                                                <!--<span class="sr-only">Toggle Calendar</span>-->
+                                            <!--</button>-->
+                                            <!--<div class="dropdown-menu dropdown-menu-right calendar-menu"></div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col-sm-6 second" style="display:none">-->
+                                <!--<div class="toDt datepicker dropdown" data-initialize="datepicker">-->
+                                    <!--<div class="input-group">-->
+                                        <!--<input type="text" class="form-control" name="toDt" placeholder="End Date" />-->
+                                        <!--<div class="input-group-btn">-->
+                                            <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">-->
+                                                <!--<span class="glyphicon glyphicon-calendar"></span>-->
+                                                <!--<span class="sr-only">Toggle Calendar</span>-->
+                                            <!--</button>-->
+                                            <!--<div class="dropdown-menu dropdown-menu-right calendar-menu"></div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <div id="mmx-advsearch-container"></div>
+                    </div>
+                </div>
+                <div class="repeater-header-right hidden"">
+                    <div class="btn-group selectlist repeater-filters" data-resize="auto">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="selected-label">&nbsp;</span>
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Filters</span>
+                        </button>
+                        <ul class="dropdown-menu role="menu">
+                            <li data-value="all" data-selected="true"><a href="#">All</a></li>
+                            <li data-value="errorsonly"><a href="#">Errors Only</a></li>
+                        </ul>
+                        <input class="hidden hidden-field" name="filterSelection" readonly="readonly" aria-hidden="true" type="text"/>
+                    </div>
+                    <div class="btn-group repeater-views hidden" data-toggle="buttons">
+                        <label class="btn btn-default active">
+                            <input name="repeaterViews" type="radio" value="datagrid">
+                            <span class="glyphicon glyphicon-list">
+                                <span class="sr-only">List View</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="repeater-viewport">
+            <div class="repeater-canvas"></div>
+            <div class="loader repeater-loader"></div>
+        </div>
+        <div class="repeater-footer">
+            <div class="repeater-footer-left">
+                <div class="repeater-itemization">
+                    <span><span class="repeater-start"></span> - <span class="repeater-end"></span> of <span class="repeater-count"></span> items</span>
+                    <div class="btn-group selectlist" data-resize="auto">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="selected-label">&nbsp;</span>
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li data-value="5"><a href="#">5</a></li>
+                            <li data-value="10" data-selected="true"><a href="#">10</a></li>
+                            <li data-value="20"><a href="#">20</a></li>
+                            <li data-value="50" data-foo="bar" data-fizz="buzz"><a href="#">50</a></li>
+                            <li data-value="100"><a href="#">100</a></li>
+                        </ul>
+                        <input class="hidden hidden-field" name="itemsPerPage" readonly="readonly" aria-hidden="true" type="text"/>
+                    </div>
+                    <span>Per Page</span>
+                </div>
+            </div>
+            <div class="repeater-footer-right">
+                <div class="repeater-pagination">
+                    <button type="button" class="btn btn-default btn-sm repeater-prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Previous Page</span>
+                    </button>
+                    <label id="MyPageLabel" class="page-label">Page</label>
+                    <div class="repeater-primaryPaging active">
+                        <div class="input-group input-append dropdown combobox">
+                            <input type="text" class="form-control" aria-labelledby="MyPageLabel">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control repeater-secondaryPaging" aria-labelledby="MyPageLabel">
+                    <span>of <span class="repeater-pages"></span></span>
+                    <button type="button" class="btn btn-default btn-sm repeater-next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next Page</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script id="AdvancedSearchTmpl" type="text/template">
+    <div class="advsearch">
+        <label class="pull-left">Add a Search Filter</label>
+        <div class="form-group">
+            <div class="input-group">
+                <select class="form-control" name="filters">
+                    <% _.each(filters, function(filter, key){  %>
+                    <option value="<%- key %>"><%- filter.title %></option>
+                    <% }); %>
+                </select>
+                <div class="advsearch-addfilter btn btn-primary input-group-addon glyphicon glyphicon-plus"></div>
+            </div>
+        </div>
+        <div class="panel-group" id="<%- identifier %>">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#<%- identifier %>" href="#collapse<%- identifier %>" class="collapsed">
+                            Filters <span></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse<%- identifier %>" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="advsearch-filter-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="advsearch-refresh btn btn-primary">Refresh</div>
+    </div>
+</script>
+
+<script id="ADVdaterangeFilter" type="text/template">
+    <div did="<%- name %>" class="alert alert-info clearfix advsearch-filter-item">
+        <label><%- filter.title %></label>
+        <div class="row-fluid">
+            <div class="col-sm-6">
+                <div class="fromDt datepicker clearfix dropdown" data-initialize="datepicker">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="fromDt" placeholder="Start Date" />
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                                <span class="sr-only">Toggle Calendar</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right calendar-menu"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 second">
+                <div class="toDt datepicker dropdown" data-initialize="datepicker">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="toDt" placeholder="End Date" />
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                                <span class="sr-only">Toggle Calendar</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right calendar-menu"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span class="glyphicon glyphicon-remove" data-dismiss="alert"></span>
+    </div>
+</script>
+
+<script id="ADVsearchFilter" type="text/template">
+    <div did="<%- name %>" class="advsearch-filter-item">
+        <div class="alert alert-info">
+            <label><%- filter.title %></label>
+            <input type="text" name="<%- filter.type %>" class="form-control" placeholder="<%- filter.title %>" value="" />
+            <span class="glyphicon glyphicon-remove" data-dismiss="alert"></span>
+        </div>
+    </div>
+</script>
+
+<script id="ADVenumFilter" type="text/template">
+    <div did="<%- name %>" class="advsearch-filter-item">
+        <div class="alert alert-info">
+            <label><%- filter.title %></label>
+            <select class="form-control" name="<%- filter.type %>">
+                <% _.each(filter.props, function(prop, key){  %>
+                <option value="<%- prop.key %>"><%- prop.val %></option>
+                <% }); %>
+            </select>
+            <span class="glyphicon glyphicon-remove" data-dismiss="alert"></span>
+        </div>
+    </div>
+</script>
+
+<script id="usernameMessageFilterView" type="text/template">
+    <div did="<%- model.id %>" class="alert alert-info fade in clearfix">
+        <label>Full Name</label>
+        <input type="text" name="name" class="form-control" placeholder="Full Name" value="" />
+        <span class="glyphicon glyphicon-remove" data-dismiss="alert"></span>
+    </div>
+</script>
+
+<script id="useremailMessageFilterView" type="text/template">
+    <div did="<%- model.id %>" class="alert alert-info fade in clearfix">
+        <label>Email Address</label>
+        <input type="text" name="email" class="form-control" placeholder="Email Address" value="" />
+        <span class="glyphicon glyphicon-remove" data-dismiss="alert"></span>
+    </div>
+</script>
+
+<script id="devicetypeMessageFilterView" type="text/template">
+    <div did="<%- model.id %>" class="alert alert-info fade in clearfix">
+        <label>Device Type</label>
+        <select class="form-control" name="devicetype">
+            <option value="ios">iOS</option>
+            <option value="android">Android</option>
+        </select>
+        <span class="glyphicon glyphicon-remove"></span>
+    </div>
+</script>
+
+<script id="devicemodelMessageFilterView" type="text/template">
+    <div did="<%- model.id %>" class="alert alert-info fade in clearfix">
+        <label>Device Model</label>
+        <input type="text" name="devicemodel" class="form-control" placeholder="Device Model" value="" />
+        <span class="glyphicon glyphicon-remove" data-dismiss="alert"></span>
+    </div>
+</script>
+
+<script id="georegionMessageFilterView" type="text/template">
+    <div did="<%- model.id %>" class="alert alert-info fade in clearfix">
+        <label>GeoRegion</label>
+        <input type="text" name="region-addr-1" class="form-control" placeholder="Address 1" value="" />
+        <input type="text" name="region-addr-2" class="form-control" placeholder="Address 2" value="" />
+        <input type="text" name="region-addr-3" class="form-control" placeholder="Address 3" value="" />
+        <span class="glyphicon glyphicon-remove" data-dismiss="alert"></span>
+    </div>
+</script>
+
+<script id="geopointMessageFilterView" type="text/template">
+    <div did="<%- model.id %>" class="alert alert-info fade in clearfix">
+        <label>GeoPoint</label>
+        <input type="text" name="point-addr" class="form-control" placeholder="Address" value="" />
+        <input type="text" name="point-radius" class="form-control" placeholder="Radius (meters)" value="" />
+        <span class="glyphicon glyphicon-remove" data-dismiss="alert"></span>
+    </div>
+</script>
+
+<div id="profile-container" class="app-view panel-containers fullpos" style="display:none">
+    <div class="panel panel-default fullpos">
+        <h4>User Profile</h4>
+        <p>You may edit your user profile details and/or change your password below. Fields marked with an asterisk (<span class="req">*</span>) are required.</p>
+        <hr />
+        <div id="user-profile-container" class="form-horizontal well"></div>
+    </div>
+</div>
+
+<script id="ProfileTmpl" type="text/template">
+    <div class="form-group">
+        <div class="row-fluid">
+            <div class="col-sm-6">
+                <label class="control-label">First Name<span class="req">*</span></label>
+                <div class="controls">
+                    <input type="text" class="form-control" name="firstName" value="<%-  model.firstName %>" placeholder="First Name">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="control-label">Last Name<span class="req">*</span></label>
+                <div class="controls">
+                    <input type="text" class="form-control" name="lastName" value="<%-  model.lastName %>" placeholder="Last Name">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row-fluid">
+            <div class="col-sm-6">
+                <label class="control-label">Email Address</label>
+                <div class="controls">
+                    <input type="text" class="form-control" name="userName" disabled="disabled" value="<%-  model.email %>" placeholder="Email Address">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="control-label">Company Name<span class="req">*</span></label>
+                <div class="controls">
+                    <input type="text" class="form-control" name="companyName" value="<%-  model.companyName %>" placeholder="Company Name">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="password-inputs">
+        <div class="form-group">
+            <div class="row-fluid">
+                <div class="col-sm-12">
+                    <label class="control-label">Current Password</label>
+                    <div class="controls">
+                        <input type="password" class="form-control" name="oldpassword" placeholder="Current Password">
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="col-sm-6">
+                    <label class="control-label">New Password</label>
+                    <div class="controls">
+                        <input type="password" class="form-control" name="newpassword" placeholder="New Password">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label">Re-type Password</label>
+                    <div class="controls">
+                        <input type="password" class="form-control" name="newpassword2" placeholder="Re-type Password">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span class="alert-container"></span>
+    </div>
+    <div class="button-group">
+        <button type="button" id="profile-save" class="btn btn-primary">Save Changes</button>
+    </div>
+</script>
+
+<div id="license-container" class="app-view fullpos" style="display:none">
+    <div id="license-main-tab" class="view-wrapper fullpos">
+        <div class="content" id="license-tab">
+            <div class="row-fluid">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="tab-content-container fullpos">
+                        <div class="solo-panel vscroll nomargin"></div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="LicenseTmpl" type="text/template">
+    <h4><%- title %></h4>
+
+    <p class="subhead">A list of <%- title %> Modules.<p>
+
+    <% for(var i=0;i<metadata.length;++i){ %>
+    <% if(metadata[i].modules){ %>
+    <div class="docs-container clearfix">
+        <div>
+            <div class="section">
+                <div class="section-title">
+                    <h5>
+                        <% if(metadata[i].url){ %><a href="<%- metadata[i].url %>"><% } %>
+                        <% if(metadata[i].shortDescription){ %>
+                        <%- metadata[i].shortDescription %>
+                        <% }else{ %>
+                        <%- metadata[i].url %><br />
+                        <% } %>
+                        <% if(metadata[i].url){ %></a><% } %>
+                    </h5>
+                </div>
+                <div class="docs-content">
+                    <% for(var j=0;j<metadata[i].modules.length;++j){ %>
+                    <b><%- metadata[i].modules[j].moduleName %></b><br />
+                    <p><%- metadata[i].modules[j].extraDescription %></p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } %>
+    <% } %>
+</script>
+
+<div id="footer" class="row-fluid">
+    <div class="col-xs-6">
+        &copy; 2014 Magnet Systems, Inc. All rights reserved.
+    </div>
+    <div class="col-xs-6">
+        <a href="#/licenses" target="_blank">Open Source Licenses</a>
+    </div>
+</div>
+
+<div id="general-alert" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" type="button" class="btn btn-primary">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="confirm-alert" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="submit btn btn-primary">Yes</button>
+                <button data-dismiss="modal" type="button" class="btn btn-default">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="error-alert" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" type="button" class="btn btn-primary">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mmx-sendmessage-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Send Message</h4>
+            </div>
+            <div class="modal-body">
+                <p>Send a message to <span class="sendmessage-to"></span>.</p>
+                <textarea name="message" class="form-control" placeholder="Message">{"msg":"hello world"}</textarea>
+                <button id="mmx-sendmessage-btn" type="button" class="btn btn-primary">Send Message</button>
+                <span class="alert-container"></span>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" type="button" class="btn btn-default">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

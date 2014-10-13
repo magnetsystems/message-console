@@ -1,0 +1,56 @@
+.table-hover > tbody > tr.nohover:hover > td, .table-hover > tbody > tr.nohover:hover > th{background:#fff}
+
+/* MMX VIEWS */
+#mmx-container > .panel > .row-fluid > .col-sm-8{padding:0}
+#mmx-project-list-container{padding:10px;border:solid 1px #aaa}
+#mmx-app-list{min-height:80px}
+#mmx-app-list .list-group-item{border-radius:0}
+#mmx-apps .tab-pane{margin:20px 0}
+#mmx-apps .glyphicon{cursor:pointer}
+#mmx-active-project-container{height:100%;border-radius:0;background:none;margin-bottom:15px}
+#mmx-active-project-container .tab-content{padding:4px 15px 15px 15px;border:solid 1px #aaa;border-top:none}
+#mmx-active-project-container .tab-content .tab-pane{background:none;margin-top:10px}
+#mmx-active-project-container .controls{text-align:left}
+#mmx-active-project-container .col-md-6 .controls{line-height:89px}
+#mmx-active-project-container .nav-tabs{border-bottom:1px solid #aaa}
+#mmx-active-project-container .nav-tabs > li{margin-bottom:-1px}
+#mmx-active-project-container .nav > li > a{padding:10px 33px}
+#mmx-active-project-container .nav-tabs > li.active > a{border-color:#aaa #aaa transparent}
+#mmx-mgmt-tab .form-group{margin:0}
+#mmx-test-tab .form-group .col-md-2 .button-group{margin-top:25px}
+
+#mmx-active-project-container .repeater-list-header td, #mmx-active-project-container .repeater-list-items td{border-left:0}
+
+/* - user list */
+#mmx-users-tab .repeater-list-header td:first-child, #mmx-users-tab .repeater-list-items td:first-child{width:30px !important;border-right:solid 1px #ddd}
+#mmx-users-tab .repeater-list-items td:first-child span{cursor:pointer}
+#mmx-users-tab .table-striped > tbody > tr:nth-child(2n+1) > td{background:#daebf0}
+#mmx-users-tab .repeater-list-items tr.head td{font-weight:700;border-bottom:1px solid #ddd;padding:8px;background:#F9F9F9}
+#mmx-sendmessage-modal .modal-body button{margin-top:10px;margin-bottom:10px}
+
+/* - message list */
+.repeater-search .col-sm-6{padding-left:0}
+#mmx-messages-list .tabmargin{padding:15px}
+#mmx-messages-list .dt-container{margin-top:12px}
+
+#mmx-messages-list .repeater-header-left{float:none}
+#mmx-messages-list .repeater-search{width:100%;margin-bottom:15px;float:none}
+#mmx-messages-list .column-selector{padding:5px 15px 15px 15px}
+#mmx-messages-list .column-selector h5{margin-top:5px}
+#mmx-messages-list .pillbox > .pill-group > .pill{margin:0 0 8px 0}
+#mmx-messages-list .repeater-list-items tr.head td{font-weight:700;border-bottom:1px solid #ddd;padding:8px;background:#F9F9F9}
+
+/* advanced search widget */
+.advsearch > label{margin-top:8px;margin-right:7px}
+.advsearch-filter-list .alert-info{background:#fff;border:solid 1px #ccc}
+.advsearch-filter-list .alert-info label{color:#555}
+.advsearch-filter-list .col-sm-6, .advsearch-filter-list .col-sm-12{padding-left:0;padding-right:10px}
+.advsearch-filter-list .col-sm-12, .advsearch-filter-list .col-sm-6.second{padding-right:0}
+.advsearch-refresh{margin-top:10px}
+.advsearch .panel-title a{font-weight:500;font-size:14px}
+.advsearch .panel-default{border-color:#aaa}
+
+@media only screen and (max-width:767px){
+    #mmx-messages-list .dt-container .col-sm-6{padding:0}
+}
+
