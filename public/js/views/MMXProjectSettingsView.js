@@ -20,10 +20,8 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         saveProject: function(){
             var me = this;
-            var input = me.$el.find('input[name="appName"]');
-            me.model.save({
-                appName : input.val()
-            }, {
+            var obj = utils.collect(me.$el);
+            me.model.save(obj, {
                 success: function(){
                     me.options.eventPubSub.trigger('renderMMXList', me.model.attributes.id);
                     Alerts.General.display({
@@ -32,7 +30,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     });
                 },
                 error: function(e){
-                    alert(e);
+                    alert(e.responseText);
                 }
             });
         },
@@ -47,7 +45,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                         me.options.eventPubSub.trigger('renderMMXList');
                     },
                     error: function(e){
-                        alert(e);
+                        alert(e.responseText);
                     }
                 });
             });

@@ -478,6 +478,7 @@ timer = {
         var me = this;
         //$(id).show();
         me.loops[id] = me.loops[id] || {};
+        if(me.loops[id].timer) me.stop(id);
         me.interval(action, delay, id);
         me.loops[id].timer = setInterval(function(){
             if(!me.loops[id].paused){

@@ -178,7 +178,7 @@
         <p>Create your messaging app projects here and set up their certificates.</p>
         <hr />
         <div class="row-fluid">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="form-group">
                     <div class="input-group">
                         <input id="mmx-project-new-name" type="text" class="form-control" name="name" placeholder="Name app" value="" >
@@ -189,7 +189,7 @@
                     <div id="mmx-app-list" class="list-group"></div>
                 </div>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-9">
                 <div id="mmx-active-project-container">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="active"><a did="Settings" href="#mmx-mgmt-tab" role="tab" data-toggle="tab">
@@ -204,7 +204,7 @@
                         <!--<span class="hidden-xs">Test Push</span>-->
                         <!--</a></li>-->
                         <li><a did="Users" href="#mmx-users-tab" role="tab" data-toggle="tab">
-                            Users
+                            Endpoints
                         </a></li>
                         <li><a did="Messages" href="#mmx-msgs-tab" role="tab" data-toggle="tab">
                             Message Log
@@ -366,12 +366,12 @@
             <form role="form">
                 <div class="form-group">
                     <div class="col-md-6">
-                        <label>GCM ID</label>
-                        <input type="text" class="form-control" name="gcm-id" placeholder="GCM Id" value="" />
+                        <label>Google Project ID</label>
+                        <input type="text" class="form-control" name="googleProjectId" placeholder="Google Project ID" value="<%- model.attributes.googleProjectId %>" />
                     </div>
                     <div class="col-md-6">
-                        <label>API Key</label>
-                        <input type="text" class="form-control" name="gcm-apikey" placeholder="GCM API Key" value="" />
+                        <label>Google API Key</label>
+                        <input type="text" class="form-control" name="googleApiKey" placeholder="Google API Key" value="<%- model.attributes.googleApiKey %>" />
                     </div>
                 </div>
             </form>
@@ -408,7 +408,7 @@
     <a href="#/messaging/<%- model.attributes.id %>" class="list-group-item<% if(activeId === model.attributes.id){ %> active<% } %>"><%- model.attributes.appName %></a>
     <% }); %>
     <% }else{ %>
-    You have not created any projects.
+    You have not created any app projects.
     <% } %>
 </script>
 
@@ -419,6 +419,11 @@
                 <div class="repeater-header-left">
                     <span class="repeater-title"></span>
                     <div class="repeater-search">
+                        <select class="form-control" name="searchby">
+                            <option value="name">Search by Name</option>
+                            <option value="phone">Search by Phone Number</option>
+                            <option value="username">Search by Id</option>
+                        </select>
                         <div class="search input-group">
                             <input type="search" class="form-control" name="searchtext" placeholder="Search"/>
                             <span class="input-group-btn">
@@ -430,7 +435,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="repeater-header-right">
+                <div class="repeater-header-right hidden">
                     <div class="btn-group selectlist repeater-filters" data-resize="auto">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <span class="selected-label">&nbsp;</span>
@@ -521,30 +526,59 @@
                     <th>Device ID</th>
                     <th>OS Type</th>
                     <th>Token Type</th>
+                    <th>Name</th>
                     <th>Phone Number</th>
                     <th>Carrier</th>
+                    <th>Status</th>
                     <th>Test Message</th>
                 </tr>
                 </thead>
                 <tbody>
                 <% if(devices && devices.length > 0){ %>
                 <% _.each(devices, function(device, key){  %>
-                <tr did="<%- device.id %>">
+                <tr did="<%- device.deviceId %>">
                     <td><%- device.deviceId %></td>
                     <td><%- device.osType %></td>
                     <td><%- device.tokenType %></td>
+                    <td><%- device.name %></td>
                     <td><%- device.phoneNumber %></td>
-                    <td><%- device.carrier %></td>
+                    <td><%- device.carrierInfo %></td>
+                    <td><%- device.status %></td>
                     <td><button btype="device" class="sendmessage btn btn-sm btn-primary">Send</button></td>
                 </tr>
                 <% }); %>
                 <% }else{ %>
-                <tr><td colspan="6">No devices associated with this user.</td></tr>
+                <tr><td colspan="8">No devices associated with this endpoint.</td></tr>
                 <% } %>
                 </tbody>
             </table>
         </td>
     </tr>
+</script>
+
+<script id="MessagingDeviceMessagesListView" type="text/template">
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+        <tr>
+            <th>Date Sent</th>
+            <th>Type</th>
+            <th>State</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if(col && col.length > 0){ %>
+        <% _.each(col, function(msg, key){ if(key < 5){ %>
+        <tr<% if(key === 0 && hl){ %> class="highlighted-row green" style="display:none"<% } %>>
+            <td><%- utils.fromISO8601(msg.dateSent) %></td>
+            <td><%- msg.type %></td>
+            <td><%- msg.state %></td>
+        </tr>
+        <% } }); %>
+        <% }else{ %>
+        <tr><td colspan="3">No messages have been sent to this endpoint.</td></tr>
+        <% } %>
+        </tbody>
+    </table>
 </script>
 
 <script id="MessagingMessagesListTmpl" type="text/template">
@@ -553,53 +587,6 @@
             <div class="clearfix">
                 <div class="repeater-header-left">
                     <div class="repeater-search row-fluid clearfix">
-                        <!--<select class="form-control pull-left" name="searchby">-->
-                            <!--<option value="targetdevid" selected="selected">Search By Device Id</option>-->
-                            <!--<option value="datesent" selected="selected">Search By Date Sent</option>-->
-                            <!--<option value="dateack" selected="selected">Search By Date Acknowledged</option>-->
-                            <!--<option value="state">Search By State</option>-->
-                        <!--</select>-->
-                        <!--<div class="dt-container row-fluid clearfix">-->
-                            <!--<div class="col-sm-12">-->
-                                <!--<div class="search input-group">-->
-                                    <!--<input type="search" class="form-control" name="searchtext" placeholder="Search"/>-->
-                                <!--<span class="input-group-btn">-->
-                                    <!--<button class="btn btn-default" type="button">-->
-                                        <!--<span class="glyphicon glyphicon-search"></span>-->
-                                        <!--<span class="sr-only">Search</span>-->
-                                    <!--</button>-->
-                                <!--</span>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="col-sm-6" style="display:none">-->
-                                <!--<div class="fromDt datepicker clearfix dropdown" data-initialize="datepicker">-->
-                                    <!--<div class="input-group">-->
-                                        <!--<input type="text" class="form-control" name="fromDt" placeholder="Start Date" />-->
-                                        <!--<div class="input-group-btn">-->
-                                            <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">-->
-                                                <!--<span class="glyphicon glyphicon-calendar"></span>-->
-                                                <!--<span class="sr-only">Toggle Calendar</span>-->
-                                            <!--</button>-->
-                                            <!--<div class="dropdown-menu dropdown-menu-right calendar-menu"></div>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="col-sm-6 second" style="display:none">-->
-                                <!--<div class="toDt datepicker dropdown" data-initialize="datepicker">-->
-                                    <!--<div class="input-group">-->
-                                        <!--<input type="text" class="form-control" name="toDt" placeholder="End Date" />-->
-                                        <!--<div class="input-group-btn">-->
-                                            <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">-->
-                                                <!--<span class="glyphicon glyphicon-calendar"></span>-->
-                                                <!--<span class="sr-only">Toggle Calendar</span>-->
-                                            <!--</button>-->
-                                            <!--<div class="dropdown-menu dropdown-menu-right calendar-menu"></div>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
                         <div id="mmx-advsearch-container"></div>
                     </div>
                 </div>
@@ -1016,12 +1003,35 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Send Message</h4>
+                <h4 class="modal-title">Send</h4>
             </div>
             <div class="modal-body">
-                <p>Send a message to <span class="sendmessage-to"></span>.</p>
-                <textarea name="message" class="form-control" placeholder="Message">{"msg":"hello world"}</textarea>
-                <button id="mmx-sendmessage-btn" type="button" class="btn btn-primary">Send Message</button>
+                <select class="form-control" name="message-type">
+                    <option value="push">Ping</option>
+                    <option value="notification">Notification</option>
+                    <option value="message">Message</option>
+                </select>
+                <div class="message-types">
+                    <div did="push" class="hidden">
+                        <p>Send a push notification ping test to <span class="sendmessage-to"></span> through GCM or APNS service
+                            directly to the device. This is useful for testing whether GCM or APNS is set up correctly.</p>
+                        <button did="push" type="button" class="btn btn-primary">Ping Device</button>
+                    </div>
+                    <div did="notification" class="hidden">
+                        <p>Send a push notification to <span class="sendmessage-to"></span>. The push notification will be sent
+                            through GCM or APNS service directly to the device.
+                        </p>
+                        <textarea name="payload" class="form-control" placeholder="Payload">Hello World</textarea>
+                        <button did="notification" type="button" class="btn btn-primary">Send Notification</button>
+                    </div>
+                    <div did="message" class="hidden">
+                        <p>Send a message to <span class="sendmessage-to"></span>. The message will be sent
+                            through the Magnet MMX hosted service.</p>
+                        <textarea name="payload" class="form-control" placeholder="Payload">Hello World</textarea>
+                        <button did="message" type="button" class="btn btn-primary">Send Message</button>
+                    </div>
+                </div>
+                <div class="message-push-history"></div>
                 <span class="alert-container"></span>
             </div>
             <div class="modal-footer">

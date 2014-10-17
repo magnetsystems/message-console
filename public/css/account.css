@@ -1,7 +1,13 @@
+/* overloads */
+.view-wrapper{padding:0 20px}
 .table-hover > tbody > tr.nohover:hover > td, .table-hover > tbody > tr.nohover:hover > th{background:#fff}
+.highlighted-row.green td{background-color:#DFF0D8 !important}
+.highlighted-row.blue td{background-color:#D9EDF7 !important}
+.highlighted-row.yellow td{background-color:#FCF8E3 !important}
+.highlighted-row.red td{background-color:#F2DEDE !important}
 
 /* MMX VIEWS */
-#mmx-container > .panel > .row-fluid > .col-sm-8{padding:0}
+#mmx-container > .panel > .row-fluid > .col-sm-9{padding:0}
 #mmx-project-list-container{padding:10px;border:solid 1px #aaa}
 #mmx-app-list{min-height:80px}
 #mmx-app-list .list-group-item{border-radius:0}
@@ -24,9 +30,12 @@
 /* - user list */
 #mmx-users-tab .repeater-list-header td:first-child, #mmx-users-tab .repeater-list-items td:first-child{width:30px !important;border-right:solid 1px #ddd}
 #mmx-users-tab .repeater-list-items td:first-child span{cursor:pointer}
+#mmx-users-tab .repeater-header-left{float:none}
+#mmx-users-tab .repeater-search{width:100%;margin-bottom:15px;float:none}
 #mmx-users-tab .table-striped > tbody > tr:nth-child(2n+1) > td{background:#daebf0}
 #mmx-users-tab .repeater-list-items tr.head td{font-weight:700;border-bottom:1px solid #ddd;padding:8px;background:#F9F9F9}
 #mmx-sendmessage-modal .modal-body button{margin-top:10px;margin-bottom:10px}
+#mmx-sendmessage-modal .message-push-history .table{font-size:12px}
 
 /* - message list */
 .repeater-search .col-sm-6{padding-left:0}
@@ -39,16 +48,6 @@
 #mmx-messages-list .column-selector h5{margin-top:5px}
 #mmx-messages-list .pillbox > .pill-group > .pill{margin:0 0 8px 0}
 #mmx-messages-list .repeater-list-items tr.head td{font-weight:700;border-bottom:1px solid #ddd;padding:8px;background:#F9F9F9}
-
-/* advanced search widget */
-.advsearch > label{margin-top:8px;margin-right:7px}
-.advsearch-filter-list .alert-info{background:#fff;border:solid 1px #ccc}
-.advsearch-filter-list .alert-info label{color:#555}
-.advsearch-filter-list .col-sm-6, .advsearch-filter-list .col-sm-12{padding-left:0;padding-right:10px}
-.advsearch-filter-list .col-sm-12, .advsearch-filter-list .col-sm-6.second{padding-right:0}
-.advsearch-refresh{margin-top:10px}
-.advsearch .panel-title a{font-weight:500;font-size:14px}
-.advsearch .panel-default{border-color:#aaa}
 
 @media only screen and (max-width:767px){
     #mmx-messages-list .dt-container .col-sm-6{padding:0}

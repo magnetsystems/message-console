@@ -60,9 +60,13 @@ define(['jquery', 'backbone', 'views/AdvSearchView'], function($, Backbone, AdvS
                         title : 'State',
                         type  : 'enum',
                         props : [
-                            {key:'DELIVERY_ATTEMPTED', val:'Delivery Attempted'},
-                            {key:'DELIVERY_ACKNOWLEDGED', val:'Delivery Acknowledged'},
-                            {key:'SENT', val:'Sent'}
+                            {key:'PENDING', val:'PENDING'},
+                            {key:'DELIVERY_ATTEMPTED', val:'DELIVERY_ATTEMPTED'},
+                            {key:'WAKEUP_REQUIRED', val:'WAKEUP_REQUIRED'},
+                            {key:'WAKEUP_SENT', val:'WAKEUP_SENT'},
+                            {key:'DELIVERED', val:'DELIVERED'},
+                            {key:'TIMEDOUT', val:'TIMEDOUT'},
+                            {key:'CANCELLED', val:'CANCELLED'}
                         ]
                     },
                     from : {
@@ -108,8 +112,8 @@ define(['jquery', 'backbone', 'views/AdvSearchView'], function($, Backbone, AdvS
             }
             /* TEMP */
             var query = {};
-            if(options.pageIndex !== 0) query.param8 = options.pageIndex !== 0 ? (options.pageSize * options.pageIndex) : 1;
-            if(options.pageSize != 10) query.param9 = options.pageSize || 10;
+            if(options.pageIndex !== 0) query.offset = options.pageIndex !== 0 ? (options.pageSize * options.pageIndex) : 1;
+            if(options.pageSize != 10) query.size = options.pageSize || 10;
             if(params.searchby && (params.fromDt || params.toDt || params.search || options.search)) query.searchby = params.searchby;
             if(params.fromDt) query.value = new Date(params.fromDt.replace(/-/g, '/')).getTime() / 1000;
             if(params.toDt) query.value2 = new Date(params.toDt.replace(/-/g, '/')).getTime() / 1000;
@@ -136,13 +140,14 @@ define(['jquery', 'backbone', 'views/AdvSearchView'], function($, Backbone, AdvS
                 var data = {
                     count   : res.total,
                     items   : res.results,
-                    page    : res.offset,
+                    page    : (res.offset / options.pageSize),
                     columns : me.columns
                 };
                 data.pages = Math.ceil(data.count / options.pageSize);
                 data.start = data.page * options.pageSize;
                 data.end = data.start + options.pageSize;
                 data.end = (data.end <= data.count) ? data.end : data.count;
+                data.start = data.start + 1;
                 setTimeout(function(){
                     $('#mmx-messages-list .repeater-list-header tr').addClass('head').detach().prependTo('#mmx-messages-list .repeater-list-items tbody');
                 }, 20);
@@ -181,8 +186,8 @@ define(['jquery', 'backbone', 'views/AdvSearchView'], function($, Backbone, AdvS
                 sortable : false
             },
             {
-                label    : 'App Id',
-                property : 'appId',
+                label    : 'Message Id',
+                property : 'messageId',
                 sortable : false
             }
         ]

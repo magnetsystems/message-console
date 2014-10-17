@@ -27,7 +27,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click #logout-btn': 'logout',
             'click .repeater-list-items td .glyphicon-plus': 'toggleRow',
             'click .repeater-list-items td .glyphicon-minus': 'toggleRow',
-            'click #mmx-sendmessage-btn': 'sendMMXMessage'
+            'change #mmx-sendmessage-modal select': 'changeMMXMessageType',
+            'click #mmx-sendmessage-modal .message-types button': 'sendMMXMessage'
         },
         goBack: function(e){
             e.preventDefault();
@@ -88,8 +89,11 @@ define(['jquery', 'backbone'], function($, Backbone){
                 state : tog.hasClass('glyphicon-minus')
             });
         },
+        changeMMXMessageType: function(e){
+            this.options.eventPubSub.trigger('changeMMXMessageType', e);
+        },
         sendMMXMessage: function(e){
-            this.options.eventPubSub.trigger('sendMMXMessage');
+            this.options.eventPubSub.trigger('sendMMXMessage', e);
         }
     });
     return View;
