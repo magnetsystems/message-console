@@ -17,7 +17,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
                             model : me.col.get(params.id)
                         });
                     }
-                });
+                }, params.id);
             });
             me.options.eventPubSub.bind('renderMMXList', function(id){
                 if(!id) $('#mmx-active-project-container').hide('fast');
@@ -28,9 +28,10 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
             'click #create-messaging-app-btn': 'createMessagingApp',
             'keypress #mmx-project-new-name': 'onCreateMessagingAppEnter'
         },
-        getApps: function(cb){
+        getApps: function(cb, isSubView){
             var me = this;
-            if(me.col.length) return cb();
+            if(me.col.length && isSubView) return cb();
+            $('#mmx-app-list').html('');
             me.col.fetch({
                success: function(){
                    cb();

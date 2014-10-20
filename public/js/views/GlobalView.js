@@ -38,7 +38,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             Cookie.remove('magnet_auth');
             $('#user-nav').addClass('hidden');
             $('#user-nav-popover').attr('data-content', '');
-            AJAX('/logout', 'POST', 'application/json', null, function(){
+            AJAX('/rest/logout', 'POST', 'application/json', null, function(){
                 Backbone.history.navigate('#/login');
             }, function(e){
                 Backbone.history.navigate('#/login');
