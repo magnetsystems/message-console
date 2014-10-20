@@ -11,7 +11,7 @@ if(!app.settings.env || app.settings.env == ''){
 }
 
 global.winston = winston;
-global.ENV_CONFIG = require('./config/config_'+app.settings.env);
+global.ENV_CONFIG = require('./config/config');
 global.APP_CONFIG = {};
 
 app.set('port', ENV_CONFIG.App.port);

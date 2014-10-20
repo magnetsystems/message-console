@@ -4,24 +4,8 @@ module.exports = {
 
     // App Configuration
     App : {
-        port          : 3002,
+        port          : 3001,
         sessionSecret : 'ThisSecretShouldBeChanged'
-    },
-
-    // Database Configuration
-    Database : {
-        options : {
-            sync        : true,
-            createAdmin : true
-        },
-        dbName   : 'developercenter',
-        username : 'root',
-        password : null,
-        params   : {
-            host    : 'localhost',
-            port    : 3306,
-            logging : winston.verbose
-        }
     },
 
     // Log Configuration
