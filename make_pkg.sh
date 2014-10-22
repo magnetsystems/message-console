@@ -28,6 +28,7 @@ cd $APP_NAME-$APP_VERSION
 
 #create links to things to be packaged
 ln -s $SCRIPT_DIR/app.js
+ln -s $SCRIPT_DIR/config
 ln -s $SCRIPT_DIR/jp.py
 ln -s $SCRIPT_DIR/make_pkg.sh
 ln -s $SCRIPT_DIR/package.json
