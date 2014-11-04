@@ -174,224 +174,305 @@
 
 <div id="mmx-container" class="app-view panel-containers fullpos" style="display:none">
     <div class="panel panel-default fullpos">
-        <h4>App Projects</h4>
-        <p>Create your messaging app projects here and set up their certificates.</p>
-        <hr />
         <div class="row-fluid">
-            <div class="col-sm-3">
-                <div class="form-group">
-                    <div class="input-group">
-                        <input id="mmx-project-new-name" type="text" class="form-control" name="name" placeholder="Name app" value="" >
-                        <div id="create-messaging-app-btn" class="btn btn-primary input-group-addon glyphicon glyphicon-plus"></div>
+            <div class="col-sm-6">
+                <div id="mmx-project-list-container" class="input-group input-append dropdown combobox" data-initialize="combobox">
+                    <input id="mmx-app-selected-item" type="text" class="form-control" placeholder="Select an option">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <button id="create-messaging-app-btn" class="btn btn-primary glyphicon glyphicon-plus"></button>
+                        <ul id="mmx-app-list" class="dropdown-menu dropdown-menu-right" role="menu"></ul>
                     </div>
-                </div>
-                <div id="mmx-project-list-container" class="panel panel-default">
-                    <div id="mmx-app-list" class="list-group"></div>
                 </div>
             </div>
-            <div class="col-sm-9">
-                <div id="mmx-active-project-container">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="active"><a did="Settings" href="#mmx-mgmt-tab" role="tab" data-toggle="tab">
-                            Settings
-                        </a></li>
-                        <!--<li><a href="#mmx-send-tab" role="tab" data-toggle="tab">-->
-                        <!--<span class="visible-xs-inline">Send</span>-->
-                        <!--<span class="hidden-xs">Send Message</span>-->
-                        <!--</a></li>-->
-                        <!--<li><a href="#mmx-test-tab" role="tab" data-toggle="tab">-->
-                        <!--<span class="visible-xs-inline">Test</span>-->
-                        <!--<span class="hidden-xs">Test Push</span>-->
-                        <!--</a></li>-->
-                        <li><a did="Users" href="#mmx-users-tab" role="tab" data-toggle="tab">
-                            Endpoints
-                        </a></li>
-                        <li><a did="Messages" href="#mmx-msgs-tab" role="tab" data-toggle="tab">
-                            Message Log
-                        </a></li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="mmx-mgmt-tab">
-                            <div class="view-container"></div>
-                        </div>
-                        <div class="tab-pane clearfix" id="mmx-send-tab">
-                            <p>Add one or more filters to select recipients who will receive your message.</p>
+            <div class="col-sm-6">
+                <h4 class="text-right">Mobile Messaging Apps</h4>
+            </div>
+        </div>
+        <hr />
+        <div id="mmx-summary-container"></div>
+        <div id="mmx-active-project-container">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a did="Dashboard" href="#mmx-dash-tab" role="tab" data-toggle="tab">
+                    Dashboard
+                </a></li>
+                <!--<li><a href="#mmx-send-tab" role="tab" data-toggle="tab">-->
+                <!--<span class="visible-xs-inline">Send</span>-->
+                <!--<span class="hidden-xs">Send Message</span>-->
+                <!--</a></li>-->
+                <!--<li><a href="#mmx-test-tab" role="tab" data-toggle="tab">-->
+                <!--<span class="visible-xs-inline">Test</span>-->
+                <!--<span class="hidden-xs">Test Push</span>-->
+                <!--</a></li>-->
+                <li><a did="Users" href="#mmx-users-tab" role="tab" data-toggle="tab">
+                    Endpoints
+                </a></li>
+                <li><a did="Messages" href="#mmx-msgs-tab" role="tab" data-toggle="tab">
+                    Message Log
+                </a></li>
+                <li><a did="Topics" href="#mmx-topics-tab" role="tab" data-toggle="tab">
+                    Topics
+                </a></li>
+                <li><a did="QuickStart" href="#mmx-qs-tab" role="tab" data-toggle="tab">
+                    Quick Start
+                </a></li>
+                <li><a did="Settings" href="#mmx-mgmt-tab" role="tab" data-toggle="tab">
+                    Settings
+                </a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="mmx-dash-tab">
+                    <div class="view-container"></div>
+                </div>
+                <div class="tab-pane clearfix" id="mmx-mgmt-tab">
+                    <div class="view-container"></div>
+                </div>
+                <div class="tab-pane clearfix" id="mmx-send-tab">
+                    <p>Add one or more filters to select recipients who will receive your message.</p>
 
-                            <div class="row-fluid">
-                                <div class="col-md-8">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">Filter List</div>
-                                        <div id="project-messaging-filter-list" class="panel-body">No filters have been added.</div>
-                                    </div>
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">Payload</div>
-                                        <div id="project-messaging-msg-payload-container" class="panel-body">
-                                            <textarea id="project-messaging-msg-payload" name="payload" placeholder="Payload">{"msg":"hello world"}</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix fullwidth">
-                                        <button class="btn btn-primary">Send Message</button>
-                                    </div>
+                    <div class="row-fluid">
+                        <div class="col-md-8">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Filter List</div>
+                                <div id="project-messaging-filter-list" class="panel-body">No filters have been added.</div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Payload</div>
+                                <div id="project-messaging-msg-payload-container" class="panel-body">
+                                    <textarea id="project-messaging-msg-payload" name="payload" placeholder="Payload">{"msg":"hello world"}</textarea>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">Add A Filter</div>
-                                        <div id="project-messaging-filter-add" class="panel-body">
-                                            <div class="list-group">
-                                                <a href="#" did="username" class="list-group-item">
-                                                    <span class="glyphicon glyphicon-plus"></span>
-                                                    Full Name
-                                                </a>
-                                                <a href="#" did="useremail" class="list-group-item">
-                                                    <span class="glyphicon glyphicon-plus"></span>
-                                                    Email Address
-                                                </a>
-                                                <a href="#" did="devicetype" class="list-group-item">
-                                                    <span class="glyphicon glyphicon-plus"></span>
-                                                    Device Type
-                                                </a>
-                                                <a href="#" did="devicemodel" class="list-group-item">
-                                                    <span class="glyphicon glyphicon-plus"></span>
-                                                    Device Model
-                                                </a>
-                                                <a href="#" did="georegion" class="list-group-item">
-                                                    <span class="glyphicon glyphicon-plus"></span>
-                                                    GeoRegion
-                                                </a>
-                                                <a href="#" did="geopoint" class="list-group-item">
-                                                    <span class="glyphicon glyphicon-plus"></span>
-                                                    GeoPoint
-                                                </a>
-                                            </div>
-                                        </div>
+                            </div>
+                            <div class="clearfix fullwidth">
+                                <button class="btn btn-primary">Send Message</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Add A Filter</div>
+                                <div id="project-messaging-filter-add" class="panel-body">
+                                    <div class="list-group">
+                                        <a href="#" did="username" class="list-group-item">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            Full Name
+                                        </a>
+                                        <a href="#" did="useremail" class="list-group-item">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            Email Address
+                                        </a>
+                                        <a href="#" did="devicetype" class="list-group-item">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            Device Type
+                                        </a>
+                                        <a href="#" did="devicemodel" class="list-group-item">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            Device Model
+                                        </a>
+                                        <a href="#" did="georegion" class="list-group-item">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            GeoRegion
+                                        </a>
+                                        <a href="#" did="geopoint" class="list-group-item">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            GeoPoint
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="tab-pane clearfix" id="mmx-test-tab">
-                            <div class="form-group clearfix">
-                                <span class="form-caption">Send Test GCM Push</span>
-                                <div class="well well-default clearfix">
-                                    <form role="form">
-                                        <div class="form-group">
-                                            <div class="col-md-4">
-                                                <label>Device Id</label>
-                                                <input type="text" class="form-control" name="gcm-push-id" placeholder="Device Id" value="" />
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label>Message</label>
-                                                <input type="text" class="form-control" name="gcm-push-msg" placeholder="Message" value="" />
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="button-group">
-                                                    <button type="button" class="btn btn-primary">Send</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <span class="form-caption">Send Test APNS Push</span>
-                                <div class="well well-default clearfix">
-                                    <form role="form">
-                                        <div class="form-group">
-                                            <div class="col-md-4">
-                                                <label>Device Id</label>
-                                                <input type="text" class="form-control" name="apns-push-id" placeholder="Device Id" value="" />
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label>Message</label>
-                                                <input type="text" class="form-control" name="apns-push-msg" placeholder="Message" value="" />
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="button-group">
-                                                    <button type="button" class="btn btn-primary">Send</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane clearfix" id="mmx-users-tab">
-                            <div class="view-container"></div>
-                        </div>
-                        <div class="tab-pane clearfix" id="mmx-msgs-tab">
-                            <div class="view-container"></div>
                         </div>
                     </div>
+                </div>
+                <div class="tab-pane clearfix" id="mmx-test-tab">
+                    <div class="form-group clearfix">
+                        <span class="form-caption">Send Test GCM Push</span>
+                        <div class="well well-default clearfix">
+                            <form role="form">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label>Device Id</label>
+                                        <input type="text" class="form-control" name="gcm-push-id" placeholder="Device Id" value="" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Message</label>
+                                        <input type="text" class="form-control" name="gcm-push-msg" placeholder="Message" value="" />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="button-group">
+                                            <button type="button" class="btn btn-primary">Send</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <span class="form-caption">Send Test APNS Push</span>
+                        <div class="well well-default clearfix">
+                            <form role="form">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label>Device Id</label>
+                                        <input type="text" class="form-control" name="apns-push-id" placeholder="Device Id" value="" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Message</label>
+                                        <input type="text" class="form-control" name="apns-push-msg" placeholder="Message" value="" />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="button-group">
+                                            <button type="button" class="btn btn-primary">Send</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane clearfix" id="mmx-users-tab">
+                    <div class="view-container"></div>
+                </div>
+                <div class="tab-pane clearfix" id="mmx-msgs-tab">
+                    <div class="view-container"></div>
+                </div>
+                <div class="tab-pane clearfix" id="mmx-topics-tab">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id="mmx-new-topic-input" type="text" class="form-control" name="name" placeholder="Name your new topic" value="" >
+                            <div id="mmx-new-topic-btn" class="btn btn-primary input-group-addon glyphicon glyphicon-plus"></div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div id="mmx-topic-list"></div>
+                </div>
+                <div class="tab-pane clearfix" id="mmx-qs-tab">
+                    <h4>How to Message</h4>
+                    <p class="light">This step-by-step tutorial will help you configure and use messaging in your app.</p>
+                    <ol>
+                        <li>Create new App in the Messaging Console</li>
+                        <li>Set up GCM credentials in the Settings tab</li>
+                        <li>Import Android SDK into your mobile app</li>
+                        <li>Import MMX API Key into <code>settings.xml</code> of your mobile app
+                        </li>
+                        <li>Set up receipient mobile app to listen for messages
+<pre>//Need to so some setup in the app's Application class
+public class MyApplication extends Application {
+  public void onCreate() {
+    super.onCreate();
+    MMXClient.registerWakeupListener(this, MyWakeupListener.class);
+    MMXClient.setWakeupInterval(this, 60 * 1000); //if a poll wakeup is required
+  }
+}
+
+public class MyWakeupListener implements MMXWakeupListener {
+  private static final String TAG = MyWakeupListener.class.getSimpleName();
+  public void onWakeupReceived(final Context applicationContext, Bundle extras) {
+    //this gets called when a "wakeup" occurs, either from a GCM message or from the polling interval (if set)
+    //the developer can either connect to their MMX or handle the the extras that came with the GCM intent
+  }
+}</pre></li>
+                        <li>Call the MMXClient.sendMessage API on the sender mobile app
+<pre>MMXClient.sendMessage(message);</pre>
+                        </li>
+                    </ol>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<script id="MessagingSummaryView" type="text/template">
+    <% if(col && col.length > 0){ %>
+    <div class="row-fluid">
+    <% _.each(col, function(model, key){ %>
+        <div class="col-sm-6">
+            <div class="well well-sm">
+                <a class="well-title" href="#/messaging/<%- model.attributes.id %>"><%- model.attributes.appName %></a>
+                <hr />
+                <%= renderSingle(model) %>
+            </div>
+        </div>
+    <% }); %>
+    </div>
+    <% }else{ %>
+    You have not created any app projects.
+    <% } %>
+</script>
+
 <script id="MessagingProjectSettingsView" type="text/template">
-    <div class="form-group clearfix">
-        <div class="row-fluid">
-            <div class="col-md-6">
+    <div class="row-fluid clearfix">
+        <div class="col-sm-7">
+            <div class="form-group clearfix">
                 <label>App Name</label>
                 <div class="controls">
                     <input type="text" class="form-control" name="appName" value="<%- model.attributes.appName %>">
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="form-group clearfix">
                 <label>App ID</label>
                 <div class="controls">
                     <input type="text" class="form-control" name="appId" readonly="readonly" value="<%- model.attributes.id %>">
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="form-group clearfix">
-        <div class="row-fluid">
-            <div class="col-md-6">
+            <div class="form-group clearfix">
                 <label>MMX API Key</label>
                 <div class="controls">
                     <input type="text" class="form-control" name="apiKey" readonly="readonly" value="<%- model.attributes.apiKey %>">
                 </div>
-            </div>
-            <div class="col-md-6">
                 <div class="controls">
-                    <button did="regenerate" class="btn btn-primary">Generate</button>
+                    <button did="regenerate" class="btn btn-primary">Re-generate</button>
                     <button did="revoke" class="btn btn-primary">Revoke</button>
+                    <span class="tooltip-danger glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="
+                    Revoking or re-generating the API Key will require changing the key in the mobile app source code to continue messaging services">
+                    </span>
+                </div>
+            </div>
+            <div class="form-group clearfix">
+                <label>Guest Access Secret</label>
+                <div class="controls controls-grouped">
+                    <input type="text" class="form-control" name="secret" value="<%- model.attributes.secret %>">
+                    <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="
+                    Used for creating user account from the mobile device">
+                    </span>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="form-group clearfix">
-        <span class="form-caption">GCM</span>
-        <div class="well well-default clearfix">
-            <form role="form">
-                <div class="form-group">
-                    <div class="col-md-6">
-                        <label>Google Project ID</label>
-                        <input type="text" class="form-control" name="googleProjectId" placeholder="Google Project ID" value="<%- model.attributes.googleProjectId %>" />
-                    </div>
-                    <div class="col-md-6">
-                        <label>Google API Key</label>
-                        <input type="text" class="form-control" name="googleApiKey" placeholder="Google API Key" value="<%- model.attributes.googleApiKey %>" />
-                    </div>
+        <div class="col-sm-5">
+            <div class="form-group clearfix">
+                <span class="form-caption">GCM</span>
+                <div class="well well-default clearfix">
+                    <form role="form">
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <label>Google Project ID</label>
+                                <input type="text" class="form-control" name="googleProjectId" placeholder="Google Project ID" value="<%- model.attributes.googleProjectId %>" />
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Google API Key</label>
+                                <input type="text" class="form-control" name="googleApiKey" placeholder="Google API Key" value="<%- model.attributes.googleApiKey %>" />
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-    </div>
-    <div class="form-group clearfix">
-        <span class="form-caption">APNS</span>
-        <div class="well well-default clearfix">
-            <form role="form">
-                <div class="form-group">
-                    <div class="col-md-6">
-                        <label>Certificate</label>
-                        <input type="file" name="apns-cert" />
-                    </div>
-                    <div class="col-md-6">
-                        <label>Password</label>
-                        <input type="password" class="form-control" name="apns-pass" placeholder="APNS Password" value="" />
-                    </div>
+            </div>
+            <div class="form-group clearfix">
+                <span class="form-caption">APNS</span>
+                <div class="well well-default clearfix">
+                    <form role="form">
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <label>Certificate</label>
+                                <input type="file" name="apns-cert" />
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Password</label>
+                                <input type="password" class="form-control" name="apns-pass" placeholder="APNS Password" value="" />
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
     <div class="form-group clearfix">
@@ -402,10 +483,67 @@
     </div>
 </script>
 
+<script id="MessagingDashboardItemTmpl" type="text/template">
+    <div did="<%- model.attributes.id %>" class="mmx-dashboard-item">
+        <div class="media">
+            <a class="pull-left" href="#">
+                <img src="images/dashboard/delivered_messages.png" alt="delivered messages">
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading">Messages Delivered in the last 7 days: <%- statistics.delivered.total %></h4>
+                <p class="media-line">
+                    <span class="text green">Push Notifications: <%-statistics.pushMessageStats.totalDelivered %></span>
+                    <span class="vertical-line">|</span>
+                    <span class="text blue">In-App Messages: <%- statistics.inAppMessagesStats.totalDelivered %></span>
+                </p>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" style="width:<%- statistics.delivered.pushPercent %>%">
+                        <span class="sr-only"></span>
+                    </div>
+                    <div class="progress-bar progress-bar-info" style="width:<%- statistics.delivered.msgPercent %>%">
+                        <span class="sr-only"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="media">
+            <a class="pull-left" href="#">
+                <img src="images/dashboard/pending_messages.png" alt="pending messages">
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading">Messages Pending in the last 7 days:  <%- statistics.pending.total %></h4>
+                <p class="media-line">
+                    <span class="text gray">Push Notifications: <%-statistics.pushMessageStats.totalPending %> <span class="vertical-line">|</span> <span class="text gray">In-App Messages: <%- statistics.inAppMessagesStats.totalPending %></span>
+                </p>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" style="width:<%- statistics.pending.pushPercent %>%">
+                        <span class="sr-only"></span>
+                    </div>
+                    <div class="progress-bar progress-bar-info" style="width:<%- statistics.pending.msgPercent %>%">
+                        <span class="sr-only"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="media">
+            <a class="pull-left" href="#">
+                <img src="images/dashboard/userdevices.png" alt="user and devices">
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading">Devices Registered</h4>
+                <p class="text darkgray media-line">
+                    Last 7 days: <%- statistics.deviceStats.numDevices %>
+                </p>
+            </div>
+        </div>
+    </div>
+</script>
+
 <script id="MessagingAppsListView" type="text/template">
     <% if(col && col.length > 0){ %>
     <% _.each(col, function(model, key){  %>
-    <a href="#/messaging/<%- model.attributes.id %>" class="list-group-item<% if(activeId === model.attributes.id){ %> active<% } %>"><%- model.attributes.appName %></a>
+    <li data-value="<%- model.attributes.id %>"><a href="#/messaging/<%- model.attributes.id %>"><%- model.attributes.appName %></a></li>
     <% }); %>
     <% }else{ %>
     You have not created any app projects.
@@ -669,6 +807,38 @@
             </div>
         </div>
     </div>
+</script>
+
+<script id="MessagingTopicsListView" type="text/template">
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+        <tr>
+            <th>Topic Name</th>
+            <th>Subscribers</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if(col && col.length > 0){ %>
+        <% _.each(col, function(topic, key){ %>
+        <tr did="<%- topic.id %>">
+            <td><%- topic.name %></td>
+            <td><%- topic.subscriptionCount %></td>
+            <td><%- topic.description %></td>
+            <td>
+                <button class="topic-publish-btn btn btn-primary btn-sm">Publish</button>
+                <button class="topic-delete-btn btn btn-danger btn-sm">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+        <% }); %>
+        <% }else{ %>
+        <tr><td colspan="3">No topics have been created yet.</td></tr>
+        <% } %>
+        </tbody>
+    </table>
 </script>
 
 <script id="AdvancedSearchTmpl" type="text/template">
@@ -1035,6 +1205,25 @@
                 <span class="alert-container"></span>
             </div>
             <div class="modal-footer">
+                <button data-dismiss="modal" type="button" class="btn btn-default">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mmx-publishtopic-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Publish a message to topic <span class="mmx-topic-name-placeholder"></span></h4>
+            </div>
+            <div class="modal-body">
+                <span class="alert-container"></span>
+                <textarea name="payload" class="form-control" placeholder="Payload">Hello World</textarea>
+            </div>
+            <div class="modal-footer">
+                <button id="mmx-publishtopic-btn" type="button" class="btn btn-primary">Publish Message</button>
                 <button data-dismiss="modal" type="button" class="btn btn-default">Close</button>
             </div>
         </div>

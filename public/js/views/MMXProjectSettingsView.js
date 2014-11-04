@@ -17,6 +17,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             this.$el.find('.view-container').html(_.template($('#MessagingProjectSettingsView').html(), {
                 model : this.model
             }));
+            this.$el.find('.glyphicon-info-sign').tooltip();
         },
         saveProject: function(){
             var me = this;

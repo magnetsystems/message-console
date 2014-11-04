@@ -670,6 +670,23 @@ utils = {
         }
         return ary;
     },
+    getIndexByAttr: function(ary, key, val){
+        var index;
+        for(var i=0;i<ary.length;++i){
+            if(ary[i][key] === val){
+                index = i;
+            }
+        }
+        return index;
+    },
+    removeByAttr: function(ary, key, val){
+        for(var i=0;i<ary.length;++i){
+            if(ary[i][key] === val){
+                ary.splice(i, 1);
+            }
+        }
+        return ary;
+    },
     resetError: function(form){
         form.find('.col-sm-6').removeClass('has-error');
         form.find('.alert-container').html('');
@@ -820,6 +837,50 @@ utils = {
         }else{
             return qs[1];
         }
+    },
+    calcStats: function(stats){
+        stats.pushMessageStats.totalDelivered = 0;
+        stats.pushMessageStats.totalPending = 0;
+        if(stats.pushMessageStats.stats){
+            for(var i=0;i<stats.pushMessageStats.stats.length;++i){
+                if(stats.pushMessageStats.stats[i].state == 'ACKNOWLEDGED')
+                    stats.pushMessageStats.totalDelivered += stats.pushMessageStats.stats[i].count;
+                if(stats.pushMessageStats.stats[i].state == 'PUSHED')
+                    stats.pushMessageStats.totalPending += stats.pushMessageStats.stats[i].count;
+            }
+        }
+        stats.inAppMessagesStats.totalDelivered = 0;
+        stats.inAppMessagesStats.totalPending = 0;
+        if(stats.inAppMessagesStats.stats){
+            for(var i=0;i<stats.inAppMessagesStats.stats.length;++i){
+                if(stats.inAppMessagesStats.stats[i].type == 'DELIVERED')
+                    stats.inAppMessagesStats.totalDelivered += stats.pushMessageStats.stats[i].count;
+                if(stats.inAppMessagesStats.stats[i].type == 'PENDING')
+                    stats.inAppMessagesStats.totalPending += stats.pushMessageStats.stats[i].count;
+            }
+        }
+        stats.delivered = {
+            total : stats.pushMessageStats.totalDelivered + stats.inAppMessagesStats.totalDelivered
+        };
+        stats.pending = {
+            total : stats.pushMessageStats.totalPending + stats.inAppMessagesStats.totalPending
+        };
+        console.log(stats.pushMessageStats.totalDelivered, stats.inAppMessagesStats.totalDelivered);
+        var d1 = this.getPercentage(stats.pushMessageStats.totalDelivered, stats.delivered.total);
+        var d2 = this.getPercentage(stats.inAppMessagesStats.totalDelivered, stats.delivered.total);
+        if((d1+d2) < 100) d1 += 1;
+        stats.delivered.pushPercent = d1;
+        stats.delivered.msgPercent = d2;
+        var p1 = this.getPercentage(stats.pushMessageStats.totalPending, stats.pending.total);
+        var p2 = this.getPercentage(stats.inAppMessagesStats.totalPending, stats.pending.total);
+        if((p1+p2) < 100) p1 += 1;
+        stats.pending.pushPercent = p1;
+        stats.pending.msgPercent = p2;
+        return stats;
+
+    },
+    getPercentage: function(num, total){
+        return parseInt(parseFloat(parseInt(num, 10) * 100) / parseInt(total, 10))
     }
 };
 

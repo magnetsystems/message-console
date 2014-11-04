@@ -5,10 +5,15 @@
 .highlighted-row.blue td{background-color:#D9EDF7 !important}
 .highlighted-row.yellow td{background-color:#FCF8E3 !important}
 .highlighted-row.red td{background-color:#F2DEDE !important}
+.text.green{color:#5CB85C}
+.text.blue{color:#5BC0DE}
+.text.gray{color:#aaa}
+.text.darkgray{color:#777}
+.vertical-line{margin:0;padding:0 14px;display:inline}
+.well-title{font-size:19px;font-weight:300;margin:0;padding:5px 5px 10px 8px}
+.tooltip-danger{color:#B81000;left:5px;top:-1px}
 
 /* MMX VIEWS */
-#mmx-container > .panel > .row-fluid > .col-sm-9{padding:0}
-#mmx-project-list-container{padding:10px;border:solid 1px #aaa}
 #mmx-app-list{min-height:80px}
 #mmx-app-list .list-group-item{border-radius:0}
 #mmx-apps .tab-pane{margin:20px 0}
@@ -23,9 +28,21 @@
 #mmx-active-project-container .nav > li > a{padding:10px 33px}
 #mmx-active-project-container .nav-tabs > li.active > a{border-color:#aaa #aaa transparent}
 #mmx-mgmt-tab .form-group{margin:0}
+#mmx-mgmt-tab .form-group{margin:0}
 #mmx-test-tab .form-group .col-md-2 .button-group{margin-top:25px}
 
+.mmx-dashboard-item img{max-width:78px}
+.mmx-dashboard-item > hr{margin:0 0 10px 0;border-color:#ddd}
+.mmx-dashboard-item > .media{margin:1px 0 0 0;max-width:700px}
+.mmx-dashboard-item .media-body{padding:0}
+.mmx-dashboard-item p.media-line{margin:2px 0}
+.mmx-dashboard-item .media-body, #mmx-dash-tab h4{font-weight:500}
+.mmx-dashboard-item .progress{margin-bottom:12px;margin-top:3px}
+.mmx-dashboard-item .media-heading{margin:0;font-size:14px;font-weight:500}
+
 #mmx-active-project-container .repeater-list-header td, #mmx-active-project-container .repeater-list-items td{border-left:0}
+#mmx-summary-container > .row-fluid > .col-sm-6 > .well{background:#fff;border:solid 1px #aaa;border-radius:12px;box-shadow:2px 2px 7px #aaa}
+#mmx-summary-container > .row-fluid > .col-sm-6 > .well > hr{margin:3px 0 7px;border-color:#ddd}
 
 /* - user list */
 #mmx-users-tab .repeater-list-header td:first-child, #mmx-users-tab .repeater-list-items td:first-child{width:30px !important;border-right:solid 1px #ddd}
@@ -49,7 +66,14 @@
 #mmx-messages-list .pillbox > .pill-group > .pill{margin:0 0 8px 0}
 #mmx-messages-list .repeater-list-items tr.head td{font-weight:700;border-bottom:1px solid #ddd;padding:8px;background:#F9F9F9}
 
+/* - settings */
+.controls-grouped input, .controls-grouped .glyphicon{float:left}
+.controls-grouped input{max-width:600px;width:85%}
+.controls-grouped .glyphicon{top:9px;left:9px}
+
+
 @media only screen and (max-width:767px){
     #mmx-messages-list .dt-container .col-sm-6{padding:0}
+    .vertical-line{display:block;visibility:hidden}
 }
 
