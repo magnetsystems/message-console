@@ -1,4 +1,4 @@
-define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView', 'views/MMXProjectUsersView', 'views/MMXProjectSettingsView', 'views/MMXProjectMessagesView', 'views/MMXProjectTopicsView'], function($, Backbone, AppModel, MMXProjectDashboardView, MMXProjectUsersView, MMXProjectSettingsView, MMXProjectMessagesView, MMXProjectTopicsView){
+define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView', 'views/MMXProjectEndpointsView', 'views/MMXProjectSettingsView', 'views/MMXProjectMessagesView', 'views/MMXProjectTopicsView'], function($, Backbone, AppModel, MMXProjectDashboardView, MMXProjectEndpointsView, MMXProjectSettingsView, MMXProjectMessagesView, MMXProjectTopicsView){
     var View = Backbone.View.extend({
         el: '#mmx-active-project-container',
         initialize: function(options){
@@ -6,7 +6,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
             initDatagrid();
             var pdv = new MMXProjectDashboardView(options);
             var psv = new MMXProjectSettingsView(options);
-            var puv = new MMXProjectUsersView(options);
+            var pev = new MMXProjectEndpointsView(options);
             var pmv = new MMXProjectMessagesView(options);
             var ptv = new MMXProjectTopicsView(options);
             me.options = options;
@@ -14,7 +14,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
             me.options.eventPubSub.bind('initMMXProject', function(params){
                 me.model = params.model;
                 me.setTab(null, me.$el.find('.nav-tabs li.active a').attr('did'));
-                me.$el.show('fast');
+                me.$el.show();
             });
         },
         events: {

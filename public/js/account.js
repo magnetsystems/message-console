@@ -7,7 +7,8 @@ require.config({
         "backbone"          : "libs/backbone-min",
         "bootstrap"         : "libs/bootstrap.min",
         "fuelux"            : "libs/fuelux.min",
-        "resources"         : "libs/resources"
+        "resources"         : "libs/resources",
+        "moment"            : "libs/moment"
     },
     shim : {
         "resources"  : {
@@ -17,11 +18,11 @@ require.config({
             "deps"    : ["jquery"]
         },
         "fuelux"  : {
-            "deps"    : ["bootstrap", "jquery"]
+            "deps"    : ["bootstrap", "jquery", "moment"]
         }
     }
 });
-require(['modernizr', 'jquery', 'backbone', 'routers/accountRouter', 'resources', 'bootstrap', 'fuelux'], function(Modernizr, $, Backbone, Desktop){
+require(['modernizr', 'jquery', 'backbone', 'routers/accountRouter', 'resources', 'bootstrap', 'fuelux', 'moment'], function(Modernizr, $, Backbone, Desktop){
     // create new desktop instance
     this.router = new Desktop();
 });

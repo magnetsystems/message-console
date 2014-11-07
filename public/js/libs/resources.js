@@ -21,7 +21,6 @@ var AJAX = function(loc, method, contentType, data, callback, failback, headers)
     $.ajax({
         type        : method,
         url         : GLOBAL.baseUrl+(loc.charAt(0) == '/' ? loc : '/rest/'+loc),
-        //dataType    : dataType,
         contentType : contentType,
         data        : dataStr,
         xhrFields   : (GLOBAL.baseUrl ? {withCredentials:true} : {}),
@@ -853,10 +852,11 @@ utils = {
         stats.inAppMessagesStats.totalPending = 0;
         if(stats.inAppMessagesStats.stats){
             for(var i=0;i<stats.inAppMessagesStats.stats.length;++i){
-                if(stats.inAppMessagesStats.stats[i].type == 'DELIVERED')
-                    stats.inAppMessagesStats.totalDelivered += stats.pushMessageStats.stats[i].count;
-                if(stats.inAppMessagesStats.stats[i].type == 'PENDING')
-                    stats.inAppMessagesStats.totalPending += stats.pushMessageStats.stats[i].count;
+                if(stats.inAppMessagesStats.stats[i].type == 'DELIVERED'){
+                    stats.inAppMessagesStats.totalDelivered += stats.inAppMessagesStats.stats[i].count;
+                }else{
+                    stats.inAppMessagesStats.totalPending += stats.inAppMessagesStats.stats[i].count;
+                }
             }
         }
         stats.delivered = {
@@ -865,7 +865,6 @@ utils = {
         stats.pending = {
             total : stats.pushMessageStats.totalPending + stats.inAppMessagesStats.totalPending
         };
-        console.log(stats.pushMessageStats.totalDelivered, stats.inAppMessagesStats.totalDelivered);
         var d1 = this.getPercentage(stats.pushMessageStats.totalDelivered, stats.delivered.total);
         var d2 = this.getPercentage(stats.inAppMessagesStats.totalDelivered, stats.delivered.total);
         if((d1+d2) < 100) d1 += 1;
@@ -1093,7 +1092,7 @@ function initDatagrid(){
                                     helpers.container.find( 'td' ).removeClass( 'sorted' );
                                     $span.removeClass( chevDown ).addClass( chevUp );
                                     self.list_sortDirection = 'asc';
-                                    $item.addClass( 'sorted' );
+                                    $(this).addClass( 'sorted' );
                                 }
                                 self.render( {
                                     clearInfinite: true,
@@ -1136,7 +1135,7 @@ function initDatagrid(){
                     if ( $item.length > 0 ) {
                         obj.action = 'none';
                     } else {
-                        $item = $( '<div class="repeater-list-wrapper" data-infinite="true"><table class="table table-hover repeater-list-items" data-container="true" role="grid" aria-readonly="true"></table></div>' );
+                        $item = $( '<div class="repeater-list-wrapper" data-infinite="true"><table class="table repeater-list-items" data-container="true" role="grid" aria-readonly="true"></table></div>' );
                     }
                     obj.item = $item;
                     if ( helpers.data.items.length < 1 ) {

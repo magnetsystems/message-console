@@ -1,14 +1,12 @@
-define(['jquery', 'backbone', 'views/AdvSearchView'], function($, Backbone, AdvSearchView){
+define(['jquery', 'backbone'], function($, Backbone){
     var View = Backbone.View.extend({
         el: '#mmx-msgs-tab',
         initialize: function(options){
             var me = this;
-            me.advsearch = new AdvSearchView(options);
             me.options = options;
             me.options.eventPubSub.bind('initMMXProjectMessages', function(model){
                 me.model = model;
                 me.render();
-                me.changeSearchBy();
             });
             $.fn.datepicker.defaults = {
                 date : new Date(),
@@ -19,18 +17,19 @@ define(['jquery', 'backbone', 'views/AdvSearchView'], function($, Backbone, AdvS
                 dropdownWidth  : 170,
                 allowPastDates : true
             };
-            me.options.eventPubSub.bind('AdvSearchRefresh', function(tag){
-                if(tag == 'Messages') me.refresh();
-            });
         },
         events: {
-            'change .repeater-search select[name="searchby"]': 'changeSearchBy'
+            'change .repeater-header-left select[name="searchby"]': 'changeSearchBy',
+            'click .mmx-messagelist-refresh-btn': 'refresh'
         },
         render: function(){
             var me = this;
-            if(me.rendered) return me.refresh(true);
+            me.sorts = {};
+            if(me.rendered) return me.refresh();
             me.rendered = true;
-            me.$el.find('.view-container').html(_.template($('#MessagingMessagesListTmpl').html()));
+            me.$el.find('.view-container').html(_.template($('#MessagingMessagesListTmpl').html(), {
+                filters : me.filters
+            }));
             me.list = $('#mmx-messages-list');
             me.list.repeater({
                 dataSource       : function(options, cb){
@@ -40,77 +39,72 @@ define(['jquery', 'backbone', 'views/AdvSearchView'], function($, Backbone, AdvS
                 list_noItemsHTML : '',
                 stretchHeight    : false
             });
-            me.options.eventPubSub.trigger('initAdvSearch', {
-                tag     : 'Messages',
-                el      : '#mmx-advsearch-container',
-                filters : {
-                    queuedAt : {
-                        title : 'Date Sent',
-                        type  : 'daterange'
-                    },
-                    dateack : {
-                        title : 'Date Acknowledged',
-                        type  : 'daterange'
-                    },
-                    targetdevid : {
-                        title : 'Target Device Id',
-                        type  : 'search'
-                    },
-                    state : {
-                        title : 'State',
-                        type  : 'enum',
-                        props : [
-                            {key:'PENDING', val:'PENDING'},
-                            {key:'DELIVERY_ATTEMPTED', val:'DELIVERY_ATTEMPTED'},
-                            {key:'WAKEUP_REQUIRED', val:'WAKEUP_REQUIRED'},
-                            {key:'WAKEUP_SENT', val:'WAKEUP_SENT'},
-                            {key:'DELIVERED', val:'DELIVERED'},
-                            {key:'TIMEDOUT', val:'TIMEDOUT'},
-                            {key:'CANCELLED', val:'CANCELLED'}
-                        ]
-                    },
-                    from : {
-                        title : 'Sender',
-                        type  : 'search'
-                    },
-                    to : {
-                        title : 'Recipient',
-                        type  : 'search'
-                    }
-                }
-            });
-//            me.list.find('.fromDt, .toDt').on('changed.fu.datepicker', function(){
-//                me.refresh();
-//            });
         },
-        changeSearchBy: function(){
-            var val = $('.repeater-search select[name="searchby"]').val();
-            if(val == 'datesent' || val == 'dateack'){
-                this.$el.find('.dt-container .col-sm-12').hide().find('input').val('');
-                this.$el.find('.dt-container .col-sm-6').show('fast').find('input').val('');
+        filters : {
+            messageid : {
+                title : 'Message Id',
+                type  : 'search'
+            },
+            datesent : {
+                title : 'Date Sent',
+                type  : 'daterange'
+            },
+            dateack : {
+                title : 'Date Acknowledged',
+                type  : 'daterange'
+            },
+            targetdevid : {
+                title : 'Target Device Id',
+                type  : 'search'
+            },
+            state : {
+                title : 'State',
+                type  : 'enum',
+                props : [
+                    {key:'PENDING', val:'PENDING'},
+                    {key:'DELIVERY_ATTEMPTED', val:'DELIVERY_ATTEMPTED'},
+                    {key:'WAKEUP_REQUIRED', val:'WAKEUP_REQUIRED'},
+                    {key:'WAKEUP_SENT', val:'WAKEUP_SENT'},
+                    {key:'DELIVERED', val:'DELIVERED'},
+                    {key:'TIMEDOUT', val:'TIMEDOUT'},
+                    {key:'CANCELLED', val:'CANCELLED'}
+                ]
+            }
+        },
+        changeSearchBy: function(e){
+            var val = $(e.currentTarget).val();
+            if(this.filters[val]){
+                var filter = this.filters[val];
+                this.$el.find('.searchby-input-container').html(_.template($('#ADV'+filter.type+'Filter').html(), {
+                    filter : filter,
+                    name   : val
+                }));
             }else{
-                this.$el.find('.dt-container .col-sm-12').show('fast').find('input').val('');
-                this.$el.find('.dt-container .col-sm-6').hide().find('input').val('');
+                this.$el.find('.searchby-input-container').html('');
             }
         },
-        refresh: function(clearQuery){
-            if(clearQuery){
-                this.$el.find('.repeater-header input').val('');
-                this.$el.find('.repeater-header .search button span:first').removeClass('glyphicon-remove').addClass('glyphicon-search');
-            }
+        refresh: function(){
             this.list.repeater('render');
+        },
+        collect: function(){
+            var me = this, ary = [];
+            me.$el.find('.advsearch-filter-item').each(function(){
+                var val = utils.collect($(this));
+                ary.push({
+                    name : $(this).attr('did'),
+                    val  : (val.enum || val.search) ? (val.enum || val.search) : val
+                });
+            });
+            return ary;
         },
         retrieve: function(options, cb){
             var me = this;
-//            var params = utils.collect(me.$el.find('.repeater-header'));
-            var filters = this.advsearch.collect();
+            var filters = this.collect();
             var params = {};
-            /* TEMP */
             for(var i=0;i<filters.length;++i){
                 params = typeof filters[i].val == 'object' ? filters[i].val : {search : filters[i].val};
-                params.searchby = (filters[i].name == 'queuedAt') ? 'datesent' : filters[i].name;
+                params.searchby = filters[i].name;
             }
-            /* TEMP */
             var query = {};
             if(options.pageIndex !== 0) query.offset = options.pageIndex !== 0 ? (options.pageSize * options.pageIndex) : 1;
             if(options.pageSize != 10) query.size = options.pageSize || 10;
@@ -118,6 +112,19 @@ define(['jquery', 'backbone', 'views/AdvSearchView'], function($, Backbone, AdvS
             if(params.fromDt) query.value = new Date(params.fromDt.replace(/-/g, '/')).getTime() / 1000;
             if(params.toDt) query.value2 = new Date(params.toDt.replace(/-/g, '/')).getTime() / 1000;
             if(params.search || options.search) query.value = params.search || options.search;
+            if(options.sortDirection && options.sortProperty){
+                me.sorts = {
+                    sortby    : options.sortProperty,
+                    sortorder : options.sortDirection,
+                    index     : utils.getIndexByAttr(me.columns, 'property', options.sortProperty)
+                };
+                if(options.sortProperty == 'deliveryAckAt') options.sortProperty = 'dateack';
+                if(options.sortProperty == 'queuedAt') options.sortProperty = 'datesent';
+                if(options.sortProperty == 'deviceId') options.sortProperty = 'targetdevid';
+                if(options.sortProperty == 'messageId') options.sortProperty = 'messageid';
+                query.sortby = options.sortProperty;
+                query.sortorder = options.sortDirection == 'asc' ? 'ASCENDING' : 'DESCENDING';
+            }
             var qs = '';
             for(var key in query){
                 qs += '&'+key+'='+query[key];
@@ -126,13 +133,24 @@ define(['jquery', 'backbone', 'views/AdvSearchView'], function($, Backbone, AdvS
             AJAX('apps/'+me.model.attributes.id+'/messages'+qs, 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
                 if(res && res.results){
                     for(var i=0;i<res.results.length;++i){
-                        res.results[i].queuedAt = utils.fromISO8601(res.results[i].queuedAt);
+                        res.results[i].queuedAt = moment(res.results[i].queuedAt).format('lll');
+                        res.results[i].deliveryAckAt = moment(res.results[i].deliveryAckAt).format('lll');
+                        res.results[i].state = '<img src="images/dashboard/mmx_state_'+res.results[i].state+'.png" data-toggle="tooltip" data-placement="top" title="'+me.deliveryStates[res.results[i].state]+'" />';
                     }
                 }
                 cb(res);
             }, function(xhr, status, thrownError){
                 alert(xhr.responseText);
             });
+        },
+        deliveryStates: {
+            'PENDING'            : 'Pending',
+            'DELIVERY_ATTEMPTED' : 'Delivery attempted',
+            'WAKEUP_REQUIRED'    : 'Wake up required',
+            'WAKEUP_SENT'        : 'Wake up sent',
+            'DELIVERED'          : 'Delivered',
+            'TIMEDOUT'           : 'Timeout',
+            'CANCELLED'          : 'Cancelled'
         },
         buildList: function(options, callback){
             var me = this;
@@ -150,20 +168,40 @@ define(['jquery', 'backbone', 'views/AdvSearchView'], function($, Backbone, AdvS
                 data.start = data.start + 1;
                 setTimeout(function(){
                     $('#mmx-messages-list .repeater-list-header tr').addClass('head').detach().prependTo('#mmx-messages-list .repeater-list-items tbody');
+                    if(!$.isEmptyObject(me.sorts)){
+                        $('#mmx-messages-list .repeater-list-items tbody tr:first td').each(function(i){
+                            var td = $(this);
+                            var glyph = 'glyphicon';
+                            if(me.sorts.index === i){
+                                td.addClass('sorted');
+                                if(me.sorts.sortorder == 'asc'){
+                                    td.find('.'+glyph).removeClass(glyph+'-chevron-down').addClass(glyph+'-chevron-up');
+                                }else{
+                                    td.find('.'+glyph).removeClass(glyph+'-chevron-up').addClass(glyph+'-chevron-down');
+                                }
+                            }
+                        });
+                    }
+                    $('#mmx-messages-list').find('img').tooltip();
                 }, 20);
                 callback(data);
             });
         },
         columns: [
             {
+                label    : 'State',
+                property : 'state',
+                sortable : true
+            },
+            {
                 label    : 'Date Sent',
                 property : 'queuedAt',
-                sortable : false
+                sortable : true
             },
             {
                 label    : 'Date Acknowledged',
-                property : 'dateack',
-                sortable : false
+                property : 'deliveryAckAt',
+                sortable : true
             },
             {
                 label    : 'Sender',
@@ -176,19 +214,14 @@ define(['jquery', 'backbone', 'views/AdvSearchView'], function($, Backbone, AdvS
                 sortable : false
             },
             {
-                label    : 'State',
-                property : 'state',
-                sortable : false
-            },
-            {
-                label    : 'Device Id',
+                label    : 'Recipient Device Id',
                 property : 'deviceId',
-                sortable : false
+                sortable : true
             },
             {
                 label    : 'Message Id',
                 property : 'messageId',
-                sortable : false
+                sortable : true
             }
         ]
     });

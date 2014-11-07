@@ -27,12 +27,14 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click #logout-btn': 'logout',
             'click .repeater-list-items td .glyphicon-plus': 'toggleRow',
             'click .repeater-list-items td .glyphicon-minus': 'toggleRow',
-            'change #mmx-sendmessage-modal select': 'changeMMXMessageType',
-            'click #mmx-sendmessage-modal .message-types button': 'sendMMXMessage'
+            'click .radio.disabled': 'doNothing'
         },
         goBack: function(e){
             e.preventDefault();
             window.history.back();
+        },
+        doNothing: function(e){
+            return e.preventDefault();
         },
         logout: function(){
             Cookie.remove('magnet_auth');
@@ -88,12 +90,6 @@ define(['jquery', 'backbone'], function($, Backbone){
                 did   : did,
                 state : tog.hasClass('glyphicon-minus')
             });
-        },
-        changeMMXMessageType: function(e){
-            this.options.eventPubSub.trigger('changeMMXMessageType', e);
-        },
-        sendMMXMessage: function(e){
-            this.options.eventPubSub.trigger('sendMMXMessage', e);
         }
     });
     return View;

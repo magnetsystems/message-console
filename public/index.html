@@ -207,7 +207,7 @@
                 <!--<span class="visible-xs-inline">Test</span>-->
                 <!--<span class="hidden-xs">Test Push</span>-->
                 <!--</a></li>-->
-                <li><a did="Users" href="#mmx-users-tab" role="tab" data-toggle="tab">
+                <li><a did="Endpoints" href="#mmx-endpoints-tab" role="tab" data-toggle="tab">
                     Endpoints
                 </a></li>
                 <li><a did="Messages" href="#mmx-msgs-tab" role="tab" data-toggle="tab">
@@ -330,7 +330,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane clearfix" id="mmx-users-tab">
+                <div class="tab-pane clearfix" id="mmx-endpoints-tab">
                     <div class="view-container"></div>
                 </div>
                 <div class="tab-pane clearfix" id="mmx-msgs-tab">
@@ -420,18 +420,18 @@ public class MyWakeupListener implements MMXWakeupListener {
                 <div class="controls">
                     <input type="text" class="form-control" name="apiKey" readonly="readonly" value="<%- model.attributes.apiKey %>">
                 </div>
-                <div class="controls">
-                    <button did="regenerate" class="btn btn-primary">Re-generate</button>
-                    <button did="revoke" class="btn btn-primary">Revoke</button>
-                    <span class="tooltip-danger glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="
-                    Revoking or re-generating the API Key will require changing the key in the mobile app source code to continue messaging services">
-                    </span>
-                </div>
+                <!--<div class="controls">-->
+                    <!--<button did="regenerate" class="btn btn-primary">Re-generate</button>-->
+                    <!--<button did="revoke" class="btn btn-primary">Revoke</button>-->
+                    <!--<span class="tooltip-danger glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="-->
+                    <!--Revoking or re-generating the API Key will require changing the key in the mobile app source code to continue messaging services">-->
+                    <!--</span>-->
+                <!--</div>-->
             </div>
             <div class="form-group clearfix">
                 <label>Guest Access Secret</label>
                 <div class="controls controls-grouped">
-                    <input type="text" class="form-control" name="secret" value="<%- model.attributes.secret %>">
+                    <input type="text" class="form-control" name="guestUserSecret" value="<%- model.attributes.guestUserSecret %>">
                     <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="
                     Used for creating user account from the mobile device">
                     </span>
@@ -446,33 +446,33 @@ public class MyWakeupListener implements MMXWakeupListener {
                         <div class="form-group">
                             <div class="col-sm-6">
                                 <label>Google Project ID</label>
-                                <input type="text" class="form-control" name="googleProjectId" placeholder="Google Project ID" value="<%- model.attributes.googleProjectId %>" />
+                                <input type="text" class="form-control" name="googleProjectId" placeholder="Google Project ID" value="<%- model.attributes.gcm.googleProjectId %>" />
                             </div>
                             <div class="col-sm-6">
                                 <label>Google API Key</label>
-                                <input type="text" class="form-control" name="googleApiKey" placeholder="Google API Key" value="<%- model.attributes.googleApiKey %>" />
+                                <input type="text" class="form-control" name="googleApiKey" placeholder="Google API Key" value="<%- model.attributes.gcm.googleApiKey %>" />
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="form-group clearfix">
-                <span class="form-caption">APNS</span>
-                <div class="well well-default clearfix">
-                    <form role="form">
-                        <div class="form-group">
-                            <div class="col-sm-6">
-                                <label>Certificate</label>
-                                <input type="file" name="apns-cert" />
-                            </div>
-                            <div class="col-sm-6">
-                                <label>Password</label>
-                                <input type="password" class="form-control" name="apns-pass" placeholder="APNS Password" value="" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            <!--<div class="form-group clearfix">-->
+                <!--<span class="form-caption">APNS</span>-->
+                <!--<div class="well well-default clearfix">-->
+                    <!--<form role="form">-->
+                        <!--<div class="form-group">-->
+                            <!--<div class="col-sm-6">-->
+                                <!--<label>Certificate</label>-->
+                                <!--<input type="file" name="apns-cert" />-->
+                            <!--</div>-->
+                            <!--<div class="col-sm-6">-->
+                                <!--<label>Password</label>-->
+                                <!--<input type="password" class="form-control" name="apns-pass" placeholder="APNS Password" value="" />-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</form>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
     <div class="form-group clearfix">
@@ -550,13 +550,169 @@ public class MyWakeupListener implements MMXWakeupListener {
     <% } %>
 </script>
 
+<script id="MessagingEndpointsListTmpl" type="text/template">
+    <div class="repeater" id="mmx-endpoints-list">
+        <div class="repeater-header">
+            <div class="clearfix">
+                <div class="repeater-header-left">
+                    <div class="repeater-controls"></div>
+                    <div class="repeater-search">
+                        <div class="row-fluid">
+                            <div class="col-sm-6 same-line">
+                                <button did="actions-sendmessage" class="same-line-button btn btn-primary disabled">Send Message</button>
+                                <!--<button did="actions-deleterow" class="same-line-button btn btn-danger disabled">Delete</button>-->
+                                <button class="search-btn same-line-button btn btn-primary">Search</button>
+                                <div class="same-line-control">
+                                    <select class="form-control" name="searchby">
+                                        <option>Select a search filter</option>
+                                        <% _.each(filters, function(filter, key){ %>
+                                        <option value="<%- key %>">Search by <%- filter.title %></option>
+                                        <% }); %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="searchby-input-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="repeater-header-right hidden">
+                    <div class="btn-group selectlist repeater-filters" data-resize="auto">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="selected-label">&nbsp;</span>
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Filters</span>
+                        </button>
+                        <ul class="dropdown-menu hidden" role="menu">
+                            <li data-value="all" data-selected="true"><a href="#">All</a></li>
+                            <li data-value="errorsonly"><a href="#">Errors Only</a></li>
+                        </ul>
+                        <input class="hidden hidden-field" name="filterSelection" readonly="readonly" aria-hidden="true" type="text"/>
+                    </div>
+                    <div class="btn-group repeater-views hidden" data-toggle="buttons">
+                        <label class="btn btn-default active">
+                            <input name="repeaterViews" type="radio" value="datagrid">
+                            <span class="glyphicon glyphicon-list">
+                                <span class="sr-only">List View</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="repeater-viewport">
+            <div class="repeater-canvas"></div>
+            <div class="loader repeater-loader"></div>
+        </div>
+        <div class="repeater-footer">
+            <div class="repeater-footer-left">
+                <div class="repeater-itemization">
+                    <span><span class="repeater-start"></span> - <span class="repeater-end"></span> of <span class="repeater-count"></span> items</span>
+                    <div class="btn-group selectlist" data-resize="auto">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="selected-label">&nbsp;</span>
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li data-value="5"><a href="#">5</a></li>
+                            <li data-value="10" data-selected="true"><a href="#">10</a></li>
+                            <li data-value="20"><a href="#">20</a></li>
+                            <li data-value="50" data-foo="bar" data-fizz="buzz"><a href="#">50</a></li>
+                            <li data-value="100"><a href="#">100</a></li>
+                        </ul>
+                        <input class="hidden hidden-field" name="itemsPerPage" readonly="readonly" aria-hidden="true" type="text"/>
+                    </div>
+                    <span>Per Page</span>
+                </div>
+            </div>
+            <div class="repeater-footer-right">
+                <div class="repeater-pagination">
+                    <button type="button" class="btn btn-default btn-sm repeater-prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Previous Page</span>
+                    </button>
+                    <label id="MyPageLabel" class="page-label">Page</label>
+                    <div class="repeater-primaryPaging active">
+                        <div class="input-group input-append dropdown combobox">
+                            <input type="text" class="form-control" aria-labelledby="MyPageLabel">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control repeater-secondaryPaging" aria-labelledby="MyPageLabel">
+                    <span>of <span class="repeater-pages"></span></span>
+                    <button type="button" class="btn btn-default btn-sm repeater-next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next Page</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script id="MessagingDeviceDetailsTmpl" type="text/template">
+    <b>Device Details</b>
+    <dl class="dl-horizontal">
+        <dt>Device Id</dt>
+        <dd><%- device.deviceId %></dd>
+        <dt>Device Name</dt>
+        <dd><%- device.name %></dd>
+        <dt>OS</dt>
+        <dd><%- device.osType %></dd>
+        <dt>OS Version</dt>
+        <dd><%- device.osVersion %></dd>
+        <dt>Token Type</dt>
+        <dd><%- device.tokenType %></dd>
+        <dt>Client Token</dt>
+        <dd><%- device.clientToken %></dd>
+        <dt>Carrier Info</dt>
+        <dd><%- device.carrierInfo %></dd>
+        <dt>Phone Number</dt>
+        <dd><%- device.phoneNumber %></dd>
+        <dt>Created</dt>
+        <dd><%- device.created %></dd>
+        <dt>Updated</dt>
+        <dd><%- device.updated %></dd>
+        <dt>Status</dt>
+        <dd><%- device.status %></dd>
+    </dl>
+    <% if(user){ %>
+    <b>Device Owner Details</b>
+    <dl class="dl-horizontal">
+        <dt>User Id</dt>
+        <dd><%- user.userId %></dd>
+        <dt>Name</dt>
+        <dd><%- user.name %></dd>
+        <dt>Email</dt>
+        <dd><%- user.email %></dd>
+        <dt>Created</dt>
+        <dd><%- user.creationDate %></dd>
+        <dt>Updated</dt>
+        <dd><%- user.modificationDate %></dd>
+        <!--<dt>Properties</dt>-->
+        <!--<dd><%- user.properties %></dd>-->
+    </dl>
+    <% } %>
+</script>
+
 <script id="MessagingUsersListTmpl" type="text/template">
     <div class="repeater" id="mmx-users-list">
         <div class="repeater-header">
             <div class="clearfix">
                 <div class="repeater-header-left">
-                    <span class="repeater-title"></span>
+                    <div class="repeater-controls">
+                    </div>
                     <div class="repeater-search">
+                        <button class="btn btn-primary">Send Message</button>
+                        <button class="btn btn-danger">Delete</button>
                         <select class="form-control" name="searchby">
                             <option value="name">Search by Name</option>
                             <option value="phone">Search by Phone Number</option>
@@ -724,8 +880,17 @@ public class MyWakeupListener implements MMXWakeupListener {
         <div class="repeater-header">
             <div class="clearfix">
                 <div class="repeater-header-left">
-                    <div class="repeater-search row-fluid clearfix">
-                        <div id="mmx-advsearch-container"></div>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="searchby">
+                            <option>Select a search filter</option>
+                            <% _.each(filters, function(filter, key){ %>
+                            <option value="<%- key %>">Search by <%- filter.title %></option>
+                            <% }); %>
+                        </select>
+                        <button class="mmx-messagelist-refresh-btn btn btn-primary">Search</button>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="searchby-input-container"></div>
                     </div>
                 </div>
                 <div class="repeater-header-right hidden"">
@@ -813,6 +978,7 @@ public class MyWakeupListener implements MMXWakeupListener {
     <table class="table table-bordered table-hover table-striped">
         <thead>
         <tr>
+            <th>Topic Id</th>
             <th>Topic Name</th>
             <th>Subscribers</th>
             <th>Description</th>
@@ -823,6 +989,7 @@ public class MyWakeupListener implements MMXWakeupListener {
         <% if(col && col.length > 0){ %>
         <% _.each(col, function(topic, key){ %>
         <tr did="<%- topic.id %>">
+            <td><%- topic.id %></td>
             <td><%- topic.name %></td>
             <td><%- topic.subscriptionCount %></td>
             <td><%- topic.description %></td>
@@ -875,8 +1042,7 @@ public class MyWakeupListener implements MMXWakeupListener {
 </script>
 
 <script id="ADVdaterangeFilter" type="text/template">
-    <div did="<%- name %>" class="alert alert-info clearfix advsearch-filter-item">
-        <label><%- filter.title %></label>
+    <div did="<%- name %>" class="clearfix advsearch-filter-item">
         <div class="row-fluid">
             <div class="col-sm-6">
                 <div class="fromDt datepicker clearfix dropdown" data-initialize="datepicker">
@@ -907,31 +1073,22 @@ public class MyWakeupListener implements MMXWakeupListener {
                 </div>
             </div>
         </div>
-        <span class="glyphicon glyphicon-remove" data-dismiss="alert"></span>
     </div>
 </script>
 
 <script id="ADVsearchFilter" type="text/template">
     <div did="<%- name %>" class="advsearch-filter-item">
-        <div class="alert alert-info">
-            <label><%- filter.title %></label>
-            <input type="text" name="<%- filter.type %>" class="form-control" placeholder="<%- filter.title %>" value="" />
-            <span class="glyphicon glyphicon-remove" data-dismiss="alert"></span>
-        </div>
+        <input type="text" name="<%- filter.type %>" class="form-control" placeholder="<%- filter.title %>" value="" />
     </div>
 </script>
 
 <script id="ADVenumFilter" type="text/template">
     <div did="<%- name %>" class="advsearch-filter-item">
-        <div class="alert alert-info">
-            <label><%- filter.title %></label>
-            <select class="form-control" name="<%- filter.type %>">
-                <% _.each(filter.props, function(prop, key){  %>
-                <option value="<%- prop.key %>"><%- prop.val %></option>
-                <% }); %>
-            </select>
-            <span class="glyphicon glyphicon-remove" data-dismiss="alert"></span>
-        </div>
+        <select class="form-control" name="<%- filter.type %>">
+            <% _.each(filter.props, function(prop, key){  %>
+            <option value="<%- prop.key %>"><%- prop.val %></option>
+            <% }); %>
+        </select>
     </div>
 </script>
 
@@ -1176,32 +1333,42 @@ public class MyWakeupListener implements MMXWakeupListener {
                 <h4 class="modal-title">Send</h4>
             </div>
             <div class="modal-body">
-                <select class="form-control" name="message-type">
-                    <option value="push">Ping</option>
-                    <option value="notification">Notification</option>
-                    <option value="message">Message</option>
-                </select>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="message-type" value="message" checked>
+                        In-App Message
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="message-type" value="push">
+                        Push Notification (Ping, Push)
+                    </label>
+                    <span class="tooltip-danger glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="
+                    Push notifications require a client token, along with either a GCM key (Android) or an APNS certificate (iOS)">
+                    </span>
+                </div>
+
                 <div class="message-types">
                     <div did="push" class="hidden">
-                        <p>Send a push notification ping test to <span class="sendmessage-to"></span> through GCM or APNS service
-                            directly to the device. This is useful for testing whether GCM or APNS is set up correctly.</p>
-                        <button did="push" type="button" class="btn btn-primary">Ping Device</button>
-                    </div>
-                    <div did="notification" class="hidden">
-                        <p>Send a push notification to <span class="sendmessage-to"></span>. The push notification will be sent
-                            through GCM or APNS service directly to the device.
+                        <p>The push notification will be sent through GCM or APNS service directly to the device:<br />
+                            <span class="user-placeholder"></span><br />
+                            <span class="device-placeholder"></span>
                         </p>
                         <textarea name="payload" class="form-control" placeholder="Payload">Hello World</textarea>
                         <button did="notification" type="button" class="btn btn-primary">Send Notification</button>
+                        <button did="ping" type="button" class="btn btn-primary">Ping Device</button>
+                        <div class="message-push-history"></div>
                     </div>
                     <div did="message" class="hidden">
-                        <p>Send a message to <span class="sendmessage-to"></span>. The message will be sent
-                            through the Magnet MMX hosted service.</p>
+                        <p>The message will be sent through the Magnet MMX hosted service to:<br />
+                            <span class="user-placeholder"></span><br />
+                            <span class="device-placeholder"></span>
+                        </p>
                         <textarea name="payload" class="form-control" placeholder="Payload">Hello World</textarea>
                         <button did="message" type="button" class="btn btn-primary">Send Message</button>
                     </div>
                 </div>
-                <div class="message-push-history"></div>
                 <span class="alert-container"></span>
             </div>
             <div class="modal-footer">
@@ -1224,6 +1391,21 @@ public class MyWakeupListener implements MMXWakeupListener {
             </div>
             <div class="modal-footer">
                 <button id="mmx-publishtopic-btn" type="button" class="btn btn-primary">Publish Message</button>
+                <button data-dismiss="modal" type="button" class="btn btn-default">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mmx-device-showdetails-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Device Details</h4>
+            </div>
+            <div  class="modal-body"></div>
+            <div class="modal-footer">
                 <button data-dismiss="modal" type="button" class="btn btn-default">Close</button>
             </div>
         </div>

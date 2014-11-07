@@ -100,7 +100,7 @@ input.form-control, select.form-control{margin-bottom:5px;border-radius:0}
 
 /* alert */
 .alert-info{position:relative;padding:3px 10px;margin-bottom:3px}
-.alert-info .glyphicon{position:absolute;top:6px;right:6px;cursor:pointer}
+.alert-info .glyphicon.glyphicon-remove{position:absolute;top:6px;right:6px;cursor:pointer}
 
 /* lists */
 .list-group-item{cursor:pointer}

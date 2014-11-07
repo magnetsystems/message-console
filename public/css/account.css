@@ -12,6 +12,9 @@
 .vertical-line{margin:0;padding:0 14px;display:inline}
 .well-title{font-size:19px;font-weight:300;margin:0;padding:5px 5px 10px 8px}
 .tooltip-danger{color:#B81000;left:5px;top:-1px}
+.same-line button{float:left;margin-right:5px}
+.same-line .same-line-control{overflow:hidden;min-width:140px}
+.radio.disabled label{opacity:.4}
 
 /* MMX VIEWS */
 #mmx-app-list{min-height:80px}
@@ -28,8 +31,8 @@
 #mmx-active-project-container .nav > li > a{padding:10px 33px}
 #mmx-active-project-container .nav-tabs > li.active > a{border-color:#aaa #aaa transparent}
 #mmx-mgmt-tab .form-group{margin:0}
-#mmx-mgmt-tab .form-group{margin:0}
 #mmx-test-tab .form-group .col-md-2 .button-group{margin-top:25px}
+#create-messaging-app-btn{margin-top:-2px}
 
 .mmx-dashboard-item img{max-width:78px}
 .mmx-dashboard-item > hr{margin:0 0 10px 0;border-color:#ddd}
@@ -44,27 +47,51 @@
 #mmx-summary-container > .row-fluid > .col-sm-6 > .well{background:#fff;border:solid 1px #aaa;border-radius:12px;box-shadow:2px 2px 7px #aaa}
 #mmx-summary-container > .row-fluid > .col-sm-6 > .well > hr{margin:3px 0 7px;border-color:#ddd}
 
-/* - user list */
-#mmx-users-tab .repeater-list-header td:first-child, #mmx-users-tab .repeater-list-items td:first-child{width:30px !important;border-right:solid 1px #ddd}
-#mmx-users-tab .repeater-list-items td:first-child span{cursor:pointer}
-#mmx-users-tab .repeater-header-left{float:none}
-#mmx-users-tab .repeater-search{width:100%;margin-bottom:15px;float:none}
-#mmx-users-tab .table-striped > tbody > tr:nth-child(2n+1) > td{background:#daebf0}
-#mmx-users-tab .repeater-list-items tr.head td{font-weight:700;border-bottom:1px solid #ddd;padding:8px;background:#F9F9F9}
+/* dashboard tab */
+#mmx-dash-tab .mmx-dashboard-item{margin-top:30px}
+
+/* settings tab */
+#mmx-mgmt-tab button{margin-top:20px}
+
+/* - endpoints list */
+#mmx-endpoints-tab .repeater-list-items td:first-child span{cursor:pointer}
+#mmx-endpoints-tab .repeater-header-left{float:none}
+#mmx-endpoints-tab .repeater-search{width:100%;float:none}
+#mmx-endpoints-tab .table-striped > tbody > tr:nth-child(2n+1) > td{background:#daebf0}
+#mmx-endpoints-tab .repeater-list-items tr.head td{font-weight:700;border-bottom:1px solid #ddd;padding:8px;background:#F9F9F9}
 #mmx-sendmessage-modal .modal-body button{margin-top:10px;margin-bottom:10px}
 #mmx-sendmessage-modal .message-push-history .table{font-size:12px}
+.mmx-endpoints-showdetails-modal-btn{text-decoration:underline}
+#mmx-device-showdetails-modal dd{word-wrap:break-word}
+.fuelux .repeater-list-items tr.selected:hover{background-color:#66afe9 !important;color:#fff}
+/*.same-line .search-btn{float:right;margin:0 0 0 10px}*/
 
 /* - message list */
 .repeater-search .col-sm-6{padding-left:0}
 #mmx-messages-list .tabmargin{padding:15px}
 #mmx-messages-list .dt-container{margin-top:12px}
-
 #mmx-messages-list .repeater-header-left{float:none}
 #mmx-messages-list .repeater-search{width:100%;margin-bottom:15px;float:none}
 #mmx-messages-list .column-selector{padding:5px 15px 15px 15px}
 #mmx-messages-list .column-selector h5{margin-top:5px}
 #mmx-messages-list .pillbox > .pill-group > .pill{margin:0 0 8px 0}
 #mmx-messages-list .repeater-list-items tr.head td{font-weight:700;border-bottom:1px solid #ddd;padding:8px;background:#F9F9F9}
+#mmx-messages-list .searchby-input-container .alert-info{background:#fff;border:solid 1px #aaa;padding:3px 10px 7px}
+
+
+#mmx-messages-list .repeater-list-items td.sortable:hover, #mmx-endpoints-list .repeater-list-items td.sortable:hover, #mmx-messages-list .repeater-list-items td.sortable.sorted, #mmx-endpoints-list .repeater-list-items td.sortable.sorted{
+    background: #F1F1F1;
+    cursor: pointer;
+    background-color: #f1f1f1;
+    background-image: -moz-linear-gradient(top, #f9f9f9, #e5e5e5);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f9f9f9), to(#e5e5e5));
+    background-image: -webkit-linear-gradient(top, #f9f9f9, #e5e5e5);
+    background-image: -o-linear-gradient(top, #f9f9f9, #e5e5e5);
+    background-image: linear-gradient(to bottom, #f9f9f9, #e5e5e5);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff9f9f9', endColorstr='#ffe5e5e5', GradientType=0);
+}
+#mmx-messages-list .repeater-list-items td.sortable.sorted span.glyphicon, #mmx-endpoints-list .repeater-list-items td.sortable.sorted span.glyphicon{float:right;margin-top:2px}
 
 /* - settings */
 .controls-grouped input, .controls-grouped .glyphicon{float:left}
