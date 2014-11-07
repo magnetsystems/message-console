@@ -67,7 +67,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         showPublishModal: function(e){
             var tid = $(e.currentTarget).closest('tr').attr('did');
-            this.activeTopic = utils.getByAttr(this.topics, 'id', tid);
+            this.activeTopic = utils.getByAttr(this.topics, 'id', tid)[0];
             this.modal.find('span.mmx-topic-name-placeholder').text(this.activeTopic.name);
             this.modal.modal('show');
         },
