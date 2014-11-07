@@ -26,7 +26,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 success: function(){
                     me.options.eventPubSub.trigger('renderMMXList', me.model.attributes.id);
                     Alerts.General.display({
-                        title   : 'Project Updated',
+                        title   : 'App Updated',
                         content : 'Your changes have been saved.'
                     });
                 },
@@ -38,12 +38,17 @@ define(['jquery', 'backbone'], function($, Backbone){
         deleteProject: function(){
             var me = this;
             Alerts.Confirm.display({
-                title   : 'Confirm Project Deletion',
-                content : 'Please verify that you wish to delete this project.'
+                title   : 'Confirm App Deletion',
+                content : 'Please verify that you wish to delete this app.'
             }, function(){
                 me.model.destroy({
                     success: function(){
                         me.options.eventPubSub.trigger('renderMMXList');
+                        Backbone.history.navigate('#/messages');
+                        Alerts.General.display({
+                            title   : 'App Deleted',
+                            content : 'Your app has been deleted.'
+                        });
                     },
                     error: function(e){
                         alert(e.responseText);
