@@ -80,6 +80,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 msg.val('');
                 alert('message sent');
             }, function(xhr, status, thrownError){
+                return alert('this feature is not yet supported.');
                 alert(xhr.responseText);
             });
         }
