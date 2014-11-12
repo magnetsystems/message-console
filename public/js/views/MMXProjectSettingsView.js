@@ -1,10 +1,10 @@
 define(['jquery', 'backbone'], function($, Backbone){
     var View = Backbone.View.extend({
-        el: '#mmx-mgmt-tab',
+        el: '#mmx-settings',
         initialize: function(options){
             var me = this;
             me.options = options;
-            me.options.eventPubSub.bind('initMMXProjectSettings', function(model){
+            me.options.eventPubSub.bind('initMMXProjectsettings', function(model){
                 me.model = model;
                 me.render();
             });

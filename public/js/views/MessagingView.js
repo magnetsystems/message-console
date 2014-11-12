@@ -13,10 +13,11 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
                 $('#mmx-active-project-container').hide();
                 me.getApps(function(){
                     me.renderAppList(params.id);
+                    me.options.opts.appCount = me.col.length;
                     if(params.id && me.col.get(params.id)){
-                        me.selectProject(params.id);
+                        me.selectProject(params.id, params.view);
                     }else if(me.col.length == 1){
-                        me.selectProject(me.col.models[0].attributes.id);
+                        me.selectProject(me.col.models[0].attributes.id, params.view);
                     }else if(me.col.length > 1){
                         me.options.eventPubSub.trigger('initMMXSummary', {
                             col : me.col
@@ -28,11 +29,18 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
                 if(!id) $('#mmx-active-project-container').hide('fast');
                 me.renderAppList(id);
             });
+            me.newAppModal = $('#mmx-create-app-modal');
+            me.newAppModal.find('#create-messaging-app-btn').click(function(){
+                me.createMessagingApp();
+            });
         },
         events: {
-            'click #create-messaging-app-btn': 'createMessagingApp',
-            'keypress #mmx-project-new-name': 'onCreateMessagingAppEnter',
-            'click #mmx-app-list li a': 'onSelectApp'
+            'click #create-messaging-app-modal': 'showCreateMessagingAppModal',
+            'change #mmx-app-list': 'onSelectApp'
+        },
+        showCreateMessagingAppModal: function(){
+            this.newAppModal.find('input').val('');
+            this.newAppModal.modal('show');
         },
         getApps: function(cb, isSubView){
             var me = this;
@@ -54,7 +62,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
         },
         createMessagingApp: function(){
             var me = this;
-            var input = $('#mmx-app-selected-item');
+            var input = me.newAppModal.find('input');
             if($.trim(input.val()).length < 1) return;
             var model = new AppModel();
             model.save({
@@ -63,6 +71,8 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
                 success: function(){
                     input.val('');
                     me.col.add(model);
+                    me.options.opts.appCount = me.col.length;
+                    me.newAppModal.modal('hide');
                     Backbone.history.navigate('#/messaging/'+model.attributes.id);
                 },
                 error: function(e){
@@ -70,20 +80,16 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
                 }
             });
         },
-        onCreateMessagingAppEnter: function(e){
-            if(e.keyCode != 13)  return;
-            this.createMessagingApp();
-        },
-        selectProject: function(id){
+        selectProject: function(id, view){
             $('#mmx-summary-container').hide();
-            $('#mmx-project-list-container').combobox('selectByValue', id);
             this.options.eventPubSub.trigger('initMMXProject', {
-                model : this.col.get(id)
+                model : this.col.get(id),
+                view  : view
             });
         },
         onSelectApp: function(){
-            var sel = $('#mmx-project-list-container').combobox('selectedItem');
-            Backbone.history.navigate('#/messaging/'+sel.value);
+            var appId = $('#mmx-app-list').val();
+            if(appId) Backbone.history.navigate('#/messaging/'+appId);
         }
     });
     return View;

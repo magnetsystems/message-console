@@ -1,10 +1,10 @@
 define(['jquery', 'backbone'], function($, Backbone){
     var View = Backbone.View.extend({
-        el: '#mmx-endpoints-tab',
+        el: '#mmx-endpoints',
         initialize: function(options){
             var me = this;
             me.options = options;
-            me.options.eventPubSub.bind('initMMXProjectEndpoints', function(model){
+            me.options.eventPubSub.bind('initMMXProjectendpoints', function(model){
                 me.model = model;
                 me.render();
             });
@@ -140,12 +140,15 @@ define(['jquery', 'backbone'], function($, Backbone){
                     me.endpoints = [];
                     me.users = [];
                     for(var i=0;i<res.results.length;++i){
-                        res.results[i].device.created = moment.unix(res.results[i].device.created).format('lll');
-                        res.results[i].device.updated = moment.unix(res.results[i].device.updated).format('lll');
-                        res.results[i].device.deviceIdLink = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.deviceId.substr(0, 10)+'...</a>';
+                        res.results[i].device.created = moment.unix(res.results[i].device.created / 1000).format('lll');
+                        res.results[i].device.updated = moment.unix(res.results[i].device.updated / 1000).format('lll');
+                        res.results[i].device.nameEdited = res.results[i].device.name.substr(0, 10)+'...';
+                        res.results[i].device.ownerIdEdited = res.results[i].device.ownerId.substr(0, 10)+'...';
+                        res.results[i].device.osTypeEdited = '<i class="fa fa-2x fa-'+(res.results[i].device.osType == 'ANDROID' ? 'android' : 'apple')+'"></i>';
+                        res.results[i].device.deviceIdEdited = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.deviceId.substr(0, 10)+'...</a>';
                         if(res.results[i].userEntity){
-                            res.results[i].userEntity.creationDate = moment.unix(res.results[i].userEntity.creationDate).format('lll');
-                            res.results[i].userEntity.modificationDate = moment.unix(res.results[i].userEntity.modificationDate).format('lll');
+                            res.results[i].userEntity.creationDate = moment.unix(res.results[i].userEntity.creationDate / 1000).format('lll');
+                            res.results[i].userEntity.modificationDate = moment.unix(res.results[i].userEntity.modificationDate / 1000).format('lll');
                         }
                         me.endpoints.push(res.results[i].device);
                         me.users.push(res.results[i].userEntity || null);
@@ -194,17 +197,17 @@ define(['jquery', 'backbone'], function($, Backbone){
         columns: [
             {
                 label    : 'Device Id',
-                property : 'deviceIdLink',
+                property : 'deviceIdEdited',
                 sortable : false
             },
             {
                 label    : 'Device Name',
-                property : 'name',
+                property : 'nameEdited',
                 sortable : true
             },
             {
                 label    : 'OS',
-                property : 'osType',
+                property : 'osTypeEdited',
                 sortable : true
             },
             {
@@ -219,7 +222,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             },
             {
                 label    : 'User Id',
-                property : 'ownerId',
+                property : 'ownerIdEdited',
                 sortable : false
             }
         ],

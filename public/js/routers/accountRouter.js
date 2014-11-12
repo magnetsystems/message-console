@@ -1,9 +1,9 @@
 define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','views/AlertErrorView','views/GlobalView','views/LoginView',
         'views/RegistrationView','views/CompleteRegistrationView','views/ForgotPasswordView','views/ResetPasswordView','views/MessagingView',
-        'views/ProfileView']
+    'views/MMXProjectQuickstartView','views/ProfileView']
     , function($, Backbone, AlertGeneralView, AlertConfirmView, AlertErrorView, GlobalView, LoginView,
                RegistrationView, CompleteRegistrationView, ForgotPasswordView, ResetPasswordView, MessagingView,
-               ProfileView){
+               MMXProjectQuickstartView, ProfileView){
     // bind alerts
     Alerts.General = new AlertGeneralView();
     Alerts.Confirm = new AlertConfirmView();
@@ -18,17 +18,19 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
             this.httpreq = new HTTPRequest('/rest/');
             // init model connector for REST
             this.mc = new ModelConnector(this.httpreq);
+            this.opts = {};
             utils.setIndexOf();
             this.GLOBAL = {};
             // init site views
-            var gv = new GlobalView({eventPubSub:this.eventPubSub});
-            var lv = new LoginView({mc:this.mc, router:this, eventPubSub:this.eventPubSub});
-            var rv = new RegistrationView({mc:this.mc, router:this, eventPubSub:this.eventPubSub});
-            var crv = new CompleteRegistrationView({mc:this.mc, router:this, eventPubSub:this.eventPubSub});
-            var fpv = new ForgotPasswordView({mc:this.mc, router:this, eventPubSub:this.eventPubSub});
-            var rpv = new ResetPasswordView({mc:this.mc, router:this, eventPubSub:this.eventPubSub});
-            var mv = new MessagingView({mc:this.mc, router:this, eventPubSub:this.eventPubSub});
-            var pv = new ProfileView({mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            var gv = new GlobalView({opts:this.opts,eventPubSub:this.eventPubSub});
+            var lv = new LoginView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            var rv = new RegistrationView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            var crv = new CompleteRegistrationView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            var fpv = new ForgotPasswordView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            var rpv = new ResetPasswordView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            var mv = new MessagingView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            var pv = new ProfileView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            var qsv = new MMXProjectQuickstartView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
             // override default backbone model sync method to be compatible with Magnet REST APIs
             syncOverride(this.mc, this.eventPubSub);
             Backbone.history.start();
@@ -42,6 +44,7 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
             'reset-password'    : 'resetPassword',
             'messaging'         : 'messaging',
             'messaging/:id'     : 'messaging',
+            'messaging/:id/:view' : 'messaging',
             'profile'           : 'profile',
             '*notFound'         : 'messaging'
         },
@@ -75,7 +78,8 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
             me.auth(function(){
                 me.eventPubSub.trigger('resetGlobalPages', 'mmx-container');
                 me.eventPubSub.trigger('initMessaging', {
-                    id : id
+                    id   : id,
+                    view : view
                 });
             });
         },

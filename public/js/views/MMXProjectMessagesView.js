@@ -1,10 +1,10 @@
 define(['jquery', 'backbone'], function($, Backbone){
     var View = Backbone.View.extend({
-        el: '#mmx-msgs-tab',
+        el: '#mmx-messages',
         initialize: function(options){
             var me = this;
             me.options = options;
-            me.options.eventPubSub.bind('initMMXProjectMessages', function(model){
+            me.options.eventPubSub.bind('initMMXProjectmessages', function(model){
                 me.model = model;
                 me.render();
             });
@@ -135,7 +135,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     for(var i=0;i<res.results.length;++i){
                         res.results[i].queuedAt = moment(res.results[i].queuedAt).format('lll');
                         res.results[i].deliveryAckAt = moment(res.results[i].deliveryAckAt).format('lll');
-                        res.results[i].state = '<img src="images/dashboard/mmx_state_'+res.results[i].state+'.png" data-toggle="tooltip" data-placement="top" title="'+me.deliveryStates[res.results[i].state]+'" />';
+                        res.results[i].state = '<img src="images/dashboard/mmx_state_'+res.results[i].state+'.png" data-toggle="tooltip" data-placement="right" title="'+me.deliveryStates[res.results[i].state]+'" />';
                     }
                 }
                 cb(res);

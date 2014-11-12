@@ -1,10 +1,10 @@
 define(['jquery', 'backbone'], function($, Backbone){
     var View = Backbone.View.extend({
-        el: '#mmx-topics-tab',
+        el: '#mmx-topics',
         initialize: function(options){
             var me = this;
             me.options = options;
-            me.options.eventPubSub.bind('initMMXProjectTopics', function(model){
+            me.options.eventPubSub.bind('initMMXProjecttopics', function(model){
                 me.model = model;
                 $('#mmx-new-topic-input').val('');
                 me.getTopics(function(){

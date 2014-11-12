@@ -12,16 +12,24 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
             me.options = options;
             me.model = new AppModel();
             me.options.eventPubSub.bind('initMMXProject', function(params){
-                me.model = params.model;
-                me.setTab(null, me.$el.find('.nav-tabs li.active a').attr('did'));
+                me.model = params.model || me.model;
+                me.setTab(params.view || 'dashboard');
                 me.$el.show();
+                me.options.eventPubSub.trigger('showCollapsibleMenu');
             });
         },
-        events: {
-            'click .nav-tabs li a': 'setTab'
+        setTab: function(view){
+            $('.mmx-nav a').removeClass('active');
+            $('.mmx-nav a[href="#'+view+'"]').addClass('active');
+            this.$el.find('.tab-pane').removeClass('active');
+            this.$el.find('.tab-pane[id="mmx-'+view+'"]').addClass('active');
+            this.options.eventPubSub.trigger('updateBreadcrumb', {
+                title : this.toUpper(view)+(view == 'dashboard' ? ' for '+this.model.attributes.appName : '')
+            });
+            this.options.eventPubSub.trigger('initMMXProject'+view, this.model);
         },
-        setTab: function(e, view){
-            this.options.eventPubSub.trigger('initMMXProject'+(view ? view : $(e.currentTarget).attr('did')), this.model);
+        toUpper: function(str){
+            return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
         }
     });
     return View;

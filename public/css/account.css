@@ -15,14 +15,22 @@
 .same-line button{float:left;margin-right:5px}
 .same-line .same-line-control{overflow:hidden;min-width:140px}
 .radio.disabled label{opacity:.4}
+.btn{border-radius:6px}
+.btn.btn-primary{border:solid 1px #0a394f;background-color:#036285}
+.label, .nav-tabs.two > li > a, .nav-tabs.three > li > a, .nav-tabs.four > li > a, .btn, .alert, .panel, .panel-group .panel{border-radius:4px}
+input.form-control, select.form-control{margin-bottom:5px;border-radius:4px}
+.app-view{background:#d9d9d9}
+.required{color:#ff0000;font-size:16px}
 
-/* MMX VIEWS */
-#mmx-app-list{min-height:80px}
+/* MMX CONTENT VIEW */
+#breadcrumb{padding:4px 0}
+#breadcrumb .same-line button{float:right;margin:-1px 0 0 8px}
 #mmx-app-list .list-group-item{border-radius:0}
 #mmx-apps .tab-pane{margin:20px 0}
 #mmx-apps .glyphicon{cursor:pointer}
-#mmx-active-project-container{height:100%;border-radius:0;background:none;margin-bottom:15px}
-#mmx-active-project-container .tab-content{padding:4px 15px 15px 15px;border:solid 1px #aaa;border-top:none}
+#mmx-container .view-wrapper{padding:0;margin-top:43px;background:#d9d9d9}
+#mmx-active-project-container{border-radius:0;background:#fff;overflow-y:scroll}
+#mmx-active-project-container .tab-content{padding:4px 15px 15px 15px}
 #mmx-active-project-container .tab-content .tab-pane{background:none;margin-top:10px}
 #mmx-active-project-container .controls{text-align:left}
 #mmx-active-project-container .col-md-6 .controls{line-height:89px}
@@ -30,10 +38,16 @@
 #mmx-active-project-container .nav-tabs > li{margin-bottom:-1px}
 #mmx-active-project-container .nav > li > a{padding:10px 33px}
 #mmx-active-project-container .nav-tabs > li.active > a{border-color:#aaa #aaa transparent}
-#mmx-mgmt-tab .form-group{margin:0}
-#mmx-test-tab .form-group .col-md-2 .button-group{margin-top:25px}
-#create-messaging-app-btn{margin-top:-2px}
 
+/* mmx summary */
+#mmx-active-project-container .repeater-list-header td, #mmx-active-project-container .repeater-list-items td{border-left:0}
+#mmx-summary-container{overflow-y:auto}
+#mmx-summary-container > .row-fluid{margin-top:15px}
+#mmx-summary-container > .row-fluid > .col-sm-6 > .well{background:#fff;border:solid 1px #fff;border-radius:12px}
+#mmx-summary-container > .row-fluid > .col-sm-6 > .well > hr{margin:3px 0 7px;border-color:#ddd}
+
+/* mmx dashboard */
+#mmx-dashboard .mmx-dashboard-item{margin-top:30px}
 .mmx-dashboard-item img{max-width:78px}
 .mmx-dashboard-item > hr{margin:0 0 10px 0;border-color:#ddd}
 .mmx-dashboard-item > .media{margin:1px 0 0 0;max-width:700px}
@@ -43,31 +57,29 @@
 .mmx-dashboard-item .progress{margin-bottom:12px;margin-top:3px}
 .mmx-dashboard-item .media-heading{margin:0;font-size:14px;font-weight:500}
 
-#mmx-active-project-container .repeater-list-header td, #mmx-active-project-container .repeater-list-items td{border-left:0}
-#mmx-summary-container > .row-fluid > .col-sm-6 > .well{background:#fff;border:solid 1px #aaa;border-radius:12px;box-shadow:2px 2px 7px #aaa}
-#mmx-summary-container > .row-fluid > .col-sm-6 > .well > hr{margin:3px 0 7px;border-color:#ddd}
-
-/* dashboard tab */
-#mmx-dash-tab .mmx-dashboard-item{margin-top:30px}
-
-/* settings tab */
+/* mmx settings */
+#mmx-settings .form-group{margin:0}
 #mmx-mgmt-tab button{margin-top:20px}
+.controls-grouped input, .controls-grouped .glyphicon{float:left}
+.controls-grouped input{max-width:600px;width:85%}
+.controls-grouped .glyphicon{top:9px;left:9px}
 
-/* - endpoints list */
-#mmx-endpoints-tab .repeater-list-items td:first-child span{cursor:pointer}
-#mmx-endpoints-tab .repeater-header-left{float:none}
-#mmx-endpoints-tab .repeater-search{width:100%;float:none}
-#mmx-endpoints-tab .table-striped > tbody > tr:nth-child(2n+1) > td{background:#daebf0}
-#mmx-endpoints-tab .repeater-list-items tr.head td{font-weight:700;border-bottom:1px solid #ddd;padding:8px;background:#F9F9F9}
+/* mmx test */
+#mmx-test .form-group .col-md-2 .button-group{margin-top:25px}
+
+/* mmx endpoints */
+#mmx-endpoints .repeater-list-items td:first-child span{cursor:pointer}
+#mmx-endpoints .repeater-header-left{float:none}
+#mmx-endpoints .repeater-search{width:100%;float:none}
+#mmx-endpoints .table-striped > tbody > tr:nth-child(2n+1) > td{background:#daebf0}
+#mmx-endpoints .repeater-list-items tr.head td{font-weight:700;border-bottom:1px solid #ddd;padding:8px;background:#F9F9F9}
 #mmx-sendmessage-modal .modal-body button{margin-top:10px;margin-bottom:10px}
 #mmx-sendmessage-modal .message-push-history .table{font-size:12px}
 .mmx-endpoints-showdetails-modal-btn{text-decoration:underline}
 #mmx-device-showdetails-modal dd{word-wrap:break-word}
 .fuelux .repeater-list-items tr.selected:hover{background-color:#66afe9 !important;color:#fff}
-/*.same-line .search-btn{float:right;margin:0 0 0 10px}*/
 
-/* - message list */
-.repeater-search .col-sm-6{padding-left:0}
+/* mmx messages */
 #mmx-messages-list .tabmargin{padding:15px}
 #mmx-messages-list .dt-container{margin-top:12px}
 #mmx-messages-list .repeater-header-left{float:none}
@@ -75,10 +87,9 @@
 #mmx-messages-list .column-selector{padding:5px 15px 15px 15px}
 #mmx-messages-list .column-selector h5{margin-top:5px}
 #mmx-messages-list .pillbox > .pill-group > .pill{margin:0 0 8px 0}
+#mmx-messages-list .repeater-list-items td img{width:30px}
 #mmx-messages-list .repeater-list-items tr.head td{font-weight:700;border-bottom:1px solid #ddd;padding:8px;background:#F9F9F9}
 #mmx-messages-list .searchby-input-container .alert-info{background:#fff;border:solid 1px #aaa;padding:3px 10px 7px}
-
-
 #mmx-messages-list .repeater-list-items td.sortable:hover, #mmx-endpoints-list .repeater-list-items td.sortable:hover, #mmx-messages-list .repeater-list-items td.sortable.sorted, #mmx-endpoints-list .repeater-list-items td.sortable.sorted{
     background: #F1F1F1;
     cursor: pointer;
@@ -92,15 +103,24 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff9f9f9', endColorstr='#ffe5e5e5', GradientType=0);
 }
 #mmx-messages-list .repeater-list-items td.sortable.sorted span.glyphicon, #mmx-endpoints-list .repeater-list-items td.sortable.sorted span.glyphicon{float:right;margin-top:2px}
+.repeater-header-left .col-sm-4, .repeater-header-left .col-sm-6{padding-left:0}
 
-/* - settings */
-.controls-grouped input, .controls-grouped .glyphicon{float:left}
-.controls-grouped input{max-width:600px;width:85%}
-.controls-grouped .glyphicon{top:9px;left:9px}
+/* mmx topics */
+#mmx-topics > .same-line{max-width:500px}
+#mmx-topics .same-line button{float:right;margin:-1px 0 0 8px}
 
+/* quickstart */
+#mmx-quickstart .numbering{font-size:40px;text-indent:15px}
+#mmx-quickstart .text{margin-top:20px}
+#mmx-quickstart .table-striped tr:nth-child(2n+1) > td{background:#e3e3e3}
 
 @media only screen and (max-width:767px){
     #mmx-messages-list .dt-container .col-sm-6{padding:0}
     .vertical-line{display:block;visibility:hidden}
 }
 
+@media only screen and (max-width:767px){
+    .table-layout{height:100%;position:absolute;padding-top:50px}
+    .table-layout .table-cell{display:table-cell}
+    #mmx-container .view-wrapper{margin-top:75px}
+}

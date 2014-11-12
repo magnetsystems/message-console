@@ -6,6 +6,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.options = options;
             me.options.eventPubSub.bind('initMMXSummary', function(params){
                 $('#mmx-active-project-container').hide();
+                me.options.eventPubSub.trigger('hideCollapsibleMenu');
                 $('#mmx-summary-container').show('fast');
                 me.getStats(params.col, function(col){
                     me.render(col);
