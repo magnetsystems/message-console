@@ -22,6 +22,8 @@ define(['jquery', 'backbone'], function($, Backbone){
         saveProject: function(){
             var me = this;
             var obj = utils.collect(me.$el);
+            if($.trim(obj.guestUserSecret).length < 1) return alert('Guest Access Secret is a required field.');
+            if($.trim(obj.appName).length < 1) return alert('App Name is a required field.');
             me.model.save(obj, {
                 success: function(){
                     me.options.eventPubSub.trigger('renderMMXList', me.model.attributes.id);
