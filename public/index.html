@@ -360,7 +360,7 @@
     <% }); %>
     </div>
     <% }else{ %>
-    You have not created any app projects.
+    You have not created any apps.
     <% } %>
 </script>
 
@@ -510,8 +510,6 @@
     <% _.each(col, function(model, key){  %>
     <option value="<%- model.attributes.id %>"><%- model.attributes.appName %></li>
     <% }); %>
-    <% }else{ %>
-    You have not created any app projects.
     <% } %>
 </script>
 

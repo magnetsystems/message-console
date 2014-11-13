@@ -26,6 +26,12 @@ define(['jquery', 'backbone'], function($, Backbone){
             if($.trim(obj.appName).length < 1) return alert('App Name is a required field.');
             me.model.save(obj, {
                 success: function(){
+                    me.model.set({
+                        gcm : {
+                            googleProjectId : obj.googleProjectId,
+                            googleApiKey    : obj.googleApiKey
+                        }
+                    });
                     me.options.eventPubSub.trigger('renderMMXList', me.model.attributes.id);
                     Alerts.General.display({
                         title   : 'App Updated',

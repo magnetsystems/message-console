@@ -12,7 +12,7 @@ pre{background-color:#efefef;border:1px solid rgba(0, 0, 0, 0.15);border-radius:
 .btn.btn-primary{background:#008cba}
 /*.btn.disabled{background:#a9b2b8;border-color:#a9b2b8;opacity:1}*/
 .general-padding{padding:15px}
-.padding-sm{padding:4px 0}
+.padding-sm{padding:7px 0}
 .fixed-160{width:160px}
 .fullwidth{width:100%;clear:both}
 .preloader{padding:30px;text-align:center}

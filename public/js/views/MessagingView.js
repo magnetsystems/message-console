@@ -63,7 +63,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
         createMessagingApp: function(){
             var me = this;
             var input = me.newAppModal.find('input');
-            if($.trim(input.val()).length < 1) return alert('Your app name is too short.');
+            if($.trim(input.val()).length < 1) return alert('App Name is a required field.');
             var model = new AppModel();
             model.save({
                 appName : input.val()

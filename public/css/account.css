@@ -12,6 +12,7 @@
 .vertical-line{margin:0;padding:0 14px;display:inline}
 .well-title{font-size:19px;font-weight:300;margin:0;padding:5px 5px 10px 8px}
 .tooltip-danger{color:#B81000;left:5px;top:-1px}
+.padding-sm{padding:4px 0}
 .same-line button{float:left;margin-right:5px}
 .same-line .same-line-control{overflow:hidden;min-width:140px}
 .radio.disabled label{opacity:.4}
