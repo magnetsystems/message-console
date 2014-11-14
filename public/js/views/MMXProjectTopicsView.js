@@ -38,6 +38,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         createTopic: function(){
             var me = this;
             var input = $('#mmx-new-topic-input');
+            if(!$.trim(input.val()).length) return alert('Topic Name is a required field.');
             AJAX('apps/'+me.model.attributes.id+'/topics', 'POST', 'application/json', {
                 name : input.val()
             }, function(res, status, xhr){

@@ -470,6 +470,23 @@ function endLoading(id, params){
     }
 }
 
+function MMXTour(){
+    var tour = new Tour({
+        storage : false,
+        steps: [
+        {
+            element   : "#breadcrumb .same-line",
+            title     : "Create Your First App",
+            content   : "Welcome to Magnet Messaging! Get started by pressing the + button.",
+            placement : "bottom",
+            backdrop  : true
+        }
+    ]});
+    tour.init();
+    tour.start();
+    return tour;
+}
+
 // utility functions
 timer = {
     loops : {},

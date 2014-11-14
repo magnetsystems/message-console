@@ -18,7 +18,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
                         me.selectProject(params.id, params.view);
                     }else if(me.col.length == 1){
                         me.selectProject(me.col.models[0].attributes.id, params.view);
-                    }else if(me.col.length > 1){
+                    }else if(!me.col.length || me.col.length > 1){
                         me.options.eventPubSub.trigger('initMMXSummary', {
                             col : me.col
                         });

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/fuelux.min.css" />
     <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-tour.min.css">
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/account.css" />
     <script src="js/libs/modernizr.js"></script>
@@ -359,8 +360,6 @@
         </div>
     <% }); %>
     </div>
-    <% }else{ %>
-    You have not created any apps.
     <% } %>
 </script>
 
@@ -954,7 +953,7 @@
         <% if(col && col.length > 0){ %>
         <% _.each(col, function(topic, key){ %>
         <tr did="<%- topic.id %>">
-            <td><%- topic.id %></td>
+            <td><%- topic.displayId || topic.id %></td>
             <td><%- topic.name %></td>
             <td><%- topic.subscriptionCount %></td>
             <td><%- topic.description %></td>
@@ -995,7 +994,7 @@
         </tr>
         <tr>
             <td class="numbering">4.</td>
-            <td>Go to the <a href="#endpoints">Endpoints</a> page and send a test message.</td>
+            <td>Open the app and it will register that as an endpoint.</td>
         </tr>
         <tr>
             <td class="numbering">5.</td>

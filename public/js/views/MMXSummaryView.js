@@ -7,7 +7,13 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.options.eventPubSub.bind('initMMXSummary', function(params){
                 $('#mmx-active-project-container').hide();
                 me.options.eventPubSub.trigger('hideCollapsibleMenu');
+                me.render([]);
                 $('#mmx-summary-container').show('fast');
+                me.options.eventPubSub.trigger('updateBreadcrumb', {
+                    title : ''
+                });
+//                if(!params.col.length)
+//                    return me.options.opts.tour = MMXTour();
                 me.getStats(params.col, function(col){
                     me.render(col);
                 });

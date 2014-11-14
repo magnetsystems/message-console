@@ -110,7 +110,11 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(options.pageSize != 10) query.size = options.pageSize || 10;
             if(params.searchby && (params.fromDt || params.toDt || params.search || options.search)) query.searchby = params.searchby;
             if(params.fromDt) query.value = new Date(params.fromDt.replace(/-/g, '/')).getTime() / 1000;
-            if(params.toDt) query.value2 = new Date(params.toDt.replace(/-/g, '/')).getTime() / 1000;
+            if(params.toDt && params.toDt.length){
+                var toDateTime = new Date(params.toDt.replace(/-/g, '/'));
+                toDateTime = new Date(toDateTime.getFullYear(), toDateTime.getMonth(), toDateTime.getDate(), 23, 59, 59);
+                query.value2 = toDateTime.getTime() / 1000;
+            }
             if(params.search || options.search) query.value = params.search || options.search;
             if(options.sortDirection && options.sortProperty){
                 me.sorts = {
