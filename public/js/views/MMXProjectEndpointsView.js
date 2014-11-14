@@ -276,6 +276,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             this.activeUser = this.users[index] || null;
             this.latestMessageId = null;
             this.sendMessageModal.find('.radio').removeClass('disabled').show();
+            this.sendMessageModal.find('.message-push-history').html('');
             this.sendMessageModal.find('input[name="message-type"][value="message"]').prop('checked', true);
             if(!this.activeDevice.clientToken || !this.model.attributes.gcm || !this.model.attributes.gcm.googleApiKey || !this.model.attributes.gcm.googleProjectId){
                 this.sendMessageModal.find('input[name="message-type"][value="push"]').closest('.radio').addClass('disabled');
@@ -327,6 +328,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         changeMMXMessageType: function(dom){
             var option = dom.val();
+            if(option == 'push' && dom.closest('.radio').hasClass('disabled')) return;
             this.sendMessageModal.find('.message-types > div').addClass('hidden');
             this.sendMessageModal.find('.message-types > div[did="'+option+'"]').removeClass('hidden');
         },
@@ -336,6 +338,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             var type = 'message';
             var input = me.sendMessageModal.find('.message-types > div[did="'+type+'"] textarea');
             var url = 'apps/'+me.model.attributes.id+'/endpoints/'+this.activeDevice.id+'/'+type;
+            if(type == 'notification' && !$.trim(input.val()).length) return alert('Payload is required for sending a push notification');
             if(me.activeDevice && me.activeDevice.deviceId)
                 body.deviceId = me.activeDevice.deviceId;
             if(me.activeUser && me.activeUser.userId)
