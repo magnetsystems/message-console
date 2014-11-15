@@ -146,10 +146,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                     for(var i=0;i<res.results.length;++i){
                         res.results[i].device.created = moment.unix(res.results[i].device.created / 1000).format('lll');
                         res.results[i].device.updated = moment.unix(res.results[i].device.updated / 1000).format('lll');
-                        res.results[i].device.nameEdited = res.results[i].device.name.substr(0, 10)+'...';
+                        res.results[i].device.nameEdited = res.results[i].device.name.substr(0, 30)+'...';
                         res.results[i].device.ownerIdEdited = res.results[i].device.ownerId.substr(0, 10)+'...';
                         res.results[i].device.osTypeEdited = '<i class="fa fa-2x fa-'+(res.results[i].device.osType == 'ANDROID' ? 'android' : 'apple')+'"></i>';
-                        res.results[i].device.deviceIdEdited = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.deviceId.substr(0, 10)+'...</a>';
+                        res.results[i].device.deviceIdEdited = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.deviceId.substr(0, 30)+'...</a>';
                         if(res.results[i].userEntity){
                             res.results[i].userEntity.creationDate = moment.unix(res.results[i].userEntity.creationDate / 1000).format('lll');
                             res.results[i].userEntity.modificationDate = moment.unix(res.results[i].userEntity.modificationDate / 1000).format('lll');
@@ -194,6 +194,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                             }
                         });
                     }
+                    $('#mmx-endpoints-list .repeater-list-items tr td:nth-child(1), #mmx-endpoints-list .repeater-list-items tr td:nth-child(2)').css('width', '30%');
                 }, 20);
                 callback(data);
             });

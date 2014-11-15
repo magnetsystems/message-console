@@ -15,6 +15,10 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
                 me.model = params.model || me.model;
                 me.setTab(params.view || 'dashboard');
                 me.$el.show();
+                if(me.options.opts.newMMXUser === true){
+                    me.options.opts.newMMXUser = false;
+                    me.options.opts.tour = MMXInitialAppTour(params.model.attributes.id);
+                }
                 me.options.eventPubSub.trigger('showCollapsibleMenu');
             });
         },

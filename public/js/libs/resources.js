@@ -470,14 +470,14 @@ function endLoading(id, params){
     }
 }
 
-function MMXTour(){
+function MMXNoAppTour(){
     var tour = new Tour({
         storage : false,
         steps: [
         {
             element   : "#breadcrumb .same-line",
-            title     : "Create Your First App",
-            content   : "Welcome to Magnet Messaging! Get started by pressing the + button.",
+            title     : "Create An App",
+            content   : "You have no apps in your list. You can create one by pressing the + button.",
             placement : "bottom",
             backdrop  : true
         }
@@ -486,6 +486,34 @@ function MMXTour(){
     tour.start();
     return tour;
 }
+
+function MMXInitialAppTour(appId){
+    var tour = new Tour({
+        storage : false,
+        delay   : 1000,
+        steps: [
+            {
+                element   : "#breadcrumb .same-line",
+                title     : "Welcome to Magnet Messaging!",
+                content   : "We made your first app for you. When you are ready you can make more apps yourself by pressing the + button.",
+                placement : "bottom",
+                backdrop  : true,
+                onNext    : function(){
+                    Backbone.history.navigate('#/messaging/'+appId+'/quickstart');
+                    return;
+                }
+            },
+            {
+                element   : "#mmx-quickstart .download-compiled-source",
+                title     : "Quickstart",
+                content   : "Follow these easy steps to get started quickly."
+            }
+        ]});
+    tour.init();
+    tour.start();
+    return tour;
+}
+
 
 // utility functions
 timer = {

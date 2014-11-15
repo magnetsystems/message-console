@@ -22,7 +22,7 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
             utils.setIndexOf();
             this.GLOBAL = {};
             // init site views
-            var gv = new GlobalView({opts:this.opts,eventPubSub:this.eventPubSub});
+            var gv = new GlobalView({opts:this.opts, eventPubSub:this.eventPubSub});
             var lv = new LoginView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
             var rv = new RegistrationView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
             var crv = new CompleteRegistrationView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});

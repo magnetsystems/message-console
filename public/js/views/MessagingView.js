@@ -39,6 +39,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
             'change #mmx-app-list': 'onSelectApp'
         },
         showCreateMessagingAppModal: function(){
+            if(this.options.opts.tour) this.options.opts.tour.end();
             this.newAppModal.find('input').val('');
             this.newAppModal.modal('show');
         },
@@ -82,6 +83,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
         },
         selectProject: function(id, view){
             $('#mmx-summary-container').hide();
+            $('#mmx-app-list').val(id);
             this.options.eventPubSub.trigger('initMMXProject', {
                 model : this.col.get(id),
                 view  : view

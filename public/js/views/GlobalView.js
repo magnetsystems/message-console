@@ -103,7 +103,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         updateBreadcrumb: function(params){
             params = params || {};
-            if(params.title)
+            if(typeof params.title !== 'undefined')
                 $('#breadcrumb .bc-title').html(params.title+' <span></span>');
             if(params.sub)
                 $('#breadcrumb .bc-title span').html(params.sub);

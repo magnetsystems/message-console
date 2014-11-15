@@ -12,8 +12,12 @@ define(['jquery', 'backbone'], function($, Backbone){
                 me.options.eventPubSub.trigger('updateBreadcrumb', {
                     title : ''
                 });
-//                if(!params.col.length)
-//                    return me.options.opts.tour = MMXTour();
+                if(!params.col.length && !me.options.opts.newMMXUser && me.options.opts.firstLogin === true){
+                    me.options.opts.firstLogin = false;
+                    return me.options.opts.tour = MMXNoAppTour();
+                }else{
+                    me.options.opts.firstLogin = false;
+                }
                 me.getStats(params.col, function(col){
                     me.render(col);
                 });

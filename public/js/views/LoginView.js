@@ -8,6 +8,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             this.lv = new LoginValidator();
             me.options.eventPubSub.bind('initLogin', function(callback){
                 me.callback = callback;
+                me.options.opts.newMMXUser = false;
+                me.options.opts.firstLogin = false;
                 Cookie.remove('magnet_auth');
                 $('#user-nav').addClass('hidden');
                 $('#user-nav-popover').attr('data-content', '').popover('hide');
@@ -29,6 +31,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                     name      : user.val(),
                     password  : pass.val()
                 }, function(res, status, xhr){
+                    if(xhr.getResponseHeader('X-New-MMX-User') === 'enabled')
+                        me.options.opts.newMMXUser = true;
+                    else
+                        me.options.opts.firstLogin = true;
                     AJAX('/rest/profile', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
                         Cookie.create('magnet_auth', res.firstName+':'+res.lastName+':'+res.email, 1);
                         $('#user-nav-popover').attr('data-content', '<b>'+res.firstName+' '+res.lastName+'</b><br />'+user.val());
