@@ -38,7 +38,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click .search-btn': 'refresh',
             'click button[did="actions-sendmessage"]': 'showSendMessageModal',
             'click button[did="actions-deleterow"]': 'deleteEndpoint',
-            'click .repeater-list-items tr': 'toggleRow'
+            'click #mmx-endpoints-list input[type="checkbox"]': 'toggleRow'
         },
         render: function(){
             var me = this;
@@ -52,7 +52,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 dataSource       : function(options, cb){
                     me.buildList(options, cb)
                 },
-                list_selectable  : true,
+                list_selectable  : false,
                 list_noItemsHTML : ''
             });
             this.selectedEndpoints = [];
@@ -80,6 +80,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             }
         },
         refresh: function(){
+            this.$el.find('.repeater-search .same-line-button[did^="action"]').addClass('disabled');
             var params = utils.collect(this.$el.find('.repeater-header'));
             if(this.validate(params))
                 this.list.repeater('render');
@@ -150,6 +151,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                         res.results[i].device.ownerIdEdited = res.results[i].device.ownerId.substr(0, 10)+'...';
                         res.results[i].device.osTypeEdited = '<i class="fa fa-2x fa-'+(res.results[i].device.osType == 'ANDROID' ? 'android' : 'apple')+'"></i>';
                         res.results[i].device.deviceIdEdited = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.deviceId.substr(0, 30)+'...</a>';
+                        res.results[i].device.checkbox = '<input type="checkbox" />';
                         if(res.results[i].userEntity){
                             res.results[i].userEntity.creationDate = moment.unix(res.results[i].userEntity.creationDate / 1000).format('lll');
                             res.results[i].userEntity.modificationDate = moment.unix(res.results[i].userEntity.modificationDate / 1000).format('lll');
@@ -194,12 +196,18 @@ define(['jquery', 'backbone'], function($, Backbone){
                             }
                         });
                     }
-                    $('#mmx-endpoints-list .repeater-list-items tr td:nth-child(1), #mmx-endpoints-list .repeater-list-items tr td:nth-child(2)').css('width', '30%');
+                    $('#mmx-endpoints-list .repeater-list-items tr td:nth-child(1)').css('width', '30px');
+                    $('#mmx-endpoints-list .repeater-list-items tr td:nth-child(2), #mmx-endpoints-list .repeater-list-items tr td:nth-child(3)').css('width', '30%');
                 }, 20);
                 callback(data);
             });
         },
         columns: [
+            {
+                label    : '',
+                property : 'checkbox',
+                sortable : false
+            },
             {
                 label    : 'Device Id',
                 property : 'deviceIdEdited',
@@ -244,19 +252,20 @@ define(['jquery', 'backbone'], function($, Backbone){
             }
         },
         toggleRow: function(e){
-            var row = $(e.currentTarget);
-            if(!row.hasClass('head')){
-                var id = row.attr('did');
-                if(row.hasClass('selected')){
-                    this.selectedEndpoints = []; // support only one endpoint at a time
-                    this.selectedEndpoints.push(utils.getByAttr(this.endpoints, 'id', parseInt(id))[0]);
-                    if(this.selectedEndpoints.length)
-                        this.$el.find('.repeater-search .same-line-button[did^="action"]').removeClass('disabled');
-                }else{
-                    this.selectedEndpoints.splice(utils.getIndexByAttr(this.selectedEndpoints, 'id', parseInt(id)), 1);
-                    if(!this.selectedEndpoints.length)
-                        this.$el.find('.repeater-search .same-line-button[did^="action"]').addClass('disabled');
-                }
+            var checkbox = $(e.currentTarget);
+            var parent = checkbox.closest('tbody');
+            var row = checkbox.closest('tr');
+            var id = row.attr('did');
+            parent.find('tr[did!="'+id+'"] input[type="checkbox"]').attr('checked', false);
+            if(checkbox.is(':checked')){
+                this.selectedEndpoints = []; // support only one endpoint at a time
+                this.selectedEndpoints.push(utils.getByAttr(this.endpoints, 'id', parseInt(id))[0]);
+                if(this.selectedEndpoints.length)
+                    this.$el.find('.repeater-search .same-line-button[did^="action"]').removeClass('disabled');
+            }else{
+                this.selectedEndpoints.splice(utils.getIndexByAttr(this.selectedEndpoints, 'id', parseInt(id)), 1);
+                if(!this.selectedEndpoints.length)
+                    this.$el.find('.repeater-search .same-line-button[did^="action"]').addClass('disabled');
             }
         },
         showDeviceDetailsModal: function(e){
