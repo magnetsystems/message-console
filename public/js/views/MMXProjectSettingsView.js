@@ -52,7 +52,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 me.model.destroy({
                     success: function(){
                         me.options.eventPubSub.trigger('renderMMXList');
-                        Backbone.history.navigate('#/messages');
+                        Backbone.history.navigate('#/messaging');
                         Alerts.General.display({
                             title   : 'App Deleted',
                             content : 'Your app has been deleted.'

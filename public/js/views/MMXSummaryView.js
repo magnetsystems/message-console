@@ -5,8 +5,11 @@ define(['jquery', 'backbone'], function($, Backbone){
             var me = this;
             me.options = options;
             me.options.eventPubSub.bind('initMMXSummary', function(params){
+                me.setElement('#mmx-summary-container');
                 $('#mmx-active-project-container').hide();
-                me.options.eventPubSub.trigger('hideCollapsibleMenu');
+                me.options.eventPubSub.trigger('hideCollapsibleMenu', {
+                    mmxView : true
+                });
                 me.render([]);
                 $('#mmx-summary-container').show('fast');
                 me.options.eventPubSub.trigger('updateBreadcrumb', {

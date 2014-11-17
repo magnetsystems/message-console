@@ -14,9 +14,6 @@ var AJAX = function(loc, method, contentType, data, callback, failback, headers)
     }else{
         dataStr = data;
     }
-    if(typeof headers === typeof Function){
-        complete = headers;
-    }
     $.support.cors = true;
     $.ajax({
         type        : method,
@@ -1274,6 +1271,10 @@ function initDatagrid(){
                             var $item = $( '<td></td>' );
                             if(helpers.subset[ helpers.index ].property == 'manage')
                                 $item = $('<td><div class="fixed-160 controls hoverable"><button type="button" did="edit" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit"></span><span class="hidden-xs">Edit</span></button><button type="button" did="remove" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-trash"></span><span class="hidden-xs">Remove</span></button></div></td>');
+                            if(content && helpers.subset[ helpers.index ].property == 'dataRefId'){
+                                $item = $( '<td><button class="view-log-data btn btn-primary btn-sm" did="'+content+'">View</button><button class="download-log-data btn btn-primary btn-sm" did="'+content+'">Download</button></td>' );
+                                content = '';
+                            }
                             if(helpers.subset[ helpers.index ].property == 'toggle')
                                 $item = $('<td width="1"><span class="glyphicon glyphicon-plus"></span></td>');
                             if(helpers.subset[ helpers.index ].property == 'sendmessage')

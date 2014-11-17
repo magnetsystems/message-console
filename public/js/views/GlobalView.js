@@ -69,7 +69,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 this.showCollapseMenu();
             }
         },
-        hideCollapseMenu: function(){
+        hideCollapseMenu: function(params){
             var btn = $('#toggle-collapsible-menu');
             $('#collapsible-menu-list a').hide('fast');
             $('#collapsible-menu-list').animate({
@@ -98,7 +98,9 @@ define(['jquery', 'backbone'], function($, Backbone){
             $('#main-nav-menu li a[href="#/'+tabName+'"]').closest('li').addClass('active');
             var vertical = $('#collapsible-menu-list a[href="#/'+tabName+'"]');
             vertical.addClass('active');
-            this.updateBreadcrumb(vertical.text());
+            this.updateBreadcrumb({
+                title : vertical.text()
+            });
             this.handleView(tabName);
         },
         updateBreadcrumb: function(params){

@@ -1,9 +1,9 @@
 define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','views/AlertErrorView','views/GlobalView','views/LoginView',
-        'views/RegistrationView','views/CompleteRegistrationView','views/ForgotPasswordView','views/ResetPasswordView','views/MessagingView',
-    'views/MMXProjectQuickstartView','views/ProfileView']
+        'views/RegistrationView','views/CompleteRegistrationView','views/ForgotPasswordView','views/ResetPasswordView','views/ProjectMessagingView',
+    'views/ProfileView']
     , function($, Backbone, AlertGeneralView, AlertConfirmView, AlertErrorView, GlobalView, LoginView,
-               RegistrationView, CompleteRegistrationView, ForgotPasswordView, ResetPasswordView, MessagingView,
-               MMXProjectQuickstartView, ProfileView){
+               RegistrationView, CompleteRegistrationView, ForgotPasswordView, ResetPasswordView, ProjectMessagingView,
+               ProfileView){
     // bind alerts
     Alerts.General = new AlertGeneralView();
     Alerts.Confirm = new AlertConfirmView();
@@ -28,9 +28,8 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
             var crv = new CompleteRegistrationView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
             var fpv = new ForgotPasswordView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
             var rpv = new ResetPasswordView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
-            var mv = new MessagingView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
+            var mv = new ProjectMessagingView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
             var pv = new ProfileView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
-            var qsv = new MMXProjectQuickstartView({opts:this.opts,mc:this.mc, router:this, eventPubSub:this.eventPubSub});
             // override default backbone model sync method to be compatible with Magnet REST APIs
             syncOverride(this.mc, this.eventPubSub);
             Backbone.history.start();

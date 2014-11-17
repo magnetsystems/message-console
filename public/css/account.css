@@ -1,27 +1,27 @@
 /* overloads */
-.view-wrapper{padding:0 20px}
-.table-hover > tbody > tr.nohover:hover > td, .table-hover > tbody > tr.nohover:hover > th{background:#fff}
-.highlighted-row.green td{background-color:#DFF0D8 !important}
-.highlighted-row.blue td{background-color:#D9EDF7 !important}
-.highlighted-row.yellow td{background-color:#FCF8E3 !important}
-.highlighted-row.red td{background-color:#F2DEDE !important}
-.text.green{color:#5CB85C}
-.text.blue{color:#5BC0DE}
-.text.gray{color:#aaa}
-.text.darkgray{color:#777}
-.vertical-line{margin:0;padding:0 14px;display:inline}
-.well-title{font-size:19px;font-weight:300;margin:0;padding:5px 5px 10px 8px}
-.tooltip-danger{color:#B81000;left:5px;top:-1px}
-.padding-sm{padding:4px 0}
-.same-line button{float:left;margin-right:5px}
-.same-line .same-line-control{overflow:hidden;min-width:140px}
-.radio.disabled label{opacity:.4}
-.btn{border-radius:6px}
-.btn.btn-primary{border:solid 1px #0a394f;background-color:#036285}
-.label, .nav-tabs.two > li > a, .nav-tabs.three > li > a, .nav-tabs.four > li > a, .btn, .alert, .panel, .panel-group .panel{border-radius:4px}
-input.form-control, select.form-control{margin-bottom:5px;border-radius:4px}
-.app-view{background:#d9d9d9}
-.required{color:#ff0000;font-size:16px}
+#messaging .view-wrapper{padding:0 20px}
+#messaging .table-hover > tbody > tr.nohover:hover > td, .table-hover > tbody > tr.nohover:hover > th{background:#fff}
+#messaging .highlighted-row.green td{background-color:#DFF0D8 !important}
+#messaging .highlighted-row.blue td{background-color:#D9EDF7 !important}
+#messaging .highlighted-row.yellow td{background-color:#FCF8E3 !important}
+#messaging .highlighted-row.red td{background-color:#F2DEDE !important}
+#messaging .text.green{color:#5CB85C}
+#messaging .text.blue{color:#5BC0DE}
+#messaging .text.gray{color:#aaa}
+#messaging .text.darkgray{color:#777}
+#messaging .vertical-line{margin:0;padding:0 14px;display:inline}
+#messaging .well-title{font-size:19px;font-weight:300;margin:0;padding:5px 5px 10px 8px}
+#messaging .tooltip-danger{color:#B81000;left:5px;top:-1px}
+#messaging .padding-sm{padding:4px 0}
+#messaging .same-line button, #breadcrumb .same-line button{float:left;margin-right:5px}
+#messaging .same-line .same-line-control, #breadcrumb .same-line .same-line-control{overflow:hidden;min-width:140px}
+#messaging .radio.disabled label{opacity:.4}
+#messaging .btn{border-radius:6px}
+#messaging .btn.btn-primary{border:solid 1px #0a394f;background-color:#036285}
+#messaging .label, .nav-tabs.two > li > a, #messaging .nav-tabs.three > li > a, #messaging .nav-tabs.four > li > a, #messaging .btn, #messaging .alert, #messaging .panel, #messaging .panel-group .panel{border-radius:4px}
+#messaging input.form-control, #messaging select.form-control{margin-bottom:5px;border-radius:4px}
+#messaging .app-view{background:#d9d9d9}
+#messaging .required{color:#ff0000;font-size:16px}
 
 /* MMX CONTENT VIEW */
 #breadcrumb{padding:4px 0}
