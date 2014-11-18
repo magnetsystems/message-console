@@ -1,6 +1,6 @@
 {
   "name": "messaging-console",
-  "version": "2.4.0-SNAPSHOT",
+  "version": "2.4.0_D1",
   "private": true,
   "dependencies": {
     "ejs": "^1.0.0",
