@@ -132,6 +132,19 @@ input.form-control, select.form-control{margin-bottom:5px;border-radius:0}
 
 /* repeater */
 .repeater-list-items tr.head td{font-weight:700;border-bottom:1px solid #ddd;padding:8px;background:#F9F9F9}
+.repeater-list-items td.sortable:hover, .repeater-list-items td.sortable:hover, .repeater-list-items td.sortable.sorted, .repeater-list-items td.sortable.sorted{
+    background: #F1F1F1;
+    cursor: pointer;
+    background-color: #f1f1f1;
+    background-image: -moz-linear-gradient(top, #f9f9f9, #e5e5e5);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f9f9f9), to(#e5e5e5));
+    background-image: -webkit-linear-gradient(top, #f9f9f9, #e5e5e5);
+    background-image: -o-linear-gradient(top, #f9f9f9, #e5e5e5);
+    background-image: linear-gradient(to bottom, #f9f9f9, #e5e5e5);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff9f9f9', endColorstr='#ffe5e5e5', GradientType=0);
+}
+.repeater-list-items td.sortable.sorted span.glyphicon, .repeater-list-items td.sortable.sorted span.glyphicon{float:right;margin-top:2px}
 
 /* PROJECTS */
 #projects-tab table{margin-bottom:0;border-bottom:0}

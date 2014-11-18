@@ -894,7 +894,7 @@ utils = {
         stats.inAppMessagesStats.totalPending = 0;
         if(stats.inAppMessagesStats.stats){
             for(var i=0;i<stats.inAppMessagesStats.stats.length;++i){
-                if(stats.inAppMessagesStats.stats[i].type == 'DELIVERED'){
+                if(stats.inAppMessagesStats.stats[i].type == 'DELIVERED' || stats.inAppMessagesStats.stats[i].type == 'RECEIVED'){
                     stats.inAppMessagesStats.totalDelivered += stats.inAppMessagesStats.stats[i].count;
                 }else{
                     stats.inAppMessagesStats.totalPending += stats.inAppMessagesStats.stats[i].count;
