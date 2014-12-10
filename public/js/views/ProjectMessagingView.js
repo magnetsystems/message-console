@@ -77,7 +77,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
                     Backbone.history.navigate('#/messaging/'+model.attributes.id);
                 },
                 error: function(e){
-                    alert(e);
+                    alert('The App name you specified already exists. Please choose another name.');
                 }
             });
         },

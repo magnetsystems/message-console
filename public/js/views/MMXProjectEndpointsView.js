@@ -76,7 +76,10 @@ define(['jquery', 'backbone'], function($, Backbone){
             },
             epostype : {
                 title : 'OS',
-                type  : 'search'
+                type  : 'enum',
+                props : [
+                    {key:'ANDROID', val:'ANDROID'}
+                ]
             }
         },
         refresh: function(){
@@ -88,8 +91,6 @@ define(['jquery', 'backbone'], function($, Backbone){
         validate: function(params){
             params = params || {};
             if(params.searchby == 'epname' && params.search.length && params.search.length < 3)
-                return alert('Search value needs at least 3 characters.');
-            if(params.searchby == 'epostype' && params.search.length && params.search.length < 3)
                 return alert('Search value needs at least 3 characters.');
             return true;
         },

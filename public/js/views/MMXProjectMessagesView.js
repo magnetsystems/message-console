@@ -67,8 +67,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     {key:'WAKEUP_SENT', val:'WAKEUP_SENT'},
                     {key:'DELIVERED', val:'DELIVERED'},
                     {key:'TIMEDOUT', val:'TIMEDOUT'},
-                    {key:'RECEIVED', val:'RECEIVED'},
-                    {key:'CANCELLED', val:'CANCELLED'}
+                    {key:'RECEIVED', val:'RECEIVED'}
                 ]
             }
         },
@@ -156,8 +155,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             'WAKEUP_SENT'        : 'Wake up sent',
             'DELIVERED'          : 'Delivered',
             'TIMEDOUT'           : 'Timeout',
-            'RECEIVED'           : 'Received',
-            'CANCELLED'          : 'Cancelled'
+            'RECEIVED'           : 'Received'
         },
         buildList: function(options, callback){
             var me = this;
