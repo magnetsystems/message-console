@@ -13,6 +13,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 Cookie.remove('magnet_auth');
                 $('#user-nav').addClass('hidden');
                 $('#user-nav-popover').attr('data-content', '').popover('hide');
+                $('#user-nav-popover').hide();
                 me.$el.find('input').val('');
                 me.$el.find('input[name="username"]').focus();
             });
