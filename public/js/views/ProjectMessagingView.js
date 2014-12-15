@@ -7,6 +7,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
             var sv = new MMXSummaryView(options);
             me.options = options;
             me.col = new AppCollection();
+            me.options.opts.col = me.col;
             me.options.eventPubSub.bind('initMessaging', function(params){
                 $('#mmx-project-new-name').val('');
                 $('#mmx-summary-container').hide();
