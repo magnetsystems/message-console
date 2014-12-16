@@ -18,8 +18,10 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
             me.options.eventPubSub.bind('initMMXProject', function(params){
                 me.setElement('#mmx-active-project-container');
                 me.model = params.model || me.model;
+                setTimeout(function(){
+                    me.$el.show();
+                }, 201);
                 me.setTab(params.view || 'dashboard');
-                me.$el.show();
                 if(me.options.opts.newMMXUser === true){
                     me.options.opts.newMMXUser = false;
                     me.options.opts.tour = MMXInitialAppTour(params.model.attributes.id);
@@ -33,7 +35,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
             $('.mmx-nav a').removeClass('active');
             $('.mmx-nav a[href="#'+view+'"]').addClass('active');
             this.$el.find('.tab-pane').removeClass('active');
-            this.$el.find('.tab-pane[id="mmx-'+view+'"]').addClass('active');
+            this.$el.find('#mmx-'+view).addClass('active');
             this.options.eventPubSub.trigger('updateBreadcrumb', {
                 title : this.toUpper(view)+(view == 'dashboard' ? ' for '+this.model.attributes.appName : '')
             });
