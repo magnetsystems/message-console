@@ -977,53 +977,46 @@
 <script id="MessagingQuickstartTmpl" type="text/template">
     <p class="light">This step-by-step tutorial will help you configure and use messaging in your app.</p>
     <table class="table table-striped">
-        <% if(typeof isFirstApp !== 'undefined' && isFirstApp){ %>
         <tr>
             <td class="numbering">1.</td>
             <td>
-                <a class="download-compiled-source" href="#">Download the source files here.</a>
+                Download the MMX Quickstart Android app from GitHub and import it into Android Studio.<br />
+                (<a class="download-compiled-source" href="#">Download a template project.</a>)
             </td>
         </tr>
         <tr>
             <td class="numbering">2.</td>
-            <td>
-                Load the source files into Android Studio.
+            <td>Update the res/raw/quickstart.properties file with these values for your application:
+                <pre>
+appId=&lt;MMX App ID&gt;
+apiKey=&lt;MMX API key&gt;
+gcmSenderId=&lt;gcm project/sender id&gt;
+serverUser=&lt;MMX server user id&gt;
+guestSecret=&lt;MMX app guest secret&gt;</pre>
             </td>
         </tr>
         <tr>
             <td class="numbering">3.</td>
-            <td>Build the project and open in the emulator or load onto a device.</td>
-        </tr>
-        <tr>
-            <td class="numbering">4.</td>
-            <td>Open the app and it will register that as an endpoint.</td>
+            <td>Build/install the app with Android Studio or from commandline at the quickstart root:
+                <pre>./gradlew clean install</pre>
+            </td>
         </tr>
         <tr>
             <td class="numbering">5.</td>
-            <td>Go to the <a href="#endpoints">Endpoint</a> page and send a test message.</td>
-        </tr>
-        <% }else{ %>
-        <tr>
-            <td class="numbering">1.</td>
-            <td>
-                Copy this sample code into your project.<br />
-                (<a class="download-compiled-source" href="#">Download a template project.</a>)
-                <pre>(◕‿◕✿)</pre>
-            </td>
+            <td>Install/run the application on an emulator or device.</td>
         </tr>
         <tr>
-            <td class="numbering">2.</td>
-            <td>Build the project and open in the emulator or load onto a device.</td>
-        </tr>
-        <tr>
-            <td class="numbering">3.</td>
-            <td>Open the app and it will register that as an endpoint.</td>
+            <td class="numbering">6.</td>
+            <td>Connect to these server settings:
+<pre>host:citest01.magneteng.com
+port: 5222
+username: &lt;choose a new one, the user will be created upon first login&gt;
+password: &lt;a new password&gt;</td>
         </tr>
         <tr class="mmx-nav">
-            <td class="numbering">4.</td>
-            <td>Go to the <a href="#endpoints">Endpoints</a> page and send a test message.</td>
+            <td class="numbering">7.</td>
+            <td>That's it! You should be able to send a message to yourself using the “Send Message” dialog.</td>
         </tr>
-        <% } %>
     </table>
 </script>
 
