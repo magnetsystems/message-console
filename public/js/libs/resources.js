@@ -1,7 +1,7 @@
 
 /* HELPERS */
 var GLOBAL = {
-    baseUrl : '',
+    baseUrl : 'http://localhost:3000',
     polling : false
 };
 
@@ -468,6 +468,7 @@ function endLoading(id, params){
 }
 
 function MMXNoAppTour(){
+    $('.modal').modal('hide');
     var tour = new Tour({
         storage : false,
         steps: [
