@@ -160,6 +160,19 @@ define(['jquery', 'backbone'], function($, Backbone){
                         me.endpoints.push(res.results[i].device);
                         me.users.push(res.results[i].userEntity || null);
                     }
+                    if(parseInt(me.options.opts.configs['cluster.max.devices.per.app']) <= res.active){
+                        $('#mmx-maximum-devices-reached').show();
+                        $('#mmx-container .view-wrapper').css('margin-top', function(index, curValue){
+                            var curr = parseInt(curValue, 10);
+                            return (curr == 43 || curr == 77) ? (curr + 35) : curr + 'px';
+                        });
+                    }else{
+                        $('#mmx-maximum-devices-reached').hide();
+                        $('#mmx-container .view-wrapper').css('margin-top', function(index, curValue){
+                            var curr = parseInt(curValue, 10);
+                            return (curr == 77 || curr == 111) ? (curr - 35) : curr + 'px';
+                        });
+                    }
                 }
                 cb(res);
             }, function(xhr, status, thrownError){

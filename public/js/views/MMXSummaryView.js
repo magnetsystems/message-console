@@ -45,13 +45,16 @@ define(['jquery', 'backbone'], function($, Backbone){
         render: function(col){
             this.$el.html(_.template($('#MessagingSummaryView').html(), {
                 col          : col.models,
+                configs      : this.options.opts.configs,
                 renderSingle : this.renderSingle
             }));
+            this.$el.find('.fa-exclamation-triangle').tooltip();
         },
-        renderSingle: function(model){
+        renderSingle: function(model, configs){
             if(!model.attributes.statistics) return 'No information is available about this app yet.';
             return _.template($('#MessagingDashboardItemTmpl').html(), {
                 model      : model,
+                configs    : configs,
                 statistics : model.attributes.statistics || {}
             })
         }

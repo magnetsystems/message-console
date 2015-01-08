@@ -206,6 +206,12 @@
                 </div>
             </div>
         </div>
+        <div id="mmx-maximum-apps-reached" class="alert mmx-global-alert alert-warning fade in clearfix" style="display:none">
+            <i class="fa fa-exclamation-triangle"></i> You have the <b>maximum number of apps</b>. You will need to delete an app to create one.
+        </div>
+        <div id="mmx-maximum-devices-reached" class="alert mmx-global-alert alert-warning fade in clearfix" style="display:none">
+            <i class="fa fa-exclamation-triangle"></i> This app has reached the <b>maximum device limit</b>. To add additional devices, you must deactivate an active device.
+        </div>
         <div class="view-wrapper fullpos">
             <div id="mmx-summary-container" class="fullpos"></div>
             <div id="mmx-active-project-container" class="fullpos">
@@ -355,7 +361,7 @@
             <div class="well well-sm">
                 <a class="well-title" href="#/messaging/<%- model.attributes.id %>"><%- model.attributes.appName %></a>
                 <hr />
-                <%= renderSingle(model) %>
+                <%= renderSingle(model, configs) %>
             </div>
         </div>
     <% }); %>
@@ -491,7 +497,7 @@
             </div>
         </div>
         <hr />
-        <div class="media">
+        <div class="media clearfix">
             <a class="pull-left" href="#">
                 <img src="images/dashboard/userdevices.png" alt="user and devices">
             </a>
@@ -500,6 +506,12 @@
                 <p class="text darkgray media-line">
                     Last 7 days: <%- statistics.deviceStats.numDevices %>
                 </p>
+                <div class="media-alert">
+                    <% if(parseInt(configs['cluster.max.devices.per.app']) <= statistics.deviceStats.totalActive){ %>
+                    <i class="fa fa-exclamation-triangle fa-4x" data-toggle="tooltip" data-placement="right" title="
+                    This app has reached the maximum device limit. See Endpoints tab for more information."></i>
+                    <% } %>
+                </div>
             </div>
         </div>
     </div>

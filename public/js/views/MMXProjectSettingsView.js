@@ -52,6 +52,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             }, function(){
                 me.model.destroy({
                     success: function(){
+                        me.options.eventPubSub.trigger('imposeAppLimit');
                         me.options.eventPubSub.trigger('renderMMXList');
                         var ret = Backbone.history.navigate('#/', true);
                         if(ret === undefined)

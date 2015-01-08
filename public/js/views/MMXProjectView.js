@@ -21,6 +21,11 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
                 setTimeout(function(){
                     me.$el.show();
                 }, 201);
+                $('#mmx-maximum-devices-reached').hide();
+                $('#mmx-container .view-wrapper').css('margin-top', function(index, curValue){
+                    var curr = parseInt(curValue, 10);
+                    return (curr == 78 || curr == 112) ? (curr - 35) : curr + 'px';
+                });
                 me.setTab(params.view || 'dashboard');
                 if(me.options.opts.newMMXUser === true){
                     me.options.opts.newMMXUser = false;
