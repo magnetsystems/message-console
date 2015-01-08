@@ -38,7 +38,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
                 me.createMessagingApp();
             });
             me.options.eventPubSub.bind('imposeAppLimit', function(){
-                if(this.options.opts.configs['cluster.max.apps'] !== -1 && this.options.opts.configs['cluster.max.apps'] <= me.col.length){
+                if(me.options.opts.configs['cluster.max.apps'] !== -1 && me.options.opts.configs['cluster.max.apps'] <= me.col.length){
                     $('#mmx-maximum-apps-reached').show();
                     $('#mmx-container .view-wrapper').css('margin-top', function(index, curValue){
                         var curr = parseInt(curValue, 10);
