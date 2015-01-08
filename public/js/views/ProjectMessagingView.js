@@ -38,7 +38,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
                 me.createMessagingApp();
             });
             me.options.eventPubSub.bind('imposeAppLimit', function(){
-                if(me.options.opts.configs['cluster.max.apps'] !== -1 && me.options.opts.configs['cluster.max.apps'] <= me.col.length){
+                if(me.options.opts.configs['cluster.max.apps'] > 0 && me.options.opts.configs['cluster.max.apps'] <= me.col.length){
                     $('#mmx-maximum-apps-reached').show();
                     $('#mmx-container .view-wrapper').css('margin-top', function(index, curValue){
                         var curr = parseInt(curValue, 10);
@@ -60,7 +60,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
         },
         showCreateMessagingAppModal: function(){
             if(this.options.opts.tour) this.options.opts.tour.end();
-            if(this.options.opts.configs['cluster.max.apps'] !== -1 && this.options.opts.configs['cluster.max.apps'] <= this.col.length) return alert('You have the maximum number of apps. You will need to delete an app to create one. ');
+            if(this.options.opts.configs['cluster.max.apps'] > 0 && this.options.opts.configs['cluster.max.apps'] <= this.col.length) return alert('You have the maximum number of apps. You will need to delete an app to create one. ');
             this.newAppModal.find('input').val('');
             this.newAppModal.modal('show');
         },
@@ -82,7 +82,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
             if(me.options.opts.configs) return cb();
             AJAX('apps/configs', 'GET', 'application/json', null, function(res){
                 res.configs['cluster.max.apps'] = parseInt(res.configs['cluster.max.apps']);
-                res.configs['cluster.max.devices.per.user'] = parseInt(res.configs['cluster.max.devices.per.user']);
+                res.configs['cluster.max.devices.per.app'] = parseInt(res.configs['cluster.max.devices.per.app']);
                 me.options.opts.configs = res.configs;
                 cb();
             }, function(xhr){

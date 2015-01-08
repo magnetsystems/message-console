@@ -160,7 +160,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                         me.endpoints.push(res.results[i].device);
                         me.users.push(res.results[i].userEntity || null);
                     }
-                    if(me.options.opts.configs['cluster.max.devices.per.app'] !== -1 && me.options.opts.configs['cluster.max.devices.per.app'] <= res.active){
+                    if(me.options.opts.configs['cluster.max.devices.per.app'] > 0 && me.options.opts.configs['cluster.max.devices.per.app'] <= res.active){
                         $('#mmx-maximum-devices-reached').show();
                         $('#mmx-container .view-wrapper').css('margin-top', function(index, curValue){
                             var curr = parseInt(curValue, 10);

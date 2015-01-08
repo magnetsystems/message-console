@@ -507,7 +507,7 @@
                     Last 7 days: <%- statistics.deviceStats.numDevices %>
                 </p>
                 <div class="media-alert">
-                    <% if(configs['cluster.max.devices.per.app'] !== -1 && configs['cluster.max.devices.per.app'] <= statistics.deviceStats.totalActive){ %>
+                    <% if(configs['cluster.max.devices.per.app'] > 0 && configs['cluster.max.devices.per.app'] <= statistics.deviceStats.totalActive){ %>
                     <i class="fa fa-exclamation-triangle fa-4x" data-toggle="tooltip" data-placement="right" title="
                     This app has reached the maximum device limit. See Endpoints tab for more information."></i>
                     <% } %>
