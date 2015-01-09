@@ -498,7 +498,7 @@ function MMXInitialAppTour(appId){
             {
                 element   : "#breadcrumb .same-line",
                 title     : "Welcome to Magnet Messaging!",
-                content   : "We made your first app for you. When you are ready you can make more apps yourself by pressing the + button.",
+                content   : "We made your first app for you. Click Next to continue with the tour. When you are ready you can make more apps yourself by pressing the + button.",
                 placement : "bottom",
                 backdrop  : true,
                 onNext    : function(){
@@ -509,6 +509,9 @@ function MMXInitialAppTour(appId){
                     <div class='arrow'></div>\
                 <h3 class='popover-title'></h3>\
                 <div class='popover-content'></div>\
+                <div class='popover-navigation'>\
+                    <button class='btn btn-default' data-role='next'>Next »</button>\
+                </div>\
             </div>"
             },
             {
