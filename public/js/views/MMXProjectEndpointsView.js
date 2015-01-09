@@ -170,7 +170,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                         $('#mmx-maximum-devices-reached').hide();
                         $('#mmx-container .view-wrapper').css('margin-top', function(index, curValue){
                             var curr = parseInt(curValue, 10);
-                            return (curr == 77 || curr == 111) ? (curr - 35) : curr + 'px';
+                            return (curr == 78 || curr == 112) ? (curr - 35) : curr + 'px';
                         });
                     }
                 }
