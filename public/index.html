@@ -44,7 +44,7 @@
         </div>
         <ul id="user-nav-menu" class="nav navbar-nav navbar-right">
             <li>
-                <a id="user-nav-popover" data-title="<div class='clearfix'><a href='#/profile' class='btn btn-sm btn-default pull-left'>Profile</a><button id='logout-btn' class='btn btn-sm btn-default pull-right'>Sign Out</button></div>" data-content="">
+                <a id="user-nav-popover" style="display:none" data-title="<div class='clearfix'><a href='#/profile' class='btn btn-sm btn-default pull-left'>Profile</a><button id='logout-btn' class='btn btn-sm btn-default pull-right'>Sign Out</button></div>" data-content="">
                     <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span>
                 </a>
             </li>
@@ -206,6 +206,12 @@
                 </div>
             </div>
         </div>
+        <div id="mmx-maximum-apps-reached" class="alert mmx-global-alert alert-warning fade in clearfix" style="display:none">
+            <i class="fa fa-exclamation-triangle"></i> You have the <b>maximum number of apps</b>. You will need to delete an app to create one.
+        </div>
+        <div id="mmx-maximum-devices-reached" class="alert mmx-global-alert alert-warning fade in clearfix" style="display:none">
+            <i class="fa fa-exclamation-triangle"></i> This app has reached the <b>maximum device limit</b>. To add additional devices, you must deactivate an active device.
+        </div>
         <div class="view-wrapper fullpos">
             <div id="mmx-summary-container" class="fullpos"></div>
             <div id="mmx-active-project-container" class="fullpos">
@@ -355,7 +361,7 @@
             <div class="well well-sm">
                 <a class="well-title" href="#/messaging/<%- model.attributes.id %>"><%- model.attributes.appName %></a>
                 <hr />
-                <%= renderSingle(model) %>
+                <%= renderSingle(model, configs) %>
             </div>
         </div>
     <% }); %>
@@ -455,9 +461,9 @@
             <div class="media-body">
                 <h4 class="media-heading">Messages Delivered in the last 7 days: <%- statistics.delivered.total %></h4>
                 <p class="media-line">
-                    <span class="text green">Push Notifications: <%-statistics.pushMessageStats.totalDelivered %></span>
+                    <span class="text <% if(statistics.pushMessageStats.totalDelivered == 0){ %>gray<% }else{ %>green<% } %>">Push Notifications: <%-statistics.pushMessageStats.totalDelivered %></span>
                     <span class="vertical-line">|</span>
-                    <span class="text blue">In-App Messages: <%- statistics.inAppMessagesStats.totalDelivered %></span>
+                    <span class="text <% if(statistics.inAppMessagesStats.totalDelivered == 0){ %>gray<% }else{ %>blue<% } %>">In-App Messages: <%- statistics.inAppMessagesStats.totalDelivered %></span>
                 </p>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" style="width:<%- statistics.delivered.pushPercent %>%">
@@ -476,7 +482,9 @@
             <div class="media-body">
                 <h4 class="media-heading">Messages Pending in the last 7 days:  <%- statistics.pending.total %></h4>
                 <p class="media-line">
-                    <span class="text gray">Push Notifications: <%-statistics.pushMessageStats.totalPending %> <span class="vertical-line">|</span> <span class="text gray">In-App Messages: <%- statistics.inAppMessagesStats.totalPending %></span>
+                    <span class="text <% if(statistics.pushMessageStats.totalPending == 0){ %>gray<% }else{ %>green<% } %>">Push Notifications: <%-statistics.pushMessageStats.totalPending %>
+                    <span class="vertical-line">|</span>
+                    <span class="text <% if(statistics.inAppMessagesStats.totalPending == 0){ %>gray<% }else{ %>blue<% } %>">In-App Messages: <%- statistics.inAppMessagesStats.totalPending %></span>
                 </p>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" style="width:<%- statistics.pending.pushPercent %>%">
@@ -489,7 +497,7 @@
             </div>
         </div>
         <hr />
-        <div class="media">
+        <div class="media clearfix">
             <a class="pull-left" href="#">
                 <img src="images/dashboard/userdevices.png" alt="user and devices">
             </a>
@@ -498,6 +506,12 @@
                 <p class="text darkgray media-line">
                     Last 7 days: <%- statistics.deviceStats.numDevices %>
                 </p>
+                <div class="media-alert">
+                    <% if(configs['cluster.max.devices.per.app'] > 0 && configs['cluster.max.devices.per.app'] <= statistics.deviceStats.totalActive){ %>
+                    <i class="fa fa-exclamation-triangle fa-4x" data-toggle="tooltip" data-placement="right" title="
+                    This app has reached the maximum device limit. See Endpoints tab for more information."></i>
+                    <% } %>
+                </div>
             </div>
         </div>
     </div>
@@ -975,52 +989,46 @@
 <script id="MessagingQuickstartTmpl" type="text/template">
     <p class="light">This step-by-step tutorial will help you configure and use messaging in your app.</p>
     <table class="table table-striped">
-        <% if(typeof isFirstApp !== 'undefined' && isFirstApp){ %>
         <tr>
             <td class="numbering">1.</td>
             <td>
-                <a class="download-compiled-source" href="#">Download the source files here.</a>
+                Download the MMX Quickstart Android app from GitHub and import it into Android Studio.<br />
+                (<a class="download-compiled-source" href="#">Download a template project.</a>)
             </td>
         </tr>
         <tr>
             <td class="numbering">2.</td>
-            <td>
-                Load the source files into Android Studio.
+            <td>Update the res/raw/quickstart.properties file with these values for your application:
+                <pre>
+appId=&lt;MMX App ID&gt;
+apiKey=&lt;MMX API key&gt;
+gcmSenderId=&lt;gcm project/sender id&gt;
+serverUser=&lt;MMX server user id&gt;
+guestSecret=&lt;MMX app guest secret&gt;</pre>
             </td>
         </tr>
         <tr>
             <td class="numbering">3.</td>
-            <td>Build the project and open in the emulator or load onto a device.</td>
-        </tr>
-        <tr>
-            <td class="numbering">4.</td>
-            <td>Open the app and it will register that as an endpoint.</td>
+            <td>Build/install the app with Android Studio or from commandline at the quickstart root:
+                <pre>./gradlew clean install</pre>
+            </td>
         </tr>
         <tr>
             <td class="numbering">5.</td>
-            <td>Go to the <a href="">Endpoint</a> page and send a test message.</td>
-        </tr>
-        <% }else{ %>
-        <tr>
-            <td class="numbering">1.</td>
-            <td>
-                Copy this sample code into your project.
-                <pre>(◕‿◕✿)</pre>
-            </td>
+            <td>Install/run the application on an emulator or device.</td>
         </tr>
         <tr>
-            <td class="numbering">2.</td>
-            <td>Build the project and open in the emulator or load onto a device.</td>
-        </tr>
-        <tr>
-            <td class="numbering">3.</td>
-            <td>Open the app and it will register that as an endpoint.</td>
+            <td class="numbering">6.</td>
+            <td>Connect to these server settings:
+<pre>host:citest01.magneteng.com
+port: 5222
+username: &lt;choose a new one, the user will be created upon first login&gt;
+password: &lt;a new password&gt;</td>
         </tr>
         <tr class="mmx-nav">
-            <td class="numbering">4.</td>
-            <td>Go to the <a href="#endpoints">Endpoints</a> page and send a test message.</td>
+            <td class="numbering">7.</td>
+            <td>That's it! You should be able to send a message to yourself using the “Send Message” dialog.</td>
         </tr>
-        <% } %>
     </table>
 </script>
 

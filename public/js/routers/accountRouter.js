@@ -100,6 +100,7 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
                 auth = auth.split(':');
                 popover.attr('data-content', '<b>'+auth[0]+' '+auth[1]+'</b><br />'+auth[2]);
                 $('#user-nav').removeClass('hidden');
+                $('#user-nav-popover').show();
                 callback();
             }
         }

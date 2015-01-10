@@ -67,8 +67,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     {key:'WAKEUP_SENT', val:'WAKEUP_SENT'},
                     {key:'DELIVERED', val:'DELIVERED'},
                     {key:'TIMEDOUT', val:'TIMEDOUT'},
-                    {key:'RECEIVED', val:'RECEIVED'},
-                    {key:'CANCELLED', val:'CANCELLED'}
+                    {key:'RECEIVED', val:'RECEIVED'}
                 ]
             }
         },
@@ -138,8 +137,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             AJAX('apps/'+me.model.attributes.id+'/messages'+qs, 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
                 if(res && res.results){
                     for(var i=0;i<res.results.length;++i){
-                        res.results[i].queuedAt = moment(res.results[i].queuedAt).format('lll');
-                        res.results[i].deliveryAckAt = moment(res.results[i].deliveryAckAt).format('lll');
+                        if(res.results[i].queuedAt) res.results[i].queuedAt = moment(res.results[i].queuedAt).format('lll');
+                        if(res.results[i].deliveryAckAt) res.results[i].deliveryAckAt = moment(res.results[i].deliveryAckAt).format('lll');
                         res.results[i].state = '<img src="images/dashboard/mmx_state_'+res.results[i].state+'.png" data-toggle="tooltip" data-placement="right" title="'+me.deliveryStates[res.results[i].state]+'" />';
                     }
                 }
@@ -152,11 +151,11 @@ define(['jquery', 'backbone'], function($, Backbone){
             'PENDING'            : 'Pending',
             'DELIVERY_ATTEMPTED' : 'Delivery attempted',
             'WAKEUP_REQUIRED'    : 'Wake up required',
+            'WAKEUP_TIMEDOUT'    : 'Wake up timeout',
             'WAKEUP_SENT'        : 'Wake up sent',
             'DELIVERED'          : 'Delivered',
             'TIMEDOUT'           : 'Timeout',
-            'RECEIVED'           : 'Received',
-            'CANCELLED'          : 'Cancelled'
+            'RECEIVED'           : 'Received'
         },
         buildList: function(options, callback){
             var me = this;

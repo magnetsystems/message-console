@@ -13,6 +13,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 Cookie.remove('magnet_auth');
                 $('#user-nav').addClass('hidden');
                 $('#user-nav-popover').attr('data-content', '').popover('hide');
+                $('#user-nav-popover').hide();
                 me.$el.find('input').val('');
                 me.$el.find('input[name="username"]').focus();
             });
@@ -35,6 +36,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                         me.options.opts.newMMXUser = true;
                     else
                         me.options.opts.firstLogin = true;
+                    delete me.options.opts.configs;
                     AJAX('/rest/profile', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
                         Cookie.create('magnet_auth', res.firstName+':'+res.lastName+':'+res.email, 1);
                         $('#user-nav-popover').attr('data-content', '<b>'+res.firstName+' '+res.lastName+'</b><br />'+user.val());

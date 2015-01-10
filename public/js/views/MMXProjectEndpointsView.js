@@ -76,7 +76,10 @@ define(['jquery', 'backbone'], function($, Backbone){
             },
             epostype : {
                 title : 'OS',
-                type  : 'search'
+                type  : 'enum',
+                props : [
+                    {key:'ANDROID', val:'ANDROID'}
+                ]
             }
         },
         refresh: function(){
@@ -88,8 +91,6 @@ define(['jquery', 'backbone'], function($, Backbone){
         validate: function(params){
             params = params || {};
             if(params.searchby == 'epname' && params.search.length && params.search.length < 3)
-                return alert('Search value needs at least 3 characters.');
-            if(params.searchby == 'epostype' && params.search.length && params.search.length < 3)
                 return alert('Search value needs at least 3 characters.');
             return true;
         },
@@ -146,18 +147,31 @@ define(['jquery', 'backbone'], function($, Backbone){
                     me.users = [];
                     for(var i=0;i<res.results.length;++i){
                         res.results[i].device.created = moment.unix(res.results[i].device.created / 1000).format('lll');
-                        res.results[i].device.updated = moment.unix(res.results[i].device.updated / 1000).format('lll');
+                        if(res.results[i].device.updated) res.results[i].device.updated = moment.unix(res.results[i].device.updated / 1000).format('lll');
                         res.results[i].device.nameEdited = res.results[i].device.name.substr(0, 30)+'...';
                         res.results[i].device.ownerIdEdited = res.results[i].device.ownerId.substr(0, 10)+'...';
                         res.results[i].device.osTypeEdited = '<i class="fa fa-2x fa-'+(res.results[i].device.osType == 'ANDROID' ? 'android' : 'apple')+'"></i>';
                         res.results[i].device.deviceIdEdited = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.deviceId.substr(0, 30)+'...</a>';
                         res.results[i].device.checkbox = '<input type="checkbox" />';
                         if(res.results[i].userEntity){
-                            res.results[i].userEntity.creationDate = moment.unix(res.results[i].userEntity.creationDate / 1000).format('lll');
-                            res.results[i].userEntity.modificationDate = moment.unix(res.results[i].userEntity.modificationDate / 1000).format('lll');
+                            if(res.results[i].userEntity.creationDate) res.results[i].userEntity.creationDate = moment.unix(res.results[i].userEntity.creationDate / 1000).format('lll');
+                            if(res.results[i].userEntity.modificationDate) res.results[i].userEntity.modificationDate = moment.unix(res.results[i].userEntity.modificationDate / 1000).format('lll');
                         }
                         me.endpoints.push(res.results[i].device);
                         me.users.push(res.results[i].userEntity || null);
+                    }
+                    if(me.options.opts.configs['cluster.max.devices.per.app'] > 0 && me.options.opts.configs['cluster.max.devices.per.app'] <= res.active){
+                        $('#mmx-maximum-devices-reached').show();
+                        $('#mmx-container .view-wrapper').css('margin-top', function(index, curValue){
+                            var curr = parseInt(curValue, 10);
+                            return (curr == 43 || curr == 77) ? (curr + 35) : curr + 'px';
+                        });
+                    }else{
+                        $('#mmx-maximum-devices-reached').hide();
+                        $('#mmx-container .view-wrapper').css('margin-top', function(index, curValue){
+                            var curr = parseInt(curValue, 10);
+                            return (curr == 78 || curr == 112) ? (curr - 35) : curr + 'px';
+                        });
                     }
                 }
                 cb(res);

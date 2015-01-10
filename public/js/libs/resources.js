@@ -1,7 +1,7 @@
 
 /* HELPERS */
 var GLOBAL = {
-    baseUrl : 'http://localhost:3000',
+    baseUrl : '',
     polling : false
 };
 
@@ -468,6 +468,7 @@ function endLoading(id, params){
 }
 
 function MMXNoAppTour(){
+    $('.modal').modal('hide');
     var tour = new Tour({
         storage : false,
         steps: [
@@ -476,7 +477,12 @@ function MMXNoAppTour(){
             title     : "Create An App",
             content   : "You have no apps in your list. You can create one by pressing the + button.",
             placement : "bottom",
-            backdrop  : true
+            backdrop  : true,
+            template  : "<div class='popover tour'>\
+                    <div class='arrow'></div>\
+                <h3 class='popover-title'></h3>\
+                <div class='popover-content'></div>\
+            </div>"
         }
     ]});
     tour.init();
@@ -492,18 +498,34 @@ function MMXInitialAppTour(appId){
             {
                 element   : "#breadcrumb .same-line",
                 title     : "Welcome to Magnet Messaging!",
-                content   : "We made your first app for you. When you are ready you can make more apps yourself by pressing the + button.",
+                content   : "We made your first app for you. Click Next to continue with the tour. When you are ready you can make more apps yourself by pressing the + button.",
                 placement : "bottom",
                 backdrop  : true,
                 onNext    : function(){
                     Backbone.history.navigate('#/messaging/'+appId+'/quickstart');
                     return;
-                }
+                },
+                template  : "<div class='popover tour'>\
+                    <div class='arrow'></div>\
+                <h3 class='popover-title'></h3>\
+                <div class='popover-content'></div>\
+                <div class='popover-navigation'>\
+                    <button class='btn btn-default' data-role='next'>Next »</button>\
+                </div>\
+            </div>"
             },
             {
                 element   : "#mmx-quickstart .download-compiled-source",
                 title     : "Quickstart",
-                content   : "Follow these easy steps to get started quickly."
+                content   : "Follow these easy steps to get started quickly.",
+                template  : "<div class='popover tour'>\
+                    <div class='arrow'></div>\
+                <h3 class='popover-title'></h3>\
+                <div class='popover-content'></div>\
+                <div class='popover-navigation'>\
+                    <button class='btn btn-default' data-role='end'>End tour</button>\
+                </div>\
+            </div>"
             }
         ]});
     tour.init();

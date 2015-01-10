@@ -24,6 +24,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             var obj = utils.collect(me.$el);
             if($.trim(obj.guestUserSecret).length < 1) return alert('Guest Access Secret is a required field.');
             if($.trim(obj.appName).length < 1) return alert('App Name is a required field.');
+            if(me.model.attributes.appName != obj.appName && me.options.opts.col.where({appName:obj.appName}).length) return alert('The App name you specified already exists. Please choose another name.');
             me.model.save(obj, {
                 success: function(){
                     me.model.set({
@@ -51,12 +52,16 @@ define(['jquery', 'backbone'], function($, Backbone){
             }, function(){
                 me.model.destroy({
                     success: function(){
+                        me.options.eventPubSub.trigger('imposeAppLimit');
                         me.options.eventPubSub.trigger('renderMMXList');
-                        Backbone.history.navigate('#/messaging');
-                        Alerts.General.display({
-                            title   : 'App Deleted',
-                            content : 'Your app has been deleted.'
-                        });
+                        var ret = Backbone.history.navigate('#/', true);
+                        if(ret === undefined)
+                            Backbone.history.loadUrl('#/');
+                        else
+                            Alerts.General.display({
+                                title   : 'App Deleted',
+                                content : 'Your app has been deleted.'
+                            });
                     },
                     error: function(e){
                         alert(e.responseText);

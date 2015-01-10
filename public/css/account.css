@@ -30,6 +30,8 @@
 #mmx-apps .tab-pane{margin:20px 0}
 #mmx-apps .glyphicon{cursor:pointer}
 #mmx-container .view-wrapper{padding:0;margin-top:43px;background:#d9d9d9}
+.mmx-global-alert{padding:6px;margin-bottom:0}
+.mmx-global-alert .fa{margin:0 8px}
 #mmx-active-project-container{border-radius:0;background:#fff;overflow-y:scroll}
 #mmx-active-project-container .tab-content{padding:4px 15px 15px 15px}
 #mmx-active-project-container .tab-content .tab-pane{background:none;margin-top:10px}
@@ -52,11 +54,14 @@
 .mmx-dashboard-item img{max-width:78px}
 .mmx-dashboard-item > hr{margin:0 0 10px 0;border-color:#ddd}
 .mmx-dashboard-item > .media{margin:1px 0 0 0;max-width:700px}
-.mmx-dashboard-item .media-body{padding:0}
+.mmx-dashboard-item .media-body{padding:0;position:relative}
+.mmx-dashboard-item .media, .mmx-dashboard-item .media-body{overflow:visible}
 .mmx-dashboard-item p.media-line{margin:2px 0}
 .mmx-dashboard-item .media-body, #mmx-dash-tab h4{font-weight:500}
 .mmx-dashboard-item .progress{margin-bottom:12px;margin-top:3px}
 .mmx-dashboard-item .media-heading{margin:0;font-size:14px;font-weight:500}
+.mmx-dashboard-item .media-alert{position:absolute;top:5px;right:50px;min-width:300px}
+.mmx-dashboard-item .fa-exclamation-triangle{color:#ffbb00}
 
 /* mmx settings */
 #mmx-settings .form-group{margin:0}
@@ -101,6 +106,7 @@
 #mmx-quickstart .numbering{font-size:40px;text-indent:15px}
 #mmx-quickstart .text{margin-top:20px}
 #mmx-quickstart .table-striped tr:nth-child(2n+1) > td{background:#e3e3e3}
+.download-compiled-source{text-decoration:underline}
 
 @media only screen and (max-width:767px){
     #mmx-messages-list .dt-container .col-sm-6{padding:0}

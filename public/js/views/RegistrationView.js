@@ -25,7 +25,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                         title   : 'Registration Submitted Successfully',
                         content : 'Your invitation confirmation has been sent successfully. An administrator will review your application and contact you through email.'
                     };
-                    if(status && status.indexOf('"skipAdminApproval": true') != -1){
+                    if(xhr.responseText && xhr.responseText.indexOf('"skipAdminApproval": true') != -1){
                         msg.content = 'Your invitation confirmation has been sent successfully. An email has been sent to the email address you provided. Please check your email and click on the link to complete the registration process.';
                     }
                     Alerts.General.display(msg);

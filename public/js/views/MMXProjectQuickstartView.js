@@ -13,9 +13,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click .download-compiled-source': 'downloadCompiledSource'
         },
         render: function(){
-            this.$el.html(_.template($('#MessagingQuickstartTmpl').html(), {
-                isFirstApp : (this.options.opts && this.options.opts.appCount < 2)
-            }));
+            this.$el.html(_.template($('#MessagingQuickstartTmpl').html()));
         },
         downloadCompiledSource: function(e){
             e.preventDefault();

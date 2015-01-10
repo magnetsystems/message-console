@@ -22,8 +22,10 @@ define(['jquery', 'backbone'], function($, Backbone){
         render: function(stats){
             this.$el.find('.view-container').html(_.template($('#MessagingDashboardItemTmpl').html(), {
                 model      : this.model,
+                configs    : this.options.opts.configs,
                 statistics : utils.calcStats(stats)
             }));
+            this.$el.find('.view-container .fa-exclamation-triangle').tooltip();
         }
     });
     return View;
