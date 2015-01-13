@@ -1,7 +1,7 @@
 
 /* HELPERS */
 var GLOBAL = {
-    baseUrl : '',
+    baseUrl : 'http://localhost:3000',
     polling : false
 };
 
@@ -912,6 +912,7 @@ utils = {
                     stats.pushMessageStats.totalPending += stats.pushMessageStats.stats[i].count;
             }
         }
+        stats.inAppMessagesStats = stats.inAppMessagesStats || {};
         stats.inAppMessagesStats.totalDelivered = 0;
         stats.inAppMessagesStats.totalPending = 0;
         if(stats.inAppMessagesStats.stats){

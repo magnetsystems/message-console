@@ -5,6 +5,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             var me = this;
             me.options = options;
             me.options.eventPubSub.bind('initMMXProjectendpoints', function(model){
+                me.setElement('#mmx-endpoints');
                 me.model = model;
                 me.render();
             });
@@ -141,7 +142,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 qs += '&'+key+'='+query[key];
             }
             qs = qs.replace('&', '?');
-            AJAX('apps/'+me.model.attributes.id+'/endpoints'+qs, 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
+            AJAX('mmx/apps/'+me.model.attributes.id+'/endpoints'+qs, 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
                 if(res && res.results){
                     me.endpoints = [];
                     me.users = [];
@@ -316,7 +317,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         getRecentMessages: function(cb, isFirstCall){
             var me = this;
-            AJAX('apps/'+me.model.attributes.id+'/devices/'+this.activeDevice.deviceId+'/messages', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
+            AJAX('mmx/apps/'+me.model.attributes.id+'/devices/'+this.activeDevice.deviceId+'/messages', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
                 me.renderDeviceMessages(res.mlist);
                 if(isFirstCall) me.latestMessageId = res.mlist.length > 0 ? res.mlist[0].messageId : null;
                 if(typeof cb === typeof Function) cb();

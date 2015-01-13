@@ -27,7 +27,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             });
         },
         getStats: function(col, cb){
-            AJAX('apps/stats', 'GET', 'application/json', null, function(res){
+            AJAX('mmx/apps/stats', 'GET', 'application/json', null, function(res){
                 for(var j=0;j<col.models.length;++j){
                     for(var i=0;i<res.length;++i){
                         if(res[i].appId == col.models[j].attributes.id){
