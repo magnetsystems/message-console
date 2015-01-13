@@ -286,7 +286,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         showDeviceDetailsModal: function(e){
             e.preventDefault();
             var row = $(e.currentTarget).closest('tr');
-            var index = utils.getIndexByAttr(this.endpoints, 'id', parseInt(row.attr('did')));
+            var index = utils.getIndexByAttr(this.endpoints, 'id', row.attr('did'));
             var modal = $('#mmx-device-showdetails-modal');
             modal.find('.modal-body').html(_.template($('#MessagingDeviceDetailsTmpl').html(), {
                 device : this.endpoints[index],
