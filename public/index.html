@@ -894,42 +894,54 @@
         <tr>
             <td class="numbering">1.</td>
             <td>
-                Download the MMX Quickstart Android app from GitHub and import it into Android Studio.<br />
-                (<a class="download-compiled-source" href="#">Download a template project.</a>)
+                Download the Messaging Quickstart Android app. Import it into Android Studio.<br />
+                (<a class="download-compiled-source" href="#">Download Quickstart app project.</a>)
             </td>
         </tr>
         <tr>
             <td class="numbering">2.</td>
-            <td>Update the res/raw/quickstart.properties file with these values for your application:
+            <td>Verify the "res/raw/quickstart.properties" file match values for your app settings as shown in "Settings" menu.
                 <pre>
-appId=&lt;MMX App ID&gt;
+appId=&lt;App ID&gt;
 apiKey=&lt;MMX API key&gt;
-gcmSenderId=&lt;gcm project/sender id&gt;
-serverUser=&lt;MMX server user id&gt;
-guestSecret=&lt;MMX app guest secret&gt;</pre>
+gcmSenderId=&lt;GCM project/sender id&gt;
+guestSecret=&lt;Guest Access Secret&gt;</pre>
             </td>
         </tr>
         <tr>
             <td class="numbering">3.</td>
-            <td>Build/install the app with Android Studio or from commandline at the quickstart root:
-                <pre>./gradlew clean install</pre>
+            <td>Build the app with Android Studio or from command line at root directory of "quickstart-android"
+                <pre>./gradlew clean build</pre>
+            </td>
+        </tr>
+        <tr>
+            <td class="numbering">4.</td>
+            <td>Install and run the Android app on an Android emulator or mobile device connected to your development machine:
+                <pre>./gradlew install</pre>
             </td>
         </tr>
         <tr>
             <td class="numbering">5.</td>
-            <td>Install/run the application on an emulator or device.</td>
+            <td>From the app, connect to Messaging using these connection settings:
+<pre>host:mmx.magnet.com
+port: 5222</pre>
+Optional if not using guest access:
+<pre>username: &lt;choose a new one, the user will be created upon first login&gt;
+password: &lt;a new password&gt;</pre>
+                You are all set! You can now send and receive messages with Magnet Mobile Messaging.
+            </td>
         </tr>
         <tr>
             <td class="numbering">6.</td>
-            <td>Connect to these server settings:
-<pre>host:citest01.magneteng.com
-port: 5222
-username: &lt;choose a new one, the user will be created upon first login&gt;
-password: &lt;a new password&gt;</td>
+            <td>Try it out by sending an in-app messages or push notification to your app from <a href="#/messaging/<%- model.attributes.appId %>/endpoints">Endpoints</a> -> Select your device -> Send Message dialog.</td>
         </tr>
         <tr class="mmx-nav">
             <td class="numbering">7.</td>
-            <td>That's it! You should be able to send a message to yourself using the “Send Message” dialog.</td>
+            <td>Go to "Message Log" to view in-app message status.</td>
+        </tr>
+        <tr class="mmx-nav">
+            <td class="numbering">7.</td>
+            <td>See <a href="#">Magnet Mobile Messaging Developer Guide</a> to learn more about Mobile Messaging capabilities. </td>
         </tr>
     </table>
 </script>

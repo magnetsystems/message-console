@@ -14,7 +14,9 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click .download-compiled-source': 'downloadCompiledSource'
         },
         render: function(){
-            this.$el.html(_.template($('#MessagingQuickstartTmpl').html()));
+            this.$el.html(_.template($('#MessagingQuickstartTmpl').html(), {
+                model : this.model
+            }));
         },
         downloadCompiledSource: function(e){
             e.preventDefault();
@@ -26,7 +28,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 iframe.style.display = 'none';
                 document.body.appendChild(iframe);
             }
-            iframe.src = GLOBAL.baseUrl+'/rest/apps/'+this.model.attributes.id+'/sample?platform=android';
+            iframe.src = GLOBAL.baseUrl+'/rest/mmx/apps/'+this.model.attributes.id+'/sample?platform=android';
         }
     });
     return View;
