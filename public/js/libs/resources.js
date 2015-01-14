@@ -1,7 +1,7 @@
 
 /* HELPERS */
 var GLOBAL = {
-    baseUrl : 'http://localhost:3000',
+    baseUrl : '',
     polling : false
 };
 

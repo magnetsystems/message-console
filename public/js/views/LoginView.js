@@ -40,7 +40,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                     AJAX('/rest/profile', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
                         Cookie.create('magnet_auth', res.firstName+':'+res.lastName+':'+res.email, 1);
                         $('#user-nav-popover').attr('data-content', '<b>'+res.firstName+' '+res.lastName+'</b><br />'+user.val());
-//                        $('#user-nav').removeClass('hidden');
+                        $('#user-nav').removeClass('hidden');
+                        $('#user-nav-popover').show();
                         user.val('');
                         if(typeof me.callback === typeof Function){
                             me.callback();
