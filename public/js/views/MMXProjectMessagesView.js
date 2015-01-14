@@ -60,12 +60,11 @@ define(['jquery', 'backbone'], function($, Backbone){
                 title : 'State',
                 type  : 'enum',
                 props : [
-                    {key:'PENDING', val:'PENDING'},
                     {key:'DELIVERY_ATTEMPTED', val:'DELIVERY_ATTEMPTED'},
                     {key:'WAKEUP_REQUIRED', val:'WAKEUP_REQUIRED'},
+                    {key:'WAKEUP_TIMEDOUT', val:'WAKEUP_TIMEDOUT'},
                     {key:'WAKEUP_SENT', val:'WAKEUP_SENT'},
                     {key:'DELIVERED', val:'DELIVERED'},
-                    {key:'TIMEDOUT', val:'TIMEDOUT'},
                     {key:'RECEIVED', val:'RECEIVED'}
                 ]
             }
@@ -147,13 +146,11 @@ define(['jquery', 'backbone'], function($, Backbone){
             });
         },
         deliveryStates: {
-            'PENDING'            : 'Pending',
             'DELIVERY_ATTEMPTED' : 'Delivery attempted',
             'WAKEUP_REQUIRED'    : 'Wake up required',
             'WAKEUP_TIMEDOUT'    : 'Wake up timeout',
             'WAKEUP_SENT'        : 'Wake up sent',
             'DELIVERED'          : 'Delivered',
-            'TIMEDOUT'           : 'Timeout',
             'RECEIVED'           : 'Received'
         },
         buildList: function(options, callback){
