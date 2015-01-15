@@ -1,6 +1,6 @@
 define(["jquery", "backbone"], function($, Backbone){
     var View = Backbone.Model.extend({
-        urlRoot: 'apps',
+        urlRoot : 'mmx/apps',
         parse: function(res){
             return res;
         }

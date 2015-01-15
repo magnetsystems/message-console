@@ -5,6 +5,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             var me = this;
             me.options = options;
             me.options.eventPubSub.bind('initMMXProjectmessages', function(model){
+                me.setElement('#mmx-messages');
                 me.model = model;
                 me.render();
             });
@@ -25,8 +26,6 @@ define(['jquery', 'backbone'], function($, Backbone){
         render: function(){
             var me = this;
             me.sorts = {};
-            if(me.rendered) return me.refresh();
-            me.rendered = true;
             me.$el.find('.view-container').html(_.template($('#MessagingMessagesListTmpl').html(), {
                 filters : me.filters
             }));
@@ -133,7 +132,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 qs += '&'+key+'='+query[key];
             }
             qs = qs.replace('&', '?');
-            AJAX('apps/'+me.model.attributes.id+'/messages'+qs, 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
+            AJAX('mmx/apps/'+me.model.attributes.id+'/messages'+qs, 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
                 if(res && res.results){
                     for(var i=0;i<res.results.length;++i){
                         if(res.results[i].queuedAt) res.results[i].queuedAt = moment(res.results[i].queuedAt).format('lll');

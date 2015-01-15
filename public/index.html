@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/bootstrap-tour.min.css">
     <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/account.css" />
+    <link rel="stylesheet" href="css/messaging.css" />
     <script src="js/libs/modernizr.js"></script>
     <script data-main="js/account" src="js/libs/require.js"></script>
 </head>
@@ -222,106 +222,6 @@
                     <div class="tab-pane clearfix" id="mmx-settings">
                         <div class="view-container"></div>
                     </div>
-                    <div class="tab-pane clearfix" id="mmx-send">
-                        <p>Add one or more filters to select recipients who will receive your message.</p>
-
-                        <div class="row-fluid">
-                            <div class="col-md-8">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">Filter List</div>
-                                    <div id="project-messaging-filter-list" class="panel-body">No filters have been added.</div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">Payload</div>
-                                    <div id="project-messaging-msg-payload-container" class="panel-body">
-                                        <textarea id="project-messaging-msg-payload" name="payload" placeholder="Payload">{"msg":"hello world"}</textarea>
-                                    </div>
-                                </div>
-                                <div class="clearfix fullwidth">
-                                    <button class="btn btn-primary">Send Message</button>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">Add A Filter</div>
-                                    <div id="project-messaging-filter-add" class="panel-body">
-                                        <div class="list-group">
-                                            <a href="#" did="username" class="list-group-item">
-                                                <span class="glyphicon glyphicon-plus"></span>
-                                                Full Name
-                                            </a>
-                                            <a href="#" did="useremail" class="list-group-item">
-                                                <span class="glyphicon glyphicon-plus"></span>
-                                                Email Address
-                                            </a>
-                                            <a href="#" did="devicetype" class="list-group-item">
-                                                <span class="glyphicon glyphicon-plus"></span>
-                                                Device Type
-                                            </a>
-                                            <a href="#" did="devicemodel" class="list-group-item">
-                                                <span class="glyphicon glyphicon-plus"></span>
-                                                Device Model
-                                            </a>
-                                            <a href="#" did="georegion" class="list-group-item">
-                                                <span class="glyphicon glyphicon-plus"></span>
-                                                GeoRegion
-                                            </a>
-                                            <a href="#" did="geopoint" class="list-group-item">
-                                                <span class="glyphicon glyphicon-plus"></span>
-                                                GeoPoint
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane clearfix" id="mmx-test">
-                        <div class="form-group clearfix">
-                            <span class="form-caption">Send Test GCM Push</span>
-                            <div class="well well-default clearfix">
-                                <form role="form">
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <label>Device Id</label>
-                                            <input type="text" class="form-control" name="gcm-push-id" placeholder="Device Id" value="" />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label>Message</label>
-                                            <input type="text" class="form-control" name="gcm-push-msg" placeholder="Message" value="" />
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="button-group">
-                                                <button type="button" class="btn btn-primary">Send</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
-                            <span class="form-caption">Send Test APNS Push</span>
-                            <div class="well well-default clearfix">
-                                <form role="form">
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <label>Device Id</label>
-                                            <input type="text" class="form-control" name="apns-push-id" placeholder="Device Id" value="" />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label>Message</label>
-                                            <input type="text" class="form-control" name="apns-push-msg" placeholder="Message" value="" />
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="button-group">
-                                                <button type="button" class="btn btn-primary">Send</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                     <div class="tab-pane clearfix" id="mmx-endpoints">
                         <div class="view-container"></div>
                     </div>
@@ -344,7 +244,7 @@
         </div>
         <div id="footer" class="row-fluid">
             <div class="col-xs-6">
-                &copy; 2014 Magnet Systems, Inc. All rights reserved.
+                &copy; 2015 Magnet Systems, Inc. All rights reserved.
             </div>
             <div class="col-xs-6">
                 <a href="#/licenses" target="_blank">Open Source Licenses</a>
@@ -447,7 +347,9 @@
     <div class="form-group clearfix">
         <div class="controls">
             <button did="save" class="btn btn-primary">Save</button>
+            <% if(typeof opts.isMMXSubview === 'undefined' || !opts.isMMXSubview){ %>
             <button did="delete" class="btn btn-danger">Delete App</button>
+            <% } %>
         </div>
     </div>
 </script>
