@@ -5,7 +5,6 @@ define(['jquery', 'backbone'], function($, Backbone){
             var me = this;
             me.options = options;
             me.options.eventPubSub.bind('initMMXProjecttopics', function(model){
-                me.setElement('#mmx-topics');
                 me.model = model;
                 $('#mmx-new-topic-input').val('');
                 me.getTopics(function(){
@@ -24,7 +23,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         getTopics: function(cb){
             var me = this;
-            AJAX('mmx/apps/'+me.model.attributes.id+'/topics', 'GET', 'application/json', null, function(res, status, xhr){
+            AJAX('apps/'+me.model.attributes.id+'/topics', 'GET', 'application/json', null, function(res, status, xhr){
                 me.topics = res;
                 cb();
             }, function(xhr, status, thrownError){
@@ -40,7 +39,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             var me = this;
             var input = $('#mmx-new-topic-input');
             if(!$.trim(input.val()).length) return alert('Topic Name is a required field.');
-            AJAX('mmx/apps/'+me.model.attributes.id+'/topics', 'POST', 'application/json', {
+            AJAX('apps/'+me.model.attributes.id+'/topics', 'POST', 'application/json', {
                 name : input.val()
             }, function(res, status, xhr){
                 input.val('');
@@ -57,7 +56,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 content : 'Please verify that you wish to delete this topic.'
             }, function(){
                 var row = $(e.currentTarget).closest('tr');
-                AJAX('mmx/apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(row.attr('did')), 'DELETE', 'application/json', null, function(res, status, xhr){
+                AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(row.attr('did')), 'DELETE', 'application/json', null, function(res, status, xhr){
                     utils.removeByAttr(me.topics, 'id', row.attr('did'));
                     row.hide('slow', function(){
                         row.remove();
@@ -76,7 +75,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         publishTopic: function(){
             var me = this;
             var msg = this.modal.find('textarea');
-            AJAX('mmx/apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(this.activeTopic.id)+'/publish', 'POST', 'application/json', {
+            AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(this.activeTopic.id)+'/publish', 'POST', 'application/json', {
                 payload : msg.val()
             }, function(res, status, xhr){
                 msg.val('');

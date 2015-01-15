@@ -5,7 +5,6 @@ define(['jquery', 'backbone'], function($, Backbone){
             var me = this;
             me.options = options;
             me.options.eventPubSub.bind('initMMXProjectquickstart', function(model){
-                me.setElement('#mmx-quickstart');
                 me.model = model;
                 me.render();
             });

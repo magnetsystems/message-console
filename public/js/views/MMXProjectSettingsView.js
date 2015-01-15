@@ -5,7 +5,6 @@ define(['jquery', 'backbone'], function($, Backbone){
             var me = this;
             me.options = options;
             me.options.eventPubSub.bind('initMMXProjectsettings', function(model){
-                me.setElement('#mmx-settings');
                 me.model = model;
                 me.render();
             });
@@ -16,8 +15,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         render: function(){
             this.$el.find('.view-container').html(_.template($('#MessagingProjectSettingsView').html(), {
-                model : this.model,
-                opts  : this.options.opts
+                model : this.model
             }));
             this.$el.find('.glyphicon-info-sign').tooltip();
         },
@@ -27,9 +25,6 @@ define(['jquery', 'backbone'], function($, Backbone){
             if($.trim(obj.guestUserSecret).length < 1) return alert('Guest Access Secret is a required field.');
             if($.trim(obj.appName).length < 1) return alert('App Name is a required field.');
             if(me.model.attributes.appName != obj.appName && me.options.opts.col.where({appName:obj.appName}).length) return alert('The App name you specified already exists. Please choose another name.');
-            obj.gcm = {};
-            if(obj.googleApiKey) obj.gcm.googleApiKey = obj.googleApiKey;
-            if(obj.googleProjectId) obj.gcm.googleProjectId = obj.googleProjectId;
             me.model.save(obj, {
                 success: function(){
                     me.model.set({
