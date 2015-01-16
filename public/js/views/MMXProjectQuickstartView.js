@@ -27,7 +27,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 iframe.style.display = 'none';
                 document.body.appendChild(iframe);
             }
-            iframe.src = GLOBAL.baseUrl+'/rest/mmx/apps/'+this.model.attributes.id+'/sample?platform=android';
+            iframe.src = GLOBAL.baseUrl+'/rest/apps/'+this.model.attributes.id+'/sample?platform=android';
         }
     });
     return View;
