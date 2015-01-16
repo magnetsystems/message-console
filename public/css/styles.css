@@ -63,7 +63,7 @@ html, body{background:#efefef;height:100%}
 .view-wrapper > .content > .row-fluid > .col-md-3{padding-right:15px}
 .vscroll.page-main-tab{background:#fff;margin:52px 20px 0 20px;border:solid 1px #aaa}
 .main-section, .main-section > .tab-content, .main-section > .tab-content > .tab-pane, .view-wrapper > .content > .row-fluid, .tab-content-container, .view-wrapper > .content > .row-fluid > div{height:100%}
-
+#confirm-tos-dialog iframe{width:100%}
 
 /* - forms */
 label{font-weight:500}

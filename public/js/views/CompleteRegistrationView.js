@@ -20,25 +20,29 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(me.validate(me.$el) === true){
                 utils.resetError(me.$el);
                 var data = utils.collect(me.$el);
-                AJAX('/rest/users/'+token+'/completeRegistration', 'POST', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
-                    Backbone.history.navigate('#/login');
-                    Alerts.General.display({
-                        title   : 'Registration Completed',
-                        content : 'Congratulations! You have completed the registration. Sign in now to begin sending messages.'
-                    });
-                }, function(xhr, status, thrownError){
-                    var msg = 'A problem occurred during registration. Have you already registered? If so, please click on the "Return to Login" button below and try logging in.';
-                    if(xhr.responseText == '"USER_DOES_NOT_EXIST"'){
-                        msg = 'A problem occurred during registration. Have you already registered? If so, try logging in. If you cannot log in, your account may have been removed. Please contact Magnet support for assistance or create a new account.';
-                    }
-                    if(xhr.responseText.indexOf('invit_req_pending') != -1 || xhr.responseText.indexOf('finish') != -1 || xhr.responseText.indexOf('failed') != -1){
-                        Alerts.Error.display({
-                            title   : 'Registration Error',
-                            content : msg
+                $('#confirm-tos-dialog').modal('show');
+                $('#agree-to-tos').unbind('click').click(function(){
+                    $('#confirm-tos-dialog').modal('hide');
+                    AJAX('/rest/users/'+token+'/completeRegistration', 'POST', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
+                        Backbone.history.navigate('#/login');
+                        Alerts.General.display({
+                            title   : 'Registration Completed',
+                            content : 'Congratulations! You have completed the registration. Sign in now to begin sending messages.'
                         });
-                    }else{
-                        utils.showError(me.$el, '', msg);
-                    }
+                    }, function(xhr, status, thrownError){
+                        var msg = 'A problem occurred during registration. Have you already registered? If so, please click on the "Return to Login" button below and try logging in.';
+                        if(xhr.responseText == '"USER_DOES_NOT_EXIST"'){
+                            msg = 'A problem occurred during registration. Have you already registered? If so, try logging in. If you cannot log in, your account may have been removed. Please contact Magnet support for assistance or create a new account.';
+                        }
+                        if(xhr.responseText.indexOf('invit_req_pending') != -1 || xhr.responseText.indexOf('finish') != -1 || xhr.responseText.indexOf('failed') != -1){
+                            Alerts.Error.display({
+                                title   : 'Registration Error',
+                                content : msg
+                            });
+                        }else{
+                            utils.showError(me.$el, '', msg);
+                        }
+                    });
                 });
             }
         },
