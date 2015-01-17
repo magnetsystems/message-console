@@ -147,9 +147,12 @@ define(['jquery', 'backbone'], function($, Backbone){
             });
         },
         selectMMXView: function(e){
-            e.preventDefault();
             var link = $(e.currentTarget);
             var view = link.attr('href');
+            if(view.indexOf('/docs/') != -1)
+                return;
+            else
+                e.preventDefault();
             this.options.eventPubSub.trigger('initMMXProject', {
                 view : view.slice(1)
             });
