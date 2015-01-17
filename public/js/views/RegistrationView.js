@@ -14,6 +14,8 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         register: function(){
             var me = this;
+            var re = /(?![\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})./g;
+            me.$el.find('input[name="email"]').val(me.$el.find('input[name="email"]').val().replace(re, ''));
             if(me.validate(me.$el) === true){
                 utils.resetError(me.$el);
                 var data = utils.collect(me.$el);
