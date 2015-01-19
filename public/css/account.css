@@ -108,6 +108,10 @@
 #mmx-quickstart .table-striped tr:nth-child(2n+1) > td{background:#e3e3e3}
 .download-compiled-source{text-decoration:underline}
 
+/* footer */
+#footer{padding:0}
+
+
 @media only screen and (max-width:767px){
     #mmx-messages-list .dt-container .col-sm-6{padding:0}
     .vertical-line{display:block;visibility:hidden}
