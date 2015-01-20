@@ -10,10 +10,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                 me.getTopics(function(){
                     me.render();
                 });
-                me.modal = $('#mmx-publishtopic-modal');
-                $('#mmx-publishtopic-btn').click(function(){
-                    me.publishTopic();
-                });
+            });
+            me.modal = $('#mmx-publishtopic-modal');
+            $('#mmx-publishtopic-btn').click(function(){
+                me.publishTopic();
             });
         },
         events : {
