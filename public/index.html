@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Messaging</title>
+    <title>Magnet Messaging – Developer Preview</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/fuelux.min.css" />
     <link rel="stylesheet" href="css/font-awesome.min.css" />
@@ -28,7 +28,7 @@
             </button>
             <a class="navbar-brand" href="#">
                 <img src="images/heading.png" />
-                Messaging
+                Magnet Messaging <span class="hidden-xs">- Developer Preview</span>
                 <span class="project-name-holder"></span>
             </a>
         </div>
@@ -40,12 +40,16 @@
                 <li><a href="#topics">Topics</a></li>
                 <li><a href="#quickstart">Quickstart</a></li>
                 <li><a href="#settings">Settings</a></li>
+                <li><a href="/docs/latest/messaging/" target="_blank">Documentation</a></li>
             </ul>
         </div>
         <ul id="user-nav-menu" class="nav navbar-nav navbar-right">
             <li>
+                <a href="/docs/latest/messaging/" target="_blank" class="hidden-xs">
+                    <span class="fa fa-question-circle fa-2x"></span>
+                </a>
                 <a id="user-nav-popover" style="display:none" data-title="<div class='clearfix'><a href='#/profile' class='btn btn-sm btn-default pull-left'>Profile</a><button id='logout-btn' class='btn btn-sm btn-default pull-right'>Sign Out</button></div>" data-content="">
-                    <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span>
+                    <span class="fa fa-cog fa-2x"></span> <span class="caret"></span>
                 </a>
             </li>
         </ul>
@@ -148,7 +152,7 @@
                     <a id="forgotpassword-btn" class="btn btn-primary">Request Password Recovery</a>
                 </div>
                 <div class="form-group">
-                    <p><a href="#/login">I suddenly remember now</a></p>
+                    <p><a href="#/login">I remember now</a></p>
                 </div>
             </div>
         </div>
@@ -171,7 +175,7 @@
                     <a id="resetpassword-btn" class="btn btn-primary">Save Password</a>
                 </div>
                 <div class="form-group">
-                    <p><a href="#/login">I suddenly remember now</a></p>
+                    <p><a href="#/login">I remember now</a></p>
                 </div>
             </div>
         </div>
@@ -187,6 +191,7 @@
             <a class="list-group-item" href="#topics"><i class="fa fa-edit"></i>Topics</a>
             <a class="list-group-item" href="#quickstart"><i class="fa fa-desktop"></i>Quickstart</a>
             <a class="list-group-item" href="#settings"><i class="fa fa-cog"></i>Settings</a>
+            <a class="list-group-item" href="/docs/latest/messaging/" target="_blank"><i class="fa fa-book"></i>Documentation</a>
         </div>
     </div>
     <div class="table-cell">
@@ -343,11 +348,8 @@
             </div>
         </div>
         <div id="footer" class="row-fluid">
-            <div class="col-xs-6">
-                &copy; 2014 Magnet Systems, Inc. All rights reserved.
-            </div>
-            <div class="col-xs-6">
-                <a href="#/licenses" target="_blank">Open Source Licenses</a>
+            <div class="col-xs-12">
+                <p>Copyright &copy; Magnet Systems, Inc. 2015 | <a href="//www.magnet.com/resources/privacy_policy.html">Privacy Policy</a> | <a href="//www.magnet.com/resources/tos.html">Terms of Service</a></p>
             </div>
         </div>
     </div>
@@ -992,42 +994,53 @@
         <tr>
             <td class="numbering">1.</td>
             <td>
-                Download the MMX Quickstart Android app from GitHub and import it into Android Studio.<br />
-                (<a class="download-compiled-source" href="#">Download a template project.</a>)
+                <a class="download-compiled-source" href="#">Download the Messaging Quickstart Android app.</a> Import it into Android Studio.
             </td>
         </tr>
         <tr>
             <td class="numbering">2.</td>
-            <td>Update the res/raw/quickstart.properties file with these values for your application:
+            <td>Verify the "res/raw/quickstart.properties" file match values for your app settings as shown in "Settings" menu.
                 <pre>
-appId=&lt;MMX App ID&gt;
+appId=&lt;App ID&gt;
 apiKey=&lt;MMX API key&gt;
-gcmSenderId=&lt;gcm project/sender id&gt;
-serverUser=&lt;MMX server user id&gt;
-guestSecret=&lt;MMX app guest secret&gt;</pre>
+gcmSenderId=&lt;GCM project/sender id&gt;
+guestSecret=&lt;Guest Access Secret&gt;</pre>
             </td>
         </tr>
         <tr>
             <td class="numbering">3.</td>
-            <td>Build/install the app with Android Studio or from commandline at the quickstart root:
-                <pre>./gradlew clean install</pre>
+            <td>Build the app with Android Studio or from command line at root directory of "quickstart-android"
+                <pre>./gradlew clean build</pre>
+            </td>
+        </tr>
+        <tr>
+            <td class="numbering">4.</td>
+            <td>Install and run the Android app on an Android emulator or mobile device connected to your development machine:
+                <pre>./gradlew install</pre>
             </td>
         </tr>
         <tr>
             <td class="numbering">5.</td>
-            <td>Install/run the application on an emulator or device.</td>
+            <td>From the app, connect to Messaging using these connection settings:
+<pre>host:mmx.magnet.com
+port: 5222</pre>
+Optional if not using guest access:
+<pre>username: &lt;choose a new one, the user will be created upon first login&gt;
+password: &lt;a new password&gt;</pre>
+                You are all set! You can now send and receive messages with Magnet Mobile Messaging.
+            </td>
         </tr>
         <tr>
             <td class="numbering">6.</td>
-            <td>Connect to these server settings:
-<pre>host:citest01.magneteng.com
-port: 5222
-username: &lt;choose a new one, the user will be created upon first login&gt;
-password: &lt;a new password&gt;</td>
+            <td>Try it out by sending an in-app messages or push notification to your app from <a href="#/messaging/<%- model.attributes.appId %>/endpoints">Endpoints</a> -> Select your device -> Send Message dialog.</td>
         </tr>
         <tr class="mmx-nav">
             <td class="numbering">7.</td>
-            <td>That's it! You should be able to send a message to yourself using the “Send Message” dialog.</td>
+            <td>Go to "Message Log" to view in-app message status.</td>
+        </tr>
+        <tr class="mmx-nav">
+            <td class="numbering">8.</td>
+            <td>See <a href="/docs/latest/messaging/">Magnet Mobile Messaging Developer Guide</a> to learn more about Mobile Messaging capabilities. </td>
         </tr>
     </table>
 </script>
@@ -1441,6 +1454,25 @@ password: &lt;a new password&gt;</td>
             <div class="modal-footer">
                 <button data-dismiss="modal" type="button" class="btn btn-default">Close</button>
                 <button id="create-messaging-app-btn" type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="confirm-tos-dialog" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
+                <h3>Terms of Service</h3>
+                <p>You must agree to the Terms of Service to continue.</p>
+            </div>
+            <div class="modal-body">
+                <iframe src="https://www.magnet.com/resources/tos.html"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="cancel btn btn-default">I Don't Agree</button>
+                <button id="agree-to-tos" class="submit btn-primary btn">I Agree</button>
             </div>
         </div>
     </div>

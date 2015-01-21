@@ -45,7 +45,8 @@ body > .navbar .container-fluid{padding-right:0}
 #user-nav-menu .popover-content{font-size:13px;margin-bottom:12px}
 #user-nav-menu .popover-content b{font-size:14px}
 #user-nav-popover{cursor:pointer}
-#user-nav-menu .popover{left:-195px !important;top:48px !important}
+#user-nav-menu .popover{left:-135px !important;top:48px !important}
+#user-nav-menu > li > a{float:left}
 
 /* SITE LAYOUT */
 html, body{background:#efefef;height:100%}
@@ -63,7 +64,7 @@ html, body{background:#efefef;height:100%}
 .view-wrapper > .content > .row-fluid > .col-md-3{padding-right:15px}
 .vscroll.page-main-tab{background:#fff;margin:52px 20px 0 20px;border:solid 1px #aaa}
 .main-section, .main-section > .tab-content, .main-section > .tab-content > .tab-pane, .view-wrapper > .content > .row-fluid, .tab-content-container, .view-wrapper > .content > .row-fluid > div{height:100%}
-
+#confirm-tos-dialog iframe{width:100%}
 
 /* - forms */
 label{font-weight:500}

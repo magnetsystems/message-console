@@ -736,7 +736,7 @@ utils = {
     getIndexByAttr: function(ary, key, val){
         var index;
         for(var i=0;i<ary.length;++i){
-            if(ary[i][key] === val){
+            if(ary[i][key] === val || ary[i][key] === parseInt(val)){
                 index = i;
             }
         }

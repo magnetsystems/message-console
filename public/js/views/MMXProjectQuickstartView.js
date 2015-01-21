@@ -13,7 +13,9 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click .download-compiled-source': 'downloadCompiledSource'
         },
         render: function(){
-            this.$el.html(_.template($('#MessagingQuickstartTmpl').html()));
+            this.$el.html(_.template($('#MessagingQuickstartTmpl').html(), {
+                model : this.model
+            }));
         },
         downloadCompiledSource: function(e){
             e.preventDefault();

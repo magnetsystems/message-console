@@ -31,6 +31,10 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
                     me.options.opts.newMMXUser = false;
                     me.options.opts.tour = MMXInitialAppTour(params.model.attributes.id);
                 }
+                if(me.options.opts.tour && params.view && params.view != 'quickstart'){
+                    $('.tour').remove();
+                    me.options.opts.tour.end();
+                }
                 me.options.eventPubSub.trigger('showCollapsibleMenu', {
                     mmxView : true
                 });
