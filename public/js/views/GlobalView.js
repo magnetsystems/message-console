@@ -42,7 +42,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click .repeater-list-items td .glyphicon-plus': 'toggleRow',
             'click .repeater-list-items td .glyphicon-minus': 'toggleRow',
             'click .radio.disabled': 'doNothing',
-            'click .mmx-nav a': 'selectMMXView'
+            'click .mmx-nav a': 'selectMMXView',
+            'click #mmx-contextual-doc-btn': 'viewContextualDocs'
         },
         goBack: function(e){
             e.preventDefault();
@@ -156,7 +157,28 @@ define(['jquery', 'backbone'], function($, Backbone){
             this.options.eventPubSub.trigger('initMMXProject', {
                 view : view.slice(1)
             });
+        },
+        viewContextualDocs: function(e){
+            e.preventDefault();
+            var dom = $('#collapsible-menu-list > div > a.active');
+            var activeView;
+            if(dom.length){
+                activeView = dom.attr('href').replace('#', '');
+                switch(activeView){
+                    case 'dashboard': window.open('/docs/latest/messaging/The+Dashboard.html', '_blank'); break;
+                    case 'endpoints': window.open('/docs/latest/messaging/Send+Test+Messages+to+Users.html', '_blank'); break;
+                    case 'messages': window.open('/docs/latest/messaging/Message+Logs.html', '_blank'); break;
+                    case 'topics': window.open('/docs/latest/messaging/Topic+Management.html', '_blank'); break;
+                    case 'quickstart': window.open('/docs/latest/messaging/Creating+a+Mobile+Client+App+that+Uses+Mobile+Messaging.html', '_blank'); break;
+                    case 'settings': window.open('/docs/latest/messaging/Set+Up+Mobile+Messaging.html', '_blank'); break;
+                    default: window.open('/docs/latest/messaging/', '_blank');
+                }
+            }else{
+                window.open('/docs/latest/messaging/', '_blank');
+            }
         }
-    });
+
+
+});
     return View;
 });
