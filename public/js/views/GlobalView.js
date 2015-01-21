@@ -169,7 +169,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     case 'endpoints': window.open('/docs/latest/messaging/Send+Test+Messages+to+Users.html', '_blank'); break;
                     case 'messages': window.open('/docs/latest/messaging/Message+Logs.html', '_blank'); break;
                     case 'topics': window.open('/docs/latest/messaging/Topic+Management.html', '_blank'); break;
-                    case 'quickstart': window.open('/docs/latest/messaging/Creating+a+Mobile+Client+App+that+Uses+Mobile+Messaging.html', '_blank'); break;
+                    case 'quickstart': window.open('/docs/latest/messaging/Establishing+Real-Time+Connection.html', '_blank'); break;
                     case 'settings': window.open('/docs/latest/messaging/Set+Up+Mobile+Messaging.html', '_blank'); break;
                     default: window.open('/docs/latest/messaging/', '_blank');
                 }
