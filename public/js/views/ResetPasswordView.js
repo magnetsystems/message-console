@@ -19,8 +19,6 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(me.validate(me.$el) === true){
                 utils.resetError(me.$el);
                 var data = utils.collect(me.$el);
-                var re = /(?![\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})./g;
-                data.email = data.email.replace(re, '');
                 data.passwordResetToken = token;
                 AJAX('/rest/resetPassword', 'POST', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
                     me.$el.find('input').val('');

@@ -24,7 +24,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             var obj = utils.collect(me.$el);
             if($.trim(obj.guestUserSecret).length < 1) return alert('Guest Access Secret is a required field.');
             if($.trim(obj.appName).length < 1) return alert('App Name is a required field.');
-            if(me.model.attributes.appName != obj.appName && me.options.opts.col.where({appName:obj.appName}).length) return alert('The App name you specified already exists. Please choose another name.');
+            if(me.model.attributes.appName != obj.appName && me.options.opts.col.iwhere('appName', obj.appName).length) return alert('The App name you specified already exists. Please choose another name.');
             me.model.save(obj, {
                 success: function(){
                     me.model.set({
