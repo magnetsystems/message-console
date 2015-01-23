@@ -34,6 +34,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 template  : '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content"></div><h3 class="popover-title"></h3></div>',
                 html      : true
             });
+            me.bindFeedbackButton();
         },
         events: {
             'click .goBack': 'goBack',
@@ -176,9 +177,99 @@ define(['jquery', 'backbone'], function($, Backbone){
             }else{
                 window.open('/docs/latest/messaging/', '_blank');
             }
+        },
+        bindFeedbackButton: function(){
+            $('#leave-feedback-container').show();
+            var div = $('#feedback-content');
+            var complete = $('#feedback-complete');
+            var error = $('#feedback-error');
+            var btn = $('#feedback-btn');
+            var submitBtn = $('#submit-feedback-btn');
+            var loader = $('#feedback-content img');
+            var isActive = false;
+            var closed = {
+                height  : 0,
+                width   : 0,
+                padding : 0,
+                opacity : 0
+            };
+            div.each(function(){
+                $.data(this, 'baseHeight', $(this).height()+14);
+                $.data(this, 'baseWidth', $(this).width());
+                $('#leave-feedback-container').css('opacity', '1');
+            }).css(closed);
+            btn.click(function(e){
+                e.preventDefault();
+                if(btn.hasClass('active')){
+                    btn.removeClass('active');
+                    complete.hide('slow');
+                    error.hide('slow');
+                    div.animate(closed, 600);
+                }else{
+                    setTimeout(function(){
+                        btn.addClass('active');
+                        complete.hide('slow');
+                        error.hide('slow');
+                        div.animate({
+                            height  : div.data('baseHeight') + 20,
+                            width   : div.data('baseWidth'),
+                            padding : '10px',
+                            opacity : 1
+                        }, 600);
+                    }, 100);
+                }
+            });
+            $('html').click(function(e){
+                if(btn.hasClass('active')){
+                    btn.removeClass('active');
+                    complete.hide('slow');
+                    error.hide('slow');
+                    div.animate(closed, 600);
+                }
+            });
+            $('#leave-feedback-container').click(function(e){
+                e.stopPropagation();
+            });
+            submitBtn.click(function(e){
+                e.stopPropagation();
+                e.preventDefault();
+                var type = $('#feedback-type-field');
+                var name = $('#feedback-name');
+                var sub = $('#feedback-subject');
+                var msg = $('#feedback-message');
+                var email = $('#feedback-email');
+                if(isActive === false && $.trim(msg.val()).length > 0){
+                    isActive = true;
+                    submitBtn.hide();
+                    loader.show();
+                    $.ajax({
+                        type        : 'POST',
+                        url         : '/rest/submitFeedback',
+                        data        : {
+                            fullname     : name.val(),
+                            type         : type.val(),
+                            msg          : msg.val(),
+                            sub          : sub.val(),
+                            emailaddress : email.val()
+                        },
+                        contentType : 'application/x-www-form-urlencoded'
+                    }).done(function(){
+                        complete.show('slow');
+                    }).fail(function(){
+                        error.show('slow');
+                    }).always(function(){
+                        name.val('');
+                        msg.val('');
+                        sub.val('');
+                        email.val('');
+                        div.css(closed);
+                        isActive = false;
+                        submitBtn.show();
+                        loader.hide();
+                    });
+                }
+            });
         }
-
-
-});
+    });
     return View;
 });

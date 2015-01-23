@@ -111,6 +111,17 @@
 /* footer */
 #footer{padding:0}
 
+/* feedback */
+#leave-feedback-container{opacity:0;text-align:center;z-index:100000;background:#fff;position:fixed;right:1px;bottom:1px;box-shadow:0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);border:solid 1px #ccc}
+#leave-feedback-container a{outline:none;display:block;padding:5px 12px;color:#fff;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);line-height:17px;text-decoration:none;background:#465C6D;transition:all 0.2s ease-in-out 0s}
+#leave-feedback-container a:hover, #leave-feedback-container a:active{background:#669DB6}
+#leave-feedback-container p{padding-left:10px;padding-right:10px;text-align:left;color:#666;font-size:12px}
+#feedback-content, #feedback-complete, #feedback-error{color:#fff;width:240px}
+#feedback-complete p, #feedback-error p{text-align:center}
+#feedback-content label{font-weight:bold}
+#leave-feedback-container h4{font-size:18px;color:#555}
+#leave-feedback-container .form-control{margin-bottom:10px}
+#leave-feedback-container button{margin-top:0;min-width:100%}
 
 @media only screen and (max-width:767px){
     #mmx-messages-list .dt-container .col-sm-6{padding:0}

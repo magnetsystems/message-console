@@ -1273,6 +1273,31 @@ password: &lt;a new password&gt;</pre>
     </div>
 </div>
 
+<div id="leave-feedback-container">
+    <a id="feedback-btn" href="">Leave Feedback</a>
+    <div id="feedback-content">
+        <p>We welcome any comments or questions.</p>
+        <select id="feedback-type-field" class="form-control">
+            <option value="Comment">Comment</option>
+            <option value="Question">Question</option>
+        </select>
+        <input id="feedback-name" class="form-control" type="text" placeholder="Name" name="name">
+        <input id="feedback-subject" class="form-control" type="text" placeholder="Subject" name="email">
+        <input id="feedback-email" class="form-control" type="text" placeholder="Email Address" name="email">
+        <textarea id="feedback-message" class="form-control" placeholder="Message"></textarea>
+        <button id="submit-feedback-btn" class="btn btn-primary">Submit Feedback</button>
+        <img src="/img/site/ajax-loader-sm.gif" style="display:none" />
+    </div>
+    <div id="feedback-complete" style="display:none">
+        <h4>Feedback Has Been<br />Submitted</h4>
+        <p>Thank you for submitting your feedback or question. We will respond shortly.</p>
+    </div>
+    <div id="feedback-error" style="display:none">
+        <h4>Error Submitting<br />Feedback</h4>
+        <p>There was an error submitting your feedback. Please try again later.</p>
+    </div>
+</div>
+
 <script id="LicenseTmpl" type="text/template">
     <h4><%- title %></h4>
 
