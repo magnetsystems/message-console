@@ -172,10 +172,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                     case 'topics': window.open('/docs/guide/messaging/latest/Topic+Management.html', '_blank'); break;
                     case 'quickstart': window.open('/docs/guide/messaging/latest/Establishing+Real-Time+Connection.html', '_blank'); break;
                     case 'settings': window.open('/docs/guide/messaging/latest/Set+Up+Mobile+Messaging.html', '_blank'); break;
-                    default: window.open('/docs/guide/messaging/latest', '_blank');
+                    default: window.open('/docs/guide/messaging/latest/index.html', '_blank');
                 }
             }else{
-                window.open('/docs/guide/messaging/latest', '_blank');
+                window.open('/docs/guide/messaging/latest/index.html', '_blank');
             }
         },
         bindFeedbackButton: function(){
