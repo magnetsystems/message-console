@@ -989,79 +989,149 @@
 </script>
 
 <script id="MessagingQuickstartTmpl" type="text/template">
-    <p class="light">This step-by-step tutorial will help you configure and use messaging in your app.</p>
-    <table class="table table-striped">
-        <tr>
-            <td class="numbering">1.</td>
-            <td>
-                <a class="download-compiled-source" href="#">Download the Messaging Quickstart Android app.</a> Import it into Android Studio.
-            </td>
-        </tr>
-        <tr>
-            <td class="numbering">2.</td>
-            <td>Verify the "res/raw/quickstart.properties" file match values for your app settings as shown in "Settings" menu.
+
+    <p class="light">These step-by-step tutorials will help you configure and use messaging in your app.</p>
+
+    <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#mmx-quickstart-quickstart-tab" aria-controls="mmx-quickstart-quickstart-tab" role="tab" data-toggle="tab">Quickstart</a></li>
+            <li role="presentation"><a href="#mmx-quickstart-existing-tab" aria-controls="mmx-quickstart-existing-tab" role="tab" data-toggle="tab">Existing Mobile Apps</a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="mmx-quickstart-quickstart-tab">
+
+                <table class="table table-striped">
+                    <tr>
+                        <td class="numbering">1.</td>
+                        <td>
+                            <p>Install Android Studio as described in <a href="http://developer.android.com/sdk/installing/studio.html">http://developer.android.com/sdk/installing/studio.html</a>.</p>
+                            <a class="download-compiled-source" href="#">Download the Messaging Quickstart Android app</a>. Import it into Android Studio.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">2.</td>
+                        <td>Verify the "res/raw/quickstart.properties" file match values for your app settings as shown in "Settings" menu.
                 <pre>
 appId=&lt;App ID&gt;
 apiKey=&lt;MMX API key&gt;
 gcmSenderId=&lt;GCM project/sender id&gt;
 guestSecret=&lt;Guest Access Secret&gt;</pre>
-            </td>
-        </tr>
-        <tr>
-            <td class="numbering">3.</td>
-            <td>Build the app with Android Studio or from command line at root directory of "quickstart-android"
-                <pre>./gradlew clean build</pre>
-            </td>
-        </tr>
-        <tr>
-            <td class="numbering">4.</td>
-            <td>Install and run the Android app on an Android emulator or mobile device connected to your development machine:
-                <pre>./gradlew install</pre>
-            </td>
-        </tr>
-        <tr>
-            <td class="numbering">5.</td>
-            <td>From the app, connect to Messaging using these connection settings:
-<pre>host:mmx.magnet.com
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">3.</td>
+                        <td>Build the app with Android Studio or from command line at root directory of "quickstart-android"
+                            <pre>./gradlew clean build</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">4.</td>
+                        <td>Install and run the Android app on an Android emulator or mobile device connected to your development machine:
+                            <pre>./gradlew install</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">5.</td>
+                        <td>From the app, connect to Messaging using these connection settings:
+<pre>host:mmx-svr1.magnet.com
 port: 5222</pre>
-Optional if not using guest access:
+                            Optional if not using guest access:
 <pre>username: &lt;choose a new one, the user will be created upon first login&gt;
 password: &lt;a new password&gt;</pre>
-                You are all set! You can now send and receive messages with Magnet Mobile Messaging.
-            </td>
-        </tr>
-        <tr class="mmx-nav">
-            <td class="numbering">6.</td>
-            <td>Try it out by sending an in-app messages or push notification to your app from <a href="#endpoints">Endpoints</a> -> Select your device -> Send Message dialog.</td>
-        </tr>
-        <tr>
-            <td class="numbering">7.</td>
-            <td>Go to "Message Log" to view in-app message status.</td>
-        </tr>
-        <tr>
-            <td class="numbering">8.</td>
-            <td>
-                <p>See <a href="/docs/latest/guide/messaging/index.html" target="_blank">Magnet Mobile Messaging Developer Guide</a> to learn more about Mobile Messaging capabilities.</p>
-                <p>If you want to use Mobile Messaging for an existing Android project, add the Mobile Messaging client library as a dependency to the Gradle build script as shown below:</p>
+                            You are all set! You can now send and receive messages with Magnet Mobile Messaging.
+                        </td>
+                    </tr>
+                    <tr class="mmx-nav">
+                        <td class="numbering">6.</td>
+                        <td>Try it out by sending an in-app messages or push notification to your app from <a href="#endpoints">Endpoints</a> -> Select your device -> Send Message dialog.</td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">7.</td>
+                        <td>Go to "Message Log" to view in-app message status.</td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">8.</td>
+                        <td>
+                            <p>See <a href="/docs/latest/guide/messaging/index.html" target="_blank">Magnet Mobile Messaging Developer Guide</a> to learn more about Mobile Messaging capabilities.</p>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div role="tabpanel" class="tab-pane" id="mmx-quickstart-existing-tab">
+
+                <table class="table table-striped">
+                    <tr>
+                        <td class="numbering">1.</td>
+                        <td>
+                            Install Android Studio as described in <a href="http://developer.android.com/sdk/installing/studio.html">http://developer.android.com/sdk/installing/studio.html</a>.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">2.</td>
+                        <td>
+                            <p>Add the Mobile Messaging client library as a dependency to the Gradle build script as shown below:</p>
 <pre>repositories {
-    // TODO Change to public repo URL and remove credentials
     maven {
-        url "http://dev-repo.magnet.com:8081/artifactory/everything"
-        credentials {
-            username = "mary.developer"
-            password = "test"
-        }
+        url "https://repo.magnet.com/artifactory/public"
     }
 }
 dependencies {
-    // TODO Change to release version
-compile ("com.magnet.mmx:magnet-mmx-client-android:0.8.0@aar") {
+    compile ("com.magnet.mmx:magnet-mmx-client-android:0.8.0@aar") {
         transitive=true
     }
 }</pre>
-            </td>
-        </tr>
-    </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">3.</td>
+                        <td>Add your app settings as shown in "Settings" menu to your Android app source, described in <a href="/docs/latest/guide/messaging/Connecting+to+Mobile+Messaging+from+Mobile+Apps.html">Connecting to Mobile Messaging from Mobile Apps</a>.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">4.</td>
+                        <td>Build the app with Android Studio or from command line at root directory of "quickstart-android"
+                            <pre>./gradlew clean build</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">5.</td>
+                        <td>Install and run the Android app on an Android emulator or mobile device connected to your development machine:
+                            <pre>./gradlew install</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">6.</td>
+                        <td>From the app, connect to Messaging using these connection settings:
+<pre>host:mmx.magnet.com
+port: 5222</pre>
+                            Optional if not using guest access:
+<pre>username: &lt;choose a new one, the user will be created upon first login&gt;
+password: &lt;a new password&gt;</pre>
+                            You are all set! You can now send and receive messages with Magnet Mobile Messaging.
+                        </td>
+                    </tr>
+                    <tr class="mmx-nav">
+                        <td class="numbering">7.</td>
+                        <td>Try it out by sending an in-app messages or push notification to your app from <a href="#endpoints">Endpoints</a> -> Select your device -> Send Message dialog.</td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">8.</td>
+                        <td>Go to "Message Log" to view in-app message status.</td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">9.</td>
+                        <td>
+                            <p>See <a href="/docs/latest/guide/messaging/index.html" target="_blank">Magnet Mobile Messaging Developer Guide</a> to learn more about Mobile Messaging capabilities.</p>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
 </script>
 
 <script id="AdvancedSearchTmpl" type="text/template">
@@ -1254,6 +1324,8 @@ compile ("com.magnet.mmx:magnet-mmx-client-android:0.8.0@aar") {
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="form-group">
             <div class="row-fluid">
                 <div class="col-sm-6">
                     <label class="control-label">New Password</label>
@@ -1305,7 +1377,7 @@ compile ("com.magnet.mmx:magnet-mmx-client-android:0.8.0@aar") {
         <input id="feedback-email" class="form-control" type="text" placeholder="Email Address" name="email">
         <textarea id="feedback-message" class="form-control" placeholder="Message"></textarea>
         <button id="submit-feedback-btn" class="btn btn-primary">Submit Feedback</button>
-        <img src="/img/site/ajax-loader-sm.gif" style="display:none" />
+        <img src="/images/ajax-loader-sm.gif" style="display:none" />
     </div>
     <div id="feedback-complete" style="display:none">
         <h4>Feedback Has Been<br />Submitted</h4>
@@ -1313,7 +1385,7 @@ compile ("com.magnet.mmx:magnet-mmx-client-android:0.8.0@aar") {
     </div>
     <div id="feedback-error" style="display:none">
         <h4>Error Submitting<br />Feedback</h4>
-        <p>There was an error submitting your feedback. Please try again later.</p>
+        <p>There was an error submitting your feedback. Please check the email address you typed and try again.</p>
     </div>
 </div>
 

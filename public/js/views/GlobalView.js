@@ -186,6 +186,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             var btn = $('#feedback-btn');
             var submitBtn = $('#submit-feedback-btn');
             var loader = $('#feedback-content img');
+            div.find('input, textarea').val('');
             var isActive = false;
             var closed = {
                 height  : 0,
@@ -238,35 +239,39 @@ define(['jquery', 'backbone'], function($, Backbone){
                 var sub = $('#feedback-subject');
                 var msg = $('#feedback-message');
                 var email = $('#feedback-email');
-                if(isActive === false && $.trim(msg.val()).length > 0){
-                    isActive = true;
-                    submitBtn.hide();
-                    loader.show();
-                    $.ajax({
-                        type        : 'POST',
-                        url         : '/rest/submitFeedback',
-                        data        : {
-                            fullname     : name.val(),
-                            type         : type.val(),
-                            msg          : msg.val(),
-                            sub          : sub.val(),
-                            emailaddress : email.val()
-                        },
-                        contentType : 'application/x-www-form-urlencoded'
-                    }).done(function(){
-                        complete.show('slow');
-                    }).fail(function(){
-                        error.show('slow');
-                    }).always(function(){
-                        name.val('');
-                        msg.val('');
-                        sub.val('');
-                        email.val('');
-                        div.css(closed);
-                        isActive = false;
-                        submitBtn.show();
-                        loader.hide();
-                    });
+                if(isActive === false){
+                    if($.trim(name.val()).length > 0 && $.trim(sub.val()).length > 0 && $.trim(msg.val()).length > 0 && $.trim(email.val()).length > 0){
+                        isActive = true;
+                        submitBtn.hide();
+                        loader.show();
+                        $.ajax({
+                            type        : 'POST',
+                            url         : GLOBAL.baseUrl+'/rest/submitFeedback',
+                            data        : {
+                                fullname     : name.val(),
+                                type         : type.val(),
+                                msg          : msg.val(),
+                                sub          : sub.val(),
+                                emailaddress : email.val()
+                            },
+                            contentType : 'application/x-www-form-urlencoded'
+                        }).done(function(){
+                            complete.show('slow');
+                            name.val('');
+                            msg.val('');
+                            sub.val('');
+                            email.val('');
+                        }).fail(function(){
+                            error.show('slow');
+                        }).always(function(){
+                            isActive = false;
+                            div.css(closed);
+                            submitBtn.show();
+                            loader.hide();
+                        });
+                    }else{
+                        alert('Please fill in all of the fields.');
+                    }
                 }
             });
         }
