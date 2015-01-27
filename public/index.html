@@ -1040,7 +1040,26 @@ password: &lt;a new password&gt;</pre>
         </tr>
         <tr>
             <td class="numbering">8.</td>
-            <td>See <a href="/docs/guide/messaging/latest/index.html" target="_blank">Magnet Mobile Messaging Developer Guide</a> to learn more about Mobile Messaging capabilities. </td>
+            <td>
+                <p>See <a href="/docs/guide/messaging/latest/index.html" target="_blank">Magnet Mobile Messaging Developer Guide</a> to learn more about Mobile Messaging capabilities.</p>
+                <p>If you want to use Mobile Messaging for an existing Android project, add the Mobile Messaging client library as a dependency to the Gradle build script as shown below:</p>
+<pre>repositories {
+    // TODO Change to public repo URL and remove credentials
+    maven {
+        url "http://dev-repo.magnet.com:8081/artifactory/everything"
+        credentials {
+            username = "mary.developer"
+            password = "test"
+        }
+    }
+}
+dependencies {
+    // TODO Change to release version
+compile ("com.magnet.mmx:magnet-mmx-client-android:0.8.0@aar") {
+        transitive=true
+    }
+}</pre>
+            </td>
         </tr>
     </table>
 </script>
