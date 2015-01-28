@@ -53,11 +53,14 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         validatePassword: function(){
             var dom = this.$el.find('.password-inputs');
-            if($('.password-inputs input[name="newpassword"]').val() != $('.password-inputs input[name="newpassword2"]').val()){
+            var p1 = $('.password-inputs input[name="newpassword"]').val();
+            var p2 = $('.password-inputs input[name="newpassword2"]').val();
+            if($.trim(p2).length && $.trim(p1).length && p1 != p2){
                 utils.showError(dom, 'newpassword2', 'New password does not match.');
                 $('#profile-save').addClass('disabled');
             }else{
                 utils.resetError(dom);
+                dom.find('.form-group').removeClass('has-error');
                 $('#profile-save').removeClass('disabled');
             }
         }
