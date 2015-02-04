@@ -1,23 +1,37 @@
-define(['jquery', 'backbone'], function($, Backbone){
+define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadView){
     var View = Backbone.View.extend({
         el: '#mmx-settings',
         initialize: function(options){
             var me = this;
             me.options = options;
             me.options.eventPubSub.bind('initMMXProjectsettings', function(model){
-                me.setElement('#mmx-settings');
                 me.model = model;
                 me.render();
+                me.initCertUploader();
+            });
+            me.options.eventPubSub.bind('uploadAPNSCertFileComplete', function(params){
+                if(params.res.success){
+                    me.model.set({
+                        apnsCertName : params.filename
+                    });
+                    $('#mmx-settings-apns-cert-file-upload .qq-upload-file').html('Certificate Uploaded');
+                }else{
+                    Alerts.Error.display({
+                        title   : 'Error Uploading Certificate',
+                        content : 'There was an error uploading the certificate.'
+                    });
+                }
+                me.options.eventPubSub.trigger('btnComplete', $('#mmx-settings-apns-cert-file-upload-btn'));
             });
         },
         events: {
             'click .controls button[did="save"]': 'saveProject',
-            'click .controls button[did="delete"]': 'deleteProject'
+            'click .controls button[did="delete"]': 'deleteProject',
+            'click #mmx-settings-apns-cert-file-upload-btn': 'uploadCertificate'
         },
         render: function(){
             this.$el.find('.view-container').html(_.template($('#MessagingProjectSettingsView').html(), {
-                model : this.model,
-                opts  : this.options.opts
+                model : this.model
             }));
             this.$el.find('.glyphicon-info-sign').tooltip();
         },
@@ -26,10 +40,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             var obj = utils.collect(me.$el);
             if($.trim(obj.guestUserSecret).length < 1) return alert('Guest Access Secret is a required field.');
             if($.trim(obj.appName).length < 1) return alert('App Name is a required field.');
-            if(me.model.attributes.appName != obj.appName && me.options.opts.col.where({appName:obj.appName}).length) return alert('The App name you specified already exists. Please choose another name.');
-            obj.gcm = {};
-            if(obj.googleApiKey) obj.gcm.googleApiKey = obj.googleApiKey;
-            if(obj.googleProjectId) obj.gcm.googleProjectId = obj.googleProjectId;
+            if(me.model.attributes.appName != obj.appName && me.options.opts.col.iwhere('appName', obj.appName).length) return alert('The App name you specified already exists. Please choose another name.');
             me.model.save(obj, {
                 success: function(){
                     me.model.set({
@@ -73,6 +84,33 @@ define(['jquery', 'backbone'], function($, Backbone){
                     }
                 });
             });
+        },
+        initCertUploader: function(){
+            var container = '#mmx-settings-apns-cert-file-upload';
+            var uploader = new UploadView({
+                el          : container,
+                context     : 'APNSCertFile',
+                method      : 'POST',
+                validation  : {},
+                eventPubSub : this.options.eventPubSub
+            });
+            $('<button id="mmx-settings-apns-cert-file-upload-btn" class="btn btn-primary" type="button" txt="Upload">Upload</button>').insertAfter(container+' .qq-upload-button');
+            if(this.model.attributes.hasAPNSCert){
+                $(container).find('.qq-upload-list').html('<li class=" qq-upload-success"><span class="qq-upload-file">Certificate Uploaded</span></li>');
+            }else{
+
+                $(container).find('.qq-upload-list').html('<li class=" qq-upload-error"><span class="qq-upload-file">No Certificate Uploaded</span></li>');
+            }
+        },
+        uploadCertificate: function(){
+            var me = this;
+            var file = this.$el.find('.qq-upload-file');
+            if(!file.length){
+                return false;
+            }
+            var btn = $('#mmx-settings-apns-cert-file-upload-btn');
+            me.options.eventPubSub.trigger('btnLoading', btn);
+            me.options.eventPubSub.trigger('uploadAPNSCertFile', '/rest/apps/'+me.model.attributes.id+'/uploadAPNSCertificate');
         }
     });
     return View;

@@ -5,7 +5,6 @@ define(['jquery', 'backbone'], function($, Backbone){
             var me = this;
             me.options = options;
             me.options.eventPubSub.bind('initMMXProjectusers', function(model){
-                me.setElement('#mmx-users');
                 me.model = model;
                 me.render();
             });
@@ -55,7 +54,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 qs += '&'+key+'='+query[key];
             }
             qs = qs.replace('&', '?');
-            AJAX('mmx/apps/'+me.model.attributes.id+'/users'+qs, 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
+            AJAX('apps/'+me.model.attributes.id+'/users'+qs, 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
                 if(res && res.results){
                     for(var i=0;i<res.results.length;++i){
                         res.results[i].id = res.results[i].userId;
@@ -126,7 +125,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         displayDevices: function(uid, row){
             var me = this;
-            AJAX('mmx/apps/'+me.model.attributes.id+'/users/'+uid+'/devices', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
+            AJAX('apps/'+me.model.attributes.id+'/users/'+uid+'/devices', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
                 me.devices = res.results;
                 me.renderDevices(row, uid, res.results);
             }, function(xhr, status, thrownError){
@@ -168,7 +167,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         getRecentMessages: function(cb, isFirstCall){
             var me = this;
-            AJAX('mmx/apps/'+me.model.attributes.id+'/devices/'+this.activeDevice.deviceId+'/messages', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
+            AJAX('apps/'+me.model.attributes.id+'/devices/'+this.activeDevice.deviceId+'/messages', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
                 me.renderDeviceMessages(res.mlist);
                 if(isFirstCall) me.latestMessageId = res.mlist.length > 0 ? res.mlist[0].messageId : null;
                 if(typeof cb === typeof Function) cb();

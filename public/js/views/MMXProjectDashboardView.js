@@ -5,7 +5,6 @@ define(['jquery', 'backbone'], function($, Backbone){
             var me = this;
             me.options = options;
             me.options.eventPubSub.bind('initMMXProjectdashboard', function(model){
-                me.setElement('#mmx-dashboard');
                 me.model = model;
                 me.getStats(function(stats){
                     me.render(stats);
@@ -14,7 +13,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         getStats: function(cb){
             var me = this;
-            AJAX('mmx/apps/'+me.model.attributes.id+'/stats', 'GET', 'application/json', null, function(res, status, xhr){
+            AJAX('apps/'+me.model.attributes.id+'/stats', 'GET', 'application/json', null, function(res, status, xhr){
                 cb(res);
             }, function(xhr, status, thrownError){
                 alert(xhr.responseText);

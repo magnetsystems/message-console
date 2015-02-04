@@ -34,6 +34,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 template  : '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content"></div><h3 class="popover-title"></h3></div>',
                 html      : true
             });
+            me.bindFeedbackButton();
         },
         events: {
             'click .goBack': 'goBack',
@@ -42,7 +43,9 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click .repeater-list-items td .glyphicon-plus': 'toggleRow',
             'click .repeater-list-items td .glyphicon-minus': 'toggleRow',
             'click .radio.disabled': 'doNothing',
-            'click .mmx-nav a': 'selectMMXView'
+            'click .mmx-nav a': 'selectMMXView',
+            'click #mmx-contextual-doc-btn': 'viewContextualDocs',
+            'click .btn-toggle button': 'toggleSwitch'
         },
         goBack: function(e){
             e.preventDefault();
@@ -156,6 +159,138 @@ define(['jquery', 'backbone'], function($, Backbone){
             this.options.eventPubSub.trigger('initMMXProject', {
                 view : view.slice(1)
             });
+        },
+        viewContextualDocs: function(e){
+            e.preventDefault();
+            var dom = $('#collapsible-menu-list > div > a.active');
+            var activeView;
+            if(dom.length){
+                activeView = dom.attr('href').replace('#', '');
+                switch(activeView){
+                    case 'dashboard': window.open('/docs/latest/guide/messaging/The+Dashboard.html', '_blank'); break;
+                    case 'endpoints': window.open('/docs/latest/guide/messaging/Send+Test+Messages+to+Users.html', '_blank'); break;
+                    case 'messages': window.open('/docs/latest/guide/messaging/Message+Logs.html', '_blank'); break;
+                    case 'topics': window.open('/docs/latest/guide/messaging/Topic+Management.html', '_blank'); break;
+                    case 'quickstart': window.open('/docs/latest/guide/messaging/Establishing+Real-Time+Connection.html', '_blank'); break;
+                    case 'settings': window.open('/docs/latest/guide/messaging/Set+Up+Mobile+Messaging.html', '_blank'); break;
+                    default: window.open('/docs/latest/guide/messaging/index.html', '_blank');
+                }
+            }else{
+                window.open('/docs/latest/guide/messaging/index.html', '_blank');
+            }
+        },
+        bindFeedbackButton: function(){
+            $('#leave-feedback-container').show();
+            var div = $('#feedback-content');
+            var complete = $('#feedback-complete');
+            var error = $('#feedback-error');
+            var btn = $('#feedback-btn');
+            var submitBtn = $('#submit-feedback-btn');
+            var loader = $('#feedback-content img');
+            div.find('input, textarea').val('');
+            var isActive = false;
+            var closed = {
+                height  : 0,
+                width   : 0,
+                padding : 0,
+                opacity : 0
+            };
+            div.each(function(){
+                $.data(this, 'baseHeight', $(this).height()+14);
+                $.data(this, 'baseWidth', $(this).width());
+                $('#leave-feedback-container').css('opacity', '1');
+            }).css(closed);
+            btn.click(function(e){
+                e.preventDefault();
+                if(btn.hasClass('active')){
+                    btn.removeClass('active');
+                    complete.hide('slow');
+                    error.hide('slow');
+                    div.animate(closed, 600);
+                }else{
+                    setTimeout(function(){
+                        btn.addClass('active');
+                        complete.hide('slow');
+                        error.hide('slow');
+                        div.animate({
+                            height  : div.data('baseHeight') + 20,
+                            width   : div.data('baseWidth'),
+                            padding : '10px',
+                            opacity : 1
+                        }, 600);
+                    }, 100);
+                }
+            });
+            $('html').click(function(e){
+                if(btn.hasClass('active')){
+                    btn.removeClass('active');
+                    complete.hide('slow');
+                    error.hide('slow');
+                    div.animate(closed, 600);
+                }
+            });
+            $('#leave-feedback-container').click(function(e){
+                e.stopPropagation();
+            });
+            submitBtn.click(function(e){
+                e.stopPropagation();
+                e.preventDefault();
+                var type = $('#feedback-type-field');
+                var name = $('#feedback-name');
+                var sub = $('#feedback-subject');
+                var msg = $('#feedback-message');
+                var email = $('#feedback-email');
+                if(isActive === false){
+                    if($.trim(name.val()).length > 0 && $.trim(sub.val()).length > 0 && $.trim(msg.val()).length > 0 && $.trim(email.val()).length > 0){
+                        isActive = true;
+                        submitBtn.hide();
+                        loader.show();
+                        $.ajax({
+                            type        : 'POST',
+                            url         : GLOBAL.baseUrl+'/rest/submitFeedback',
+                            data        : {
+                                fullname     : name.val(),
+                                type         : type.val(),
+                                msg          : msg.val(),
+                                sub          : sub.val(),
+                                emailaddress : email.val()
+                            },
+                            contentType : 'application/x-www-form-urlencoded'
+                        }).done(function(){
+                            complete.show('slow');
+                            name.val('');
+                            msg.val('');
+                            sub.val('');
+                            email.val('');
+                        }).fail(function(){
+                            error.show('slow');
+                        }).always(function(){
+                            isActive = false;
+                            div.css(closed);
+                            submitBtn.show();
+                            loader.hide();
+                        });
+                    }else{
+                        alert('Please fill in all of the fields.');
+                    }
+                }
+            });
+        },
+        toggleSwitch: function(e){
+            var tog = $(e.currentTarget).parent();
+            if(tog.find('.btn').hasClass('disabled')){
+                return;
+            }
+            tog.find('.btn').toggleClass('active');
+            if(tog.find('.btn-primary').size()>0)
+                tog.find('.btn').toggleClass('btn-primary');
+            if(tog.find('.btn-danger').size()>0)
+                tog.find('.btn').toggleClass('btn-danger');
+            if(tog.find('.btn-success').size()>0)
+                tog.find('.btn').toggleClass('btn-success');
+            if(tog.find('.btn-info').size()>0)
+                tog.find('.btn').toggleClass('btn-info');
+            tog.find('.btn').toggleClass('btn-default');
         }
     });
     return View;

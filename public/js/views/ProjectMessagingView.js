@@ -80,7 +80,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
         getConfigs: function(cb){
             var me = this;
             if(me.options.opts.configs) return cb();
-            AJAX('mmx/apps/config', 'GET', 'application/json', null, function(res){
+            AJAX('apps/configs', 'GET', 'application/json', null, function(res){
                 res.configs['cluster.max.apps'] = parseInt(res.configs['cluster.max.apps']);
                 res.configs['cluster.max.devices.per.app'] = parseInt(res.configs['cluster.max.devices.per.app']);
                 me.options.opts.configs = res.configs;

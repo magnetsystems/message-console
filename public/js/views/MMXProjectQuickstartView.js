@@ -5,13 +5,14 @@ define(['jquery', 'backbone'], function($, Backbone){
             var me = this;
             me.options = options;
             me.options.eventPubSub.bind('initMMXProjectquickstart', function(model){
-                me.setElement('#mmx-quickstart');
                 me.model = model;
                 me.render();
             });
         },
         events : {
-            'click .download-compiled-source': 'downloadCompiledSource'
+            'click .download-compiled-source': 'downloadCompiledSource',
+            'click .nav-tabs li a': 'stopTour'
+
         },
         render: function(){
             this.$el.html(_.template($('#MessagingQuickstartTmpl').html(), {
@@ -28,7 +29,11 @@ define(['jquery', 'backbone'], function($, Backbone){
                 iframe.style.display = 'none';
                 document.body.appendChild(iframe);
             }
-            iframe.src = GLOBAL.baseUrl+'/rest/mmx/apps/'+this.model.attributes.id+'/sample?platform=android';
+            iframe.src = GLOBAL.baseUrl+'/rest/apps/'+this.model.attributes.id+'/sample?platform=android';
+        },
+        stopTour: function(){
+            $('.tour').remove();
+            this.options.opts.tour.end();
         }
     });
     return View;

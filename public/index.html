@@ -4,13 +4,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Magnet Messaging – Developer Preview</title>
+    <title>Messaging – Developer Preview</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/fuelux.min.css" />
     <link rel="stylesheet" href="css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/bootstrap-tour.min.css">
     <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/messaging.css" />
+    <link rel="stylesheet" href="css/account.css" />
     <script src="js/libs/modernizr.js"></script>
     <script data-main="js/account" src="js/libs/require.js"></script>
 </head>
@@ -28,7 +28,7 @@
             </button>
             <a class="navbar-brand" href="#">
                 <img src="images/heading.png" />
-                Magnet Messaging <span class="hidden-xs">- Developer Preview</span>
+                Messaging <span class="hidden-xs">- Developer Preview</span>
                 <span class="project-name-holder"></span>
             </a>
         </div>
@@ -40,12 +40,12 @@
                 <li><a href="#topics">Topics</a></li>
                 <li><a href="#quickstart">Quickstart</a></li>
                 <li><a href="#settings">Settings</a></li>
-                <li><a href="/docs/latest/messaging/" target="_blank">Documentation</a></li>
+                <li><a href="/docs/latest/guide/messaging/index.html" target="_blank">Documentation</a></li>
             </ul>
         </div>
         <ul id="user-nav-menu" class="nav navbar-nav navbar-right">
             <li>
-                <a href="/docs/latest/messaging/" target="_blank" class="hidden-xs">
+                <a id="mmx-contextual-doc-btn" href="#" target="_blank" class="hidden-xs">
                     <span class="fa fa-question-circle fa-2x"></span>
                 </a>
                 <a id="user-nav-popover" style="display:none" data-title="<div class='clearfix'><a href='#/profile' class='btn btn-sm btn-default pull-left'>Profile</a><button id='logout-btn' class='btn btn-sm btn-default pull-right'>Sign Out</button></div>" data-content="">
@@ -191,7 +191,7 @@
             <a class="list-group-item" href="#topics"><i class="fa fa-edit"></i>Topics</a>
             <a class="list-group-item" href="#quickstart"><i class="fa fa-desktop"></i>Quickstart</a>
             <a class="list-group-item" href="#settings"><i class="fa fa-cog"></i>Settings</a>
-            <a class="list-group-item" href="/docs/latest/messaging/" target="_blank"><i class="fa fa-book"></i>Documentation</a>
+            <a class="list-group-item" href="/docs/latest/guide/messaging/index.html" target="_blank"><i class="fa fa-book"></i>Documentation</a>
         </div>
     </div>
     <div class="table-cell">
@@ -226,6 +226,106 @@
                     </div>
                     <div class="tab-pane clearfix" id="mmx-settings">
                         <div class="view-container"></div>
+                    </div>
+                    <div class="tab-pane clearfix" id="mmx-send">
+                        <p>Add one or more filters to select recipients who will receive your message.</p>
+
+                        <div class="row-fluid">
+                            <div class="col-md-8">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Filter List</div>
+                                    <div id="project-messaging-filter-list" class="panel-body">No filters have been added.</div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Payload</div>
+                                    <div id="project-messaging-msg-payload-container" class="panel-body">
+                                        <textarea id="project-messaging-msg-payload" name="payload" placeholder="Payload">{"msg":"hello world"}</textarea>
+                                    </div>
+                                </div>
+                                <div class="clearfix fullwidth">
+                                    <button class="btn btn-primary">Send Message</button>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Add A Filter</div>
+                                    <div id="project-messaging-filter-add" class="panel-body">
+                                        <div class="list-group">
+                                            <a href="#" did="username" class="list-group-item">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                                Full Name
+                                            </a>
+                                            <a href="#" did="useremail" class="list-group-item">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                                Email Address
+                                            </a>
+                                            <a href="#" did="devicetype" class="list-group-item">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                                Device Type
+                                            </a>
+                                            <a href="#" did="devicemodel" class="list-group-item">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                                Device Model
+                                            </a>
+                                            <a href="#" did="georegion" class="list-group-item">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                                GeoRegion
+                                            </a>
+                                            <a href="#" did="geopoint" class="list-group-item">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                                GeoPoint
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane clearfix" id="mmx-test">
+                        <div class="form-group clearfix">
+                            <span class="form-caption">Send Test GCM Push</span>
+                            <div class="well well-default clearfix">
+                                <form role="form">
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <label>Device Id</label>
+                                            <input type="text" class="form-control" name="gcm-push-id" placeholder="Device Id" value="" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Message</label>
+                                            <input type="text" class="form-control" name="gcm-push-msg" placeholder="Message" value="" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="button-group">
+                                                <button type="button" class="btn btn-primary">Send</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <span class="form-caption">Send Test APNS Push</span>
+                            <div class="well well-default clearfix">
+                                <form role="form">
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <label>Device Id</label>
+                                            <input type="text" class="form-control" name="apns-push-id" placeholder="Device Id" value="" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Message</label>
+                                            <input type="text" class="form-control" name="apns-push-msg" placeholder="Message" value="" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="button-group">
+                                                <button type="button" class="btn btn-primary">Send</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane clearfix" id="mmx-endpoints">
                         <div class="view-container"></div>
@@ -297,23 +397,36 @@
                     </form>
                 </div>
             </div>
-            <!--<div class="form-group clearfix">-->
-                <!--<span class="form-caption">APNS</span>-->
-                <!--<div class="well well-default clearfix">-->
-                    <!--<form role="form">-->
-                        <!--<div class="form-group">-->
-                            <!--<div class="col-sm-6">-->
-                                <!--<label>Certificate</label>-->
-                                <!--<input type="file" name="apns-cert" />-->
-                            <!--</div>-->
-                            <!--<div class="col-sm-6">-->
-                                <!--<label>Password</label>-->
-                                <!--<input type="password" class="form-control" name="apns-pass" placeholder="APNS Password" value="" />-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</form>-->
-                <!--</div>-->
-            <!--</div>-->
+            <div class="form-group clearfix">
+                <span class="form-caption">APNS</span>
+                <div class="well well-default clearfix">
+                    <form role="form">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label>Upload Certificate</label>
+                                <div class="row-fluid">
+                                    <div class="col-sm-12">
+                                        <div id="mmx-settings-apns-cert-file-upload">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>APNS Server Type</label>
+                                <div class="btn-group btn-toggle clearfix" did="apnsServerType">
+                                    <button class="btn btn-sm <% if(model.attributes.apnsServerType === 'sandbox'){ %>btn-primary active<% }else{ %>btn-default<% } %>" did="sandbox" type="button">Sandbox</button>
+                                    <button class="btn btn-sm <% if(typeof model.attributes.apnsServerType == 'undefined' || model.attributes.apnsServerType === 'production'){ %>btn-primary active<% }else{ %>btn-default<% } %>" did="production" type="button">Production</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Password</label>
+                                <input type="password" class="form-control" name="apnsCertPassword" placeholder="APNS Password" value="" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="col-sm-6">
             <div class="form-group clearfix">
@@ -325,7 +438,7 @@
             <div class="form-group clearfix">
                 <label>MMX API Key</label>
                 <div class="controls">
-                    <input type="text" class="form-control" name="apiKey" readonly="readonly" value="<%- model.attributes.apiKey %>">
+                    <input type="text" class="form-control" name="appAPIKey" readonly="readonly" value="<%- model.attributes.appAPIKey %>">
                 </div>
                 <!--<div class="controls">-->
                 <!--<button did="regenerate" class="btn btn-primary">Re-generate</button>-->
@@ -349,9 +462,7 @@
     <div class="form-group clearfix">
         <div class="controls">
             <button did="save" class="btn btn-primary">Save</button>
-            <% if(typeof opts.isMMXSubview === 'undefined' || !opts.isMMXSubview){ %>
             <button did="delete" class="btn btn-danger">Delete App</button>
-            <% } %>
         </div>
     </div>
 </script>
@@ -891,60 +1002,149 @@
 </script>
 
 <script id="MessagingQuickstartTmpl" type="text/template">
-    <p class="light">This step-by-step tutorial will help you configure and use messaging in your app.</p>
-    <table class="table table-striped">
-        <tr>
-            <td class="numbering">1.</td>
-            <td>
-                <a class="download-compiled-source" href="#">Download the Messaging Quickstart Android app.</a> Import it into Android Studio.
-            </td>
-        </tr>
-        <tr>
-            <td class="numbering">2.</td>
-            <td>Verify the "res/raw/quickstart.properties" file match values for your app settings as shown in "Settings" menu.
+
+    <p class="light">These step-by-step tutorials will help you configure and use messaging in your app.</p>
+
+    <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#mmx-quickstart-quickstart-tab" aria-controls="mmx-quickstart-quickstart-tab" role="tab" data-toggle="tab">Quickstart</a></li>
+            <li role="presentation"><a href="#mmx-quickstart-existing-tab" aria-controls="mmx-quickstart-existing-tab" role="tab" data-toggle="tab">Existing Mobile Apps</a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="mmx-quickstart-quickstart-tab">
+
+                <table class="table table-striped">
+                    <tr>
+                        <td class="numbering">1.</td>
+                        <td>
+                            <p>Install Android Studio as described in <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">http://developer.android.com/sdk/installing/studio.html</a>.</p>
+                            <a class="download-compiled-source" href="#">Download the Messaging Quickstart Android app</a>. Import it into Android Studio.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">2.</td>
+                        <td>Verify the "res/raw/quickstart.properties" file match values for your app settings as shown in "Settings" menu.
                 <pre>
 appId=&lt;App ID&gt;
 apiKey=&lt;MMX API key&gt;
 gcmSenderId=&lt;GCM project/sender id&gt;
 guestSecret=&lt;Guest Access Secret&gt;</pre>
-            </td>
-        </tr>
-        <tr>
-            <td class="numbering">3.</td>
-            <td>Build the app with Android Studio or from command line at root directory of "quickstart-android"
-                <pre>./gradlew clean build</pre>
-            </td>
-        </tr>
-        <tr>
-            <td class="numbering">4.</td>
-            <td>Install and run the Android app on an Android emulator or mobile device connected to your development machine:
-                <pre>./gradlew install</pre>
-            </td>
-        </tr>
-        <tr>
-            <td class="numbering">5.</td>
-            <td>From the app, connect to Messaging using these connection settings:
-<pre>host:mmx.magnet.com
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">3.</td>
+                        <td>Build the app with Android Studio or from command line at root directory of "quickstart-android"
+                            <pre>./gradlew clean build</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">4.</td>
+                        <td>Install and run the Android app on an Android emulator or mobile device connected to your development machine:
+                            <pre>./gradlew install</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">5.</td>
+                        <td>From the app, connect to Messaging using these connection settings:
+<pre>host:mmx-svr1.magnet.com
 port: 5222</pre>
-Optional if not using guest access:
+                            Optional if not using guest access:
 <pre>username: &lt;choose a new one, the user will be created upon first login&gt;
 password: &lt;a new password&gt;</pre>
-                You are all set! You can now send and receive messages with Magnet Mobile Messaging.
-            </td>
-        </tr>
-        <tr>
-            <td class="numbering">6.</td>
-            <td>Try it out by sending an in-app messages or push notification to your app from <a href="#/messaging/<%- model.attributes.appId %>/endpoints">Endpoints</a> -> Select your device -> Send Message dialog.</td>
-        </tr>
-        <tr class="mmx-nav">
-            <td class="numbering">7.</td>
-            <td>Go to "Message Log" to view in-app message status.</td>
-        </tr>
-        <tr class="mmx-nav">
-            <td class="numbering">8.</td>
-            <td>See <a href="/docs/latest/messaging/">Magnet Mobile Messaging Developer Guide</a> to learn more about Mobile Messaging capabilities. </td>
-        </tr>
-    </table>
+                            You are all set! You can now send and receive messages with Magnet Mobile Messaging.
+                        </td>
+                    </tr>
+                    <tr class="mmx-nav">
+                        <td class="numbering">6.</td>
+                        <td>Try it out by sending an in-app messages or push notification to your app from <a href="#endpoints">Endpoints</a> -> Select your device -> Send Message dialog.</td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">7.</td>
+                        <td>Go to "Message Log" to view in-app message status.</td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">8.</td>
+                        <td>
+                            <p>See <a href="/docs/latest/guide/messaging/index.html" target="_blank">Magnet Mobile Messaging Developer Guide</a> to learn more about Mobile Messaging capabilities.</p>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div role="tabpanel" class="tab-pane" id="mmx-quickstart-existing-tab">
+
+                <table class="table table-striped">
+                    <tr>
+                        <td class="numbering">1.</td>
+                        <td>
+                            Install Android Studio as described in <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">http://developer.android.com/sdk/installing/studio.html</a>.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">2.</td>
+                        <td>
+                            <p>Add the Mobile Messaging client library as a dependency to the Gradle build script as shown below:</p>
+<pre>repositories {
+    maven {
+        url "https://repo.magnet.com/artifactory/public"
+    }
+}
+dependencies {
+    compile ("com.magnet.mmx:magnet-mmx-client-android:0.8.0@aar") {
+        transitive=true
+    }
+}</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">3.</td>
+                        <td>Add your app settings as shown in "Settings" menu to your Android app source, described in <a href="/docs/latest/guide/messaging/Connecting+to+Mobile+Messaging+from+Mobile+Apps.html" target="_blank">Connecting to Mobile Messaging from Mobile Apps</a>.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">4.</td>
+                        <td>Build the app with Android Studio or from command line at root directory of "quickstart-android"
+                            <pre>./gradlew clean build</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">5.</td>
+                        <td>Install and run the Android app on an Android emulator or mobile device connected to your development machine:
+                            <pre>./gradlew install</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">6.</td>
+                        <td>From the app, connect to Messaging using these connection settings:
+<pre>host:mmx-svr1.magnet.com
+port: 5222</pre>
+                            Optional if not using guest access:
+<pre>username: &lt;choose a new one, the user will be created upon first login&gt;
+password: &lt;a new password&gt;</pre>
+                            You are all set! You can now send and receive messages with Magnet Mobile Messaging.
+                        </td>
+                    </tr>
+                    <tr class="mmx-nav">
+                        <td class="numbering">7.</td>
+                        <td>Try it out by sending an in-app messages or push notification to your app from <a href="#endpoints">Endpoints</a> -> Select your device -> Send Message dialog.</td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">8.</td>
+                        <td>Go to "Message Log" to view in-app message status.</td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">9.</td>
+                        <td>
+                            <p>See <a href="/docs/latest/guide/messaging/index.html" target="_blank">Magnet Mobile Messaging Developer Guide</a> to learn more about Mobile Messaging capabilities.</p>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
 </script>
 
 <script id="AdvancedSearchTmpl" type="text/template">
@@ -1137,6 +1337,8 @@ password: &lt;a new password&gt;</pre>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="form-group">
             <div class="row-fluid">
                 <div class="col-sm-6">
                     <label class="control-label">New Password</label>
@@ -1172,6 +1374,31 @@ password: &lt;a new password&gt;</pre>
                 <div class="col-md-1"></div>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="leave-feedback-container">
+    <a id="feedback-btn" href="">Leave Feedback</a>
+    <div id="feedback-content">
+        <p>We welcome any comments or questions.</p>
+        <select id="feedback-type-field" class="form-control">
+            <option value="Comment">Comment</option>
+            <option value="Question">Question</option>
+        </select>
+        <input id="feedback-name" class="form-control" type="text" placeholder="Name" name="name">
+        <input id="feedback-subject" class="form-control" type="text" placeholder="Subject" name="email">
+        <input id="feedback-email" class="form-control" type="text" placeholder="Email Address" name="email">
+        <textarea id="feedback-message" class="form-control" placeholder="Message"></textarea>
+        <button id="submit-feedback-btn" class="btn btn-primary">Submit Feedback</button>
+        <img src="/images/ajax-loader-sm.gif" style="display:none" />
+    </div>
+    <div id="feedback-complete" style="display:none">
+        <h4>Feedback Has Been<br />Submitted</h4>
+        <p>Thank you for submitting your feedback or question. We will respond shortly.</p>
+    </div>
+    <div id="feedback-error" style="display:none">
+        <h4>Error Submitting<br />Feedback</h4>
+        <p>There was an error submitting your feedback. Please check the email address you typed and try again.</p>
     </div>
 </div>
 
