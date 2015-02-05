@@ -100,7 +100,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
             if($.trim(input.val()).length < 1) return alert('App Name is a required field.');
             var model = new AppModel();
             model.save({
-                appName : input.val()
+                name : input.val()
             }, {
                 success: function(){
                     input.val('');

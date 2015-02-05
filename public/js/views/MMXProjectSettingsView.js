@@ -12,13 +12,13 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
             me.options.eventPubSub.bind('uploadAPNSCertFileComplete', function(params){
                 if(params.res.success){
                     me.model.set({
-                        apnsCertName : params.filename
+                        apnsCertUploaded : true
                     });
                     $('#mmx-settings-apns-cert-file-upload .qq-upload-file').html('Certificate Uploaded');
                 }else{
                     Alerts.Error.display({
                         title   : 'Error Uploading Certificate',
-                        content : 'There was an error uploading the certificate.'
+                        content : 'There was an error uploading the certificate. Please make sure you are uploading a valid APNS certificate.'
                     });
                 }
                 me.options.eventPubSub.trigger('btnComplete', $('#mmx-settings-apns-cert-file-upload-btn'));
@@ -39,8 +39,8 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
             var me = this;
             var obj = utils.collect(me.$el);
             if($.trim(obj.guestUserSecret).length < 1) return alert('Guest Access Secret is a required field.');
-            if($.trim(obj.appName).length < 1) return alert('App Name is a required field.');
-            if(me.model.attributes.appName != obj.appName && me.options.opts.col.iwhere('appName', obj.appName).length) return alert('The App name you specified already exists. Please choose another name.');
+            if($.trim(obj.name).length < 1) return alert('App Name is a required field.');
+            if(me.model.attributes.name != obj.name && me.options.opts.col.iwhere('name', obj.name).length) return alert('The App name you specified already exists. Please choose another name.');
             me.model.save(obj, {
                 success: function(){
                     me.model.set({
@@ -95,10 +95,9 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
                 eventPubSub : this.options.eventPubSub
             });
             $('<button id="mmx-settings-apns-cert-file-upload-btn" class="btn btn-primary" type="button" txt="Upload">Upload</button>').insertAfter(container+' .qq-upload-button');
-            if(this.model.attributes.hasAPNSCert){
+            if(this.model.attributes.apnsCertUploaded){
                 $(container).find('.qq-upload-list').html('<li class=" qq-upload-success"><span class="qq-upload-file">Certificate Uploaded</span></li>');
             }else{
-
                 $(container).find('.qq-upload-list').html('<li class=" qq-upload-error"><span class="qq-upload-file">No Certificate Uploaded</span></li>');
             }
         },

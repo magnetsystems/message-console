@@ -361,7 +361,7 @@
     <% _.each(col, function(model, key){ %>
         <div class="col-sm-6">
             <div class="well well-sm">
-                <a class="well-title" href="#/messaging/<%- model.attributes.id %>"><%- model.attributes.appName %></a>
+                <a class="well-title" href="#/messaging/<%- model.attributes.id %>"><%- model.attributes.name %></a>
                 <hr />
                 <%= renderSingle(model, configs) %>
             </div>
@@ -377,7 +377,7 @@
             <div class="form-group clearfix">
                 <label>App Name <span class="required">*</span></label>
                 <div class="controls">
-                    <input type="text" class="form-control" name="appName" maxlength="40" value="<%- model.attributes.appName %>">
+                    <input type="text" class="form-control" name="name" maxlength="40" value="<%- model.attributes.name %>">
                 </div>
             </div>
             <div class="form-group clearfix">
@@ -406,17 +406,15 @@
                                 <label>Upload Certificate</label>
                                 <div class="row-fluid">
                                     <div class="col-sm-12">
-                                        <div id="mmx-settings-apns-cert-file-upload">
-
-                                        </div>
+                                        <div id="mmx-settings-apns-cert-file-upload"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <label>APNS Server Type</label>
-                                <div class="btn-group btn-toggle clearfix" did="apnsServerType">
-                                    <button class="btn btn-sm <% if(model.attributes.apnsServerType === 'sandbox'){ %>btn-primary active<% }else{ %>btn-default<% } %>" did="sandbox" type="button">Sandbox</button>
-                                    <button class="btn btn-sm <% if(typeof model.attributes.apnsServerType == 'undefined' || model.attributes.apnsServerType === 'production'){ %>btn-primary active<% }else{ %>btn-default<% } %>" did="production" type="button">Production</button>
+                                <div class="btn-group btn-toggle clearfix" did="apnsCertProduction">
+                                    <button class="btn btn-sm <% if(typeof model.attributes.apnsCertProduction == 'undefined' || model.attributes.apnsCertProduction === false){ %>btn-primary active<% }else{ %>btn-default<% } %>" did="false" type="button">Sandbox</button>
+                                    <button class="btn btn-sm <% if(model.attributes.apnsCertProduction === true){ %>btn-primary active<% }else{ %>btn-default<% } %>" did="true" type="button">Production</button>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -536,7 +534,7 @@
     <option>Select an App</li>
     <% if(col && col.length > 0){ %>
     <% _.each(col, function(model, key){  %>
-    <option value="<%- model.attributes.id %>"><%- model.attributes.appName %></li>
+    <option value="<%- model.attributes.id %>"><%- model.attributes.name %></li>
     <% }); %>
     <% } %>
 </script>
