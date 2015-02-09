@@ -986,9 +986,11 @@
             <td><%- topic.description %></td>
             <td>
                 <button class="topic-publish-btn btn btn-primary btn-sm">Publish</button>
+                <% if(topic.id.indexOf('ANDROID/_all_') === -1 && topic.id.indexOf('IOS/_all_')  === -1){ %>
                 <button class="topic-delete-btn btn btn-danger btn-sm">
                     <span class="glyphicon glyphicon-trash"></span>
                 </button>
+                <% } %>
             </td>
         </tr>
         <% }); %>
