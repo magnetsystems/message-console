@@ -38,17 +38,11 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
         saveProject: function(){
             var me = this;
             var obj = utils.collect(me.$el);
-            if($.trim(obj.guestUserSecret).length < 1) return alert('Guest Access Secret is a required field.');
+            if($.trim(obj.guestSecret).length < 1) return alert('Guest Access Secret is a required field.');
             if($.trim(obj.name).length < 1) return alert('App Name is a required field.');
             if(me.model.attributes.name != obj.name && me.options.opts.col.iwhere('name', obj.name).length) return alert('The App name you specified already exists. Please choose another name.');
             me.model.save(obj, {
                 success: function(){
-                    me.model.set({
-                        gcm : {
-                            googleProjectId : obj.googleProjectId,
-                            googleApiKey    : obj.googleApiKey
-                        }
-                    });
                     me.options.eventPubSub.trigger('renderMMXList', me.model.attributes.id);
                     Alerts.General.display({
                         title   : 'App Updated',

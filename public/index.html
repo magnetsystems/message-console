@@ -387,11 +387,11 @@
                         <div class="form-group">
                             <div class="col-sm-6">
                                 <label>Google Project ID</label>
-                                <input type="text" class="form-control" name="googleProjectId" placeholder="Google Project ID" value="<%- model.attributes.gcm.googleProjectId %>" />
+                                <input type="text" class="form-control" name="googleProjectId" placeholder="Google Project ID" value="<%- model.attributes.googleProjectId %>" />
                             </div>
                             <div class="col-sm-6">
                                 <label>Google API Key</label>
-                                <input type="text" class="form-control" name="googleApiKey" placeholder="Google API Key" value="<%- model.attributes.gcm.googleApiKey %>" />
+                                <input type="text" class="form-control" name="googleAPIKey" placeholder="Google API Key" value="<%- model.attributes.googleAPIKey %>" />
                             </div>
                         </div>
                     </form>
@@ -419,7 +419,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <label>Password</label>
-                                <input type="password" class="form-control" name="apnsCertPassword" placeholder="APNS Password" value="" />
+                                <input type="text" class="form-control" name="apnsCertPassword" placeholder="APNS Password" value="<%- model.attributes.googleAPIKey %>" />
                             </div>
                         </div>
                     </form>
@@ -449,7 +449,7 @@
             <div class="form-group clearfix">
                 <label>Guest Access Secret <span class="required">*</span></label>
                 <div class="controls controls-grouped">
-                    <input type="text" class="form-control" name="guestUserSecret" value="<%- model.attributes.guestUserSecret || model.attributes.guestSecret %>">
+                    <input type="text" class="form-control" name="guestSecret" value="<%- model.attributes.guestSecret || model.attributes.guestSecret %>">
                     <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="
                     Used for creating user account from the mobile device">
                     </span>
