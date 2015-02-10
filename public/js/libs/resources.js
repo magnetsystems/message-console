@@ -5,6 +5,13 @@ var GLOBAL = {
     polling : false
 };
 
+$.ajax({
+    type : 'GET',
+    url  : '/rest/isInit'
+}).done(function(){
+    window.location.href = '/wizard';
+});
+
 // wrap jquery ajax function to reduce redundant code
 var AJAX = function(loc, method, contentType, data, callback, failback, headers){
     var me = this;
@@ -20,6 +27,7 @@ var AJAX = function(loc, method, contentType, data, callback, failback, headers)
         url         : GLOBAL.baseUrl+(loc.charAt(0) == '/' ? loc : '/rest/'+loc),
         contentType : contentType,
         data        : dataStr,
+        timeout     : 15000,
         xhrFields   : (GLOBAL.baseUrl ? {withCredentials:true} : {}),
         beforeSend  : function(xhr){
             if(headers){
@@ -49,6 +57,11 @@ var AJAX = function(loc, method, contentType, data, callback, failback, headers)
             }else{
                 failback(xhr, status, thrownError);
             }
+        }else if(xhr.responseText && xhr.responseText == 'connect-error'){
+            Alerts.Error.display({
+                title   : 'Server Timeout',
+                content : 'The server is not responding right now. Please try again later.'
+            });
         }else if(typeof failback === typeof Function){
             failback(xhr, status, thrownError);
         }

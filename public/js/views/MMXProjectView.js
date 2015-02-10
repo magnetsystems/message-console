@@ -46,7 +46,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
             this.$el.find('.tab-pane').removeClass('active');
             this.$el.find('#mmx-'+view).addClass('active');
             this.options.eventPubSub.trigger('updateBreadcrumb', {
-                title : this.toUpper(view)+(view == 'dashboard' ? ' for '+this.model.attributes.appName : '')
+                title : this.toUpper(view)+(view == 'dashboard' ? ' for '+this.model.attributes.name : '')
             });
             this.options.eventPubSub.trigger('initMMXProject'+view, this.model);
         },

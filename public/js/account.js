@@ -9,6 +9,7 @@ require.config({
         "fuelux"            : "libs/fuelux.min",
         "resources"         : "libs/resources",
         "moment"            : "libs/moment",
+        "fileuploader"      : "libs/fileuploader",
         "tour"              : "libs/bootstrap-tour.min"
     },
     shim : {
@@ -23,10 +24,13 @@ require.config({
         },
         "tour" : {
             "deps"    : ["bootstrap", "jquery"]
+        },
+        "fileuploader"  : {
+            "deps"    : ["jquery"]
         }
     }
 });
-require(['modernizr', 'jquery', 'backbone', 'routers/accountRouter', 'resources', 'bootstrap', 'fuelux', 'moment', 'tour'], function(Modernizr, $, Backbone, Desktop){
+require(['modernizr', 'jquery', 'backbone', 'routers/accountRouter', 'resources', 'bootstrap', 'fileuploader', 'fuelux', 'moment', 'tour'], function(Modernizr, $, Backbone, Desktop){
     // create new desktop instance
     this.router = new Desktop();
 });

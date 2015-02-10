@@ -361,7 +361,7 @@
     <% _.each(col, function(model, key){ %>
         <div class="col-sm-6">
             <div class="well well-sm">
-                <a class="well-title" href="#/messaging/<%- model.attributes.id %>"><%- model.attributes.appName %></a>
+                <a class="well-title" href="#/messaging/<%- model.attributes.id %>"><%- model.attributes.name %></a>
                 <hr />
                 <%= renderSingle(model, configs) %>
             </div>
@@ -377,7 +377,7 @@
             <div class="form-group clearfix">
                 <label>App Name <span class="required">*</span></label>
                 <div class="controls">
-                    <input type="text" class="form-control" name="appName" maxlength="40" value="<%- model.attributes.appName %>">
+                    <input type="text" class="form-control" name="name" maxlength="40" value="<%- model.attributes.name %>">
                 </div>
             </div>
             <div class="form-group clearfix">
@@ -387,33 +387,44 @@
                         <div class="form-group">
                             <div class="col-sm-6">
                                 <label>Google Project ID</label>
-                                <input type="text" class="form-control" name="googleProjectId" placeholder="Google Project ID" value="<%- model.attributes.gcm.googleProjectId %>" />
+                                <input type="text" class="form-control" name="googleProjectId" placeholder="Google Project ID" value="<%- model.attributes.googleProjectId %>" />
                             </div>
                             <div class="col-sm-6">
                                 <label>Google API Key</label>
-                                <input type="text" class="form-control" name="googleApiKey" placeholder="Google API Key" value="<%- model.attributes.gcm.googleApiKey %>" />
+                                <input type="text" class="form-control" name="googleAPIKey" placeholder="Google API Key" value="<%- model.attributes.googleAPIKey %>" />
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <!--<div class="form-group clearfix">-->
-                <!--<span class="form-caption">APNS</span>-->
-                <!--<div class="well well-default clearfix">-->
-                    <!--<form role="form">-->
-                        <!--<div class="form-group">-->
-                            <!--<div class="col-sm-6">-->
-                                <!--<label>Certificate</label>-->
-                                <!--<input type="file" name="apns-cert" />-->
-                            <!--</div>-->
-                            <!--<div class="col-sm-6">-->
-                                <!--<label>Password</label>-->
-                                <!--<input type="password" class="form-control" name="apns-pass" placeholder="APNS Password" value="" />-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</form>-->
-                <!--</div>-->
-            <!--</div>-->
+            <div class="form-group clearfix">
+                <span class="form-caption">APNS</span>
+                <div class="well well-default clearfix">
+                    <form role="form">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label>Upload Certificate</label>
+                                <div class="row-fluid">
+                                    <div class="col-sm-12">
+                                        <div id="mmx-settings-apns-cert-file-upload"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>APNS Server Type</label>
+                                <div class="btn-group btn-toggle clearfix" did="apnsCertProduction">
+                                    <button class="btn btn-sm <% if(typeof model.attributes.apnsCertProduction == 'undefined' || model.attributes.apnsCertProduction === false){ %>btn-primary active<% }else{ %>btn-default<% } %>" did="false" type="button">Sandbox</button>
+                                    <button class="btn btn-sm <% if(model.attributes.apnsCertProduction === true){ %>btn-primary active<% }else{ %>btn-default<% } %>" did="true" type="button">Production</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Password</label>
+                                <input type="text" class="form-control" name="apnsCertPassword" placeholder="APNS Password" value="<%- model.attributes.googleAPIKey %>" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="col-sm-6">
             <div class="form-group clearfix">
@@ -425,7 +436,7 @@
             <div class="form-group clearfix">
                 <label>MMX API Key</label>
                 <div class="controls">
-                    <input type="text" class="form-control" name="apiKey" readonly="readonly" value="<%- model.attributes.apiKey %>">
+                    <input type="text" class="form-control" name="appAPIKey" readonly="readonly" value="<%- model.attributes.appAPIKey %>">
                 </div>
                 <!--<div class="controls">-->
                 <!--<button did="regenerate" class="btn btn-primary">Re-generate</button>-->
@@ -438,7 +449,7 @@
             <div class="form-group clearfix">
                 <label>Guest Access Secret <span class="required">*</span></label>
                 <div class="controls controls-grouped">
-                    <input type="text" class="form-control" name="guestUserSecret" value="<%- model.attributes.guestUserSecret || model.attributes.guestSecret %>">
+                    <input type="text" class="form-control" name="guestSecret" value="<%- model.attributes.guestSecret || model.attributes.guestSecret %>">
                     <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="
                     Used for creating user account from the mobile device">
                     </span>
@@ -523,7 +534,7 @@
     <option>Select an App</li>
     <% if(col && col.length > 0){ %>
     <% _.each(col, function(model, key){  %>
-    <option value="<%- model.attributes.id %>"><%- model.attributes.appName %></li>
+    <option value="<%- model.attributes.id %>"><%- model.attributes.name %></li>
     <% }); %>
     <% } %>
 </script>
@@ -975,9 +986,11 @@
             <td><%- topic.description %></td>
             <td>
                 <button class="topic-publish-btn btn btn-primary btn-sm">Publish</button>
+                <% if(topic.id.indexOf('ANDROID/_all_') === -1 && topic.id.indexOf('IOS/_all_')  === -1){ %>
                 <button class="topic-delete-btn btn btn-danger btn-sm">
                     <span class="glyphicon glyphicon-trash"></span>
                 </button>
+                <% } %>
             </td>
         </tr>
         <% }); %>

@@ -44,7 +44,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click .repeater-list-items td .glyphicon-minus': 'toggleRow',
             'click .radio.disabled': 'doNothing',
             'click .mmx-nav a': 'selectMMXView',
-            'click #mmx-contextual-doc-btn': 'viewContextualDocs'
+            'click #mmx-contextual-doc-btn': 'viewContextualDocs',
+            'click .btn-toggle button': 'toggleSwitch'
         },
         goBack: function(e){
             e.preventDefault();
@@ -274,6 +275,25 @@ define(['jquery', 'backbone'], function($, Backbone){
                     }
                 }
             });
+<<<<<<< HEAD
+=======
+        },
+        toggleSwitch: function(e){
+            var tog = $(e.currentTarget).parent();
+            if(tog.find('.btn').hasClass('disabled')){
+                return;
+            }
+            tog.find('.btn').toggleClass('active');
+            if(tog.find('.btn-primary').size()>0)
+                tog.find('.btn').toggleClass('btn-primary');
+            if(tog.find('.btn-danger').size()>0)
+                tog.find('.btn').toggleClass('btn-danger');
+            if(tog.find('.btn-success').size()>0)
+                tog.find('.btn').toggleClass('btn-success');
+            if(tog.find('.btn-info').size()>0)
+                tog.find('.btn').toggleClass('btn-info');
+            tog.find('.btn').toggleClass('btn-default');
+>>>>>>> release-1.0.0_M4
         }
     });
     return View;
