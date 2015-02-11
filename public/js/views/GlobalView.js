@@ -275,8 +275,6 @@ define(['jquery', 'backbone'], function($, Backbone){
                     }
                 }
             });
-<<<<<<< HEAD
-=======
         },
         toggleSwitch: function(e){
             var tog = $(e.currentTarget).parent();
@@ -293,7 +291,6 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(tog.find('.btn-info').size()>0)
                 tog.find('.btn').toggleClass('btn-info');
             tog.find('.btn').toggleClass('btn-default');
->>>>>>> release-1.0.0_M4
         }
     });
     return View;
