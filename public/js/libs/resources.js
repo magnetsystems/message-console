@@ -288,6 +288,7 @@ ModelConnector.prototype.update = function(path, id, obj, callback, failback){
     var me = this;
     me.query(path+'/'+id, 'PUT', obj, function(data, status, xhr){
         if(typeof callback === typeof Function){
+            if(data.id) delete data.id;
             if(!me.chkSession(data, xhr)) return false;
             callback(data, status, utils.convertHeaderStrToObj(xhr));
         }

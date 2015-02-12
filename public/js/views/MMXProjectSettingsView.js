@@ -41,17 +41,18 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
             if($.trim(obj.guestSecret).length < 1) return alert('Guest Access Secret is a required field.');
             if($.trim(obj.name).length < 1) return alert('App Name is a required field.');
             if(me.model.attributes.name != obj.name && me.options.opts.col.iwhere('name', obj.name).length) return alert('The App name you specified already exists. Please choose another name.');
-            me.model.save(obj, {
-                success: function(){
-                    me.options.eventPubSub.trigger('renderMMXList', me.model.attributes.id);
-                    Alerts.General.display({
-                        title   : 'App Updated',
-                        content : 'Your changes have been saved.'
-                    });
-                },
-                error: function(e){
-                    alert(e.responseText);
-                }
+            AJAX('apps/'+me.model.attributes.id, 'PUT', 'application/json', obj, function(res, status, xhr){
+                me.model.set(obj);
+                for(var key in obj)
+                    if($.trim(obj[key]) === '')
+                        me.model.unset(key);
+                me.options.eventPubSub.trigger('renderMMXList', me.model.attributes.id);
+                Alerts.General.display({
+                    title   : 'App Updated',
+                    content : 'Your changes have been saved.'
+                });
+            }, function(e){
+                alert(e.responseText);
             });
         },
         deleteProject: function(){
