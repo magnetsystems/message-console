@@ -10,7 +10,6 @@ define(['jquery', 'backbone'], function($, Backbone){
                 me.callback = callback;
                 me.options.opts.newMMXUser = false;
                 me.options.opts.firstLogin = false;
-                Cookie.remove('magnet_auth');
                 $('#user-nav').addClass('hidden');
                 $('#user-nav-popover').attr('data-content', '').popover('hide');
                 $('#user-nav-popover').hide();
