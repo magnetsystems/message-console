@@ -377,7 +377,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 body.content = input.val();
             body.appAPIKey = me.model.attributes.appAPIKey;
             utils.resetError(me.sendMessageModal);
-            AJAX(url, 'POST', 'application/x-www-form-urlencoded', body, function(res, status, xhr){
+            AJAX(url, 'POST', 'application/json', body, function(res, status, xhr){
                 input.val('');
                 alert('message sent');
             }, function(xhr, status, thrownError){
