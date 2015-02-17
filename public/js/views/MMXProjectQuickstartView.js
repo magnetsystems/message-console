@@ -33,7 +33,8 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         stopTour: function(){
             $('.tour').remove();
-            this.options.opts.tour.end();
+            if(this.options.opts.tour)
+                this.options.opts.tour.end();
         }
     });
     return View;

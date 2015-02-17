@@ -358,17 +358,24 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         sendMessage: function(dom){
             var me = this;
-            var body = {};
-            var type = 'message';
-            var input = me.sendMessageModal.find('.message-types > div[did="'+type+'"] textarea');
-            var url = 'apps/'+me.model.attributes.id+'/endpoints/'+this.activeDevice.id+'/'+type;
-            if(type == 'notification' && !$.trim(input.val()).length) return alert('Payload is required for sending a push notification');
+            var body = {
+                receipt : true,
+                headers : {
+                    'content-type'     : 'text',
+                    'content-encoding' : 'simple'
+                }
+            };
+            var input = me.sendMessageModal.find('.message-types > div[did="message"] textarea');
+            var url = 'apps/'+me.model.attributes.id+'/endpoints/'+this.activeDevice.id+'/message';
+            if(!$.trim(input.val()).length)
+                return alert('Payload is required for sending a push notification');
             if(me.activeDevice && me.activeDevice.deviceId)
                 body.deviceId = me.activeDevice.deviceId;
             if(me.activeUser && me.activeUser.userId)
-                body.userId = me.activeUser.userId;
+                body.recipientId = me.activeUser.userId;
             if($.trim(input.val()).length)
-                body.payload = input.val();
+                body.content = input.val();
+            body.appAPIKey = me.model.attributes.appAPIKey;
             utils.resetError(me.sendMessageModal);
             AJAX(url, 'POST', 'application/x-www-form-urlencoded', body, function(res, status, xhr){
                 input.val('');

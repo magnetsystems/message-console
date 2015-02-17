@@ -7,9 +7,12 @@ var GLOBAL = {
 
 $.ajax({
     type : 'GET',
-    url  : '/rest/isInit'
-}).done(function(){
-    window.location.href = '/wizard';
+    url  : '/rest/status'
+}).done(function(res){
+    if(res == 'init')
+        window.location.href = '/wizard';
+    if(res == 'standalone')
+        $('#leave-feedback-container').remove();
 });
 
 // wrap jquery ajax function to reduce redundant code
