@@ -96,13 +96,12 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
                 $(container).find('.qq-upload-list').html('<li class=" qq-upload-error"><span class="qq-upload-file">No Certificate Uploaded</span></li>');
             }
         },
-        uploadCertificate: function(){
+        uploadCertificate: function(e){
             var me = this;
-            var file = this.$el.find('.qq-upload-file');
-            if(!file.length){
+            var btn = $(e.currentTarget);
+            var file = btn.parent().find('.qq-upload-list > li > .qq-upload-file');
+            if(!file.length || file.text().indexOf('No Certificate Uploaded') != -1 || file.text().indexOf('Certificate Uploaded') != -1)
                 return false;
-            }
-            var btn = $('#mmx-settings-apns-cert-file-upload-btn');
             me.options.eventPubSub.trigger('btnLoading', btn);
             me.options.eventPubSub.trigger('uploadAPNSCertFile', '/rest/apps/'+me.model.attributes.id+'/uploadAPNSCertificate');
         }
