@@ -302,7 +302,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             this.sendMessageModal.find('.radio').removeClass('disabled').show();
             this.sendMessageModal.find('.message-push-history').html('');
             this.sendMessageModal.find('input[name="message-type"][value="message"]').prop('checked', true);
-            if(!this.activeDevice.clientToken || !this.model.attributes.gcm || !this.model.attributes.gcm.googleApiKey || !this.model.attributes.gcm.googleProjectId){
+            if(!this.activeDevice.clientToken || !this.model.attributes.googleProjectId || !this.model.attributes.googleAPIKey){
                 this.sendMessageModal.find('input[name="message-type"][value="push"]').closest('.radio').addClass('disabled');
                 pushActivated = false;
             }
