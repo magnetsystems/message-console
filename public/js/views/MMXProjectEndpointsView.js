@@ -356,14 +356,15 @@ define(['jquery', 'backbone'], function($, Backbone){
             this.sendMessageModal.find('.message-types > div').addClass('hidden');
             this.sendMessageModal.find('.message-types > div[did="'+option+'"]').removeClass('hidden');
         },
-        sendMessage: function(dom){
+        sendMessage: function(){
             var me = this;
             var body = {
                 receipt : true,
                 headers : {
                     'content-type'     : 'text',
                     'content-encoding' : 'simple'
-                }
+                },
+                appAPIKey : me.model.attributes.appAPIKey
             };
             var input = me.sendMessageModal.find('.message-types > div[did="message"] textarea');
             var url = 'apps/'+me.model.attributes.id+'/endpoints/'+this.activeDevice.id+'/message';
@@ -375,7 +376,6 @@ define(['jquery', 'backbone'], function($, Backbone){
                 body.recipientId = me.activeUser.userId;
             if($.trim(input.val()).length)
                 body.content = input.val();
-            body.appAPIKey = me.model.attributes.appAPIKey;
             utils.resetError(me.sendMessageModal);
             AJAX(url, 'POST', 'application/json', body, function(res, status, xhr){
                 input.val('');
@@ -387,21 +387,24 @@ define(['jquery', 'backbone'], function($, Backbone){
         sendNotification: function(dom){
             var type = dom.attr('did');
             var me = this;
-            var body = {};
+            var body = {
+                target : {
+                    deviceIds : []
+                },
+                appAPIKey : me.model.attributes.appAPIKey
+            };
             var input = me.sendMessageModal.find('.message-types > div[did="push"] textarea');
             var url = 'apps/'+me.model.attributes.id+'/endpoints/'+this.activeDevice.id;
             if(me.activeDevice && me.activeDevice.deviceId)
-                body.deviceId = me.activeDevice.deviceId;
-            if(me.activeUser && me.activeUser.userId)
-                body.userId = me.activeUser.userId;
+                body.target.deviceIds.push(me.activeDevice.deviceId);
             if(type == 'notification' && $.trim(input.val()).length)
-                body.payload = input.val();
+                body.body = input.val();
             url += '/'+type;
             utils.resetError(me.sendMessageModal);
             AJAX(url, 'POST', 'application/x-www-form-urlencoded', body, function(res, status, xhr){
                 input.val('');
                 alert(type+' sent');
-                if(body.deviceId) me.pollRecentMessages();
+                if(body.target.deviceIds.length) me.pollRecentMessages();
             }, function(xhr, status, thrownError){
                 utils.showError(me.sendMessageModal, '', type+' delivery error.');
             });
