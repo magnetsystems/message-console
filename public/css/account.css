@@ -5,7 +5,7 @@
 #messaging .highlighted-row.blue td{background-color:#D9EDF7 !important}
 #messaging .highlighted-row.yellow td{background-color:#FCF8E3 !important}
 #messaging .highlighted-row.red td{background-color:#F2DEDE !important}
-#messaging .text.green{color:#5CB85C}
+#messaging .text.green{color:#5CB85C;font-weight:normal}
 #messaging .text.blue{color:#5BC0DE}
 #messaging .text.gray{color:#aaa}
 #messaging .text.darkgray{color:#777}

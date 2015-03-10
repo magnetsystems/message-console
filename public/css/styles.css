@@ -1,15 +1,16 @@
 /* REUSABLE */
-.GET{background:#00a6ff}
+.GET{background:#075b85}
 .PUT{background:#e36810}
 .DELETE{background:#c20000}
-.POST{background:#277d2a}
+.POST{background:#008a7c}
 .fullpos{bottom:0;height:auto;left:0;position:absolute;right:0;top:0}
 .vscroll{bottom:0;height:auto;left:0;position:absolute;right:0;top:0;overflow-y:auto}
 h4{font-weight:300;font-size:25px}
 h5{font-weight:bold;font-size:13px;line-height:14px;margin-top:20px}
 pre{background-color:#efefef;border:1px solid rgba(0, 0, 0, 0.15);border-radius:0;font-size:12px;padding:7px}
 .button-group{margin:15px 0}
-.btn.btn-primary{background:#008cba}
+.btn{border-radius:6px}
+.btn.btn-primary{border:solid 1px #0a394f;background-color:#036285}
 /*.btn.disabled{background:#a9b2b8;border-color:#a9b2b8;opacity:1}*/
 .general-padding{padding:15px}
 .padding-sm{padding:7px 0}
@@ -24,7 +25,12 @@ pre{background-color:#efefef;border:1px solid rgba(0, 0, 0, 0.15);border-radius:
 .light.pad{padding:13px 0 0}
 .table-layout{display:table;width:100%;height:100%;padding-top:50px}
 .table-layout .table-cell{display:table-cell;position:relative}
+.has-error > input{background-color:#F2DEDE}
+.req{color:#c20000}
+.red{font-weight:bold;color:#C9302C}
+.green{font-weight:bold;color:#449D44}
 #collapsible-menu-list{width:200px;background:#243b45;border-radius:0}
+#collapsible-menu-list .list-group-item{display:block}
 #collapsible-menu-list .list-group-item i{margin-right:6px}
 #collapsible-menu-list .list-group-item{border-radius:0;border:none;background:#243b45;color:#aaa;padding:8px 15px 11px}
 #collapsible-menu-list .list-group-item.section{padding:5px 15px 7px}
@@ -39,22 +45,24 @@ body > .navbar .container-fluid{padding-right:0}
 .navbar.navbar-default .alert{margin:6px 0 6px;padding:7px 35px 7px 15px}
 .navbar.navbar-default .navbar-toggle{margin-right:55px}
 #user-nav.navbar-collapse{font-size:20px}
-#user-nav-menu{position:absolute;top:0;right:0;margin:0}
+#user-nav-menu{position:absolute;top:0;right:0;margin:0;display:none}
 #user-nav-menu .popover-title{border-top:1px solid #ccc;border-bottom:none;border-radius:0 0 5px 5px}
 #user-nav-menu .popover{min-width:250px;margin-right:10px}
 #user-nav-menu .popover-content{font-size:13px;margin-bottom:12px}
 #user-nav-menu .popover-content b{font-size:14px}
 #user-nav-popover{cursor:pointer}
-#user-nav-menu .popover{left:-135px !important;top:48px !important}
+#user-nav-menu .popover{left:-190px !important;top:48px !important}
 #user-nav-menu > li > a{float:left}
 
 /* SITE LAYOUT */
 html, body{background:#efefef;height:100%}
-.label, .navbar, .nav-tabs.two > li > a, .nav-tabs.three > li > a, .nav-tabs.four > li > a, .btn, .alert, .panel, .panel-group .panel{border-radius:0}
+.label, .navbar, .nav-tabs.two > li > a, .nav-tabs.three > li > a, .nav-tabs.four > li > a, .nav-tabs.five > li > a, .alert, .panel, .panel-group .panel{border-radius:0}
 #main-nav-menu > li > a{border-left: 1px solid #8c8c8c;font-size:15px}
 #breadcrumb{background:#002c3d;color:#fff;font-size:17px;min-height:42px;padding:4px 0x}
 #breadcrumb i, #breadcrumb .bc-title{float:left}
 #toggle-collapsible-menu{cursor:pointer;margin-right:10px;margin-top:4px}
+#collapsible-menu-list span a{text-indent:17px}
+#collapsible-menu-list .list-group div a{text-indent:17px}
 .app-view{background:#efefef}
 .view-wrapper{margin-top:43px;padding:0;margin-bottom:30px;border-bottom:solid 1px #aaa}
 .view-wrapper .navbar-header a{color:#fff}
@@ -64,7 +72,7 @@ html, body{background:#efefef;height:100%}
 .view-wrapper > .content > .row-fluid > .col-md-3{padding-right:15px}
 .vscroll.page-main-tab{background:#fff;margin:52px 20px 0 20px;border:solid 1px #aaa}
 .main-section, .main-section > .tab-content, .main-section > .tab-content > .tab-pane, .view-wrapper > .content > .row-fluid, .tab-content-container, .view-wrapper > .content > .row-fluid > div{height:100%}
-#confirm-tos-dialog iframe{width:100%}
+
 
 /* - forms */
 label{font-weight:500}
@@ -83,8 +91,9 @@ input.form-control, select.form-control{margin-bottom:5px;border-radius:0}
 .nav-tabs.two > li{width:50%}
 .nav-tabs.three > li{width:33.33%}
 .nav-tabs.four > li{width:25%}
-.nav-tabs.two > li > a, .nav-tabs.three > li > a, .nav-tabs.four > li > a{text-align:center;background:#ddd;border-bottom:solid 1px #999;padding:6px 0;margin-right:0}
-.nav-tabs.two > li.active > a, .nav-tabs.three > li.active > a, .nav-tabs.four > li.active > a, .nav-tabs.two > li.active > a:hover, .nav-tabs.three > li.active > a:hover, .nav-tabs.four > li.active > a:hover, .nav-tabs.two > li.active > a:focus, .nav-tabs.three > li.active > a:focus, .nav-tabs.four > li.active > a:focus{outline:none;font-weight:bold;background-color:#008cba;color:#fff;border:solid 1px #008cba}
+.nav-tabs.five > li{width:20%}
+.nav-tabs.two > li > a, .nav-tabs.three > li > a, .nav-tabs.four > li > a, .nav-tabs.five > li > a{text-align:center;background:#ddd;border-bottom:solid 1px #999;border-right:solid 1px #999;padding:6px 0;margin-right:0}
+.nav-tabs.two > li.active > a, .nav-tabs.three > li.active > a, .nav-tabs.four > li.active > a, .nav-tabs.five > li.active > a, .nav-tabs.two > li.active > a:hover, .nav-tabs.three > li.active > a:hover, .nav-tabs.four > li.active > a:hover, .nav-tabs.five > li.active > a:hover, .nav-tabs.two > li.active > a:focus, .nav-tabs.three > li.active > a:focus, .nav-tabs.four > li.active > a:focus, .nav-tabs.five > li.active > a:focus{outline:none;font-weight:bold;background-color:#008cba;color:#fff;border:solid 1px #008cba}
 .tab-content > .tab-pane{background:#fff}
 .tab-content.bordered{border:solid 1px #ddd;border-top:none;padding:15px}
 
@@ -101,7 +110,7 @@ input.form-control, select.form-control{margin-bottom:5px;border-radius:0}
 
 /* panels */
 .app-view > .panel, .centered-wrapper > .panel{border:solid 1px #aaa;width:90%;max-width:450px;height:300px;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;padding:10px 25px}
-#login-container .centered-wrapper > .panel{height:270px}
+#login-container .centered-wrapper > .panel, #messaging .centered-wrapper > .panel{height:270px}
 #admin #login-container .centered-wrapper > .panel{height:220px}
 #register-container .centered-wrapper > .panel{height:290px}
 #forgotpassword-container .centered-wrapper > .panel{height:200px}
@@ -114,8 +123,12 @@ input.form-control, select.form-control{margin-bottom:5px;border-radius:0}
 .panel-title .btn{float:right;margin:-6px -9px 0px 14px}
 
 /* alert */
+#general-alert .modal-body, #error-alert .modal-body{word-wrap:break-word}
+#error-alert textarea{min-height:120px}
 .alert-info{position:relative;padding:3px 10px;margin-bottom:3px}
 .alert-info .glyphicon{position:absolute;top:6px;right:6px;cursor:pointer}
+#server-restart-required{font-size:12px}
+#server-restart-required .alert-dismissible{margin-top:3px;padding:0 27px 0 8px}
 
 /* lists */
 .list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus{z-index:auto}
@@ -146,6 +159,25 @@ input.form-control, select.form-control{margin-bottom:5px;border-radius:0}
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff9f9f9', endColorstr='#ffe5e5e5', GradientType=0);
 }
 .repeater-list-items td.sortable.sorted span.glyphicon, .repeater-list-items td.sortable.sorted span.glyphicon{float:right;margin-top:2px}
+.repeater-icon-controls .glyphicon{font-size:19px;color:#008CBA;margin:5px 9px 0 0;cursor:pointer}
+.repeater-icon-controls .glyphicon.disabled{color:#bbb;cursor:text}
+.repeater-icon-controls .fa{color:#008CBA;margin:5px 9px 0 0;cursor:pointer}
+.repeater-icon-controls .fa.disabled{color:#bbb}
+.fuelux .pillbox{clear:both;border:none;padding:0}
+.pillbox .btn{margin:4px 6px}
+.fuelux .pill-group{border: 1px solid #bbb;border-radius:4px;cursor:text;padding:8px 8px 0 8px !important;background:#eee}
+.repeater{margin-bottom:25px}
+.fuelux .repeater-header, .fuelux .repeater-footer{background:#EBEBEB;min-height:0}
+.fuelux .repeater-viewport{min-height:0}
+.fuelux .repeater{border-bottom:none}
+
+/* dual-column-widget */
+.dual-column-widget .col-sm-5{padding:0}
+.dual-column-widget .col-sm-2{padding:56px 0 0 0;margin:0 auto;text-align:center}
+.dual-column-widget .col-sm-2.visible-xs{padding:8px 0 0 0}
+.dual-column-widget .list-group{margin-bottom:0;border:1px solid #ccc;padding:2px;height:157px;overflow-y:scroll}
+.dual-column-widget .list-group-item{border-radius:0;padding:3px 6px;border:none;outline:none}
+.dual-column-widget .list-group-item.active{background:#008CBA}
 
 /* PROJECTS */
 #projects-tab table{margin-bottom:0;border-bottom:0}
@@ -180,13 +212,15 @@ ul.project-menu li.active a, ul.project-menu li.active a:hover, ul.project-menu 
 
 
 /* data viewer */
+#dataviewer-grid-container{margin-bottom:130px}
+#project-dataviewer-tab .alert-warning{width:35%;min-width:300px;max-width:500px;margin:90px auto 50px;font-size:20px}
 #project-dataviewer-tab .list-group-item{border-radius:0}
 #project-dataviewer-tab .col-sm-3 .panel-body .list-group-item{border:none;border-top:solid 1px #ddd}
 #project-dataviewer-tab .col-sm-3 .panel-body .list-group-item:first-child{border-radius:0}
 #project-dataviewer-tab .repeater-header-left{float:none}
 #project-dataviewer-tab .repeater-search{width:100%;margin-bottom:15px;float:none}
-#dataviewer-entity-list{padding:1px;border:solid 1px #aaa}
-#dataviewer-entity-list .list-group-item{padding:7px 15px;border:none}
+#dataviewer-entity-list{padding:1px;border:none}
+#dataviewer-entity-list .list-group-item{padding:7px 15px;border:none;font-size:12px}
 #dataviewer-entity-list .list-group-item:hover, #dataviewer-entity-list .list-group-item:active{background:#3e8096;color:#fff}
 #dataviewer-entity-list .list-group-item.active{background:#006282;color:#fff}
 #dataviewer-query-wrapper{margin-bottom:10px}
@@ -215,17 +249,19 @@ ul.project-menu li.active a, ul.project-menu li.active a:hover, ul.project-menu 
 #dataviewer-query-container_group_8{background:#B8B8B8;border:solid 1px #808080}
 .rules-group-header > .btn-group > .btn-primary{background:#fff;border-color:#ccc;color:#888}
 .rules-group-header > .btn-group > .btn-primary.active{background:#008cba;border-color:#357ebd;color:#fff}
+.project-dataviewer-relation-link{cursor:pointer;font-size:12px}
 
-/* - entities */
+/* entities */
 #project-entity-mgmt-tab > .tab-content{margin-top:15px}
 #project-entity-mgmt-tab .padded{padding:12px 0}
+#project-entity-mgmt-tab .padded .btn{margin-left:5px}
 #project-entity-mgmt-tab .panel-body .table{margin-bottom:0}
 #project-entity-mgmt-tab .panel-body .btn-row{margin:0 0 9px 0;padding-top:3px}
 #project-entity-mgmt-tab hr{border-color:#ccc;margin-top:0;margin-bottom:25px}
 #project-entity-mgmt-acc{clear:both}
 #project-entity-new-container .alert{margin-bottom:5px;padding:6px 0 0 0}
 #project-entity-import-xml-modal textarea, #project-entity-export-xml-modal textarea{min-height:110px}
-#data-model-entities > .form-group, #data-model-valuetypes > .form-group, #data-model-relationships > .form-group, #project-security-oauth-tab > .form-group{max-width:450px}
+#data-model-entities > .form-group, #data-model-valuetypes > .form-group, #data-model-relationships > .form-group, #data-model-roles > .form-group, #project-security-oauth-tab > .form-group{max-width:450px}
 #project-entity-mgmt-tab .glyphicon-info-sign{margin-left:4px}
 #project-entity-mgmt-tab .tooltip-inner{min-width:120px}
 #project-entity-mgmt-tab > .tab-content h4{font-weight:500}
@@ -234,18 +270,23 @@ ul.project-menu li.active a, ul.project-menu li.active a:hover, ul.project-menu 
 #project-entity-mgmt-tab .table-hover > tbody > tr.combined-td .well{background:#ededed;border:solid 1px #aaa;padding:9px 0;box-shadow:0 1px 1px rgba(0, 0, 0, 0.15) inset}
 #project-entity-mgmt-tab .table-hover > tbody > tr.combined-td > td, #project-entity-mgmt-tab .table-hover > tbody > tr.combined-td:hover > td{background:#F5F5F5;border:none}
 #project-entity-mgmt-tab .nav-tabs > li > a{min-width:117px;text-align:center}
-#project-entities-mgmt-acc .label.label-success, #project-entities-mgmt-acc .label.label-primary{cursor:pointer}
+#project-entities-mgmt-acc .table .label.label-success, #project-entities-mgmt-acc .table .label.label-primary{cursor:pointer}
+.data-model-remove-acl-btn, .data-model-remove-role-btn, .data-model-remove-uniqueconstraint-btn{cursor:pointer}
+.data-model-role-container .label, .data-model-acl-item .label{font-size:14px;line-height:2}
+.data-model-role-container .well-default, .data-model-acl-item .well-default{padding:10px 3px 10px 0}
+.data-model-uniqueConstraint-container .input-group{width:100%;max-width:500px}
 .relationship-item .well{margin-bottom:11px;padding:10px 0}
 .bottom-right{position:absolute;bottom:5px;right:5px}
 #XMLContainer{background:#fff}
 #XMLContainer.refresher{-webkit-transition:background-color 800ms linear;-moz-transition:background-color 800ms linear;-o-transition:background-color 800ms linear;-ms-transition:background-color 800ms linear;transition: background-color 800ms linear}
+#project-defaultacls{margin-top:15px}
+.data-model-contextual-container .alert{margin-bottom:0}
+#project-entity-change-tracking-container{display:inline-block}
+#project-entity-change-tracking-container label{font-size:11px;margin-left:5px}
+.button-separator{height:30px;background:#555;width:1px;display:inline-block;margin:0 0 -11px 5px}
+#project-entity-new-version-btn{margin-right:-9px}
 
 /* - users */
-.fuelux .pillbox{clear:both;border:none;padding:0}
-.pillbox .btn{margin:4px 6px}
-.fuelux .pill-group{border: 1px solid #bbb;border-radius:4px;cursor:text;padding:8px 8px 0 8px !important;background:#eee}
-#project-users-list-container{margin-bottom:25px}
-.fuelux .repeater-header, .fuelux .repeater-footer{background:#EBEBEB}
 
 /* - messaging */
 #project-messaging-filter-add{padding:0}
@@ -256,17 +297,16 @@ ul.project-menu li.active a, ul.project-menu li.active a:hover, ul.project-menu 
 #project-messaging-msg-payload{border:none;height:75px;width:100%}
 
 /* - controllers */
-.controller-method{padding:4px 6px 4px 6px;font-size:14px;font-weight:bold;color:#fff;width:65px;text-align:center;float:left}
+.controller-method{padding:4px 6px 4px 6px;font-size:14px;font-weight:bold;color:#fff;width:65px;text-align:center;float:left;border-radius:12px}
 .controller-path{font-size:14px;padding:3px 6px;color:#222;margin-left:10px;float:left;font-weight:normal}
-#project-controllers-accordion {top:150px}
-#project-download-button-container .col-sm-4 {text-align:center}
+#project-controllers-accordion {top:0;right:216px}
 #project-controllers-tab .accordion *{outline:none}
-#project-controllers-tab .panel-heading{background:none;padding:3px 1px}
+#project-controllers-tab .panel-heading{padding:4px}
 #project-controllers-tab .accordion-toggle{color:#333;float:right;padding:3px 9px 3px 3px !important}
 #project-controllers-tab .accordion-toggle i{margin-left:9px;background-position:-313px -119px}
 #project-controllers-tab .accordion-toggle.active i{background-position:-288px -120px}
 .panel-group{margin-bottom:0}
-#project-controllers-tab .panel.panel-default{border:none;margin-bottom:10px;border-radius:0 10px 10px 0;background:url(//www.magnet.com/resources/sandbox/accordion_bg.png) repeat-y left top #EBEBEB}
+/*#project-controllers-tab .panel.panel-default{border:none;margin-bottom:10px;border-radius:0 10px 10px 0;background:url(//www.magnet.com/resources/sandbox/accordion_bg.png) repeat-y left top #EBEBEB}*/
 #project-controllers-tab .panel-body{border:none}
 #project-controllers-tab .panel-body p{color:#777777;font-size:12px;margin:15px 0 15px 15px}
 #project-controllers-tab .panel-body{padding:0 15px}
@@ -281,6 +321,13 @@ ul.project-menu li.active a, ul.project-menu li.active a:hover, ul.project-menu 
 #project-controllers-tab .tab-pane h5{margin-left:0;font-weight:bold;font-size:15px}
 #project-controllers-tab .tab-pane hr{margin-top:0;border-color:#aaa;border-width:1px 0 0 0}
 #project-controllers-tab .tab-pane button{margin-top:5px}
+#project-controllers-api-download{margin-right:11px;margin-top:8px;float:right}
+#project-controllers-api-download .list-group-item img{margin-right:2px}
+#project-controllers-api-download .list-group-item{font-size:15px;margin-bottom:1px;width:195px;height:39px;padding:4px 10px;border:none;background-color:#616161}
+#project-controllers-api-download .list-group-item a, #project-controllers-api-download .list-group-item a:hover{color:#fff}
+#project-controllers-api-download .list-group-item.first{font-size:18px;text-align:center;padding:6px 10px;background:#465C6D;color:#fff;cursor:default}
+#project-controllers-api-download .list-group-item:last-child{border-bottom-left-radius:15px;border-bottom-right-radius:15px}
+#project-controllers-api-download .list-group-item:first-child{border-top-left-radius:15px;border-top-right-radius:15px}
 .test-console{font-size:12px;padding:8px 0;margin:6px 0;background:#efefef !important;border:solid 1px #aaa;color:#999;font-family:'Monaco','Menlo','Ubuntu Mono','Consolas','source-code-pro',monospace}
 
 /* server response dialog */
@@ -297,10 +344,11 @@ ul.project-menu li.active a, ul.project-menu li.active a:hover, ul.project-menu 
 #project-logs-tab .dt-container .col-md-4{padding-left:0;padding-right:10px}
 #project-logs-tab .repeater-header-left{float:none}
 #project-logs-tab .repeater-search{width:100%;margin-bottom:15px;float:none}
-#project-logs-tab .repeater-search .input-group-btn button{margin-right:15px}
+#project-logs-tab .repeater-search .col-sm-6.same-line{padding-right:0}
 #project-logs-tab .column-selector{padding:5px 15px 15px 15px}
 #project-logs-tab .column-selector h5{margin-top:5px}
 #project-logs-tab .pillbox > .pill-group > .pill{margin:0 0 8px 0}
+#project-logs-tab .repeater-viewport p{text-align:center;padding:15px;font-size:17px}
 #project-logs-tab .repeater-list-items .glyphicon-remove{cursor:pointer;font-size:10px;color:#888}
 #project-logs-tab .view-log-data{margin-bottom:5px}
 
@@ -324,7 +372,7 @@ ul.project-menu li.active a, ul.project-menu li.active a:hover, ul.project-menu 
 #project-rbe-controller-list .list-group-item{border:none;border-top:solid 1px #ddd;border-radius:none}
 #project-rbe-controller-list .list-group-item:hover{color:#000;background:#E8F5FF}
 #project-rbe-controller-list .list-group-item.active{color:#000;background:#D3ECFF}
-#project-rbe-controller-list .list-group-item:first-child{border-radius:0;border-top:medium none !important}
+#project-rbe-controller-list .list-group-item:first-child{border-radius:0;messagingborder-top:medium none !important}
 #project-rbe-controller-list a, #project-rbe-controller-list a:hover, #project-rbe-controller-list a:active{text-decoration:none}
 #project-rbe-controller-list .panel-heading button{margin-left:5px;margin-top:-1px}
 #project-rbe-header-list .col-md-4{padding-left:0}
@@ -348,9 +396,22 @@ ul.project-menu li.active a, ul.project-menu li.active a:hover, ul.project-menu 
 #project-security-tab h4.panel-title{font-weight:500;text-decoration:underline}
 #project-security-tab h5{font-size:16px;font-weight:300;margin-top:0}
 #project-security-tab label{font-weight:500}
+#oauth-providers > .form-group, #oauth-providers > .alert{margin-top:10px}
 #project-oauth-providers-acc .panel-body{padding:8px 0 0 0}
 #project-oauth-providers-acc .button-group{border-top:solid 1px #ddd;padding:10px;background:#EBEBEB}
-#oauthProviderName{margin-top:10px}
+
+/* - cluster */
+.cluster-row-item{margin-left:13px;font-size:11px;color:#888}
+.cluster-row-item b{margin-left:6px}
+#project-cluster-config-container .alert-warning{max-width:600px}
+
+/* - extensions */
+#project-extensions-acc h5{margin-top:10px;margin-bottom:0}
+#collapsible-menu-list .extension-element{display:none}
+#collapsible-menu-list .extension-element.enabled{display:block}
+
+/* - database */
+#project-database-storageprovider-sys-container .storage-provider-container > div{margin:15px}
 
 
 /* FOOTER */
@@ -366,22 +427,31 @@ ul.project-menu li.active a, ul.project-menu li.active a:hover, ul.project-menu 
 .advsearch .panel-title a{font-weight:500;font-size:14px}
 .advsearch .panel-default{border-color:#aaa}
 
+#messaging > .view-wrapper{margin:0;background:#D9D9D9;border-bottom:0}
+
 
 @media only screen and (max-width:991px){
     .form-group{clear:both}
     .form-group > div{clear:both}
+    #page-container #breadcrumb{font-size:15px}
+    #page-container #breadcrumb .bc-title span{display:none}
 }
 @media only screen and (max-width:767px){
+    .centered-wrapper > .panel > h4{font-size:18px}
     #main-nav-menu{display:block !important}
     .table-layout{height:auto;position:relative;padding-top:0}
     .table-layout .table-cell{display:block}
     #collapsible-menu-list{width:100%;display:none}
     #toggle-collapsible-menu{display:none}
     #project-controllers-accordion{top:0}
+    #admin > .navbar{margin-bottom:0}
     .navbar.navbar-default .navbar-brand img{max-width:90px}
     .view-wrapper{padding:0}
+    #page-container #breadcrumb{font-size:13px}
+    #page-container #breadcrumb .bc-title span{display:inline}
     .view-wrapper > .content > .row-fluid{height:auto}
     .view-wrapper > .content > .row-fluid > .col-md-3{padding-right:0}
+    #messaging > .view-wrapper{margin-top:0 !important}
     .vscroll.tabmargin, .vscroll.nomargin{position:relative}
     .vscroll.tabmargin{margin:0}
     .view-wrapper > .content{box-shadow:none}
@@ -389,8 +459,12 @@ ul.project-menu li.active a, ul.project-menu li.active a:hover, ul.project-menu 
     .tab-content-container{border:none}
     .fixed-160{width:80px}
     #footer{display:none}
+    .tab-content-container > .nav-tabs{width:100%;margin:0}
+    .tab-content-container > .nav-tabs > li{width:100%;border-bottom:solid 1px #fff}
+    .tab-content-container > .nav-tabs > li.active > a{border:solid 1px #ddd}
 }
 
 @media only screen and (max-width:400px){
     .navbar.navbar-default .navbar-brand{font-size:14px}
+    #page-container #breadcrumb{font-size:12px}
 }

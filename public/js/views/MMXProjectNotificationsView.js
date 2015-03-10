@@ -20,7 +20,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         events: {
             'change .repeater-header-left select[name="searchby"]': 'changeSearchBy',
-            'click .mmx-userlist-refresh-btn': 'refresh'
+            'click .mmx-messagelist-refresh-btn': 'refresh'
         },
         render: function(){
             var me = this;

@@ -778,9 +778,9 @@ utils = {
         form.find('.alert-container').html('');
     },
     showError: function(dom, name, error){
-        dom.find('input[name="'+name+'"]').closest('.form-group').addClass('has-error');
-        var alert = $('<div class="alert alert-danger" role="alert"><strong>Error</strong> '+error+'</div>');
-        dom.find('.alert-container').html(alert);
+        dom.find('input[name="'+name+'"]').closest('div').addClass('has-error');
+        var alert = $('<div class="alert alert-danger" role="alert">'+error+'</div>');
+        dom.find('.alert-container:first').html(alert);
         if(dom.hasClass('pre-login-containers')){
             var panel = dom.find('.centered-wrapper > .panel');
             panel.height(panel.height()+70);
@@ -945,12 +945,12 @@ utils = {
     },
     toggleActions: function(selectedElements, list){
         if(selectedElements.length){
-            list.find('.repeater-header .repeater-header-left .glyphicon.disableable').removeClass('disabled');
-            list.find('.repeater-header .repeater-header-left .fa.disableable').removeClass('disabled');
+            list.find('.repeater-header .glyphicon.disableable').removeClass('disabled');
+            list.find('.repeater-header .fa.disableable').removeClass('disabled');
         }
         else{
-            list.find('.repeater-header .repeater-header-left .glyphicon.disableable').addClass('disabled');
-            list.find('.repeater-header .repeater-header-left .fa.disableable').addClass('disabled');
+            list.find('.repeater-header .glyphicon.disableable').addClass('disabled');
+            list.find('.repeater-header .fa.disableable').addClass('disabled');
         }
     },
     formatTableHeader: function(parent, len){

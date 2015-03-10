@@ -6,6 +6,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.options = options;
             me.options.eventPubSub.bind('initMMXProjectusers', function(model){
                 me.model = model;
+                me.selectedElements = [];
                 me.render();
             });
             me.options.eventPubSub.bind('toggleRow', function(params){
@@ -36,10 +37,8 @@ define(['jquery', 'backbone'], function($, Backbone){
         events: {
 //            'click .sendmessage': 'showSendMessageModal',
             'click #mmx-users-show-create-modal': 'showCreateUser',
-            'click .repeater-header-left .glyphicon-pencil': 'showEditUser',
-            'click .repeater-header-left .fa-lock': 'lockUser',
-            'click .repeater-header-left .fa-unlock': 'unlockUser',
-            'click .repeater-header-left .glyphicon-trash': 'removeUser',
+            'click .repeater-header .glyphicon-pencil': 'showEditUser',
+            'click .repeater-header .glyphicon-trash': 'removeUser',
             'change .repeater-header-left select[name="searchby"]': 'changeSearchBy',
             'click input[type="checkbox"]': 'toggleUserRow',
             'click .mmx-user-list-refresh-btn': 'refresh'
@@ -143,7 +142,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 me.users = [];
                 if(res && res.results){
                     for(var i=0;i<res.results.length;++i){
-                        res.results[i].id = res.results[i].userId;
+                        res.results[i].id = res.results[i].username;
                         if(res.results[i].creationDate) res.results[i].creationDate = moment(res.results[i].creationDate).format('lll');
                         if(res.results[i].modificationDate) res.results[i].modificationDate = moment(res.results[i].modificationDate).format('lll');
                         res.results[i].checkbox = '<input type="checkbox" />';
