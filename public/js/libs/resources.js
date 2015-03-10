@@ -11,13 +11,16 @@ $.ajax({
 }).done(function(res){
     if(res == 'init')
         window.location.href = '/wizard';
-    if(res == 'standalone')
+    if(res == 'standalone'){
         $('#leave-feedback-container').remove();
+        $('#confirm-tos-dialog').remove();
+    }
 });
 
 // wrap jquery ajax function to reduce redundant code
-var AJAX = function(loc, method, contentType, data, callback, failback, headers){
+var AJAX = function(loc, method, contentType, data, callback, failback, headers, params){
     var me = this;
+    params = params || {};
     var dataStr = null;
     if(!$.isEmptyObject(data) && (contentType == 'application/json' || contentType == 'text/uri-list')){
         dataStr = JSON.stringify(data);
@@ -40,6 +43,9 @@ var AJAX = function(loc, method, contentType, data, callback, failback, headers)
             }
             xhr.setRequestHeader('X-Magnet-Auth-Challenge', 'disabled');
         }
+    }).complete(function(xhr){
+        if(params.btn)
+            params.btn.html(params.btn.attr('txt')).removeClass('disabled');
     }).done(function(result, status, xhr){
         if(xhr.status == 278){
             if(window.location.href.indexOf('/login') == -1){
@@ -744,7 +750,7 @@ utils = {
     getByAttr: function(obj, key, val){
         var ary = [];
         for(var i=0;i<obj.length;++i){
-            if(obj[i][key] === val){
+            if(obj[i][key] === val || parseInt(obj[i][key]) === parseInt(val)){
                 ary.push(obj[i]);
             }
         }
@@ -768,7 +774,7 @@ utils = {
         return ary;
     },
     resetError: function(form){
-        form.find('.col-sm-6').removeClass('has-error');
+        form.find('.col-sm-12, .col-sm-10, .col-sm-8, .col-sm-6, .col-sm-4, .col-md-3').removeClass('has-error');
         form.find('.alert-container').html('');
     },
     showError: function(dom, name, error){
@@ -917,6 +923,44 @@ utils = {
         }else{
             return qs[1];
         }
+    },
+    resetRows: function(repeater){
+        repeater.find('input[type="checkbox"]').attr('checked', false);
+        repeater.find('.repeater-header .repeater-header-left .glyphicon.disableable').addClass('disabled');
+        repeater.find('.repeater-header .repeater-header-left .fa.disableable').addClass('disabled');
+    },
+    toggleRow: function(view, checkbox, type, property){
+        var parent = checkbox.closest('tbody');
+        var row = checkbox.closest('tr');
+        var list = parent.closest('.repeater');
+        var id = row.attr('did');
+        parent.find('tr[did!="'+id+'"] input[type="checkbox"]').attr('checked', false);
+        if(checkbox.is(':checked')){
+            view.selectedElements = [];
+            view.selectedElements.push(utils.getByAttr(view[type], property, id)[0]);
+        }else{
+            view.selectedElements.splice(utils.getIndexByAttr(view.selectedElements, property, id), 1);
+        }
+        utils.toggleActions(view.selectedElements, list);
+    },
+    toggleActions: function(selectedElements, list){
+        if(selectedElements.length){
+            list.find('.repeater-header .repeater-header-left .glyphicon.disableable').removeClass('disabled');
+            list.find('.repeater-header .repeater-header-left .fa.disableable').removeClass('disabled');
+        }
+        else{
+            list.find('.repeater-header .repeater-header-left .glyphicon.disableable').addClass('disabled');
+            list.find('.repeater-header .repeater-header-left .fa.disableable').addClass('disabled');
+        }
+    },
+    formatTableHeader: function(parent, len){
+        setTimeout(function(){
+            var el = parent.find('.repeater-list-header tr').addClass('head').detach();
+            if(len){
+                el.prependTo(parent.find('.repeater-list-items tbody'));
+                parent.find('.repeater-list-items tr td:nth-child(1)').css('width', '30px');
+            }
+        }, 20);
     },
     calcStats: function(stats){
         stats.pushMessageStats.totalDelivered = 0;

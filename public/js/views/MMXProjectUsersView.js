@@ -20,16 +20,40 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.sendMessageModal = $('#mmx-sendmessage-modal');
             me.sendMessageModal.on('hidden.bs.modal', function(e){
                 timer.stop('#messages-refresh');
-            })
+            });
+            me.createUserModal = $('#new-user-modal');
+            me.updateUserModal = $('#update-user-modal');
+            me.createUserBtn = $('#mmx-users-create-btn');
+            me.createUserBtn.click(function(){
+                if(me.createUserBtn.hasClass('disabled')) return;
+                me.createUser();
+            });
+            me.updateUserBtn = $('#mmx-users-update-btn');
+            me.updateUserModal.find('#mmx-users-update-btn').click(function(){
+                me.saveUser();
+            });
         },
         events: {
-            'click .sendmessage': 'showSendMessageModal'
+//            'click .sendmessage': 'showSendMessageModal',
+            'click #mmx-users-show-create-modal': 'showCreateUser',
+            'click .repeater-header-left .glyphicon-pencil': 'showEditUser',
+            'click .repeater-header-left .fa-lock': 'lockUser',
+            'click .repeater-header-left .fa-unlock': 'unlockUser',
+            'click .repeater-header-left .glyphicon-trash': 'removeUser',
+            'change .repeater-header-left select[name="searchby"]': 'changeSearchBy',
+            'click input[type="checkbox"]': 'toggleUserRow',
+            'click .mmx-user-list-refresh-btn': 'refresh'
         },
         render: function(){
             var me = this;
-            this.$el.find('.view-container').html(_.template($('#MessagingUsersListTmpl').html()));
-            this.list = $('#mmx-users-list');
-            this.list.repeater({
+            me.sorts = {};
+            if(me.rendered) return me.refresh();
+            me.rendered = true;
+            me.$el.find('.view-container').html(_.template($('#MessagingUsersListTmpl').html(), {
+                filters : me.filters
+            }));
+            me.list = $('#mmx-users-list');
+            me.list.repeater({
                 dataSource       : function(options, cb){
                     me.buildList(options, cb)
                 },
@@ -41,32 +65,98 @@ define(['jquery', 'backbone'], function($, Backbone){
         refresh: function(){
             this.list.repeater('render');
         },
+        filters : {
+            username : {
+                title : 'Username',
+                type  : 'search'
+            },
+            email : {
+                title : 'Email',
+                type  : 'search'
+            },
+            name : {
+                title : 'Name',
+                type  : 'search'
+            }
+        },
+        changeSearchBy: function(e){
+            var val = $(e.currentTarget).val();
+            if(this.filters[val]){
+                var filter = this.filters[val];
+                this.$el.find('.searchby-input-container').html(_.template($('#ADV'+filter.type+'Filter').html(), {
+                    filter : filter,
+                    name   : val
+                }));
+            }else{
+                this.$el.find('.searchby-input-container').html('');
+            }
+        },
+        collect: function(){
+            var me = this, ary = [];
+            me.$el.find('.advsearch-filter-item').each(function(){
+                var val = utils.collect($(this));
+                ary.push({
+                    name : $(this).attr('did'),
+                    val  : (val.enum || val.search) ? (val.enum || val.search) : val
+                });
+            });
+            return ary;
+        },
         retrieve: function(options, cb){
             var me = this;
-            var params = utils.collect(me.$el.find('.repeater-header'));
+            var filters = this.collect();
+            var params = {};
+            for(var i=0;i<filters.length;++i){
+                params = typeof filters[i].val == 'object' ? filters[i].val : {search : filters[i].val};
+                params.searchby = filters[i].name;
+            }
             var query = {};
             if(options.pageIndex !== 0) query.offset = options.pageIndex !== 0 ? (options.pageSize * options.pageIndex) : 1;
             if(options.pageSize != 10) query.size = options.pageSize || 10;
-            if(params.searchby && (params.search || options.search)) query.searchby = params.searchby;
-            if(params.search || options.search) query.value = params.search || options.search;
+//            if(params.searchby && (params.fromDt || params.toDt || params.search || options.search)) query.searchby = params.searchby;
+            if(params.fromDt) query.sentSince = new Date(params.fromDt.replace(/-/g, '/')).getTime() / 1000;
+            if(params.toDt && params.toDt.length){
+                var toDateTime = new Date(params.toDt.replace(/-/g, '/'));
+                toDateTime = new Date(toDateTime.getFullYear(), toDateTime.getMonth(), toDateTime.getDate(), 23, 59, 59);
+                query.sentUntil = toDateTime.getTime() / 1000;
+            }
+            if(params.search || options.search) query[params.searchby] = params.search || options.search;
+            if(options.sortDirection && options.sortProperty){
+                me.sorts = {
+                    sortby    : options.sortProperty,
+                    sortorder : options.sortDirection,
+                    index     : utils.getIndexByAttr(me.columns, 'property', options.sortProperty)
+                };
+                if(options.sortProperty == 'dateSent') options.sortProperty = 'SENT';
+                if(options.sortProperty == 'dateAcknowledged') options.sortProperty = 'ACK';
+                if(options.sortProperty == 'deviceId') options.sortProperty = 'DEVICEID';
+                if(options.sortProperty == 'state') options.sortProperty = 'STATE';
+                query.sortby = options.sortProperty;
+                query.sortorder = options.sortDirection == 'asc' ? 'ASCENDING' : 'DESCENDING';
+            }
             var qs = '';
             for(var key in query){
                 qs += '&'+key+'='+query[key];
             }
             qs = qs.replace('&', '?');
             AJAX('apps/'+me.model.attributes.id+'/users'+qs, 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
+                me.users = [];
                 if(res && res.results){
                     for(var i=0;i<res.results.length;++i){
                         res.results[i].id = res.results[i].userId;
-                        res.results[i].creationDate = utils.fromISO8601(res.results[i].creationDate);
-                        res.results[i].modificationDate = utils.fromISO8601(res.results[i].modificationDate);
+                        if(res.results[i].creationDate) res.results[i].creationDate = moment(res.results[i].creationDate).format('lll');
+                        if(res.results[i].modificationDate) res.results[i].modificationDate = moment(res.results[i].modificationDate).format('lll');
+                        res.results[i].checkbox = '<input type="checkbox" />';
                     }
+                    me.users = res.results;
                 }
-                me.users = res.results;
                 cb(res);
             }, function(xhr, status, thrownError){
                 alert(xhr.responseText);
-            });
+            }, [{
+                name : 'appAPIKey',
+                val  : me.model.attributes.appAPIKey
+            }]);
         },
         buildList: function(options, callback){
             var me = this;
@@ -84,6 +174,22 @@ define(['jquery', 'backbone'], function($, Backbone){
                 data.start = data.start + 1;
                 setTimeout(function(){
                     $('#mmx-users-list .repeater-list-header tr').addClass('head').detach().prependTo('#mmx-users-list .repeater-list-items tbody');
+                    if(!$.isEmptyObject(me.sorts)){
+                        $('#mmx-users-list .repeater-list-items tbody tr:first td').each(function(i){
+                            var td = $(this);
+                            var glyph = 'glyphicon';
+                            if(me.sorts.index === i){
+                                td.addClass('sorted');
+                                if(me.sorts.sortorder == 'asc'){
+                                    td.find('.'+glyph).removeClass(glyph+'-chevron-down').addClass(glyph+'-chevron-up');
+                                }else{
+                                    td.find('.'+glyph).removeClass(glyph+'-chevron-up').addClass(glyph+'-chevron-down');
+                                }
+                            }
+                        });
+                    }
+                    $('#mmx-users-list .repeater-list-items tr td:nth-child(1)').css('width', '30px');
+                    $('#mmx-users-list').find('img').tooltip();
                 }, 20);
                 callback(data);
             });
@@ -91,18 +197,23 @@ define(['jquery', 'backbone'], function($, Backbone){
         columns: [
             {
                 label    : '',
-                property : 'toggle',
+                property : 'checkbox',
                 sortable : false
             },
             {
-                label    : 'Id',
-                property : 'userId',
-                sortable : false
+                label    : 'Username',
+                property : 'username',
+                sortable : true
+            },
+            {
+                label    : 'Email Address',
+                property : 'email',
+                sortable : true
             },
             {
                 label    : 'Name',
                 property : 'name',
-                sortable : false
+                sortable : true
             },
             {
                 label    : 'Created',
@@ -113,15 +224,13 @@ define(['jquery', 'backbone'], function($, Backbone){
                 label    : 'Modified',
                 property : 'modificationDate',
                 sortable : false
-            },
-            {
-                label    : 'Send Message',
-                property : 'sendmessage',
-                sortable : false
             }
         ],
         selectRow: function(params){
             if(params.state) this.displayDevices(params.did, params.tog.closest('tr'));
+        },
+        toggleUserRow: function(e){
+            utils.toggleRow(this, $(e.currentTarget), 'users', 'username');
         },
         displayDevices: function(uid, row){
             var me = this;
@@ -132,11 +241,144 @@ define(['jquery', 'backbone'], function($, Backbone){
                 alert(xhr.responseText);
             });
         },
+        getUsersByUsername: function(username, cb){
+            AJAX('apps/'+this.model.attributes.id+'/users?username='+username, 'GET', 'application/x-www-form-urlencoded', null, function(res){
+                cb(res && res.results ? res.results : []);
+            }, function(e){
+                alert(e);
+            }, [{
+                name : 'appAPIKey',
+                val  : this.model.attributes.appAPIKey
+            }]);
+        },
         renderDevices: function(dom, uid, devices){
             dom.after(_.template($('#MessagingUserDevicesView').html(), {
                 uid     : uid,
                 devices : devices
             }));
+        },
+        validateUserModal: function(dom, obj, isEdit){
+            if($.trim(obj.username).length < 1 && !isEdit){
+                utils.showError(dom, 'username', 'Invalid Username. Username is a required field.');
+                return false;
+            }else if($.trim(obj.password.length) < 1 && !isEdit){
+                utils.showError(dom, 'password', 'Invalid Password. Password is a required field.');
+                return false;
+            }else if(obj.password != obj.passwordVerify){
+                utils.showError(dom, 'passwordVerify', 'Passwords do not match.');
+                return false;
+            }
+            return true;
+        },
+        showCreateUser: function(){
+            var me = this;
+            var template = _.template($('#CreateUserView').html());
+            me.createUserModal.find('.modal-body').html(template);
+            var userNameDom = me.createUserModal.find('input[name="username"]');
+            me.createUserModal.find('input').keyup(function(){
+                me.getUsersByUsername(userNameDom.val(), function(users){
+                    if(!users.length){
+                        utils.resetError(userNameDom.closest('.form-group'));
+                        if(me.validateUserModal(me.createUserModal, utils.collect(me.createUserModal))){
+                            me.createUserBtn.removeClass('disabled');
+                            utils.resetError(me.createUserModal);
+                        }else{
+                            me.createUserBtn.addClass('disabled');
+                        }
+                    }else{
+                        me.createUserBtn.addClass('disabled');
+                        utils.showError(me.createUserModal, 'username', 'This Username already exists. It cannot be added to the list.');
+                    }
+                });
+            });
+            me.createUserModal.modal('show');
+        },
+        createUser: function(){
+            var me = this;
+            var obj = utils.collect(me.createUserModal);
+            utils.resetError(me.createUserModal);
+            if(!me.validateUserModal(me.createUserModal, obj))
+                return;
+            var btn = $('#mmx-users-create-btn');
+            me.options.eventPubSub.trigger('btnLoading', btn);
+            AJAX('apps/'+me.model.attributes.id+'/users', 'POST', 'application/json', obj, function(res){
+                me.createUserModal.modal('hide');
+                me.users.push(obj);
+                me.list.repeater('render');
+                Alerts.General.display({
+                    title   : 'User Created',
+                    content : 'A new user with username of "'+obj.username+'" has been created.'
+                });
+            }, function(e){
+                var msg = 'A server error has occurred. Please check the server logs.';
+                if(e) msg = e;
+                alert(msg);
+            }, null, {
+                btn : btn
+            });
+        },
+        showEditUser: function(e){
+            var me = this;
+            var did = me.selectedElements.length ? me.selectedElements[0].username : $(e.currentTarget).closest('tr').attr('did');
+            me.activeUser = utils.getByAttr(me.users, 'username', did)[0];
+            var template = _.template($('#CreateUserView').html(), {
+                model : me.activeUser
+            });
+            me.updateUserModal.find('.modal-body').html(template);
+            me.updateUserModal.find('input').keyup(function(){
+                if(me.validateUserModal(me.updateUserModal, utils.collect(me.updateUserModal), true)){
+                    me.updateUserBtn.removeClass('disabled');
+                    utils.resetError(me.updateUserModal);
+                }else{
+                    me.updateUserBtn.addClass('disabled');
+                }
+            });
+            me.updateUserModal.modal('show');
+        },
+        saveUser: function(){
+            var me = this;
+            var btn = $('#mmx-users-update-btn');
+            var obj = utils.collect(me.updateUserModal);
+            utils.resetError(me.updateUserModal);
+            if(!me.validateUserModal(me.updateUserModal, obj, true))
+                return;
+            me.options.eventPubSub.trigger('btnLoading', btn);
+            AJAX('apps/'+me.model.attributes.id+'/users/'+obj.username, 'PUT', 'application/json', obj, function(){
+                utils.resetRows(me.list);
+                me.list.repeater('render');
+                me.updateUserModal.modal('hide');
+                Alerts.General.display({
+                    title   : 'User Updated',
+                    content : 'The user "'+me.activeUser.username+'" has been updated.'
+                });
+                delete me.activeUser;
+            }, function(e){
+                alert(e);
+            }, null, {
+                btn : btn
+            });
+        },
+        removeUser: function(e){
+            var me = this;
+            if(!me.selectedElements.length) return;
+            var did = me.selectedElements[0].username;
+            Alerts.Confirm.display({
+                title   : 'Delete User',
+                content : 'The selected user will be deleted. This can not be undone. Are you sure you want to continue?'
+            }, function(){
+                AJAX('apps/'+me.model.attributes.id+'/users/'+did, 'DELETE', 'application/json', null, function(res){
+                    utils.removeByAttr(me.users, 'username', did);
+                    me.selectedElements = [];
+                    var list = $(e.currentTarget).closest('.repeater');
+                    var dom = list.find('.repeater-list-items tr[did="'+did+'"]');
+                    utils.resetRows(me.list);
+                    dom.hide('slow', function(){
+                        dom.remove();
+                    });
+                }, function(e){
+                    alert(e);
+                });
+            });
         },
         showSendMessageModal: function(e){
             var text = '';

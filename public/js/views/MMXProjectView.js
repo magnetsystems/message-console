@@ -1,7 +1,7 @@
-define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView', 'views/MMXProjectEndpointsView',
-    'views/MMXProjectSettingsView', 'views/MMXProjectMessagesView', 'views/MMXProjectTopicsView', 'views/MMXProjectQuickstartView'],
-    function($, Backbone, AppModel, MMXProjectDashboardView, MMXProjectEndpointsView,
-     MMXProjectSettingsView, MMXProjectMessagesView, MMXProjectTopicsView, MMXProjectQuickstartView){
+define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView', 'views/MMXProjectUsersView', 'views/MMXProjectEndpointsView',
+    'views/MMXProjectSettingsView', 'views/MMXProjectMessagesView', 'views/MMXProjectNotificationsView', 'views/MMXProjectTopicsView', 'views/MMXProjectQuickstartView'],
+    function($, Backbone, AppModel, MMXProjectDashboardView, MMXProjectUsersView, MMXProjectEndpointsView,
+     MMXProjectSettingsView, MMXProjectMessagesView, MMXProjectNotificationsView, MMXProjectTopicsView, MMXProjectQuickstartView){
     var View = Backbone.View.extend({
         el: '#mmx-active-project-container',
         initialize: function(options){
@@ -9,8 +9,10 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
             initDatagrid();
             var pdv = new MMXProjectDashboardView(options);
             var psv = new MMXProjectSettingsView(options);
+            var puv = new MMXProjectUsersView(options);
             var pev = new MMXProjectEndpointsView(options);
             var pmv = new MMXProjectMessagesView(options);
+            var ppv = new MMXProjectNotificationsView(options);
             var ptv = new MMXProjectTopicsView(options);
             var pqv = new MMXProjectQuickstartView(options);
             me.options = options;
