@@ -22,6 +22,7 @@
 #messaging input.form-control, #messaging select.form-control{margin-bottom:5px;border-radius:4px}
 #messaging .app-view{background:#d9d9d9}
 #messaging .required{color:#ff0000;font-size:16px}
+#messaging #user-nav-menu{display:block}
 
 /* MMX CONTENT VIEW */
 #breadcrumb{padding:4px 0}
@@ -87,6 +88,7 @@
 #mmx-sendmessage-modal .message-push-history .table{font-size:12px}
 .mmx-endpoints-showdetails-modal-btn{text-decoration:underline}
 #mmx-device-showdetails-modal dd{word-wrap:break-word}
+#mmx-device-showdetails-modal .label{font-size:92%;font-weight:500}
 .fuelux .repeater-list-items tr.selected:hover{background-color:#66afe9 !important;color:#fff}
 
 /* mmx messages */

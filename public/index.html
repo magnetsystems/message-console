@@ -582,6 +582,14 @@
         <dd><%- device.updated %></dd>
         <dt>Status</dt>
         <dd><%- device.status %></dd>
+        <% if(tags){ %>
+        <dt>Tags</dt>
+        <dd>
+            <% _.each(tags, function(tag, key){ %>
+            <span class="label label-primary"><%- tag %></span>
+            <% }); %>
+        </dd>
+        <% } %>
     </dl>
     <% if(user){ %>
     <b>Device Owner Details</b>
@@ -1576,15 +1584,31 @@ password: &lt;a new password&gt;</pre>
                 </div>
                 <div class="radio">
                     <label>
+                        <input type="radio" name="message-type" value="ping">
+                        Ping Device
+                    </label>
+                    <span class="tooltip-danger glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="
+                    Pinging the device requires a client token, along with either a GCM key (Android) or an APNS certificate (iOS)">
+                    </span>
+                </div>
+                <div class="radio">
+                    <label>
                         <input type="radio" name="message-type" value="push">
-                        Push Notification (Ping, Push)
+                        Push Notification
                     </label>
                     <span class="tooltip-danger glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="
                     Push notifications require a client token, along with either a GCM key (Android) or an APNS certificate (iOS)">
                     </span>
                 </div>
-
                 <div class="message-types">
+                    <div did="ping" class="hidden">
+                        <p>The ping will be sent through GCM or APNS service directly to the device:<br />
+                            <span class="user-placeholder"></span><br />
+                            <span class="device-placeholder"></span>
+                        </p>
+                        <button did="ping" type="button" class="btn btn-primary">Ping Device</button>
+                        <div class="message-push-history"></div>
+                    </div>
                     <div did="push" class="hidden">
                         <p>The push notification will be sent through GCM or APNS service directly to the device:<br />
                             <span class="user-placeholder"></span><br />
@@ -1592,7 +1616,6 @@ password: &lt;a new password&gt;</pre>
                         </p>
                         <textarea name="payload" class="form-control" placeholder="Payload">Hello World</textarea>
                         <button did="notification" type="button" class="btn btn-primary">Send Notification</button>
-                        <button did="ping" type="button" class="btn btn-primary">Ping Device</button>
                         <div class="message-push-history"></div>
                     </div>
                     <div did="message" class="hidden">

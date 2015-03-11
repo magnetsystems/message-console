@@ -284,20 +284,28 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         showDeviceDetailsModal: function(e){
             e.preventDefault();
+            var me = this;
             var row = $(e.currentTarget).closest('tr');
             var index = utils.getIndexByAttr(this.endpoints, 'id', row.attr('did'));
             var modal = $('#mmx-device-showdetails-modal');
-            modal.find('.modal-body').html(_.template($('#MessagingDeviceDetailsTmpl').html(), {
-                device : this.endpoints[index],
-                user   : this.users[index]
-            }));
-            modal.modal('show');
+            AJAX('apps/'+me.model.attributes.id+'/devices/'+me.endpoints[index].deviceId+'/tags', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
+                modal.find('.modal-body').html(_.template($('#MessagingDeviceDetailsTmpl').html(), {
+                    device : me.endpoints[index],
+                    user   : me.users[index],
+                    tags   : (res && res.length && res[0].deviceId === me.endpoints[index].deviceId && res[0].tags) ? res[0].tags : []
+                }));
+                modal.modal('show');
+            }, function(xhr, status, thrownError){
+                alert(xhr.responseText);
+            }, [{
+                name : 'appAPIKey',
+                val  : me.model.attributes.appAPIKey
+            }]);
         },
         showSendMessageModal: function(e){
             var text = '', pushActivated = true;
             var index = utils.getIndexByAttr(this.endpoints, 'id', this.selectedEndpoints[0].id);
             this.activeDevice = this.endpoints[index];
-            this.activeUser = this.users[index] || null;
             this.latestMessageId = null;
             this.sendMessageModal.find('.radio').removeClass('disabled').show();
             this.sendMessageModal.find('.message-push-history').html('');
@@ -306,7 +314,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 this.sendMessageModal.find('input[name="message-type"][value="push"]').closest('.radio').addClass('disabled');
                 pushActivated = false;
             }
-            this.sendMessageModal.find('.user-placeholder').html(this.activeUser ? '<b>Endpoint:</b> '+this.activeUser.userId : '');
+            this.sendMessageModal.find('.user-placeholder').html('<b>User:</b> '+this.activeDevice.ownerId);
             this.sendMessageModal.find('.device-placeholder').html('<b>Device:</b> '+this.activeDevice.name);
             if(pushActivated) this.getRecentMessages(null, true);
             utils.resetError(this.sendMessageModal);
@@ -352,7 +360,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         changeMMXMessageType: function(dom){
             var option = dom.val();
-            if(option == 'push' && dom.closest('.radio').hasClass('disabled')) return;
+            if((option == 'push' || option == 'ping') && dom.closest('.radio').hasClass('disabled')) return;
             this.sendMessageModal.find('.message-types > div').addClass('hidden');
             this.sendMessageModal.find('.message-types > div[did="'+option+'"]').removeClass('hidden');
         },
@@ -367,13 +375,11 @@ define(['jquery', 'backbone'], function($, Backbone){
                 appAPIKey : me.model.attributes.appAPIKey
             };
             var input = me.sendMessageModal.find('.message-types > div[did="message"] textarea');
-            var url = 'apps/'+me.model.attributes.id+'/endpoints/'+this.activeDevice.id+'/message';
+            var url = 'apps/'+me.model.attributes.id+'/endpoints/'+this.activeDevice.deviceId+'/message';
             if(!$.trim(input.val()).length)
                 return alert('Payload is required for sending a push notification');
             if(me.activeDevice && me.activeDevice.deviceId)
                 body.deviceId = me.activeDevice.deviceId;
-            if(me.activeUser && me.activeUser.userId)
-                body.recipientId = me.activeUser.userId;
             if($.trim(input.val()).length)
                 body.content = input.val();
             utils.resetError(me.sendMessageModal);
@@ -381,7 +387,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 input.val('');
                 alert('message sent');
             }, function(xhr, status, thrownError){
-                utils.showError(me.sendMessageModal, '', 'message delivery error.');
+                utils.showError(me.sendMessageModal, '', 'Delivery Error: '+xhr.responseText);
             });
         },
         sendNotification: function(dom){

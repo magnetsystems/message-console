@@ -275,20 +275,27 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.createUserModal.find('.modal-body').html(template);
             var userNameDom = me.createUserModal.find('input[name="username"]');
             me.createUserModal.find('input').keyup(function(){
-                me.getUsersByUsername(userNameDom.val(), function(users){
-                    if(!users.length){
-                        utils.resetError(userNameDom.closest('.form-group'));
-                        if(me.validateUserModal(me.createUserModal, utils.collect(me.createUserModal))){
-                            me.createUserBtn.removeClass('disabled');
-                            utils.resetError(me.createUserModal);
-                        }else{
-                            me.createUserBtn.addClass('disabled');
-                        }
-                    }else{
-                        me.createUserBtn.addClass('disabled');
-                        utils.showError(me.createUserModal, 'username', 'This Username already exists. It cannot be added to the list.');
-                    }
-                });
+//                me.getUsersByUsername(userNameDom.val(), function(users){
+//                    if(!users.length){
+//                        utils.resetError(userNameDom.closest('.form-group'));
+//                        if(me.validateUserModal(me.createUserModal, utils.collect(me.createUserModal))){
+//                            me.createUserBtn.removeClass('disabled');
+//                            utils.resetError(me.createUserModal);
+//                        }else{
+//                            me.createUserBtn.addClass('disabled');
+//                        }
+//                    }else{
+//                        me.createUserBtn.addClass('disabled');
+//                        utils.showError(me.createUserModal, 'username', 'This Username already exists. It cannot be added to the list.');
+//                    }
+//                });
+                utils.resetError(userNameDom.closest('.form-group'));
+                if(me.validateUserModal(me.createUserModal, utils.collect(me.createUserModal))){
+                    me.createUserBtn.removeClass('disabled');
+                    utils.resetError(me.createUserModal);
+                }else{
+                    me.createUserBtn.addClass('disabled');
+                }
             });
             me.createUserModal.modal('show');
         },
