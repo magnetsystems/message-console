@@ -13,8 +13,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.newTopicModal = $('#mmx-create-topic-modal');
             me.createTopicBtn = $('#create-messaging-topic-btn');
             me.newTopicModal.find('input').keyup(function(){
-                var topicNameDom = me.newTopicModal.find('input[name="topicName"]');
-                utils.resetError(topicNameDom.closest('.form-group'));
+                utils.resetError(me.newTopicModal);
                 if(me.validateTopicModal(me.newTopicModal, utils.collect(me.newTopicModal))){
                     me.createTopicBtn.removeClass('disabled');
                     utils.resetError(me.newTopicModal);
@@ -89,8 +88,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                 params.searchby = filters[i].name;
             }
             var query = {};
-            if(options.pageIndex !== 0) query.offset = options.pageIndex !== 0 ? (options.pageSize * options.pageIndex) : 1;
-            if(options.pageSize != 10) query.size = options.pageSize || 10;
+            if(options.pageIndex !== 0) query.offset = options.pageIndex !== 0 ? Math.round((options.pageSize * options.pageIndex)) : 1;
+            query.size = options.pageSize || 10;
             if(params.search || options.search) query[params.searchby] = params.search || options.search;
             var qs = '';
             for(var key in query){
@@ -115,8 +114,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.retrieve(options, function(res){
                 var data = {
                     count   : res.total,
-                    items   : res.results,
-                    page    : (res.offset / options.pageSize),
+                    items   : me.topics,
+                    page    : Math.round((res.offset / options.pageSize)),
                     columns : me.columns
                 };
                 data.pages = Math.ceil(data.count / options.pageSize);
@@ -139,7 +138,12 @@ define(['jquery', 'backbone'], function($, Backbone){
             },
             {
                 label    : 'Topic Name',
-                property : 'displayName',
+                property : 'name',
+                sortable : false
+            },
+            {
+                label    : 'Description',
+                property : 'description',
                 sortable : false
             },
             {
@@ -151,11 +155,6 @@ define(['jquery', 'backbone'], function($, Backbone){
                 label    : 'Subscribers',
                 property : 'subscriptionCount',
                 sortable : false
-            },
-            {
-                label    : 'Description',
-                property : 'description',
-                sortable : false
             }
         ],
         showCreateTopicModal: function(){
@@ -165,8 +164,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.newTopicModal.modal('show');
         },
         validateTopicModal: function(dom, obj, isEdit){
-            if($.trim(obj.topicName).length < 1 && !isEdit){
-                utils.showError(dom, 'topicName', 'Invalid Topic Name. Topic Name is a required field.');
+            if($.trim(obj.name).length < 1 && !isEdit){
+                utils.showError(dom, 'name', 'Invalid Topic Name. Topic Name is a required field.');
                 return false;
             }
             return true;
@@ -178,20 +177,18 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(!me.validateTopicModal(me.newTopicModal, obj))
                 return;
             me.options.eventPubSub.trigger('btnLoading', me.createTopicBtn);
-            AJAX('apps/'+me.model.attributes.id+'/topics', 'POST', 'application/json', {
-                name : obj.topicName
-            }, function(res){
+            AJAX('apps/'+me.model.attributes.id+'/topics', 'POST', 'application/json', obj, function(res){
                 me.newTopicModal.modal('hide');
                 me.topics.push(obj);
                 me.list.repeater('render');
                 Alerts.General.display({
                     title   : 'Topic Created',
-                    content : 'A new topic with name of "'+obj.topicName+'" has been created.'
+                    content : 'A new topic with name of "'+obj.name+'" has been created.'
                 });
             }, function(e){
                 var msg = 'A server error has occurred. Please check the server logs.';
                 if(e) msg = e;
-                alert(msg);
+                alert('A topic by this name already exists.');
             }, null, {
                 btn : me.createTopicBtn
             });

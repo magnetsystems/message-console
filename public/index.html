@@ -1711,12 +1711,22 @@ password: &lt;a new password&gt;</pre>
                 <h4 class="modal-title">New Topic</h4>
             </div>
             <div  class="modal-body">
-                <label>What is your Topic's name?</label>
-                <input type="text" name="topicName" class="form-control" maxlength="40" placeholder="The name of your new topic" />
+                <div class="form-group clearfix">
+                    <label>Name <span class="required">*</span></label>
+                    <div class="controls">
+                        <input type="text" class="form-control" name="name" maxlength="40" value="The name of your new topic">
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <label>Description</label>
+                    <div class="controls">
+                        <input type="text" class="form-control" name="description" maxlength="100" value="a description">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button data-dismiss="modal" type="button" class="btn btn-default">Close</button>
                 <button id="create-messaging-topic-btn" type="button" class="btn btn-primary">Save</button>
+                <button data-dismiss="modal" type="button" class="btn btn-default">Close</button>
             </div>
         </div>
     </div>
@@ -1768,8 +1778,8 @@ password: &lt;a new password&gt;</pre>
                 <input type="text" class="form-control" maxlength="40" placeholder="The name of your new app" />
             </div>
             <div class="modal-footer">
-                <button data-dismiss="modal" type="button" class="btn btn-default">Close</button>
                 <button id="create-messaging-app-btn" type="button" class="btn btn-primary">Save</button>
+                <button data-dismiss="modal" type="button" class="btn btn-default">Close</button>
             </div>
         </div>
     </div>
@@ -1787,8 +1797,8 @@ password: &lt;a new password&gt;</pre>
                 <iframe src="//www.magnet.com/resources/tos.html"></iframe>
             </div>
             <div class="modal-footer">
-                <button data-dismiss="modal" class="cancel btn btn-default">I Don't Agree</button>
                 <button id="agree-to-tos" class="submit btn-primary btn">I Agree</button>
+                <button data-dismiss="modal" class="cancel btn btn-default">I Don't Agree</button>
             </div>
         </div>
     </div>
