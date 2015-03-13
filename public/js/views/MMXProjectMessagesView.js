@@ -71,34 +71,14 @@ define(['jquery', 'backbone'], function($, Backbone){
             }
         },
         changeSearchBy: function(e){
-            var val = $(e.currentTarget).val();
-            if(this.filters[val]){
-                var filter = this.filters[val];
-                this.$el.find('.searchby-input-container').html(_.template($('#ADV'+filter.type+'Filter').html(), {
-                    filter : filter,
-                    name   : val
-                }));
-            }else{
-                this.$el.find('.searchby-input-container').html('');
-            }
+            utils.changeSearchBy(this, $(e.currentTarget).val());
         },
         refresh: function(){
             this.list.repeater('render');
         },
-        collect: function(){
-            var me = this, ary = [];
-            me.$el.find('.advsearch-filter-item').each(function(){
-                var val = utils.collect($(this));
-                ary.push({
-                    name : $(this).attr('did'),
-                    val  : (val.enum || val.search) ? (val.enum || val.search) : val
-                });
-            });
-            return ary;
-        },
         retrieve: function(options, cb){
             var me = this;
-            var filters = this.collect();
+            var filters = utils.collectFilters(me.$el);
             var params = {};
             for(var i=0;i<filters.length;++i){
                 params = typeof filters[i].val == 'object' ? filters[i].val : {search : filters[i].val};

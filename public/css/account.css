@@ -106,16 +106,16 @@
 
 /* mmx topics */
 #mmx-topics > .same-line{max-width:500px}
-#mmx-topics .same-line button{float:right;margin:-1px 0 0 8px}
+#mmx-topics > .same-line button{float:right;margin:-1px 0 0 8px}
 
 /* mmx users */
-#mmx-users-list .generic-control-container{position:relative}
-#mmx-users .repeater-icon-controls{position:absolute;top:0;left:0}
+.generic-control-container{position:relative}
+.repeater-icon-controls{position:absolute;top:0;left:0}
 .repeater-icon-controls .glyphicon{font-size:19px;color:#008CBA;margin:5px 9px 0 0;cursor:pointer}
 .repeater-icon-controls .glyphicon.disabled{color:#bbb;cursor:text}
 .repeater-icon-controls .fa{color:#008CBA;margin:5px 9px 0 0;cursor:pointer}
 .repeater-icon-controls .fa.disabled{color:#bbb}
-#mmx-users .messaging-list .repeater-header-left{padding-left:95px}
+#mmx-users .messaging-list .repeater-header-left, #mmx-topics .messaging-list .repeater-header-left{padding-left:95px}
 
 /* quickstart */
 #mmx-quickstart .numbering{font-size:40px;text-indent:15px}

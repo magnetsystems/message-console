@@ -244,14 +244,7 @@
                         <div class="view-container"></div>
                     </div>
                     <div class="tab-pane clearfix" id="mmx-topics">
-                        <div class="same-line">
-                            <button id="mmx-new-topic-btn" class="same-line-button btn btn-primary glyphicon glyphicon-plus"></button>
-                            <div class="same-line-control">
-                                <input id="mmx-new-topic-input" type="text" class="form-control" name="name" placeholder="Name your new topic" value="" >
-                            </div>
-                        </div>
-                        <hr />
-                        <div id="mmx-topic-list"></div>
+                        <div class="view-container"></div>
                     </div>
                     <div class="tab-pane clearfix" id="mmx-quickstart"></div>
                 </div>
@@ -1020,39 +1013,113 @@
 </script>
 
 <script id="MessagingTopicsListView" type="text/template">
-    <table class="table table-bordered table-hover table-striped">
-        <thead>
-        <tr>
-            <th>Topic Id</th>
-            <th>Topic Name</th>
-            <th>Subscribers</th>
-            <th>Description</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <% if(col && col.length > 0){ %>
-        <% _.each(col, function(topic, key){ %>
-        <tr did="<%- topic.id %>">
-            <td><%- topic.displayId || topic.id %></td>
-            <td><%- topic.name %></td>
-            <td><%- topic.subscriptionCount %></td>
-            <td><%- topic.description %></td>
-            <td>
-                <button class="topic-publish-btn btn btn-primary btn-sm">Publish</button>
-                <% if(topic.id.indexOf('ANDROID/_all_') === -1 && topic.id.indexOf('IOS/_all_')  === -1){ %>
-                <button class="topic-delete-btn btn btn-danger btn-sm">
-                    <span class="glyphicon glyphicon-trash"></span>
+    <div class="repeater messaging-list" id="mmx-topics-list">
+        <div class="repeater-header">
+            <div class="clearfix">
+                <div class="generic-control-container">
+                    <div class="repeater-icon-controls">
+                        <div class="btn-group repeater-views" data-toggle="buttons">
+                            <span id="mmx-topics-show-create-modal" class="glyphicon glyphicon-plus" data-placement="bottom" data-toggle="tooltip" data-title="Add Topic"></span>
+                            <span class="glyphicon glyphicon-envelope disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Publish Message"></span>
+                            <span class="glyphicon glyphicon-trash disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Delete Topic"></span>
+                        </div>
+                    </div>
+                    <div class="repeater-header-left">
+                        <div class="col-sm-4 same-line">
+                            <button class="mmx-topic-list-refresh-btn same-line-button btn btn-primary">Refresh</button>
+                            <div class="same-line-control">
+                                <select class="form-control" name="searchby">
+                                    <option>Select a search filter</option>
+                                    <% _.each(filters, function(filter, key){ %>
+                                    <option value="<%- key %>">Search by <%- filter.title %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="searchby-input-container"></div>
+                        </div>
+                    </div>
+                    <div class="repeater-header-right hidden"">
+                    <div class="btn-group selectlist repeater-filters" data-resize="auto">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="selected-label">&nbsp;</span>
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Filters</span>
+                        </button>
+                        <ul class="dropdown-menu role="menu">
+                        <li data-value="all" data-selected="true"><a href="#">All</a></li>
+                        <li data-value="errorsonly"><a href="#">Errors Only</a></li>
+                        </ul>
+                        <input class="hidden hidden-field" name="filterSelection" readonly="readonly" aria-hidden="true" type="text"/>
+                    </div>
+                    <div class="btn-group repeater-views hidden" data-toggle="buttons">
+                        <label class="btn btn-default active">
+                            <input name="repeaterViews" type="radio" value="datagrid">
+                            <span class="glyphicon glyphicon-list">
+                                <span class="sr-only">List View</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="repeater-viewport">
+        <div class="repeater-canvas"></div>
+        <div class="loader repeater-loader"></div>
+    </div>
+    <div class="repeater-footer">
+        <div class="repeater-footer-left">
+            <div class="repeater-itemization">
+                <span><span class="repeater-start"></span> - <span class="repeater-end"></span> of <span class="repeater-count"></span> items</span>
+                <div class="btn-group selectlist" data-resize="auto">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="selected-label">&nbsp;</span>
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li data-value="5"><a href="#">5</a></li>
+                        <li data-value="10" data-selected="true"><a href="#">10</a></li>
+                        <li data-value="20"><a href="#">20</a></li>
+                        <li data-value="50" data-foo="bar" data-fizz="buzz"><a href="#">50</a></li>
+                        <li data-value="100"><a href="#">100</a></li>
+                    </ul>
+                    <input class="hidden hidden-field" name="itemsPerPage" readonly="readonly" aria-hidden="true" type="text"/>
+                </div>
+                <span>Per Page</span>
+            </div>
+        </div>
+        <div class="repeater-footer-right">
+            <div class="repeater-pagination">
+                <button type="button" class="btn btn-default btn-sm repeater-prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span class="sr-only">Previous Page</span>
                 </button>
-                <% } %>
-            </td>
-        </tr>
-        <% }); %>
-        <% }else{ %>
-        <tr><td colspan="3">No topics have been created yet.</td></tr>
-        <% } %>
-        </tbody>
-    </table>
+                <label id="MyPageLabel" class="page-label">Page</label>
+                <div class="repeater-primaryPaging active">
+                    <div class="input-group input-append dropdown combobox">
+                        <input type="text" class="form-control" aria-labelledby="MyPageLabel">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right"></ul>
+                        </div>
+                    </div>
+                </div>
+                <input type="text" class="form-control repeater-secondaryPaging" aria-labelledby="MyPageLabel">
+                <span>of <span class="repeater-pages"></span></span>
+                <button type="button" class="btn btn-default btn-sm repeater-next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="sr-only">Next Page</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    </div>
 </script>
 
 <script id="MessagingQuickstartTmpl" type="text/template">
@@ -1631,6 +1698,25 @@ password: &lt;a new password&gt;</pre>
             </div>
             <div class="modal-footer">
                 <button data-dismiss="modal" type="button" class="btn btn-default">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mmx-create-topic-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">New Topic</h4>
+            </div>
+            <div  class="modal-body">
+                <label>What is your Topic's name?</label>
+                <input type="text" name="topicName" class="form-control" maxlength="40" placeholder="The name of your new topic" />
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" type="button" class="btn btn-default">Close</button>
+                <button id="create-messaging-topic-btn" type="button" class="btn btn-primary">Save</button>
             </div>
         </div>
     </div>

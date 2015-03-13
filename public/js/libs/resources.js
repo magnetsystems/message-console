@@ -926,8 +926,8 @@ utils = {
     },
     resetRows: function(repeater){
         repeater.find('input[type="checkbox"]').attr('checked', false);
-        repeater.find('.repeater-header .repeater-header-left .glyphicon.disableable').addClass('disabled');
-        repeater.find('.repeater-header .repeater-header-left .fa.disableable').addClass('disabled');
+        repeater.find('.repeater-header .glyphicon.disableable').addClass('disabled');
+        repeater.find('.repeater-header .fa.disableable').addClass('disabled');
     },
     toggleRow: function(view, checkbox, type, property){
         var parent = checkbox.closest('tbody');
@@ -961,6 +961,28 @@ utils = {
                 parent.find('.repeater-list-items tr td:nth-child(1)').css('width', '30px');
             }
         }, 20);
+    },
+    changeSearchBy: function(me, val){
+        if(me.filters[val]){
+            var filter = me.filters[val];
+            me.$el.find('.searchby-input-container').html(_.template($('#ADV'+filter.type+'Filter').html(), {
+                filter : filter,
+                name   : val
+            }));
+        }else{
+            me.$el.find('.searchby-input-container').html('');
+        }
+    },
+    collectFilters: function(dom){
+        var me = this, ary = [];
+        dom.find('.advsearch-filter-item').each(function(){
+            var val = me.collect($(this));
+            ary.push({
+                name : $(this).attr('did'),
+                val  : (val.enum || val.search) ? (val.enum || val.search) : val
+            });
+        });
+        return ary;
     },
     calcStats: function(stats){
         stats.pushMessageStats.totalDelivered = 0;
