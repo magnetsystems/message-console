@@ -95,7 +95,7 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
             popover.popover('hide');
             var auth = Cookie.get('magnet_auth');
             if(!auth || $.trim(auth).length < 1){
-                this.login(callback);
+                this.eventPubSub.trigger('getUserProfile', callback);
             }else{
                 auth = auth.split(':');
                 popover.attr('data-content', '<b>'+auth[0]+' '+auth[1]+'</b><br />'+auth[2]);

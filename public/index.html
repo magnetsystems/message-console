@@ -1012,6 +1012,61 @@
     </div>
 </script>
 
+<script id="CreateTopicView" type="text/template">
+    <span class="alert-container"></span>
+    <div class="form-group clearfix">
+        <div class="col-sm-12">
+            <label>Name <span class="required">*</span></label>
+            <div class="controls">
+                <input type="text" class="form-control" name="name" maxlength="40" placeholder="The name of your new topic" <% if(typeof model != 'undefined'){ %>disabled="disabled"<% } %> value="<%- typeof model != 'undefined' ? model.name : '' %>" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <div class="col-sm-12">
+            <label>Description</label>
+            <div class="controls">
+                <input type="text" class="form-control" name="description" maxlength="100" placeholder="A description of your topic" <% if(typeof model != 'undefined'){ %>disabled="disabled"<% } %> value="<%- typeof model != 'undefined' ? model.description : ''  %>" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <div class="col-sm-12">
+            <label>Tags</label>
+            <div class="topic-tag-container controls">
+                <div class="same-line clearfix">
+                    <div class="same-line-button btn btn-primary glyphicon glyphicon-plus"></div>
+                    <div class="same-line-control">
+                        <input type="text" name="topicName" class="form-control" placeholder="Add Topic">
+                    </div>
+                </div>
+                <div name="tags" class="pillbox">
+                    <ul class="clearfix pill-group pill-container"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script id="TagsListView" type="text/template">
+    <% _.each(tags, function(tag, id){ %>
+    <li class="btn btn-default pill">
+        <span><%- tag %></span>
+        <span class="glyphicon glyphicon-close">
+            <span class="sr-only">Remove</span>
+        </span>
+    </li>
+    <% }); %>
+    <li class="pillbox-input-wrap btn-group">
+        <a class="pillbox-more">and <span class="pillbox-more-count"></span> more...</a>
+        <button type="button" class="dropdown-toggle sr-only">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="suggest dropdown-menu" role="menu" data-toggle="dropdown" data-flip="auto"></ul>
+    </li>
+</script>
+
 <script id="MessagingTopicsListView" type="text/template">
     <div class="repeater messaging-list" id="mmx-topics-list">
         <div class="repeater-header">
@@ -1020,6 +1075,7 @@
                     <div class="repeater-icon-controls">
                         <div class="btn-group repeater-views" data-toggle="buttons">
                             <span id="mmx-topics-show-create-modal" class="glyphicon glyphicon-plus" data-placement="bottom" data-toggle="tooltip" data-title="Add Topic"></span>
+                            <span class="glyphicon glyphicon-pencil disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Edit Topic"></span>
                             <span class="glyphicon glyphicon-envelope disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Publish Message"></span>
                             <span class="glyphicon glyphicon-trash disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Delete Topic"></span>
                         </div>
@@ -1710,23 +1766,26 @@ password: &lt;a new password&gt;</pre>
                 <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">New Topic</h4>
             </div>
-            <div  class="modal-body">
-                <div class="form-group clearfix">
-                    <label>Name <span class="required">*</span></label>
-                    <div class="controls">
-                        <input type="text" class="form-control" name="name" maxlength="40" value="The name of your new topic">
-                    </div>
-                </div>
-                <div class="form-group clearfix">
-                    <label>Description</label>
-                    <div class="controls">
-                        <input type="text" class="form-control" name="description" maxlength="100" value="a description">
-                    </div>
-                </div>
-            </div>
+            <div  class="modal-body"></div>
             <div class="modal-footer">
                 <button id="create-messaging-topic-btn" type="button" class="btn btn-primary">Save</button>
                 <button data-dismiss="modal" type="button" class="btn btn-default">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="update-topic-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Edit Topic</h4>
+            </div>
+            <div class="modal-body clearfix"></div>
+            <div class="modal-footer">
+                <button id="mmx-topics-update-btn" class="disabled btn btn-primary">Save</button>
+                <button data-dismiss="modal" type="button" class="btn btn-default">Cancel</button>
             </div>
         </div>
     </div>

@@ -12,18 +12,14 @@ define(['jquery', 'backbone'], function($, Backbone){
             });
             me.newTopicModal = $('#mmx-create-topic-modal');
             me.createTopicBtn = $('#create-messaging-topic-btn');
-            me.newTopicModal.find('input').keyup(function(){
-                utils.resetError(me.newTopicModal);
-                if(me.validateTopicModal(me.newTopicModal, utils.collect(me.newTopicModal))){
-                    me.createTopicBtn.removeClass('disabled');
-                    utils.resetError(me.newTopicModal);
-                }else{
-                    me.createTopicBtn.addClass('disabled');
-                }
-            });
             me.createTopicBtn.click(function(){
                 if(me.createTopicBtn.hasClass('disabled')) return;
                 me.createTopic();
+            });
+            me.updateTopicModal = $('#update-topic-modal');
+            me.updateTopicBtn = $('#mmx-topics-update-btn');
+            me.updateTopicModal.find('#mmx-topics-update-btn').click(function(){
+                me.saveTopic();
             });
             me.modal = $('#mmx-publishtopic-modal');
             me.modal.find('#mmx-publishtopic-btn').click(function(){
@@ -36,6 +32,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             'change .repeater-header-left select[name="searchby"]': 'changeSearchBy',
             'click .repeater-header .glyphicon-envelope': 'showPublishModal',
             'click .repeater-header .glyphicon-trash': 'deleteTopic',
+            'click .repeater-header .glyphicon-pencil': 'showEditTopic',
             'click .repeater-header .glyphicon-plus': 'showCreateTopicModal'
         },
         toggleRow: function(e){
@@ -100,7 +97,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                 me.topics = [];
                 if(res && res.results){
                     for(var i=0;i<res.results.length;++i){
-                        res.results[i].checkbox = '<input type="checkbox" />';
+                        if(res.results[i].id.indexOf('/ios/_all_') === -1 && res.results[i].id.indexOf('/android/_all_') === -1)
+                            res.results[i].checkbox = '<input type="checkbox" />';
                     }
                     me.topics = res.results;
                 }
@@ -159,8 +157,27 @@ define(['jquery', 'backbone'], function($, Backbone){
         ],
         showCreateTopicModal: function(){
             var me = this;
-            me.newTopicModal.find('input').val('');
             me.createTopicBtn.addClass('disabled');
+            var template = _.template($('#CreateTopicView').html());
+            me.newTopicModal.find('.modal-body').html(template);
+            me.newTopicModal.find('input').keyup(function(){
+                utils.resetError(me.newTopicModal);
+                if(me.validateTopicModal(me.newTopicModal, utils.collect(me.newTopicModal))){
+                    me.createTopicBtn.removeClass('disabled');
+                    utils.resetError(me.newTopicModal);
+                }else{
+                    me.createTopicBtn.addClass('disabled');
+                }
+            });
+            me.newTopicModal.find('.pill-container').html(_.template($('#TagsListView').html(), {
+                tags : []
+            }));
+            me.newTopicModal.find('.pillbox').pillbox({
+                edit : true
+            });
+            me.newTopicModal.find('.topic-tag-container .glyphicon-plus').click(function(){
+                me.setTopicTag($(this));
+            });
             me.newTopicModal.modal('show');
         },
         validateTopicModal: function(dom, obj, isEdit){
@@ -178,20 +195,106 @@ define(['jquery', 'backbone'], function($, Backbone){
                 return;
             me.options.eventPubSub.trigger('btnLoading', me.createTopicBtn);
             AJAX('apps/'+me.model.attributes.id+'/topics', 'POST', 'application/json', obj, function(res){
-                me.newTopicModal.modal('hide');
-                me.topics.push(obj);
-                me.list.repeater('render');
-                Alerts.General.display({
-                    title   : 'Topic Created',
-                    content : 'A new topic with name of "'+obj.name+'" has been created.'
+                AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(res.id)+'/tags', 'POST', 'application/json', {
+                    topicId : res.id,
+                    tags    : obj.tags
+                }, function(res){
+                    me.newTopicModal.modal('hide');
+                    me.topics.push(obj);
+                    me.list.repeater('render');
+                    Alerts.General.display({
+                        title   : 'Topic Created',
+                        content : 'A new topic with name of "'+obj.name+'" has been created.'
+                    });
+                }, function(e){
+                    var msg = 'A server error has occurred. Please check the server logs.';
+                    if(e) msg = e;
+                    alert('A topic by this name already exists.');
+                }, [{
+                    name : 'appAPIKey',
+                    val  : me.model.attributes.appAPIKey
+                }], {
+                    btn : me.createTopicBtn
                 });
             }, function(e){
                 var msg = 'A server error has occurred. Please check the server logs.';
                 if(e) msg = e;
                 alert('A topic by this name already exists.');
-            }, null, {
-                btn : me.createTopicBtn
+                me.options.eventPubSub.trigger('btnComplete', me.createTopicBtn);
             });
+        },
+        showEditTopic: function(e){
+            var me = this;
+            var did = me.selectedElements.length ? me.selectedElements[0].id : $(e.currentTarget).closest('tr').attr('did');
+            me.activeTopic = utils.getByAttr(me.topics, 'id', did)[0];
+            var template = _.template($('#CreateTopicView').html(), {
+                model : me.activeTopic
+            });
+            me.updateTopicBtn.removeClass('disabled');
+            me.updateTopicModal.find('.modal-body').html(template);
+            me.updateTopicModal.find('.pill-container').html(_.template($('#TagsListView').html(), {
+                tags : me.activeTopic.tags
+            }));
+            me.updateTopicModal.find('.pillbox').pillbox({
+                edit : true
+            });
+            me.updateTopicModal.find('.topic-tag-container .glyphicon-plus').click(function(){
+                me.setTopicTag($(this));
+            });
+            me.updateTopicModal.modal('show');
+        },
+        saveTopic: function(){
+            var me = this;
+            var btn = $('#mmx-topics-update-btn');
+            var obj = utils.collect(me.updateTopicModal);
+            utils.resetError(me.updateTopicModal);
+            if(!me.validateTopicModal(me.updateTopicModal, obj, true))
+                return;
+            me.options.eventPubSub.trigger('btnLoading', btn);
+            AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(me.activeTopic.id)+'/deleteTags', 'POST', 'application/json', {
+                topicId : me.activeTopic.id,
+                tags    : me.activeTopic.tags
+            }, function(res){
+                if(obj.tags && obj.tags.length){
+                    AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(me.activeTopic.id)+'/tags', 'POST', 'application/json', {
+                        topicId : me.activeTopic.id,
+                        tags    : obj.tags
+                    }, function(res){
+                        me.saveTopicComplete(me);
+                    }, function(e){
+                        var msg = 'A server error has occurred. Please check the server logs.';
+                        if(e) msg = e;
+                        alert('A topic by this name already exists.');
+                    }, [{
+                        name : 'appAPIKey',
+                        val  : me.model.attributes.appAPIKey
+                    }], {
+                        btn : me.updateTopicBtn
+                    });
+                }else{
+                    me.options.eventPubSub.trigger('btnComplete', btn);
+                    me.saveTopicComplete(me);
+                }
+            }, function(e){
+                var msg = 'A server error has occurred. Please check the server logs.';
+                if(e) msg = e;
+                me.options.eventPubSub.trigger('btnComplete', btn);
+                alert('A topic by this name already exists.');
+            }, [{
+                name : 'appAPIKey',
+                val  : me.model.attributes.appAPIKey
+            }]);
+
+        },
+        saveTopicComplete: function(me){
+            utils.resetRows(me.list);
+            me.list.repeater('render');
+            me.updateTopicModal.modal('hide');
+            Alerts.General.display({
+                title   : 'Topic Updated',
+                content : 'The topic "'+me.activeTopic.name+'" has been updated.'
+            });
+            delete me.activeTopic;
         },
         deleteTopic: function(e){
             var me = this;
@@ -234,6 +337,18 @@ define(['jquery', 'backbone'], function($, Backbone){
             }, function(xhr, status, thrownError){
                 alert(xhr.responseText);
             });
+        },
+        setTopicTag: function(btn){
+            var input = btn.closest('.same-line').find('input');
+            var name = $.trim(input.val());
+            if(name.length){
+                var pillbox = btn.closest('.topic-tag-container').find('.pillbox');
+                pillbox.pillbox('addItems', -1, [{
+                    text  : name,
+                    value : name
+                }]);
+                input.val('');
+            }
         }
     });
     return View;

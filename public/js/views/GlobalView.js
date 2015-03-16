@@ -29,6 +29,9 @@ define(['jquery', 'backbone'], function($, Backbone){
                 $('#collapsible-menu-list').show();
                 me.showCollapseMenu();
             });
+            options.eventPubSub.bind('getUserProfile', function(callback){
+                me.getProfile(callback);
+            });
             $('#user-nav-popover').popover({
                 placement : 'bottom',
                 template  : '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content"></div><h3 class="popover-title"></h3></div>',
@@ -42,6 +45,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click #toggle-collapsible-menu': 'toggleCollapseMenu',
             'click .repeater-list-items td .glyphicon-plus': 'toggleRow',
             'click .repeater-list-items td .glyphicon-minus': 'toggleRow',
+            'click .pillbox .glyphicon-trash': 'removePillItem',
             'click .radio.disabled': 'doNothing',
             'click .mmx-nav a': 'selectMMXView',
             'click #mmx-contextual-doc-btn': 'viewContextualDocs',
@@ -291,6 +295,22 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(tog.find('.btn-info').size()>0)
                 tog.find('.btn').toggleClass('btn-info');
             tog.find('.btn').toggleClass('btn-default');
+        },
+        getProfile: function(cb){
+            AJAX('/rest/profile', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
+                res.firstName = res.firstName || '';
+                res.lastName = res.lastName || '';
+                Cookie.create('magnet_auth', res.firstName+':'+res.lastName+':'+res.email, 1);
+                $('#user-nav-popover').attr('data-content', '<b>'+res.firstName+' '+res.lastName+'</b><br />'+user.val());
+                $('#user-nav').removeClass('hidden');
+                $('#user-nav-popover').show();
+                cb();
+            }, function(xhr, status, thrownError){
+                alert(xhr.responseText);
+            });
+        },
+        removePillItem: function(e){
+            $(e.currentTarget).closest('.pill').remove();
         }
     });
     return View;

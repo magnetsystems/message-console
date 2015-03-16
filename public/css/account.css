@@ -107,6 +107,11 @@
 /* mmx topics */
 #mmx-topics > .same-line{max-width:500px}
 #mmx-topics > .same-line button{float:right;margin:-1px 0 0 8px}
+.fuelux .pillbox.pills-editable .pill-group .pill span.glyphicon-close{top:2px;color:#ff0000;cursor:pointer}
+.fuelux .pillbox.pills-editable .pill-group .pill span.glyphicon-close:before{content: "\e020"}
+.topic-tag-container{width:50%}
+.topic-tag-container .same-line-button{float:right;margin:-1px 0 0 8px}
+.topic-tag-container .pill-group{min-height:56px}
 
 /* mmx users */
 .generic-control-container{position:relative}
@@ -115,7 +120,8 @@
 .repeater-icon-controls .glyphicon.disabled{color:#bbb;cursor:text}
 .repeater-icon-controls .fa{color:#008CBA;margin:5px 9px 0 0;cursor:pointer}
 .repeater-icon-controls .fa.disabled{color:#bbb}
-#mmx-users .messaging-list .repeater-header-left, #mmx-topics .messaging-list .repeater-header-left{padding-left:95px}
+#mmx-users .messaging-list .repeater-header-left{padding-left:95px}
+#mmx-topics .messaging-list .repeater-header-left{padding-left:128px}
 
 /* quickstart */
 #mmx-quickstart .numbering{font-size:40px;text-indent:15px}

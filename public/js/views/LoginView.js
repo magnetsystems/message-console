@@ -44,7 +44,9 @@ define(['jquery', 'backbone'], function($, Backbone){
                         $('#user-nav').removeClass('hidden');
                         $('#user-nav-popover').show();
                         user.val('');
-                        if(typeof me.callback === typeof Function){
+                        if(res.userType === 'admin'){
+                            window.location.href = '/admin';
+                        }else if(typeof me.callback === typeof Function){
                             me.callback();
                         }else{
                             Backbone.history.navigate('#/messaging');
