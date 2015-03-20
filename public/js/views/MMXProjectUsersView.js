@@ -240,6 +240,9 @@ define(['jquery', 'backbone'], function($, Backbone){
             if($.trim(obj.username).length < 1 && !isEdit){
                 utils.showError(dom, 'username', 'Invalid Username. Username is a required field.');
                 return false;
+            }else if(!/^[a-zA-Z0-9-_]+$/i.test(obj.username) && !isEdit){
+                utils.showError(dom, 'username', 'Invalid Username. Username must consist of letters, numbers, -, and _.');
+                return false;
             }else if($.trim(obj.password.length) < 1 && !isEdit){
                 utils.showError(dom, 'password', 'Invalid Password. Password is a required field.');
                 return false;
