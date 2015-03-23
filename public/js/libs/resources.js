@@ -947,8 +947,10 @@ utils = {
         if(selectedElements.length){
             list.find('.repeater-header .glyphicon.disableable').removeClass('disabled');
             list.find('.repeater-header .fa.disableable').removeClass('disabled');
-        }
-        else{
+            if(selectedElements.length > 1){
+
+            }
+        }else{
             list.find('.repeater-header .glyphicon.disableable').addClass('disabled');
             list.find('.repeater-header .fa.disableable').addClass('disabled');
         }

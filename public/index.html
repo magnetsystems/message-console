@@ -1184,25 +1184,40 @@
 
     <p class="light">These step-by-step tutorials will help you configure and use messaging in your app.</p>
 
-    <div role="tabpanel">
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#mmx-quickstart-quickstart-tab" aria-controls="mmx-quickstart-quickstart-tab" role="tab" data-toggle="tab">Quickstart</a></li>
-            <li role="presentation"><a href="#mmx-quickstart-existing-tab" aria-controls="mmx-quickstart-existing-tab" role="tab" data-toggle="tab">Existing Mobile Apps</a></li>
-        </ul>
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="mmx-quickstart-quickstart-tab">
+    <div class="centered">
+        <div class="form-group">
+            <div class="btn-group btn-toggle clearfix" did="platform">
+                <button class="btn btn-sm btn-primary active" type="button" did="android">
+                    <i class="fa fa-2x fa-android"></i>
+                </button>
+                <button class="btn btn-sm btn-default" type="button" did="ios">
+                    <i class="fa fa-2x fa-apple"></i>
+                </button>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="btn-group btn-toggle clearfix" did="type">
+                <button class="btn same-width-button btn-sm btn-primary active" type="button" did="new">New App</button>
+                <button class="btn same-width-button btn-sm btn-default" type="button" did="existing">Existing App</button>
+            </div>
+        </div>
+    </div>
 
+    <div role="tabpanel">
+        <div class="tab-content">
+
+            <div role="tabpanel" class="tab-pane active" id="mmx-quickstart-android-new">
                 <table class="table table-striped">
                     <tr>
                         <td class="numbering">1.</td>
                         <td>
-                            <p>Install Android Studio as described in <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">http://developer.android.com/sdk/installing/studio.html</a>.</p>
-                            <a class="download-compiled-source" href="#">Download the Messaging Quickstart Android app</a>. Import it into Android Studio.
+                            <p>Install Android Studio as described at <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">http://developer.android.com/sdk/installing/studio.html</a>.</p>
+                            <a class="download-compiled-source" did="android" href="#">Download the Messaging Quickstart Android app</a>. Import it into Android Studio.
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="mmx-nav">
                         <td class="numbering">2.</td>
-                        <td>Verify the "res/raw/quickstart.properties" file match values for your app settings as shown in "Settings" menu.
+                        <td>Verify the <b>res/raw/quickstart.properties</b> file match values for your app settings as shown in the <a href="#settings">Settings</a> menu.
                 <pre>
 appId=&lt;App ID&gt;
 apiKey=&lt;MMX API key&gt;
@@ -1212,7 +1227,7 @@ guestSecret=&lt;Guest Access Secret&gt;</pre>
                     </tr>
                     <tr>
                         <td class="numbering">3.</td>
-                        <td>Build the app with Android Studio or from command line at root directory of "quickstart-android"
+                        <td>Build the app with Android Studio or from command line at root directory of <b>quickstart-android</b>.
                             <pre>./gradlew clean build</pre>
                         </td>
                     </tr>
@@ -1237,9 +1252,9 @@ password: &lt;a new password&gt;</pre>
                         <td class="numbering">6.</td>
                         <td>Try it out by sending an in-app messages or push notification to your app from <a href="#endpoints">Endpoints</a> -> Select your device -> Send Message dialog.</td>
                     </tr>
-                    <tr>
+                    <tr class="mmx-nav">
                         <td class="numbering">7.</td>
-                        <td>Go to "Message Log" to view in-app message status.</td>
+                        <td>Go to <a href="#messages">Message Log</a> to view in-app message status.</td>
                     </tr>
                     <tr>
                         <td class="numbering">8.</td>
@@ -1248,15 +1263,14 @@ password: &lt;a new password&gt;</pre>
                         </td>
                     </tr>
                 </table>
-
             </div>
-            <div role="tabpanel" class="tab-pane" id="mmx-quickstart-existing-tab">
 
+            <div role="tabpanel" class="tab-pane" id="mmx-quickstart-android-existing">
                 <table class="table table-striped">
                     <tr>
                         <td class="numbering">1.</td>
                         <td>
-                            Install Android Studio as described in <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">http://developer.android.com/sdk/installing/studio.html</a>.
+                            Install Android Studio as described at <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">http://developer.android.com/sdk/installing/studio.html</a>.
                         </td>
                     </tr>
                     <tr>
@@ -1275,14 +1289,14 @@ dependencies {
 }</pre>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="mmx-nav">
                         <td class="numbering">3.</td>
-                        <td>Add your app settings as shown in "Settings" menu to your Android app source, described in <a href="/docs/latest/guide/messaging/Connecting+to+Mobile+Messaging+from+Mobile+Apps.html" target="_blank">Connecting to Mobile Messaging from Mobile Apps</a>.
+                        <td>Add your app settings as shown in the <a href="#settings">Settings</a> menu to your Android app source, described in <a href="/docs/latest/guide/messaging/Connecting+to+Mobile+Messaging+from+Mobile+Apps.html" target="_blank">Connecting to Mobile Messaging from Mobile Apps</a>.
                         </td>
                     </tr>
                     <tr>
                         <td class="numbering">4.</td>
-                        <td>Build the app with Android Studio or from command line at root directory of "quickstart-android"
+                        <td>Build the app with Android Studio or from command line at root directory of <b>quickstart-android</b>.
                             <pre>./gradlew clean build</pre>
                         </td>
                     </tr>
@@ -1307,9 +1321,9 @@ password: &lt;a new password&gt;</pre>
                         <td class="numbering">7.</td>
                         <td>Try it out by sending an in-app messages or push notification to your app from <a href="#endpoints">Endpoints</a> -> Select your device -> Send Message dialog.</td>
                     </tr>
-                    <tr>
+                    <tr class="mmx-nav">
                         <td class="numbering">8.</td>
-                        <td>Go to "Message Log" to view in-app message status.</td>
+                        <td>Go to <a href="#messages">Message Log</a> to view in-app message status.</td>
                     </tr>
                     <tr>
                         <td class="numbering">9.</td>
@@ -1318,8 +1332,108 @@ password: &lt;a new password&gt;</pre>
                         </td>
                     </tr>
                 </table>
-
             </div>
+
+            <div role="tabpanel" class="tab-pane" id="mmx-quickstart-ios-new">
+                <table class="table table-striped">
+                    <tr>
+                        <td class="numbering">1.</td>
+                        <td>
+                            <p>Download and install Xcode as described at <a href="https://developer.apple.com/xcode/downloads/" target="_blank">https://developer.apple.com/xcode/downloads/</a>.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">2.</td>
+                        <td>
+                            <a class="download-compiled-source" did="ios" href="#">Download the Messaging Quickstart iOS app</a> and open <b>QuickStart.xcworkspace</b> in Xcode.
+                        </td>
+                    </tr>
+                    <tr class="mmx-nav">
+                        <td class="numbering">3.</td>
+                        <td>Verify the <b>Configurations.plist</b> file matches the values for your app settings as shown in the <a href="#settings">Settings</a> menu.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">4.</td>
+                        <td>Build and run the app in Xcode.
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="mmx-quickstart-ios-existing">
+                <table class="table table-striped">
+                    <tr>
+                        <td class="numbering">1.</td>
+                        <td>
+                            <p>Download and install Xcode as described at <a href="https://developer.apple.com/xcode/downloads/" target="_blank">https://developer.apple.com/xcode/downloads/</a>.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">2.</td>
+                        <td>
+                            If you are already using CocoaPods, add the following lines to your podfile and run <b>pod update</b> from the terminal, then go directly to step 10. <br />
+                            The "source" line below is in addition to source 'https://github.com/CocoaPods/Specs.git'.
+                            <pre>source 'git@bitbucket.org:magneteng/ios-distribution.git'
+pod 'MMX', '~> 0.2'</pre>
+                            If you are not currently using CocoaPods, following the instructions on step 3 through 9 to install CocoaPods and configure the app.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">3.</td>
+                        <td>
+                            Go to <a href="http://cocoapods.org/" target="_blank">http://cocoapods.org/</a> and follow the instructions to install CocoaPods.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">4.</td>
+                        <td>
+                            Open the <b>Terminal</b> application.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">5.</td>
+                        <td>
+                            Change directory to the folder containing your xcodeproj file.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">6.</td>
+                        <td>
+                            Run the following command:
+                            <pre>pod init</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">7.</td>
+                        <td>Edit the podfile to contain the following:
+                            <pre>source 'git@bitbucket.org:magneteng/ios-distribution.git'
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '7.0'
+inhibit_all_warnings!
+pod 'MMX', '~> 0.2'</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">8.</td>
+                        <td>Run the following command:
+                            <pre>pod install</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">9.</td>
+                        <td>From now on make sure you open the project using the .xcworkspace file.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="numbering">10.</td>
+                        <td>If you are using a Swift project you will need to add <b>MMX.h</b> to your bridging header.
+                            <pre>#import &lt;MMX/MMX.h&gt;</pre>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
         </div>
     </div>
 
