@@ -720,7 +720,7 @@
     <div class="form-group">
         <div class="col-sm-12">
             <label>Username</label>
-            <input type="text" class="form-control" name="username" placeholder="Username" <% if(typeof model != 'undefined'){ %>disabled="disabled"<% } %> value="<%- typeof model != 'undefined' ? model.username : '' %>" />
+            <input type="text" class="form-control" name="username" maxlength="42" placeholder="Username" <% if(typeof model != 'undefined'){ %>disabled="disabled"<% } %> value="<%- typeof model != 'undefined' ? model.username : '' %>" />
         </div>
     </div>
     <div class="form-group">

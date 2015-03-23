@@ -243,6 +243,9 @@ define(['jquery', 'backbone'], function($, Backbone){
             }else if(!/^[a-zA-Z0-9-_]+$/i.test(obj.username) && !isEdit){
                 utils.showError(dom, 'username', 'Invalid Username. Username must consist of letters, numbers, -, and _.');
                 return false;
+            }else if(obj.username.length < 5 && !isEdit){
+                utils.showError(dom, 'username', 'Invalid Username. Username must contain five or more characters.');
+                return false;
             }else if($.trim(obj.password.length) < 1 && !isEdit){
                 utils.showError(dom, 'password', 'Invalid Password. Password is a required field.');
                 return false;
@@ -298,10 +301,13 @@ define(['jquery', 'backbone'], function($, Backbone){
                     title   : 'User Created',
                     content : 'A new user with username of "'+obj.username+'" has been created.'
                 });
-            }, function(e){
-                var msg = 'A server error has occurred. Please check the server logs.';
-                if(e) msg = e;
-                alert(msg);
+            }, function(xhr){
+                if(xhr.responseText == 'user-exists'){
+                    xhr.responseText = 'A user with this username already exists.';
+                }else{
+                    xhr.responseText = 'A server error has occurred. Please check the server logs.';
+                }
+                alert(xhr.responseText);
             }, null, {
                 btn : btn
             });
@@ -331,6 +337,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             utils.resetError(me.updateUserModal);
             if(!me.validateUserModal(me.updateUserModal, obj, true))
                 return;
+            if(!$.trim(obj.password).length) delete obj.password;
             me.options.eventPubSub.trigger('btnLoading', btn);
             AJAX('apps/'+me.model.attributes.id+'/users/'+obj.username, 'PUT', 'application/json', obj, function(){
                 utils.resetRows(me.list);
@@ -341,8 +348,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     content : 'The user "'+me.activeUser.username+'" has been updated.'
                 });
                 delete me.activeUser;
-            }, function(e){
-                alert(e);
+                alert(xhr.responseText);
             }, null, {
                 btn : btn
             });
@@ -364,8 +370,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                     dom.hide('slow', function(){
                         dom.remove();
                     });
-                }, function(e){
-                    alert(e);
+                }, function(xhr){
+                    alert(xhr.responseText);
                 });
             });
         },
