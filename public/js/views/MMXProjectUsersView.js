@@ -39,6 +39,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click #mmx-users-show-create-modal': 'showCreateUser',
             'click .repeater-header .glyphicon-pencil': 'showEditUser',
             'click .repeater-header .glyphicon-trash': 'removeUser',
+            'click .repeater-header .fa-lock': 'lockUser',
+            'click .repeater-header .fa-unlock-alt': 'unlockUser',
             'change .repeater-header-left select[name="searchby"]': 'changeSearchBy',
             'click input[type="checkbox"]': 'toggleUserRow',
             'click .mmx-user-list-refresh-btn': 'refresh'
@@ -123,6 +125,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                 if(res && res.results){
                     for(var i=0;i<res.results.length;++i){
                         res.results[i].id = res.results[i].username;
+                        res.results[i].usernameEdited = res.results[i].username;
+                        if(!res.results[i].active) res.results[i].usernameEdited += ' <span class="fa fa-lock"></span>';
                         if(res.results[i].creationDate) res.results[i].creationDate = moment(res.results[i].creationDate).format('lll');
                         if(res.results[i].modificationDate) res.results[i].modificationDate = moment(res.results[i].modificationDate).format('lll');
                         res.results[i].checkbox = '<input type="checkbox" />';
@@ -181,7 +185,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             },
             {
                 label    : 'Username',
-                property : 'username',
+                property : 'usernameEdited',
                 sortable : true
             },
             {
@@ -351,6 +355,30 @@ define(['jquery', 'backbone'], function($, Backbone){
                 alert(xhr.responseText);
             }, null, {
                 btn : btn
+            });
+        },
+        lockUser: function(e){
+            var me = this;
+            if(!me.selectedElements.length) return;
+            var did = me.selectedElements[0].username;
+            AJAX('apps/'+me.model.attributes.id+'/users/'+did+'/deactivate', 'POST', 'application/json', null, function(res){
+                me.selectedElements = [];
+                utils.resetRows(me.list);
+                me.list.repeater('render');
+            }, function(xhr){
+                alert(xhr.responseText);
+            });
+        },
+        unlockUser: function(e){
+            var me = this;
+            if(!me.selectedElements.length) return;
+            var did = me.selectedElements[0].username;
+            AJAX('apps/'+me.model.attributes.id+'/users/'+did+'/activate', 'POST', 'application/json', null, function(res){
+                me.selectedElements = [];
+                utils.resetRows(me.list);
+                me.list.repeater('render');
+            }, function(xhr){
+                alert(xhr.responseText);
             });
         },
         removeUser: function(e){

@@ -52,7 +52,7 @@
                 </a>
             </li>
             <li>
-                <a id="user-nav-popover" style="display:none" data-title="<div class='clearfix'><a href='#/profile' class='btn btn-sm btn-default pull-left'>Profile</a><button id='logout-btn' class='btn btn-sm btn-default pull-right'>Sign Out</button></div>" data-content="">
+                <a id="user-nav-popover" tabindex="0" role="button" data-trigger="focus" style="display:none" data-title="<div class='clearfix'><a href='#/profile' class='btn btn-sm btn-default pull-left'>Profile</a><button id='logout-btn' class='btn btn-sm btn-default pull-right'>Sign Out</button></div>" data-content="">
                     <span class="fa fa-cog fa-2x"></span> <span class="caret"></span>
                 </a>
             </li>
@@ -615,6 +615,8 @@
                             <span id="mmx-users-show-create-modal" class="glyphicon glyphicon-plus" data-placement="bottom" data-toggle="tooltip" data-title="Add User"></span>
                             <span class="glyphicon glyphicon-pencil disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Edit User"></span>
                             <span class="glyphicon glyphicon-trash disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Delete User"></span>
+                            <span class="fa fa-2x fa-lock disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Lock User"></span>
+                            <span class="fa fa-2x fa-unlock-alt disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Unlock User"></span>
                         </div>
                     </div>
                     <div class="repeater-header-left">

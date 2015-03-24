@@ -301,7 +301,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 res.firstName = res.firstName || '';
                 res.lastName = res.lastName || '';
                 Cookie.create('magnet_auth', res.firstName+':'+res.lastName+':'+res.email, 1);
-                $('#user-nav-popover').attr('data-content', '<b>'+res.firstName+' '+res.lastName+'</b><br />'+user.val());
+                $('#user-nav-popover').attr('data-content', '<b>'+res.firstName+' '+res.lastName+'</b><br />'+res.email);
                 $('#user-nav').removeClass('hidden');
                 $('#user-nav-popover').show();
                 cb();
