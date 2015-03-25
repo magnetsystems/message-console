@@ -97,8 +97,9 @@ define(['jquery', 'backbone'], function($, Backbone){
                 me.topics = [];
                 if(res && res.results){
                     for(var i=0;i<res.results.length;++i){
-                        if(res.results[i].id.indexOf('/ios/_all_') === -1 && res.results[i].id.indexOf('/android/_all_') === -1)
-                            res.results[i].checkbox = '<input type="checkbox" />';
+                        if(res.results[i].name.indexOf('com.magnet.os/') != -1)
+                            res.results[i].name = res.results[i].name.replace('com.magnet.os/', '');
+                        res.results[i].checkbox = '<input type="checkbox" />';
                     }
                     me.topics = res.results;
                 }
@@ -195,32 +196,41 @@ define(['jquery', 'backbone'], function($, Backbone){
                 return;
             me.options.eventPubSub.trigger('btnLoading', me.createTopicBtn);
             AJAX('apps/'+me.model.attributes.id+'/topics', 'POST', 'application/json', obj, function(res){
-                AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(res.id)+'/tags', 'POST', 'application/json', {
-                    topicId : res.id,
-                    tags    : obj.tags
-                }, function(res){
-                    me.newTopicModal.modal('hide');
-                    me.topics.push(obj);
-                    me.list.repeater('render');
-                    Alerts.General.display({
-                        title   : 'Topic Created',
-                        content : 'A new topic with name of "'+obj.name+'" has been created.'
+                if(obj.tags && obj.tags.length){
+                    AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(res.id)+'/tags', 'POST', 'application/json', {
+                        topicId : res.id,
+                        tags    : obj.tags
+                    }, function(res){
+                        me.createTopicComplete(obj);
+                    }, function(e){
+                        var msg = 'A server error has occurred. Please check the server logs.';
+                        if(e) msg = e;
+                        alert(msg);
+                    }, [{
+                        name : 'appAPIKey',
+                        val  : me.model.attributes.appAPIKey
+                    }], {
+                        btn : me.createTopicBtn
                     });
-                }, function(e){
-                    var msg = 'A server error has occurred. Please check the server logs.';
-                    if(e) msg = e;
-                    alert('A topic by this name already exists.');
-                }, [{
-                    name : 'appAPIKey',
-                    val  : me.model.attributes.appAPIKey
-                }], {
-                    btn : me.createTopicBtn
-                });
+                }else{
+                    me.options.eventPubSub.trigger('btnComplete', me.createTopicBtn);
+                    me.createTopicComplete(obj);
+                }
             }, function(e){
                 var msg = 'A server error has occurred. Please check the server logs.';
                 if(e) msg = e;
                 alert('A topic by this name already exists.');
                 me.options.eventPubSub.trigger('btnComplete', me.createTopicBtn);
+            });
+        },
+        createTopicComplete: function(obj){
+            var me = this;
+            me.newTopicModal.modal('hide');
+            me.topics.push(obj);
+            me.list.repeater('render');
+            Alerts.General.display({
+                title   : 'Topic Created',
+                content : 'A new topic with name of "'+obj.name+'" has been created.'
             });
         },
         showEditTopic: function(e){

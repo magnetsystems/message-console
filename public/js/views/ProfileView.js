@@ -1,18 +1,21 @@
 define(['jquery', 'backbone'], function($, Backbone){
     var View = Backbone.View.extend({
-        el: '#profile-container',
+        el: '#user-profile-modal',
         initialize: function(options){
             var me = this;
             me.options = options;
+            me.modal = $('#user-profile-modal');
+            me.updateProfileBtn = $('#user-profile-update-btn');
             me.options.eventPubSub.bind('initProfile', function(){
                 me.getProfile(function(data){
-                     me.render(data);
+                    me.render(data);
+                    me.modal.modal('show');
                 });
             });
         },
         events: {
-            'click #profile-save': 'saveProfile',
-            'keyup .password-inputs .col-sm-6 input': 'validatePassword'
+            'click #user-profile-update-btn': 'saveProfile',
+            'keyup .password-inputs input': 'validatePassword'
         },
         getProfile: function(cb){
             AJAX('/rest/profile', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
@@ -25,12 +28,11 @@ define(['jquery', 'backbone'], function($, Backbone){
             var template = _.template($('#ProfileTmpl').html(), {
                 model  : data
             });
-            $('#user-profile-container').html(template);
+            this.modal.find('.modal-body').html(template);
         },
         saveProfile: function(){
             var me = this;
-            var form = $('#user-profile-container');
-            var data = utils.collect(form);
+            var data = utils.collect(me.$el.find('.modal-body'));
             if(me.hasPassword(data) && data.newpassword != data.newpassword2){
                 return Alerts.Error.display({
                     title   : 'Password Doesn\'t Match',
@@ -40,6 +42,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             delete data.userName;
             AJAX('/rest/profile', 'PUT', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
                 me.$el.find('.password-inputs input').val('');
+                me.modal.modal('hide');
                 Alerts.General.display({
                     title   : 'Profile Updated',
                     content : 'Your user profile has been updated successfully.'
@@ -52,16 +55,26 @@ define(['jquery', 'backbone'], function($, Backbone){
             return ($.trim(data.oldpassword).length !== 0) || ($.trim(data.newpassword).length !== 0 || $.trim(data.newpassword2).length !== 0);
         },
         validatePassword: function(){
-            var dom = this.$el.find('.password-inputs');
+            var dom = this.$el.find('.modal-body');
+            var pwdInputs = this.$el.find('.password-inputs .col-sm-6 input');
+            utils.resetError(dom);
+            var p0 = $('.password-inputs input[name="oldpassword"]').val();
             var p1 = $('.password-inputs input[name="newpassword"]').val();
             var p2 = $('.password-inputs input[name="newpassword2"]').val();
-            if($.trim(p2).length && $.trim(p1).length && p1 != p2){
+            if(!$.trim(p0).length){
+                pwdInputs.prop('disabled', true);
+            }else{
+                pwdInputs.prop('disabled', false);
+            }
+            if($.trim(p0).length && $.trim(p1).length < 4 && $.trim(p2).length < 4){
+                utils.showError(dom, 'newpassword', 'Password must be at least four characters.');
+                this.updateProfileBtn.addClass('disabled');
+            }else if($.trim(p0).length && p1 !== p2){
                 utils.showError(dom, 'newpassword2', 'New password does not match.');
-                $('#profile-save').addClass('disabled');
+                this.updateProfileBtn.addClass('disabled');
             }else{
                 utils.resetError(dom);
-                dom.find('.form-group').removeClass('has-error');
-                $('#profile-save').removeClass('disabled');
+                this.updateProfileBtn.removeClass('disabled');
             }
         }
     });

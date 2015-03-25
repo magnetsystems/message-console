@@ -59,7 +59,7 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
             var me = this;
             Alerts.Confirm.display({
                 title   : 'Confirm App Deletion',
-                content : 'Please verify that you wish to delete this app.'
+                content : 'Please verify that you wish to delete this app. If this app is deleted, any mobile clients using this App will lose connectivity.'
             }, function(){
                 me.model.destroy({
                     success: function(){

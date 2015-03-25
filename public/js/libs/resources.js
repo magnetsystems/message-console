@@ -5,18 +5,6 @@ var GLOBAL = {
     polling : false
 };
 
-$.ajax({
-    type : 'GET',
-    url  : '/rest/status'
-}).done(function(res){
-    if(res == 'init')
-        window.location.href = '/wizard';
-    if(res == 'standalone'){
-        $('#leave-feedback-container').remove();
-        $('#confirm-tos-dialog').remove();
-    }
-});
-
 // wrap jquery ajax function to reduce redundant code
 var AJAX = function(loc, method, contentType, data, callback, failback, headers, params){
     var me = this;
@@ -533,12 +521,12 @@ function MMXInitialAppTour(appId){
                 <h3 class='popover-title'></h3>\
                 <div class='popover-content'></div>\
                 <div class='popover-navigation'>\
-                    <button class='btn btn-default' data-role='next'>Next »</button>\
+                    <button class='btn btn-primary' data-role='next'>Next »</button>\
                 </div>\
             </div>"
             },
             {
-                element   : "#mmx-quickstart .download-compiled-source",
+                element   : "#mmx-quickstart #mmx-quickstart-android-new .download-compiled-source",
                 title     : "Quickstart",
                 content   : "Follow these easy steps to get started quickly.",
                 template  : "<div class='popover tour'>\
@@ -546,7 +534,7 @@ function MMXInitialAppTour(appId){
                 <h3 class='popover-title'></h3>\
                 <div class='popover-content'></div>\
                 <div class='popover-navigation'>\
-                    <button class='btn btn-default' data-role='end'>End tour</button>\
+                    <button class='btn btn-primary' data-role='end'>End tour</button>\
                 </div>\
             </div>"
             }

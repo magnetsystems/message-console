@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Messaging – Developer Preview</title>
+    <title>Magnet Message</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/fuelux.min.css" />
     <link rel="stylesheet" href="css/font-awesome.min.css" />
@@ -28,7 +28,7 @@
             </button>
             <a class="navbar-brand" href="#">
                 <img src="images/heading.png" />
-                Messaging <span class="hidden-xs">- Developer Preview</span>
+                Message <span class="hidden-xs">Application Console</span>
                 <span class="project-name-holder"></span>
             </a>
         </div>
@@ -52,7 +52,7 @@
                 </a>
             </li>
             <li>
-                <a id="user-nav-popover" tabindex="0" role="button" data-trigger="focus" style="display:none" data-title="<div class='clearfix'><a href='#/profile' class='btn btn-sm btn-default pull-left'>Profile</a><button id='logout-btn' class='btn btn-sm btn-default pull-right'>Sign Out</button></div>" data-content="">
+                <a id="user-nav-popover" tabindex="0" role="button" data-trigger="focus" style="display:none" data-title="<div class='clearfix'><a href='#' class='show-profile-btn btn btn-sm btn-default pull-left'>Profile</a><button id='logout-btn' class='btn btn-sm btn-default pull-right'>Sign Out</button></div>" data-content="">
                     <span class="fa fa-cog fa-2x"></span> <span class="caret"></span>
                 </a>
             </li>
@@ -66,7 +66,7 @@
             <h4>Sign In</h4>
             <form id="login-form">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="username" placeholder="Username" />
+                    <input class="form-control" type="text" name="username" placeholder="Email Address" />
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="password" name="password" placeholder="Password" />
@@ -254,7 +254,7 @@
         </div>
         <div id="footer" class="row-fluid">
             <div class="col-xs-12">
-                <p>Copyright &copy; Magnet Systems, Inc. 2015 | <a href="//www.magnet.com/resources/privacy_policy.html">Privacy Policy</a> | <a href="//www.magnet.com/resources/tos.html">Terms of Service</a></p>
+                <p>Copyright &copy; Magnet Systems, Inc. 2015 | <a target="_blank" href="//www.magnet.com/resources/licenses.html">License and Notices</a></p>
             </div>
         </div>
     </div>
@@ -267,6 +267,7 @@
         <div class="col-sm-6">
             <div class="well well-sm">
                 <a class="well-title" href="#/messaging/<%- model.attributes.id %>"><%- model.attributes.name %></a>
+                <a href="#/messaging/<%- model.attributes.id %>/settings" class="glyphicon glyphicon-cog"></span></a>
                 <hr />
                 <%= renderSingle(model, configs) %>
             </div>
@@ -285,6 +286,36 @@
                     <input type="text" class="form-control" name="name" maxlength="40" value="<%- model.attributes.name %>">
                 </div>
             </div>
+            <div class="form-group clearfix">
+                <label>App ID</label>
+                <div class="controls">
+                    <input type="text" class="form-control" name="appId" readonly="readonly" value="<%- model.attributes.id %>">
+                </div>
+            </div>
+            <div class="form-group clearfix">
+                <label>Magnet Message API Key</label>
+                <div class="controls">
+                    <input type="text" class="form-control" name="appAPIKey" readonly="readonly" value="<%- model.attributes.appAPIKey %>">
+                </div>
+                <!--<div class="controls">-->
+                <!--<button did="regenerate" class="btn btn-primary">Re-generate</button>-->
+                <!--<button did="revoke" class="btn btn-primary">Revoke</button>-->
+                <!--<span class="tooltip-danger glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="-->
+                <!--Revoking or re-generating the API Key will require changing the key in the mobile app source code to continue messaging services">-->
+                <!--</span>-->
+                <!--</div>-->
+            </div>
+            <div class="form-group clearfix">
+                <label>Anonymous Access Secret <span class="required">*</span></label>
+                <div class="controls controls-grouped">
+                    <input type="text" class="form-control" name="guestSecret" value="<%- model.attributes.guestSecret || model.attributes.guestSecret %>">
+                    <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="
+                    Used for creating user account from the mobile device">
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
             <div class="form-group clearfix">
                 <span class="form-caption">GCM</span>
                 <div class="well well-default clearfix">
@@ -328,36 +359,6 @@
                             </div>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="form-group clearfix">
-                <label>App ID</label>
-                <div class="controls">
-                    <input type="text" class="form-control" name="appId" readonly="readonly" value="<%- model.attributes.id %>">
-                </div>
-            </div>
-            <div class="form-group clearfix">
-                <label>MMX API Key</label>
-                <div class="controls">
-                    <input type="text" class="form-control" name="appAPIKey" readonly="readonly" value="<%- model.attributes.appAPIKey %>">
-                </div>
-                <!--<div class="controls">-->
-                <!--<button did="regenerate" class="btn btn-primary">Re-generate</button>-->
-                <!--<button did="revoke" class="btn btn-primary">Revoke</button>-->
-                <!--<span class="tooltip-danger glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" title="-->
-                <!--Revoking or re-generating the API Key will require changing the key in the mobile app source code to continue messaging services">-->
-                <!--</span>-->
-                <!--</div>-->
-            </div>
-            <div class="form-group clearfix">
-                <label>Guest Access Secret <span class="required">*</span></label>
-                <div class="controls controls-grouped">
-                    <input type="text" class="form-control" name="guestSecret" value="<%- model.attributes.guestSecret || model.attributes.guestSecret %>">
-                    <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="
-                    Used for creating user account from the mobile device">
-                    </span>
                 </div>
             </div>
         </div>
@@ -1041,7 +1042,7 @@
                 <div class="same-line clearfix">
                     <div class="same-line-button btn btn-primary glyphicon glyphicon-plus"></div>
                     <div class="same-line-control">
-                        <input type="text" name="topicName" class="form-control" placeholder="Add Topic">
+                        <input type="text" name="topicName" class="form-control" placeholder="Add Tag">
                     </div>
                 </div>
                 <div name="tags" class="pillbox">
@@ -1214,7 +1215,7 @@
                         <td class="numbering">1.</td>
                         <td>
                             <p>Install Android Studio as described at <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">http://developer.android.com/sdk/installing/studio.html</a>.</p>
-                            <a class="download-compiled-source" did="android" href="#">Download the Messaging Quickstart Android app</a>. Import it into Android Studio.
+                            <a class="download-compiled-source" did="android" href="#">Download the Magnet Message Quickstart Android app</a>. Import it into Android Studio.
                         </td>
                     </tr>
                     <tr class="mmx-nav">
@@ -1224,7 +1225,7 @@
 appId=&lt;App ID&gt;
 apiKey=&lt;MMX API key&gt;
 gcmSenderId=&lt;GCM project/sender id&gt;
-guestSecret=&lt;Guest Access Secret&gt;</pre>
+guestSecret=&lt;Anonymous Access Secret&gt;</pre>
                         </td>
                     </tr>
                     <tr>
@@ -1241,13 +1242,13 @@ guestSecret=&lt;Guest Access Secret&gt;</pre>
                     </tr>
                     <tr>
                         <td class="numbering">5.</td>
-                        <td>From the app, connect to Messaging using these connection settings:
+                        <td>From the app, connect to Magnet Message using these connection settings:
 <pre>host:mmx-svr1.magnet.com
 port: 5222</pre>
                             Optional if not using guest access:
 <pre>username: &lt;choose a new one, the user will be created upon first login&gt;
 password: &lt;a new password&gt;</pre>
-                            You are all set! You can now send and receive messages with Magnet Mobile Messaging.
+                            You are all set! You can now send and receive messages with Magnet Message.
                         </td>
                     </tr>
                     <tr class="mmx-nav">
@@ -1261,7 +1262,7 @@ password: &lt;a new password&gt;</pre>
                     <tr>
                         <td class="numbering">8.</td>
                         <td>
-                            <p>See <a href="/docs/latest/guide/messaging/index.html" target="_blank">Magnet Mobile Messaging Developer Guide</a> to learn more about Mobile Messaging capabilities.</p>
+                            <p>See <a href="/docs/latest/guide/messaging/index.html" target="_blank">Magnet Message Developer Guide</a> to learn more about messaging capabilities.</p>
                         </td>
                     </tr>
                 </table>
@@ -1278,7 +1279,7 @@ password: &lt;a new password&gt;</pre>
                     <tr>
                         <td class="numbering">2.</td>
                         <td>
-                            <p>Add the Mobile Messaging client library as a dependency to the Gradle build script as shown below:</p>
+                            <p>Add the Magnet Message client library as a dependency to the Gradle build script as shown below:</p>
 <pre>repositories {
     maven {
         url "https://repo.magnet.com/artifactory/public"
@@ -1293,7 +1294,7 @@ dependencies {
                     </tr>
                     <tr class="mmx-nav">
                         <td class="numbering">3.</td>
-                        <td>Add your app settings as shown in the <a href="#settings">Settings</a> menu to your Android app source, described in <a href="/docs/latest/guide/messaging/Connecting+to+Mobile+Messaging+from+Mobile+Apps.html" target="_blank">Connecting to Mobile Messaging from Mobile Apps</a>.
+                        <td>Add your app settings as shown in the <a href="#settings">Settings</a> menu to your Android app source, described in <a href="/docs/latest/guide/messaging/Connecting+to+Mobile+Messaging+from+Mobile+Apps.html" target="_blank">Connecting to Magnet Message from Mobile Apps</a>.
                         </td>
                     </tr>
                     <tr>
@@ -1310,13 +1311,13 @@ dependencies {
                     </tr>
                     <tr>
                         <td class="numbering">6.</td>
-                        <td>From the app, connect to Messaging using these connection settings:
+                        <td>From the app, connect to Magnet Message using these connection settings:
 <pre>host:mmx-svr1.magnet.com
 port: 5222</pre>
                             Optional if not using guest access:
 <pre>username: &lt;choose a new one, the user will be created upon first login&gt;
 password: &lt;a new password&gt;</pre>
-                            You are all set! You can now send and receive messages with Magnet Mobile Messaging.
+                            You are all set! You can now send and receive messages with Magnet Message.
                         </td>
                     </tr>
                     <tr class="mmx-nav">
@@ -1330,7 +1331,7 @@ password: &lt;a new password&gt;</pre>
                     <tr>
                         <td class="numbering">9.</td>
                         <td>
-                            <p>See <a href="/docs/latest/guide/messaging/index.html" target="_blank">Magnet Mobile Messaging Developer Guide</a> to learn more about Mobile Messaging capabilities.</p>
+                            <p>See <a href="/docs/latest/guide/messaging/index.html" target="_blank">Magnet Message Developer Guide</a> to learn more about messaging capabilities.</p>
                         </td>
                     </tr>
                 </table>
@@ -1347,7 +1348,7 @@ password: &lt;a new password&gt;</pre>
                     <tr>
                         <td class="numbering">2.</td>
                         <td>
-                            <a class="download-compiled-source" did="ios" href="#">Download the Messaging Quickstart iOS app</a> and open <b>QuickStart.xcworkspace</b> in Xcode.
+                            <a class="download-compiled-source" did="ios" href="#">Download the Magnet Message Quickstart iOS app</a> and open <b>QuickStart.xcworkspace</b> in Xcode.
                         </td>
                     </tr>
                     <tr class="mmx-nav">
@@ -1590,19 +1591,16 @@ pod 'MMX', '~> 0.2'</pre>
 </div>
 
 <script id="ProfileTmpl" type="text/template">
+    <span class="alert-container"></span>
     <div class="form-group">
         <div class="row-fluid">
             <div class="col-sm-6">
-                <label class="control-label">First Name<span class="req">*</span></label>
-                <div class="controls">
-                    <input type="text" class="form-control" name="firstName" value="<%-  model.firstName %>" placeholder="First Name">
-                </div>
+                <label class="control-label">First Name</label>
+                <input type="text" class="form-control" name="firstName" value="<%-  model.firstName %>" placeholder="First Name">
             </div>
             <div class="col-sm-6">
-                <label class="control-label">Last Name<span class="req">*</span></label>
-                <div class="controls">
-                    <input type="text" class="form-control" name="lastName" value="<%-  model.lastName %>" placeholder="Last Name">
-                </div>
+                <label class="control-label">Last Name</label>
+                <input type="text" class="form-control" name="lastName" value="<%-  model.lastName %>" placeholder="Last Name">
             </div>
         </div>
     </div>
@@ -1610,25 +1608,24 @@ pod 'MMX', '~> 0.2'</pre>
         <div class="row-fluid">
             <div class="col-sm-6">
                 <label class="control-label">Email Address</label>
-                <div class="controls">
-                    <input type="text" class="form-control" name="userName" disabled="disabled" value="<%-  model.email %>" placeholder="Email Address">
-                </div>
+                <input type="text" class="form-control" name="userName" disabled="disabled" value="<%-  model.email %>" placeholder="Email Address">
             </div>
             <div class="col-sm-6">
-                <label class="control-label">Company Name<span class="req">*</span></label>
-                <div class="controls">
-                    <input type="text" class="form-control" name="companyName" value="<%-  model.companyName %>" placeholder="Company Name">
-                </div>
+                <label class="control-label">Company Name</label>
+                <input type="text" class="form-control" name="companyName" value="<%-  model.companyName %>" placeholder="Company Name">
             </div>
         </div>
     </div>
+    <hr />
     <div class="password-inputs">
         <div class="form-group">
             <div class="row-fluid">
                 <div class="col-sm-12">
                     <label class="control-label">Current Password</label>
-                    <div class="controls">
-                        <input type="password" class="form-control" name="oldpassword" placeholder="Current Password">
+                    <div class="toggling-password-input">
+                        <span class="glyphicon glyphicon-eye-close hidden" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to hide the password value."></span>
+                        <span class="glyphicon glyphicon-eye-open" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to display the password value."></span>
+                        <input type="password" class="form-control toggling-password-input" name="oldpassword" placeholder="Current Password">
                     </div>
                 </div>
             </div>
@@ -1637,22 +1634,22 @@ pod 'MMX', '~> 0.2'</pre>
             <div class="row-fluid">
                 <div class="col-sm-6">
                     <label class="control-label">New Password</label>
-                    <div class="controls">
-                        <input type="password" class="form-control" name="newpassword" placeholder="New Password">
+                    <div class="toggling-password-input">
+                        <span class="glyphicon glyphicon-eye-close hidden" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to hide the password value."></span>
+                        <span class="glyphicon glyphicon-eye-open" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to display the password value."></span>
+                        <input type="password" disabled="disabled" class="form-control toggling-password-input" name="newpassword" placeholder="New Password">
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <label class="control-label">Re-type Password</label>
-                    <div class="controls">
-                        <input type="password" class="form-control" name="newpassword2" placeholder="Re-type Password">
+                    <div class="toggling-password-input">
+                        <span class="glyphicon glyphicon-eye-close hidden" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to hide the password value."></span>
+                        <span class="glyphicon glyphicon-eye-open" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to display the password value."></span>
+                        <input type="password" disabled="disabled" class="form-control toggling-password-input" name="newpassword2" placeholder="Re-type Password">
                     </div>
                 </div>
             </div>
         </div>
-        <span class="alert-container"></span>
-    </div>
-    <div class="button-group">
-        <button type="button" id="profile-save" class="btn btn-primary">Save Changes</button>
     </div>
 </script>
 
@@ -1803,6 +1800,22 @@ pod 'MMX', '~> 0.2'</pre>
             <div class="modal-body clearfix"></div>
             <div class="modal-footer">
                 <button id="mmx-users-update-btn" class="disabled btn btn-primary">Save</button>
+                <button data-dismiss="modal" type="button" class="btn btn-default">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="user-profile-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">User Profile</h4>
+            </div>
+            <div class="modal-body clearfix"></div>
+            <div class="modal-footer">
+                <button id="user-profile-update-btn" class="btn btn-primary">Save</button>
                 <button data-dismiss="modal" type="button" class="btn btn-default">Cancel</button>
             </div>
         </div>

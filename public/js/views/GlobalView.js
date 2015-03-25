@@ -49,7 +49,9 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click .radio.disabled': 'doNothing',
             'click .mmx-nav a': 'selectMMXView',
             'click #mmx-contextual-doc-btn': 'viewContextualDocs',
-            'click .btn-toggle button': 'toggleSwitch'
+            'click .show-profile-btn': 'showProfile',
+            'click .btn-toggle button': 'toggleSwitch',
+            'click .toggling-password-input .glyphicon': 'togglePasswordContainer'
         },
         goBack: function(e){
             e.preventDefault();
@@ -57,6 +59,10 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         doNothing: function(e){
             return e.preventDefault();
+        },
+        showProfile: function(e){
+            e.preventDefault();
+            this.options.eventPubSub.trigger('initProfile');
         },
         logout: function(){
             Cookie.remove('magnet_auth');
@@ -311,6 +317,18 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         removePillItem: function(e){
             $(e.currentTarget).closest('.pill').remove();
+        },
+        togglePasswordContainer: function(e){
+            var icon = $(e.currentTarget);
+            var parent = icon.closest('.toggling-password-input');
+            icon.addClass('hidden');
+            if(icon.hasClass('glyphicon-eye-open')){
+                parent.find('.glyphicon-eye-close').removeClass('hidden');
+                parent.find('input').attr('type', 'text');
+            }else{
+                parent.find('.glyphicon-eye-open').removeClass('hidden');
+                parent.find('input').attr('type', 'password');
+            }
         }
     });
     return View;

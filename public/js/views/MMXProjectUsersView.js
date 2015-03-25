@@ -352,6 +352,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     content : 'The user "'+me.activeUser.username+'" has been updated.'
                 });
                 delete me.activeUser;
+            }, function(xhr){
                 alert(xhr.responseText);
             }, null, {
                 btn : btn

@@ -18,8 +18,11 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
             this.httpreq = new HTTPRequest('/rest/');
             // init model connector for REST
             this.mc = new ModelConnector(this.httpreq);
-            this.opts = {};
+            this.opts = {
+                hasInit : false
+            };
             utils.setIndexOf();
+            this.setState(function(){});
             this.GLOBAL = {};
             // init site views
             var gv = new GlobalView({opts:this.opts, eventPubSub:this.eventPubSub});
@@ -89,20 +92,46 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
                 me.eventPubSub.trigger('initProfile');
             });
         },
+        setState: function(cb){
+            var me = this;
+            if(me.opts.hasInit) return cb();
+            $.ajax({
+                type : 'GET',
+                url  : '/rest/status'
+            }).done(function(res){
+                switch(res.platform){
+                    case 'init': {
+                        window.location.href = '/wizard';
+                        break;
+                    }
+                    case 'standalone': {
+                        $('#leave-feedback-container').remove();
+                        $('#confirm-tos-dialog').remove();
+                        if(res.newMMXUser) me.opts.newMMXUser = true;
+                        break;
+                    }
+                }
+                me.opts.hasInit = true;
+                cb();
+            });
+        },
         auth: function(callback){
+            var me = this;
             timer.stop();
             var popover = $('#user-nav-popover');
             popover.popover('hide');
-            var auth = Cookie.get('magnet_auth');
-            if(!auth || $.trim(auth).length < 1){
-                this.eventPubSub.trigger('getUserProfile', callback);
-            }else{
-                auth = auth.split(':');
-                popover.attr('data-content', '<b>'+auth[0]+' '+auth[1]+'</b><br />'+auth[2]);
-                $('#user-nav').removeClass('hidden');
-                $('#user-nav-popover').show();
-                callback();
-            }
+            me.setState(function(){
+                var auth = Cookie.get('magnet_auth');
+                if(!auth || $.trim(auth).length < 1){
+                    me.eventPubSub.trigger('getUserProfile', callback);
+                }else{
+                    auth = auth.split(':');
+                    popover.attr('data-content', '<b>'+auth[2]+'</b><br />');
+                    $('#user-nav').removeClass('hidden');
+                    $('#user-nav-popover').show();
+                    callback();
+                }
+            });
         }
     });
     return Router;
