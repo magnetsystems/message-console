@@ -57,6 +57,7 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
         },
         register: function(callback){
             var me = this;
+            if(!me.opts.emailEnabled) return me.handleEmailDisabled();
             me.eventPubSub.trigger('resetGlobalPages', 'registration-container');
             me.eventPubSub.trigger('initRegistration', callback);
         },
@@ -67,6 +68,7 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
         },
         forgotPassword: function(callback){
             var me = this;
+            if(!me.opts.emailEnabled) return me.handleEmailDisabled();
             me.eventPubSub.trigger('resetGlobalPages', 'forgotpassword-container');
             me.eventPubSub.trigger('initForgotPassword', callback);
         },
@@ -111,10 +113,19 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
                         break;
                     }
                 }
-                if(res.emailEnabled)
+                if(res.emailEnabled){
+                    me.opts.emailEnabled = res.emailEnabled;
+                }
                 me.opts.hasInit = true;
                 cb();
             });
+        },
+        handleEmailDisabled: function(){
+            Alerts.Error.display({
+                title   : 'Email Feature Disabled',
+                content : 'The email feature has not yet been enabled. As a result, users will not be able to register or recover their password on their own. See the README for more information.'
+            });
+            Backbone.history.navigate('#/login');
         },
         auth: function(callback){
             var me = this;
