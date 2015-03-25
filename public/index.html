@@ -306,11 +306,38 @@
                 <!--</div>-->
             </div>
             <div class="form-group clearfix">
-                <label>Anonymous Access Secret <span class="required">*</span></label>
+                <label>Anonymous Access Secret</label>
                 <div class="controls controls-grouped">
                     <input type="text" class="form-control" name="guestSecret" value="<%- model.attributes.guestSecret || model.attributes.guestSecret %>">
                     <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="
                     Used for creating user account from the mobile device">
+                    </span>
+                </div>
+            </div>
+            <div class="form-group clearfix">
+                <label>External Hostname</label>
+                <div class="controls controls-grouped">
+                    <input type="text" class="form-control" disabled="disabled" value="<%- configs['mmx.push.callbackurl'] %>">
+                    <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="
+                    The public url to be used by mobile clients for acknowledging push notifications.">
+                    </span>
+                </div>
+            </div>
+            <div class="form-group clearfix">
+                <label>Messaging Client Port</label>
+                <div class="controls controls-grouped">
+                    <input type="text" class="form-control" disabled="disabled" value="<%- configs['xmpp.socket.plain.port'] %>">
+                    <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="
+                    The messaging port mobile clients will use for communication with the messaging server.">
+                    </span>
+                </div>
+            </div>
+            <div class="form-group clearfix">
+                <label>Domain</label>
+                <div class="controls controls-grouped">
+                    <input type="text" class="form-control" disabled="disabled" value="<%- configs['mmx.domain.name'] %>">
+                    <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="
+                    An identifier representing the network gateway or 'primary' server to which mobile clients connect.">
                     </span>
                 </div>
             </div>
@@ -363,7 +390,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group clearfix">
+    <div class="button-group clearfix">
         <div class="controls">
             <button did="save" class="btn btn-primary">Save</button>
             <button did="delete" class="btn btn-danger">Delete App</button>

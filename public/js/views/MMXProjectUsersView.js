@@ -129,7 +129,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                         if(!res.results[i].active) res.results[i].usernameEdited += ' <span class="fa fa-lock"></span>';
                         if(res.results[i].creationDate) res.results[i].creationDate = moment(res.results[i].creationDate).format('lll');
                         if(res.results[i].modificationDate) res.results[i].modificationDate = moment(res.results[i].modificationDate).format('lll');
-                        res.results[i].checkbox = '<input type="checkbox" />';
+                        if(res.results[i].username != 'serveruser') res.results[i].checkbox = '<input type="checkbox" />';
                     }
                     me.users = res.results;
                 }

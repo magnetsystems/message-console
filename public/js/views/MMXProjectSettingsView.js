@@ -31,7 +31,8 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
         },
         render: function(){
             this.$el.find('.view-container').html(_.template($('#MessagingProjectSettingsView').html(), {
-                model : this.model
+                model   : this.model,
+                configs : this.options.opts.configs
             }));
             this.$el.find('.glyphicon-info-sign').tooltip();
         },

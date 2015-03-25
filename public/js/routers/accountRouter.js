@@ -111,6 +111,7 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
                         break;
                     }
                 }
+                if(res.emailEnabled)
                 me.opts.hasInit = true;
                 cb();
             });
