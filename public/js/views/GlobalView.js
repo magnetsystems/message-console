@@ -312,7 +312,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 $('#user-nav-popover').show();
                 cb();
             }, function(xhr, status, thrownError){
-                alert(xhr.responseText);
+                cb();
             });
         },
         removePillItem: function(e){
