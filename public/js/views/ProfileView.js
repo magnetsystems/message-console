@@ -66,11 +66,13 @@ define(['jquery', 'backbone'], function($, Backbone){
             }else{
                 pwdInputs.prop('disabled', false);
             }
-            if($.trim(p0).length && $.trim(p1).length < 4 && $.trim(p2).length < 4){
-                utils.showError(dom, 'newpassword', 'Password must be at least four characters.');
+            if($.trim(p0).length && $.trim(p1).length && $.trim(p1).length < 4){
+                utils.showError(dom, 'newpassword', 'Password must be at least four characters.', true);
                 this.updateProfileBtn.addClass('disabled');
-            }else if($.trim(p0).length && p1 !== p2){
-                utils.showError(dom, 'newpassword2', 'New password does not match.');
+            }else if($.trim(p0).length && $.trim(p1).length > 3 && $.trim(p2).length > 3 && p1 !== p2){
+                utils.showError(dom, 'newpassword2', 'New password does not match.', true);
+                this.updateProfileBtn.addClass('disabled');
+            }else if($.trim(p0).length && $.trim(p1).length < 4 || $.trim(p2).length < 4){
                 this.updateProfileBtn.addClass('disabled');
             }else{
                 utils.resetError(dom);

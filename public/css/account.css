@@ -2,6 +2,9 @@ div.centered{margin:0 auto}
 .tour .btn{margin-bottom:11px}
 .toggling-password-input{position:relative}
 .toggling-password-input .glyphicon{cursor:pointer;color:#036285;display:block;font-size:20px;position:absolute;right:8px;top:8px;z-index:100}
+.colortext-info{color:#30708F}
+.colortext-danger{color:#a94442}
+.alert-container div.colortext{padding:3px 12px}
 
 /* overloads */
 #messaging .view-wrapper{padding:0 20px}
@@ -131,13 +134,16 @@ div.centered{margin:0 auto}
 /* quickstart */
 #mmx-quickstart .centered{text-align:center}
 #mmx-quickstart .centered .form-group{margin-bottom:6px}
+#mmx-quickstart .centered .form-group span{font-size:20px;font-weight:300}
+#mmx-quickstart .centered .form-group .btn-group{margin-top:5px}
+#mmx-quickstart .centered .form-group .btn-sm{padding:7px 20px}
 #mmx-quickstart .btn-group{display:inline-block}
 #mmx-quickstart .same-width-button{width:100px}
 #mmx-quickstart .tab-content{border:none;margin:0;padding:0 15px 15px}
 #mmx-quickstart .tab-pane{margin:0 !important;border:solid 1px #aaa}
 #mmx-quickstart .tab-pane, #mmx-quickstart .table{border-radius:6px}
 #mmx-quickstart .table{margin-bottom:0}
-#mmx-quickstart .numbering{font-size:40px;text-indent:15px}
+#mmx-quickstart .numbering{font-size:25px;text-indent:15px}
 #mmx-quickstart .text{margin-top:20px}
 #mmx-quickstart .table-striped tr:nth-child(2n+1) > td{background:#e3e3e3}
 .download-compiled-source{text-decoration:underline}

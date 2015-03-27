@@ -762,12 +762,12 @@ utils = {
         return ary;
     },
     resetError: function(form){
-        form.find('.col-sm-12, .col-sm-10, .col-sm-8, .col-sm-6, .col-sm-4, .col-md-3').removeClass('has-error');
+        form.find('.has-error').removeClass('has-error');
         form.find('.alert-container').html('');
     },
-    showError: function(dom, name, error){
+    showError: function(dom, name, error, isTextOnly){
         dom.find('input[name="'+name+'"]').closest('div').addClass('has-error');
-        var alert = $('<div class="alert alert-danger" role="alert">'+error+'</div>');
+        var alert = isTextOnly ? $('<div class="colortext colortext-danger">'+error+'</div>') : $('<div class="alert alert-danger" role="alert">'+error+'</div>');
         dom.find('.alert-container:first').html(alert);
         if(dom.hasClass('pre-login-containers')){
             var panel = dom.find('.centered-wrapper > .panel');
