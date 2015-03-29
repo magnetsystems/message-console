@@ -19,6 +19,9 @@ define(['jquery', 'backbone'], function($, Backbone){
             options.eventPubSub.bind('updateBreadcrumb', function(params){
                 me.updateBreadcrumb(params);
             });
+            options.eventPubSub.bind('setHeaderNavigation', function(params){
+                me.setHeaderNavigation(params);
+            });
             options.eventPubSub.bind('hideCollapsibleMenu', function(){
                 $('#toggle-collapsible-menu').hide();
                 me.hideCollapseMenu();
@@ -32,7 +35,12 @@ define(['jquery', 'backbone'], function($, Backbone){
             options.eventPubSub.bind('getUserProfile', function(callback){
                 me.getProfile(callback);
             });
-            $('#user-nav-popover').popover({
+            $('#user-identity').popover({
+                placement : 'bottom',
+                template  : '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content"></div><h3 class="popover-title"></h3></div>',
+                html      : true
+            });
+            $('#page-select').popover({
                 placement : 'bottom',
                 template  : '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content"></div><h3 class="popover-title"></h3></div>',
                 html      : true
@@ -65,9 +73,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             this.options.eventPubSub.trigger('initProfile');
         },
         logout: function(){
-            Cookie.remove('magnet_auth');
-            $('#user-nav').addClass('hidden');
-            $('#user-nav-popover').attr('data-content', '');
+            this.options.eventPubSub.trigger('setHeaderNavigation');
             AJAX('/rest/logout', 'POST', 'application/json', null, function(){
                 Backbone.history.navigate('#/login');
             }, function(e){
@@ -303,17 +309,29 @@ define(['jquery', 'backbone'], function($, Backbone){
             tog.find('.btn').toggleClass('btn-default');
         },
         getProfile: function(cb){
+            var me = this;
             AJAX('/rest/profile', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
-                res.firstName = res.firstName || '';
-                res.lastName = res.lastName || '';
-                Cookie.create('magnet_auth', res.firstName+':'+res.lastName+':'+res.email, 1);
-                $('#user-nav-popover').attr('data-content', '<b>'+res.firstName+' '+res.lastName+'</b><br />'+res.email);
-                $('#user-nav').removeClass('hidden');
-                $('#user-nav-popover').show();
+                me.options.eventPubSub.trigger('setHeaderNavigation', res);
                 cb();
             }, function(xhr, status, thrownError){
-                cb();
+                me.options.eventPubSub.trigger('setHeaderNavigation');
+                Backbone.history.navigate('#/login');
             });
+        },
+        setHeaderNavigation: function(params){
+            var userIdentityDom = $('#user-identity');
+            if(params){
+                $('#user-navigation').show('fast');
+                $('#user-identity');
+                $('#page-select');
+            }else{
+                $('#user-navigation').hide();
+                $('#user-identity').popover('hide');
+                $('#page-select').popover('hide');
+            }
+            params = params || {};
+            userIdentityDom.find('.placeholder-username').text(params.email || '');
+            userIdentityDom.find('.placeholder-role').text(params.userType || '');
         },
         removePillItem: function(e){
             $(e.currentTarget).closest('.pill').remove();

@@ -133,14 +133,9 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
             var popover = $('#user-nav-popover');
             popover.popover('hide');
             me.setState(function(){
-                var auth = Cookie.get('magnet_auth');
-                if(!auth || $.trim(auth).length < 1){
+                if(!me.opts.user){
                     me.eventPubSub.trigger('getUserProfile', callback);
                 }else{
-                    auth = auth.split(':');
-                    popover.attr('data-content', '<b>'+auth[2]+'</b><br />');
-                    $('#user-nav').removeClass('hidden');
-                    $('#user-nav-popover').show();
                     callback();
                 }
             });

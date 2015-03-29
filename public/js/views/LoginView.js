@@ -10,9 +10,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                 me.callback = callback;
                 me.options.opts.newMMXUser = false;
                 me.options.opts.firstLogin = false;
-                $('#user-nav').addClass('hidden');
-                $('#user-nav-popover').attr('data-content', '').popover('hide');
-                $('#user-nav-popover').hide();
+                delete me.options.opts.user;
+                me.options.eventPubSub.trigger('setHeaderNavigation');
                 me.$el.find('input').val('');
                 me.$el.find('input[name="username"]').focus();
             });
@@ -36,22 +35,11 @@ define(['jquery', 'backbone'], function($, Backbone){
                     else
                         me.options.opts.firstLogin = true;
                     delete me.options.opts.configs;
-                    AJAX('/rest/profile', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
-                        res.firstName = res.firstName || '';
-                        res.lastName = res.lastName || '';
-                        Cookie.create('magnet_auth', res.firstName+':'+res.lastName+':'+res.email, 1);
-                        $('#user-nav-popover').attr('data-content', '<b>'+res.firstName+' '+res.lastName+'</b><br />'+user.val());
-                        $('#user-nav').removeClass('hidden');
-                        $('#user-nav-popover').show();
-                        user.val('');
-                        if(typeof me.callback === typeof Function){
-                            me.callback();
-                        }else{
-                            Backbone.history.navigate('#/messaging');
-                        }
-                    }, function(xhr, status, thrownError){
-                        alert(xhr.responseText);
-                    });
+                    if(typeof me.callback === typeof Function){
+                        me.callback();
+                    }else{
+                        Backbone.history.navigate('#/messaging');
+                    }
                 }, function(xhr, status, thrownError){
                     if(xhr.responseText == 'invalid-login'){
                         Alerts.Error.display({
