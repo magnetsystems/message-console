@@ -14,7 +14,7 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
                     me.model.set({
                         apnsCertUploaded : true
                     });
-                    $('#mmx-settings-apns-cert-file-upload .qq-upload-file').html('Certificate Uploaded');
+                    $('#mmx-settings-apns-cert-file-upload').find('.qq-upload-list').html(me.certUploadedTmpl);
                 }else{
                     Alerts.Error.display({
                         title   : 'Error Uploading Certificate',
@@ -27,7 +27,8 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
         events: {
             'click .controls button[did="save"]': 'saveProject',
             'click .controls button[did="delete"]': 'deleteProject',
-            'click #mmx-settings-apns-cert-file-upload-btn': 'uploadCertificate'
+            'click #mmx-settings-apns-cert-file-upload-btn': 'uploadCertificate',
+            'click .remove-cert-btn': 'deleteAPNSCertificate'
         },
         render: function(){
             this.$el.find('.view-container').html(_.template($('#MessagingProjectSettingsView').html(), {
@@ -96,11 +97,13 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
             });
 //            $('<button id="mmx-settings-apns-cert-file-upload-btn" class="btn btn-primary" type="button" txt="Upload">Upload</button>').insertAfter(container+' .qq-upload-button');
             if(this.model.attributes.apnsCertUploaded){
-                $(container).find('.qq-upload-list').html('<li class=" qq-upload-success"><span class="qq-upload-file">certificate uploaded</span></li>');
+                $(container).find('.qq-upload-list').html(this.certUploadedTmpl);
             }else{
-                $(container).find('.qq-upload-list').html('<li class=" qq-upload-error"><span class="qq-upload-file">no certificate</span></li>');
+                $(container).find('.qq-upload-list').html(this.noCertTmpl);
             }
         },
+        certUploadedTmpl : '<li class="qq-upload-success"><span class="qq-upload-file">certificate uploaded</span><button class="remove-cert-btn btn btn-sm"><span class="glyphicon glyphicon-remove"></span></button></li>',
+        noCertTmpl : '<li class=" qq-upload-error"><span class="qq-upload-file">no certificate</span></li>',
         uploadCertificate: function(e){
             var me = this;
             var btn = $(e.currentTarget);
@@ -109,6 +112,15 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
                 return false;
             me.options.eventPubSub.trigger('btnLoading', btn);
             me.options.eventPubSub.trigger('uploadAPNSCertFile', '/rest/apps/'+me.model.attributes.id+'/uploadAPNSCertificate');
+        },
+        deleteAPNSCertificate: function(e){
+            e.preventDefault();
+            var me = this;
+            AJAX('apps/'+me.model.attributes.id+'/deleteAPNSCertificate', 'DELETE', 'application/json', null, function(res, status, xhr){
+                $('#mmx-settings-apns-cert-file-upload').find('.qq-upload-list').html(me.noCertTmpl);
+            }, function(e){
+                alert(e.responseText);
+            });
         }
     });
     return View;
