@@ -1,4 +1,5 @@
 div.centered{margin:0 auto}
+.no-padding{padding:0}
 .tour .btn{margin-bottom:11px}
 .toggling-password-input{position:relative}
 .toggling-password-input .glyphicon{cursor:pointer;color:#036285;display:block;font-size:20px;position:absolute;right:8px;top:8px;z-index:100}
@@ -145,7 +146,7 @@ div.centered{margin:0 auto}
 .repeater-icon-controls .glyphicon.disabled{color:#bbb;cursor:text}
 .repeater-icon-controls .fa{color:#008CBA;margin:6px 9px 0 0;cursor:pointer}
 .repeater-icon-controls .fa.disabled{color:#bbb}
-#mmx-users .messaging-list .repeater-header-left{padding-left:159px}
+#mmx-users .messaging-list .repeater-header-left{padding-left:98px}
 #mmx-topics .messaging-list .repeater-header-left{padding-left:128px}
 
 /* quickstart */
@@ -196,8 +197,8 @@ div.centered{margin:0 auto}
 .qq-upload-drop-area span{display:block;position:absolute;top:50%;width:100%;margin-top:-8px;font-size:16px}
 .qq-upload-extra-drop-area{position:relative;margin-top:50px;font-size:16px;padding-top:30px;height:20px;min-height:40px}
 .qq-upload-drop-area-active{background:#FF7171}
-.qq-upload-list{margin:0;padding:0;list-style:none;float:right}
-.qq-upload-list li, .pw-wsdl-url-processing li{border:none;margin:10px 0 0 0 !important;padding:9px;line-height:15px;font-size:16px;background-color:#fff}
+.qq-upload-list{margin:0;padding:0 92px 0 0;list-style:none}
+.qq-upload-list li, .pw-wsdl-url-processing li{border:none;margin:10px 0 0 0 !important;padding:9px;line-height:15px;font-size:13px;background-color:#fff}
 .qq-upload-file,.qq-upload-spinner,.qq-upload-size,.qq-upload-cancel,.qq-upload-retry,.qq-upload-failed-text,.qq-upload-finished{margin-left:8px}
 .qq-upload-spinner{display:inline-block;background:url(../images/loading.gif);width:15px;height:15px;vertical-align:middle}
 .qq-upload-finished{display:none;width:15px;height:15px;vertical-align:text-bottom}
@@ -213,10 +214,11 @@ div.centered{margin:0 auto}
 .qq-upload-list li.qq-upload-fail{background-color:#FFF;color:#D60000}
 .qq-progress-bar{background:-moz-linear-gradient(top,rgba(30,87,153,1) 0,rgba(41,137,216,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(30,87,153,1)),color-stop(50%,rgba(41,137,216,1)),color-stop(51%,rgba(32,124,202,1)),color-stop(100%,rgba(125,185,232,1)));background:-webkit-linear-gradient(top,rgba(30,87,153,1) 0,rgba(41,137,216,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%);background:-o-linear-gradient(top,rgba(30,87,153,1) 0,rgba(41,137,216,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%);background:-ms-linear-gradient(top,rgba(30,87,153,1) 0,rgba(41,137,216,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%);background:linear-gradient(to bottom,rgba(30,87,153,1) 0,rgba(41,137,216,1) 50%,rgba(32,124,202,1) 51%,rgba(125,185,232,1) 100%);width:0;height:15px;border-radius:6px;margin-bottom:3px;display:none}
 .qq-uploader .btn{margin-right:8px}
-.qq-upload-button{background-color:#fff;border-color:#ccc;color:#333}
+.qq-upload-button{color:#fff;float:right}
 .qq-upload-list li, .pw-wsdl-url-processing li{margin:0 0 7px !important;border:none}
 .qq-upload-size{display:none !important}
 .qq-upload-fail .qq-upload-file{display:none !important}
+.qq-upload-error .qq-upload-file{color:#888}
 
 @media only screen and (max-width:767px){
     #mmx-messages-list .dt-container .col-sm-6{padding:0}

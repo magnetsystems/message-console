@@ -87,14 +87,18 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
                 el          : container,
                 context     : 'APNSCertFile',
                 method      : 'POST',
-                validation  : {},
-                eventPubSub : this.options.eventPubSub
+                validation  : {
+                    allowedExtensions : ['p12'],
+                    sizeLimit         : 500000
+                },
+                eventPubSub : this.options.eventPubSub,
+                path        : '/rest/apps/'+this.model.attributes.id+'/uploadAPNSCertificate'
             });
-            $('<button id="mmx-settings-apns-cert-file-upload-btn" class="btn btn-primary" type="button" txt="Upload">Upload</button>').insertAfter(container+' .qq-upload-button');
+//            $('<button id="mmx-settings-apns-cert-file-upload-btn" class="btn btn-primary" type="button" txt="Upload">Upload</button>').insertAfter(container+' .qq-upload-button');
             if(this.model.attributes.apnsCertUploaded){
-                $(container).find('.qq-upload-list').html('<li class=" qq-upload-success"><span class="qq-upload-file">Certificate Uploaded</span></li>');
+                $(container).find('.qq-upload-list').html('<li class=" qq-upload-success"><span class="qq-upload-file">certificate uploaded</span></li>');
             }else{
-                $(container).find('.qq-upload-list').html('<li class=" qq-upload-error"><span class="qq-upload-file">No Certificate Uploaded</span></li>');
+                $(container).find('.qq-upload-list').html('<li class=" qq-upload-error"><span class="qq-upload-file">no certificate</span></li>');
             }
         },
         uploadCertificate: function(e){

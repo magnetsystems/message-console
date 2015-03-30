@@ -16,10 +16,10 @@ define(['jquery', 'backbone', 'backbone', 'fileuploader'], function($, Backbone)
                 maxConnections              : 1,
                 forceMultipart              : false,
                 disableCancelForFormUploads : true,
-                autoUpload                  : false,
+                autoUpload                  : true,
                 element                     : document.getElementById(me.options.el.replace('#', '')),
                 text: {
-                    uploadButton : me.options.buttonName ? me.options.buttonName : 'Select a File'
+                    uploadButton : me.options.buttonName ? me.options.buttonName : 'Upload'
                 },
                 // debug : true,
                 request: {
@@ -47,13 +47,14 @@ define(['jquery', 'backbone', 'backbone', 'fileuploader'], function($, Backbone)
                     }
                 }
             });
-            me.$el.find('.qq-upload-button').addClass('btn');
+            me.params = options.params;
+            uploader.options.request.endpoint = options.path;
+            me.$el.find('.qq-upload-button').addClass('btn btn-primary');
             // bind upload event to set upload endpoint and upload files
             me.options.eventPubSub.bind('upload'+me.options.context, function(path, params){
                 me.params = params;
                 uploader.options.request.endpoint = path;
                 uploader.uploadStoredFiles();
-
             });
         }
     });
