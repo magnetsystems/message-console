@@ -504,7 +504,7 @@ function MMXNoAppTour(){
 function MMXInitialAppTour(appId){
     var tour = new Tour({
         storage : false,
-        delay   : 1000,
+        delay   : 600,
         steps: [
             {
                 element   : "#breadcrumb .same-line",
