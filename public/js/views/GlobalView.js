@@ -72,7 +72,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             e.preventDefault();
             this.options.eventPubSub.trigger('initProfile');
         },
-        logout: function(){
+        logout: function(e){
+            e.preventDefault();
             this.options.eventPubSub.trigger('setHeaderNavigation');
             AJAX('/rest/logout', 'POST', 'application/json', null, function(){
                 Backbone.history.navigate('#/login');

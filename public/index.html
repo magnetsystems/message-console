@@ -50,7 +50,7 @@
             </div>
             <div class="separator hidden-xs"></div>
             <div id="user-identity" tabindex="0" role="button" data-trigger="focus" class="action hidden-xs divide"
-                 data-title="<div class='clearfix'><a href='#' class='show-profile-btn btn btn-sm btn-default pull-left'>Profile</a><button id='logout-btn' class='btn btn-sm btn-default pull-right'>Sign Out</button></div>">
+                 data-content="<div class='user-navigation-menu clearfix'><a href='#' class='show-profile-btn'><i class='fa fa-2x fa-user'></i>Profile</a><hr /><a href='#' id='logout-btn'><i class='fa fa-2x fa-sign-out'></i> Sign Out</a></div>">
                 <div>
                     <span class="fa fa-cog fa-2x"></span> <span class="caret"></span>
                 </div>
@@ -62,7 +62,8 @@
                 </div>
             </div>
             <div class="separator hidden-xs"></div>
-            <div id="page-select" tabindex="0" role="button" data-content="<a href='/admin'>Go To Admin Console</a>" data-trigger="focus" class="admin-only-item action hidden-xs">
+            <div id="page-select" tabindex="0" role="button" data-trigger="focus" class="admin-only-item action hidden-xs"
+                 data-content="<div class='user-navigation-menu clearfix'><a href='/admin'><i class='fa fa-2x fa-link'></i>Admin Console</a></div>">
                 <div class="page-selector">
                     Developer Console <span class="caret"></span>
                 </div>
@@ -398,6 +399,21 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+            <div class="form-group clearfix">
+                <span class="form-caption">DOWNLOAD CONFIGS</span>
+                <div class="well well-default clearfix">
+                        <div class="row-fluid">
+                            <div class="col-sm-6">
+                                <label>Android</label><br />
+                                <a href="/rest/apps/<%- model.attributes.id %>/sampleConfig?platform=android" class="btn btn-primary">Download .properties</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>iOS</label><br />
+                                <a href="/rest/apps/<%- model.attributes.id %>/sampleConfig?platform=ios" class="btn btn-primary">Download .plist</a>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
