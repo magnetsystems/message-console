@@ -21,8 +21,8 @@ div.centered{margin:0 auto}
 .user-navigation-menu hr{margin:3px 0}
 .user-navigation-menu .fa{margin-top:0 !important;font-size:1.5em}
 .user-navigation-menu .show-profile-btn .fa, .user-navigation-menu .fa-link{margin-right:6px}
-.user-navigation-menu a{display:block;padding:5px 20px 8px 8px;color:#666;text-decoration:none}
-.user-navigation-menu a:hover, .user-navigation-menu a:active{background-color:#008bcc;color:#fff}
+.user-navigation-menu a{outline:none;display:block;padding:5px 20px 8px 8px;color:#666;text-decoration:none}
+.user-navigation-menu a:hover, .user-navigation-menu a:active{outline:none;background-color:#008bcc;color:#fff}
 .user-navigation-menu a:hover i, .user-navigation-menu a:active i{color:#fff !important}
 #user-identity .caret{margin-top:-9px}
 .user-identity-section{margin:0 10px;text-align:right}
