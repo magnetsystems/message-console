@@ -103,13 +103,14 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
             }).done(function(res){
                 switch(res.platform){
                     case 'init': {
-                        window.location.href = '/wizard';
-                        break;
+                        return window.location.href = '/wizard';
                     }
                     case 'standalone': {
                         $('#leave-feedback-container').remove();
                         $('#confirm-tos-dialog').remove();
-                        if(res.newMMXUser) me.opts.newMMXUser = true;
+                        if(res.newMMXUser){
+                            me.opts.newMMXUser = true;
+                        }
                         break;
                     }
                 }

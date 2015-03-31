@@ -310,7 +310,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         getProfile: function(cb){
             var me = this;
-            AJAX('/rest/profile', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
+            AJAX('profile', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
                 me.options.eventPubSub.trigger('setHeaderNavigation', res);
                 cb();
             }, function(xhr, status, thrownError){
