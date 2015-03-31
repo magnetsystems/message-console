@@ -313,6 +313,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             var me = this;
             AJAX('profile', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
                 me.options.eventPubSub.trigger('setHeaderNavigation', res);
+                me.options.opts.user = res;
                 cb();
             }, function(xhr, status, thrownError){
                 me.options.eventPubSub.trigger('setHeaderNavigation');
@@ -329,11 +330,9 @@ define(['jquery', 'backbone'], function($, Backbone){
                     userNav.find('.admin-only-item').show();
                 }
                 userNav.show('fast');
-                $('#user-identity');
-                $('#page-select');
             }else{
                 userNav.hide();
-                $('#user-identity').popover('hide');
+                userIdentityDom.popover('hide');
                 $('#page-select').popover('hide');
             }
             params = params || {};
