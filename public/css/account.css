@@ -4,7 +4,7 @@ div.centered{margin:0 auto}
 .toggling-password-input{position:relative}
 .toggling-password-input .glyphicon{cursor:pointer;color:#036285;display:block;font-size:20px;position:absolute;right:8px;top:8px;z-index:100}
 .colortext-info{color:#30708F}
-.colortext-danger{color:#a94442}
+.colortext-danger{color:#a94442;font-size:11px;display:block;margin-top:-2px}
 .alert-container div.colortext{padding:3px 12px}
 .navbar.navbar-default .navbar-brand{padding:13px 0 0 17px;color:#8c8c8c;font-size:17px}
 .navbar.navbar-default .navbar-brand img{margin-right:-6px;margin-top:-11px;max-width:160px}

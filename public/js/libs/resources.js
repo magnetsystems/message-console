@@ -763,12 +763,16 @@ utils = {
     },
     resetError: function(form){
         form.find('.has-error').removeClass('has-error');
+        form.find('.colortext').remove();
         form.find('.alert-container').html('');
     },
     showError: function(dom, name, error, isTextOnly){
-        dom.find('input[name="'+name+'"]').closest('div').addClass('has-error');
-        var alert = isTextOnly ? $('<div class="colortext colortext-danger">'+error+'</div>') : $('<div class="alert alert-danger" role="alert">'+error+'</div>');
-        dom.find('.alert-container:first').html(alert);
+        var parent = dom.find('input[name="'+name+'"]').closest('div');
+        parent.addClass('has-error');
+        var alert = (isTextOnly || 1 == 1) ? $('<div class="colortext colortext-danger">'+error+'</div>') : $('<div class="alert alert-danger" role="alert">'+error+'</div>');
+//        dom.find('.alert-container:first').html(alert);
+        parent.find('.colortext').remove();
+        parent.append(alert);
         if(dom.hasClass('pre-login-containers')){
             var panel = dom.find('.centered-wrapper > .panel');
             panel.height(panel.height()+70);
@@ -869,6 +873,10 @@ utils = {
     // returns whether current browser is an iOS device
     isIOS : function(){
         return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    },
+    isValidEmail: function(e){
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(e);
     },
     /**
      * Generate a GUID.

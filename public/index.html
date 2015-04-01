@@ -775,13 +775,13 @@
 
 <script id="CreateUserView" type="text/template">
     <span class="alert-container"></span>
-    <div class="form-group">
+    <div class="form-group clearfix">
         <div class="col-sm-12">
             <label>Username</label>
             <input type="text" class="form-control" name="username" maxlength="42" placeholder="Username" <% if(typeof model != 'undefined'){ %>disabled="disabled"<% } %> value="<%- typeof model != 'undefined' ? model.username : '' %>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group clearfix">
         <div class="col-sm-<% if(typeof provisionDb === 'undefined' || provisionDb === 'true'){ %>6<% }else{ %>12<% } %>">
             <label>Password</label>
             <input type="password" class="form-control" name="password" placeholder="Password" value="" />
@@ -793,7 +793,7 @@
         </div>
         <% } %>
     </div>
-    <div class="user-profile-group form-group">
+    <div class="user-profile-group form-group clearfix">
         <div class="col-sm-6">
             <label>Email Address</label>
             <input type="text" class="form-control" name="email" placeholder="Email Address" value="<%- typeof model != 'undefined' ? model.email : '' %>" />

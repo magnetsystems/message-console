@@ -241,20 +241,20 @@ define(['jquery', 'backbone'], function($, Backbone){
             }));
         },
         validateUserModal: function(dom, obj, isEdit){
-            if($.trim(obj.username).length < 1 && !isEdit){
-                utils.showError(dom, 'username', 'Invalid Username. Username is a required field.');
+            if($.trim(obj.username.length) < 5 && !isEdit){
+                utils.showError(dom, 'username', 'Username must contain five or more characters.', true);
                 return false;
             }else if(!/^[a-zA-Z0-9-_]+$/i.test(obj.username) && !isEdit){
-                utils.showError(dom, 'username', 'Invalid Username. Username must consist of letters, numbers, -, and _.');
-                return false;
-            }else if(obj.username.length < 5 && !isEdit){
-                utils.showError(dom, 'username', 'Invalid Username. Username must contain five or more characters.');
+                utils.showError(dom, 'username', 'Username can only contain letters, numbers, - and _.', true);
                 return false;
             }else if($.trim(obj.password.length) < 1 && !isEdit){
-                utils.showError(dom, 'password', 'Invalid Password. Password is a required field.');
+                utils.showError(dom, 'password', 'A password is required. Enter a password.', true);
+                return false;
+            }else if(obj.email && $.trim(obj.email).length && !utils.isValidEmail(obj.email)){
+                utils.showError(dom, 'email', 'The Email Address must be a valid email address.', true);
                 return false;
             }else if(obj.password != obj.passwordVerify){
-                utils.showError(dom, 'passwordVerify', 'Passwords do not match.');
+                utils.showError(dom, 'passwordVerify', 'Passwords do not match.', true);
                 return false;
             }
             return true;

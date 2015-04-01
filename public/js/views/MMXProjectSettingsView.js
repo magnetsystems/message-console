@@ -60,8 +60,13 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
         deleteProject: function(){
             var me = this;
             Alerts.Confirm.display({
-                title   : 'Confirm App Deletion',
-                content : 'Please verify that you wish to delete this app. If this app is deleted, any mobile clients using this App will lose connectivity.'
+                title   : 'Delete App',
+                content : 'By deleting this app any device using the app will no longer be able to send or receive Magnet' +
+                    ' Message. <br/> This action can not be undone. Are you sure you want to delete '+me.model.attributes.name+'?',
+                btns    : {
+                    yes : 'Delete App',
+                    no  : 'Cancel'
+                }
             }, function(){
                 me.model.destroy({
                     success: function(){
