@@ -95,6 +95,9 @@ define(['jquery', 'backbone'], function($, Backbone){
                 if(options.sortProperty == 'state') options.sortProperty = 'STATE';
                 query.sortby = options.sortProperty;
                 query.sortorder = options.sortDirection == 'asc' ? 'ASCENDING' : 'DESCENDING';
+            }else{
+                query.sortby = 'SENT';
+                query.sortorder = 'DESCENDING';
             }
             var qs = '';
             for(var key in query){
