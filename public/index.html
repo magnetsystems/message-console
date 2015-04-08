@@ -1078,7 +1078,7 @@
         <div class="col-sm-12">
             <label>Name <span class="required">*</span></label>
             <div class="controls">
-                <input type="text" class="form-control" name="name" maxlength="40" placeholder="The name of your new topic" <% if(typeof model != 'undefined'){ %>disabled="disabled"<% } %> value="<%- typeof model != 'undefined' ? model.name : '' %>" />
+                <input type="text" class="form-control" name="name" maxlength="64" placeholder="The name of your new topic" <% if(typeof model != 'undefined'){ %>disabled="disabled"<% } %> value="<%- typeof model != 'undefined' ? model.name : '' %>" />
             </div>
         </div>
     </div>
@@ -1097,7 +1097,7 @@
                 <div class="same-line clearfix">
                     <div class="same-line-button btn btn-primary glyphicon glyphicon-plus"></div>
                     <div class="same-line-control">
-                        <input type="text" name="topicName" class="form-control" placeholder="Add Tag">
+                        <input type="text" name="tagName" class="form-control" placeholder="Add Tag">
                     </div>
                 </div>
                 <div name="tags" class="pillbox">
