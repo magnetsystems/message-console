@@ -45,6 +45,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 template  : '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content"></div><h3 class="popover-title"></h3></div>',
                 html      : true
             });
+            me.initIE();
             me.bindFeedbackButton();
         },
         events: {
@@ -352,6 +353,11 @@ define(['jquery', 'backbone'], function($, Backbone){
             }else{
                 parent.find('.glyphicon-eye-open').removeClass('hidden');
                 parent.find('input').attr('type', 'password');
+            }
+        },
+        initIE: function(){
+            if(utils.detectIE()){
+                $('#footer').css('position','relative').remove().appendTo($('.view-wrapper.fullpos'));
             }
         }
     });
