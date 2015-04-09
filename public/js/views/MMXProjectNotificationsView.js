@@ -42,11 +42,11 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         filters : {
             sent : {
-                title : 'Sent',
+                title : 'Date Sent',
                 type  : 'daterange'
             },
             deviceId : {
-                title : 'Target Device Id',
+                title : 'Recipient Device Id',
                 type  : 'search'
             },
             state : {
