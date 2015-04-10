@@ -14,6 +14,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 me.options.eventPubSub.trigger('setHeaderNavigation');
                 me.$el.find('input').val('');
                 me.$el.find('input[name="username"]').focus();
+                $('.tour').remove();
             });
         },
         events: {
