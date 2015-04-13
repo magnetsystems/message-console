@@ -235,12 +235,13 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         showEditTopic: function(e){
             var me = this;
+            if(!me.selectedElements.length) return;
             var did = me.selectedElements.length ? me.selectedElements[0].id : $(e.currentTarget).closest('tr').attr('did');
             me.activeTopic = utils.getByAttr(me.topics, 'id', did)[0];
             var template = _.template($('#CreateTopicView').html(), {
                 model : me.activeTopic
             });
-            me.updateTopicBtn.removeClass('disabled');
+            me.updateTopicBtn.addClass('disabled');
             me.updateTopicModal.find('.modal-body').html(template);
             me.updateTopicModal.find('.pill-container').html(_.template($('#TagsListView').html(), {
                 tags : me.activeTopic.tags
@@ -249,6 +250,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 edit : true
             });
             me.updateTopicModal.find('.topic-tag-container .glyphicon-plus').click(function(){
+                me.updateTopicBtn.removeClass('disabled');
                 me.setTopicTag($(this));
             });
             me.updateTopicModal.modal('show');
@@ -298,6 +300,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         saveTopicComplete: function(me){
             utils.resetRows(me.list);
+            me.selectedElements = [];
             me.list.repeater('render');
             me.updateTopicModal.modal('hide');
             Alerts.General.display({

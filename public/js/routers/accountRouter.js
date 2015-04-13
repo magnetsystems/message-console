@@ -16,6 +16,7 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
             this.eventPubSub = _.extend({}, Backbone.Events);
             // init HTTP request methods
             this.httpreq = new HTTPRequest('/rest/');
+            $.ajaxSetup({cache:false});
             // init model connector for REST
             this.mc = new ModelConnector(this.httpreq);
             this.opts = {
