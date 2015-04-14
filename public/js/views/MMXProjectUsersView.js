@@ -316,7 +316,6 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         showEditUser: function(e){
             var me = this;
-            if(!me.selectedElements.length) return;
             var did = me.selectedElements.length ? me.selectedElements[0].username : $(e.currentTarget).closest('tr').attr('did');
             me.activeUser = utils.getByAttr(me.users, 'username', did)[0];
             var template = _.template($('#CreateUserView').html(), {
@@ -344,7 +343,6 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.options.eventPubSub.trigger('btnLoading', btn);
             AJAX('apps/'+me.model.attributes.id+'/users/'+obj.username, 'PUT', 'application/json', obj, function(){
                 utils.resetRows(me.list);
-                me.selectedElements = [];
                 me.list.repeater('render');
                 me.updateUserModal.modal('hide');
                 Alerts.General.display({
