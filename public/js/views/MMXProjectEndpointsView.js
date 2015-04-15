@@ -378,8 +378,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             var body = {
                 target : {
                     deviceIds : []
-                },
-                appAPIKey : me.model.attributes.appAPIKey
+                }
             };
             var input = me.sendMessageModal.find('.message-types > div[did="push"] textarea');
             var url = 'apps/'+me.model.attributes.id+'/endpoints/'+this.activeDevice.id;
@@ -395,7 +394,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                 if(body.target.deviceIds.length) me.pollRecentMessages();
             }, function(xhr, status, thrownError){
                 utils.showError(me.sendMessageModal, '', type+' delivery error.');
-            });
+            }, [{
+                name : 'appAPIKey',
+                val  : me.model.attributes.appAPIKey
+            }]);
         },
         deleteEndpoint: function(){
             var endpoints = '';

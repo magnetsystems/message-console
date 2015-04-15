@@ -27,11 +27,14 @@ define(['jquery', 'backbone'], function($, Backbone){
                         content : 'Your request to reset password has been sent successfully. Check your email for further instructions.'
                     });
                 }, function(xhr, status, thrownError){
-                    if(xhr.responseText == 'email-recovery-disabled'){
-                        utils.showError(me.$el, 'Password Recovery Disabled', 'The password recovery feature has been disabled. Please contact your administrator to reset your password.');
-                    }else{
-                        utils.showError(me.$el, 'Password Reset Failure', 'We cannot find this email address in our records.');
+                    xhr.responseText = xhr.responseText.replace(/"/g, '');
+                    var msg;
+                    switch(xhr.responseText){
+                        case 'USER_DOES_NOT_EXIST': msg = 'We cannot find this email address in our records.'; break;
+                        case 'EMAIL_FAILED': msg = 'An email could not be sent to the email address you provided.'; break;
+                        case 'email-recovery-disabled': msg = 'The password recovery feature has been disabled. Please contact your administrator to reset your password.'; break;
                     }
+                    utils.showError(me.$el, 'email', msg);
                 });
             }
         },

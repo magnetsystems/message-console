@@ -16,7 +16,7 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
             this.eventPubSub = _.extend({}, Backbone.Events);
             // init HTTP request methods
             this.httpreq = new HTTPRequest('/rest/');
-            if(utils.detectIE()) $.ajaxSetup({cache:false});
+            if(utils.detectIE())  $.ajaxSetup({cache:false});
             // init model connector for REST
             this.mc = new ModelConnector(this.httpreq);
             this.opts = {
@@ -64,14 +64,18 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
         },
         completeRegister: function(callback){
             var me = this;
-            me.eventPubSub.trigger('resetGlobalPages', 'completeregistration-container');
-            me.eventPubSub.trigger('initCompleteRegistration', callback);
+            me.setState(function(){
+                me.eventPubSub.trigger('resetGlobalPages', 'completeregistration-container');
+                me.eventPubSub.trigger('initCompleteRegistration', callback);
+            });
         },
         forgotPassword: function(callback){
             var me = this;
-            if(!me.opts.emailEnabled) return me.handleEmailDisabled();
-            me.eventPubSub.trigger('resetGlobalPages', 'forgotpassword-container');
-            me.eventPubSub.trigger('initForgotPassword', callback);
+            me.setState(function(){
+                if(!me.opts.emailEnabled) return me.handleEmailDisabled();
+                me.eventPubSub.trigger('resetGlobalPages', 'forgotpassword-container');
+                me.eventPubSub.trigger('initForgotPassword', callback);
+            });
         },
         resetPassword: function(callback){
             var me = this;
