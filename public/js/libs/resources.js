@@ -1036,6 +1036,9 @@ utils = {
         var edge = ua.indexOf('Edge/');
         if(edge > 0) return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
         return false;
+    },
+    getTopicName: function(str){
+        return str.substr(str.lastIndexOf('/')+1);
     }
 };
 

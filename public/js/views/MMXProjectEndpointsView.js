@@ -348,11 +348,10 @@ define(['jquery', 'backbone'], function($, Backbone){
             var me = this;
             var body = {
                 receipt : true,
-                headers : {
+                metadata : {
                     'content-type'     : 'text',
                     'content-encoding' : 'simple'
-                },
-                appAPIKey : me.model.attributes.appAPIKey
+                }
             };
             var input = me.sendMessageModal.find('.message-types > div[did="message"] textarea');
             var url = 'apps/'+me.model.attributes.id+'/endpoints/'+this.activeDevice.deviceId+'/message';
@@ -368,7 +367,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                 alert('message sent');
             }, function(xhr, status, thrownError){
                 utils.showError(me.sendMessageModal, '', 'Delivery Error: '+xhr.responseText);
-            });
+            }, [{
+                name : 'appAPIKey',
+                val  : me.model.attributes.appAPIKey
+            }]);
         },
         sendNotification: function(dom){
             var type = dom.attr('did');

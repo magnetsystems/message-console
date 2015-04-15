@@ -11,6 +11,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     me.render(data);
                     me.modal.modal('show');
                 });
+                $('.tour').remove();
             });
         },
         events: {

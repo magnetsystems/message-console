@@ -197,9 +197,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.options.eventPubSub.trigger('btnLoading', me.createTopicBtn);
             AJAX('apps/'+me.model.attributes.id+'/topics', 'POST', 'application/json', obj, function(res){
                 if(obj.tags && obj.tags.length){
-                    AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(res.id)+'/tags', 'POST', 'application/json', {
-                        topicId : res.id,
-                        tags    : obj.tags
+                    AJAX('apps/'+me.model.attributes.id+'/topics/'+utils.getTopicName(res.id)+'/tags', 'POST', 'application/json', {
+                        tags : obj.tags
                     }, function(res){
                         me.createTopicComplete(obj);
                     }, function(e){
@@ -263,13 +262,11 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(!me.validateTopicModal(me.updateTopicModal, obj, true))
                 return;
             me.options.eventPubSub.trigger('btnLoading', btn);
-            AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(me.activeTopic.id)+'/deleteTags', 'POST', 'application/json', {
-                topicId : me.activeTopic.id,
-                tags    : me.activeTopic.tags
+            AJAX('apps/'+me.model.attributes.id+'/topics/'+utils.getTopicName(me.activeTopic.id)+'/deleteTags', 'POST', 'application/json', {
+                tags : me.activeTopic.tags
             }, function(res){
                 if(obj.tags && obj.tags.length){
-                    AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(me.activeTopic.id)+'/tags', 'POST', 'application/json', {
-                        topicId : me.activeTopic.id,
+                    AJAX('apps/'+me.model.attributes.id+'/topics/'+utils.getTopicName(me.activeTopic.id)+'/tags', 'POST', 'application/json', {
                         tags    : obj.tags
                     }, function(res){
                         me.saveTopicComplete(me);
