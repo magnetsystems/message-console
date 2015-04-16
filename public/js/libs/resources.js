@@ -776,14 +776,14 @@ utils = {
         if(dom.hasClass('pre-login-containers')){
             var panel = dom.find('.centered-wrapper > .panel');
             if(panel.hasClass('raised')) return;
-            panel.height(panel.height()+30);
+            panel.height(panel.height()+24);
             panel.addClass('raised');
         }
         setTimeout(function(){
             alert.fadeOut('slow', function(){
                 parent.find('.colortext').remove();
                 if(dom.hasClass('pre-login-containers')){
-                    panel.height(panel.height()-30);
+                    panel.height(panel.height()-24);
                     panel.removeClass('raised');
                 }
             });

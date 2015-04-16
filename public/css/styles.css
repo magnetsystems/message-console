@@ -115,7 +115,7 @@ input.form-control, select.form-control{margin-bottom:5px}
 #register-container .centered-wrapper > .panel{height:290px}
 #forgotpassword-container .centered-wrapper > .panel{height:200px}
 #resetpassword-container .centered-wrapper > .panel{height:245px}
-#completeregistration-container .centered-wrapper > .panel{height:300px}
+#completeregistration-container .centered-wrapper > .panel{height:320px}
 .pre-login-containers .panel .btn{width:100%;padding:10px 12px;border-radius:5px;background:#d90016;border:solid 1px #C33426}
 .pre-login-containers .panel .form-group p{text-align:center;margin-top:-10px;margin-bottom:15px}
 .panel-heading{font-weight:bold}

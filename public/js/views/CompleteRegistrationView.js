@@ -44,8 +44,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                 xhr.responseText = xhr.responseText.replace(/"/g, '');
                 var msg;
                 switch(xhr.responseText){
-                    case 'USER_DOES_NOT_EXIST': msg = 'A problem occurred during registration. You may have already completed registeration. If so, please click on the "Return to Login" button below and try logging in.'; break;
-                    default: msg = 'A problem occurred during registration. Have you already registered? If so, please click on the "Return to Login" button below and try logging in.'; break;
+                    case 'USER_DOES_NOT_EXIST': msg = 'A problem occurred. You may have already completed registration. \r\n If so, please click on the "Return to Login" button below and try logging in.'; break;
+                    default: msg = 'A problem occurred. Have you already registered? \r\n If so, please click on the "Return to Login" link below and try logging in.'; break;
                 }
                 alert(msg);
             });
