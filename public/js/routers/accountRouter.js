@@ -58,9 +58,11 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
         },
         register: function(callback){
             var me = this;
-            if(!me.opts.emailEnabled) return me.handleEmailDisabled();
-            me.eventPubSub.trigger('resetGlobalPages', 'registration-container');
-            me.eventPubSub.trigger('initRegistration', callback);
+            me.setState(function(){
+                if(!me.opts.emailEnabled) return me.handleEmailDisabled();
+                me.eventPubSub.trigger('resetGlobalPages', 'registration-container');
+                me.eventPubSub.trigger('initRegistration', callback);
+            });
         },
         completeRegister: function(callback){
             var me = this;

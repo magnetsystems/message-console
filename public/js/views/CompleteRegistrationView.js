@@ -41,30 +41,24 @@ define(['jquery', 'backbone'], function($, Backbone){
                     content : 'Congratulations! You have completed the registration. Sign in now to begin sending messages.'
                 });
             }, function(xhr, status, thrownError){
-                var msg = 'A problem occurred during registration. Have you already registered? If so, please click on the "Return to Login" button below and try logging in.';
-                if(xhr.responseText == '"USER_DOES_NOT_EXIST"'){
-                    msg = 'A problem occurred during registration. Have you already registered? If so, try logging in. If you cannot log in, your account may have been removed. Please contact Magnet support for assistance or create a new account.';
+                xhr.responseText = xhr.responseText.replace(/"/g, '');
+                var msg;
+                switch(xhr.responseText){
+                    case 'USER_DOES_NOT_EXIST': msg = 'A problem occurred during registration. You may have already completed registeration. If so, please click on the "Return to Login" button below and try logging in.'; break;
+                    default: msg = 'A problem occurred during registration. Have you already registered? If so, please click on the "Return to Login" button below and try logging in.'; break;
                 }
-                if(xhr.responseText.indexOf('invit_req_pending') != -1 || xhr.responseText.indexOf('finish') != -1 || xhr.responseText.indexOf('failed') != -1){
-                    Alerts.Error.display({
-                        title   : 'Registration Error',
-                        content : msg
-                    });
-                }else{
-                    utils.showError(me.$el, '', msg);
-                }
+                alert(msg);
             });
         },
         validate: function(dom){
-            var valid = true;
             if(this.$el.find('input[name="password"]').val() != this.$el.find('input[name="password2"]').val()){
                 utils.showError(dom, 'password2', 'verification password does not match.');
-                valid = false;
+                return false;
             }else if($.trim(this.$el.find('input[name="password"]').val()).length < 6){
                 utils.showError(dom, 'password', 'Password must be at least 6 characters in length.');
-                valid = false;
+                return false;
             }
-            return valid;
+            return true;
         },
         fillCountries: function(){
             var html = '';

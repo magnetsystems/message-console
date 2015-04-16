@@ -32,7 +32,14 @@ define(['jquery', 'backbone'], function($, Backbone){
                     }
                     Alerts.General.display(msg);
                 }, function(xhr, status, thrownError){
-                    alert(xhr.responseText);
+                    xhr.responseText = xhr.responseText.replace(/"/g, '');
+                    var msg;
+                    switch(xhr.responseText){
+                        case 'USER_ALREADY_EXISTS': msg = 'This email address has already been used for registration.'; break;
+                        case 'EMAIL_FAILED': msg = 'An email could not be sent to the email address you provided.'; break;
+                        default: msg = 'An error has occurred during registration. Please contact an administrator for assistance.'; break;
+                    }
+                    alert(msg);
                 });
             }
         },
@@ -42,8 +49,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                 if($.trim($(this).val()).length < 1 || $(this).val() == $(this).attr('placeholder')){
                     utils.showError(dom, $(this).attr('name'), 'Please enter a '+$(this).attr('placeholder'));
                     valid = false;
+                    return false;
                 }
             });
+            if(!valid) return;
             var emailRxp = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
             if(!emailRxp.test(dom.find('input[name="email"]').val())){
                 utils.showError(dom, 'email', 'The format of the email address you provided is invalid.');

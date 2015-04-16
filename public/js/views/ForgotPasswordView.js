@@ -34,7 +34,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                         case 'EMAIL_FAILED': msg = 'An email could not be sent to the email address you provided.'; break;
                         case 'email-recovery-disabled': msg = 'The password recovery feature has been disabled. Please contact your administrator to reset your password.'; break;
                     }
-                    utils.showError(me.$el, 'email', msg);
+                    alert(msg);
                 });
             }
         },

@@ -68,7 +68,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 title : 'Description',
                 type  : 'search'
             },
-            tags : {
+            tag : {
                 title : 'Tag',
                 type  : 'search'
             }
@@ -97,16 +97,18 @@ define(['jquery', 'backbone'], function($, Backbone){
                 me.topics = [];
                 if(res && res.results){
                     for(var i=0;i<res.results.length;++i){
-                        if(res.results[i].name.indexOf('com.magnet.os/') != -1)
-                            res.results[i].name = res.results[i].name.replace('com.magnet.os/', '');
+                        res.results[i].id = res.results[i].topic;
                         res.results[i].checkbox = '<input type="checkbox" />';
                     }
                     me.topics = res.results;
                 }
                 cb(res);
             }, function(xhr, status, thrownError){
-                alert(xhr.responseText);
-            });
+                alert('An error has occurred: '+xhr.responseText+'.');
+            }, [{
+                name : 'appAPIKey',
+                val  : me.model.attributes.appAPIKey
+            }]);
         },
         buildList: function(options, callback){
             var me = this;
@@ -137,7 +139,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             },
             {
                 label    : 'Topic Name',
-                property : 'name',
+                property : 'topic',
                 sortable : false
             },
             {
@@ -182,8 +184,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.newTopicModal.modal('show');
         },
         validateTopicModal: function(dom, obj, isEdit){
-            if($.trim(obj.name).length < 1 && !isEdit){
-                utils.showError(dom, 'name', 'Invalid Topic Name. Topic Name is a required field.');
+            if($.trim(obj.topic).length < 1 && !isEdit){
+                utils.showError(dom, 'topic', 'Invalid Topic Name. Topic Name is a required field.');
                 return false;
             }
             return true;
@@ -195,16 +197,18 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(!me.validateTopicModal(me.newTopicModal, obj))
                 return;
             me.options.eventPubSub.trigger('btnLoading', me.createTopicBtn);
+            obj.displayName = obj.topic;
+            delete obj.tagName;
+            delete obj.tags;
+            var tags = utils.collect(me.newTopicModal.find('.topic-tag-container'));
             AJAX('apps/'+me.model.attributes.id+'/topics', 'POST', 'application/json', obj, function(res){
-                if(obj.tags && obj.tags.length){
-                    AJAX('apps/'+me.model.attributes.id+'/topics/'+utils.getTopicName(res.id)+'/tags', 'POST', 'application/json', {
-                        tags : obj.tags
+                if(tags.tags && tags.tags.length){
+                    AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(obj.topic)+'/tags', 'POST', 'application/json', {
+                        tags : tags.tags
                     }, function(res){
                         me.createTopicComplete(obj);
-                    }, function(e){
-                        var msg = 'A server error has occurred. Please check the server logs.';
-                        if(e) msg = e;
-                        alert(msg);
+                    }, function(xhr){
+                        alert('An error has occurred: '+xhr.responseText+'.');
                     }, [{
                         name : 'appAPIKey',
                         val  : me.model.attributes.appAPIKey
@@ -215,12 +219,13 @@ define(['jquery', 'backbone'], function($, Backbone){
                     me.options.eventPubSub.trigger('btnComplete', me.createTopicBtn);
                     me.createTopicComplete(obj);
                 }
-            }, function(e){
-                var msg = 'A server error has occurred. Please check the server logs.';
-                if(e) msg = e;
-                alert('A topic by this name already exists.');
+            }, function(xhr){
+                alert('An error has occurred: '+xhr.responseText+'.');
                 me.options.eventPubSub.trigger('btnComplete', me.createTopicBtn);
-            });
+            }, [{
+                name : 'appAPIKey',
+                val  : me.model.attributes.appAPIKey
+            }]);
         },
         createTopicComplete: function(obj){
             var me = this;
@@ -229,13 +234,13 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.list.repeater('render');
             Alerts.General.display({
                 title   : 'Topic Created',
-                content : 'A new topic with name of "'+obj.name+'" has been created.'
+                content : 'A new topic with name of "'+obj.topic+'" has been created.'
             });
         },
         showEditTopic: function(e){
             var me = this;
             if(!me.selectedElements.length) return;
-            var did = me.selectedElements.length ? me.selectedElements[0].id : $(e.currentTarget).closest('tr').attr('did');
+            var did = me.selectedElements.length ? me.selectedElements[0].topic : $(e.currentTarget).closest('tr').attr('did');
             me.activeTopic = utils.getByAttr(me.topics, 'id', did)[0];
             var template = _.template($('#CreateTopicView').html(), {
                 model : me.activeTopic
@@ -262,18 +267,16 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(!me.validateTopicModal(me.updateTopicModal, obj, true))
                 return;
             me.options.eventPubSub.trigger('btnLoading', btn);
-            AJAX('apps/'+me.model.attributes.id+'/topics/'+utils.getTopicName(me.activeTopic.id)+'/deleteTags', 'POST', 'application/json', {
+            AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(me.activeTopic.topic)+'/deleteTags', 'POST', 'application/json', {
                 tags : me.activeTopic.tags
             }, function(res){
                 if(obj.tags && obj.tags.length){
-                    AJAX('apps/'+me.model.attributes.id+'/topics/'+utils.getTopicName(me.activeTopic.id)+'/tags', 'POST', 'application/json', {
+                    AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(me.activeTopic.topic)+'/tags', 'POST', 'application/json', {
                         tags    : obj.tags
                     }, function(res){
                         me.saveTopicComplete(me);
-                    }, function(e){
-                        var msg = 'A server error has occurred. Please check the server logs.';
-                        if(e) msg = e;
-                        alert('A topic by this name already exists.');
+                    }, function(xhr, status, thrownError){
+                        alert('An error has occurred: '+xhr.responseText+'.');
                     }, [{
                         name : 'appAPIKey',
                         val  : me.model.attributes.appAPIKey
@@ -284,11 +287,9 @@ define(['jquery', 'backbone'], function($, Backbone){
                     me.options.eventPubSub.trigger('btnComplete', btn);
                     me.saveTopicComplete(me);
                 }
-            }, function(e){
-                var msg = 'A server error has occurred. Please check the server logs.';
-                if(e) msg = e;
+            }, function(xhr, status, thrownError){
+                alert('An error has occurred: '+xhr.responseText+'.');
                 me.options.eventPubSub.trigger('btnComplete', btn);
-                alert('A topic by this name already exists.');
             }, [{
                 name : 'appAPIKey',
                 val  : me.model.attributes.appAPIKey
@@ -302,14 +303,14 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.updateTopicModal.modal('hide');
             Alerts.General.display({
                 title   : 'Topic Updated',
-                content : 'The topic "'+me.activeTopic.name+'" has been updated.'
+                content : 'The topic "'+me.activeTopic.topic+'" has been updated.'
             });
             delete me.activeTopic;
         },
         deleteTopic: function(e){
             var me = this;
             if(!me.selectedElements.length) return;
-            var did = me.selectedElements[0].id;
+            var did = me.selectedElements[0].topic;
             Alerts.Confirm.display({
                 title   : 'Delete Topic',
                 content : 'The selected topic will be deleted. This can not be undone. Are you sure you want to continue?'
@@ -323,30 +324,39 @@ define(['jquery', 'backbone'], function($, Backbone){
                     dom.hide('slow', function(){
                         dom.remove();
                     });
-                }, function(e){
-                    alert(e);
-                });
+                }, function(xhr, status, thrownError){
+                    alert('An error has occurred: '+xhr.responseText+'.');
+                }, [{
+                    name : 'appAPIKey',
+                    val  : me.model.attributes.appAPIKey
+                }]);
             });
         },
         showPublishModal: function(e){
             var me = this;
             if(!me.selectedElements.length) return;
-            var did = me.selectedElements[0].id;
+            var did = me.selectedElements[0].topic;
             this.activeTopic = utils.getByAttr(this.topics, 'id', did)[0];
-            this.modal.find('span.mmx-topic-name-placeholder').text(this.activeTopic.name);
+            this.modal.find('span.mmx-topic-name-placeholder').text(this.activeTopic.topic);
+            this.modal.find('textarea').val('');
             this.modal.modal('show');
         },
         publishTopic: function(){
             var me = this;
             var msg = this.modal.find('textarea');
-            AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(this.activeTopic.id)+'/publish', 'POST', 'application/json', {
-                payload : msg.val()
+            AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(this.activeTopic.topic)+'/publish', 'POST', 'application/json', {
+                content     : msg.val(),
+                messageType : 'normal',
+                contentType : 'text'
             }, function(res, status, xhr){
                 msg.val('');
                 alert('message sent');
             }, function(xhr, status, thrownError){
-                alert(xhr.responseText);
-            });
+                alert('An error has occurred: '+xhr.responseText+'.');
+            }, [{
+                name : 'appAPIKey',
+                val  : me.model.attributes.appAPIKey
+            }]);
         },
         setTopicTag: function(btn){
             var input = btn.closest('.same-line').find('input');

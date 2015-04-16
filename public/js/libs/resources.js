@@ -773,16 +773,19 @@ utils = {
 //        dom.find('.alert-container:first').html(alert);
         parent.find('.colortext').remove();
         parent.append(alert);
-//        if(dom.hasClass('pre-login-containers')){
-//            var panel = dom.find('.centered-wrapper > .panel');
-//            panel.height(panel.height()+70);
-//        }
+        if(dom.hasClass('pre-login-containers')){
+            var panel = dom.find('.centered-wrapper > .panel');
+            if(panel.hasClass('raised')) return;
+            panel.height(panel.height()+30);
+            panel.addClass('raised');
+        }
         setTimeout(function(){
             alert.fadeOut('slow', function(){
-                alert.remove();
-//                if(dom.hasClass('pre-login-containers')){
-//                    panel.height(panel.height()-70);
-//                }
+                parent.find('.colortext').remove();
+                if(dom.hasClass('pre-login-containers')){
+                    panel.height(panel.height()-30);
+                    panel.removeClass('raised');
+                }
             });
         }, 5000);
     },

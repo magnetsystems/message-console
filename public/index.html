@@ -1079,7 +1079,7 @@
         <div class="col-sm-12">
             <label>Name <span class="required">*</span></label>
             <div class="controls">
-                <input type="text" class="form-control" name="name" maxlength="64" placeholder="The name of your new topic" <% if(typeof model != 'undefined'){ %>disabled="disabled"<% } %> value="<%- typeof model != 'undefined' ? model.name : '' %>" />
+                <input type="text" class="form-control" name="topic" maxlength="64" placeholder="The name of your new topic" <% if(typeof model != 'undefined'){ %>disabled="disabled"<% } %> value="<%- typeof model != 'undefined' ? model.name : '' %>" />
             </div>
         </div>
     </div>
@@ -1926,7 +1926,7 @@ pod 'MMX', '~> 0.2'</pre>
                             <span class="user-placeholder"></span><br />
                             <span class="device-placeholder"></span>
                         </p>
-                        <textarea name="payload" class="form-control" placeholder="Payload">Hello World</textarea>
+                        <textarea name="payload" class="form-control" placeholder="Payload"></textarea>
                         <button did="notification" type="button" class="btn btn-primary">Send Notification</button>
                         <div class="message-push-history"></div>
                     </div>
@@ -1935,7 +1935,7 @@ pod 'MMX', '~> 0.2'</pre>
                             <span class="user-placeholder"></span><br />
                             <span class="device-placeholder"></span>
                         </p>
-                        <textarea name="payload" class="form-control" placeholder="Payload">Hello World</textarea>
+                        <textarea name="payload" class="form-control" placeholder="Payload"></textarea>
                         <button did="message" type="button" class="btn btn-primary">Send Message</button>
                     </div>
                 </div>
@@ -1989,7 +1989,7 @@ pod 'MMX', '~> 0.2'</pre>
             </div>
             <div class="modal-body">
                 <span class="alert-container"></span>
-                <textarea name="payload" class="form-control" placeholder="Payload">Hello World</textarea>
+                <textarea name="payload" class="form-control" placeholder="Payload"></textarea>
             </div>
             <div class="modal-footer">
                 <button id="mmx-publishtopic-btn" type="button" class="btn btn-primary">Publish Message</button>
