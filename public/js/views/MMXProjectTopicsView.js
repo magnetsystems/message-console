@@ -104,7 +104,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 }
                 cb(res);
             }, function(xhr, status, thrownError){
-                alert('An error has occurred: '+xhr.responseText+'.');
+                alert('An error has occurred'+(xhr.responseText ? ': '+xhr.responseText : '.'));
             }, [{
                 name : 'appAPIKey',
                 val  : me.model.attributes.appAPIKey
@@ -220,7 +220,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     me.createTopicComplete(obj);
                 }
             }, function(xhr){
-                alert('An error has occurred: '+xhr.responseText+'.');
+                alert('An error has occurred'+(xhr.responseText ? ': '+xhr.responseText : '.'));
                 me.options.eventPubSub.trigger('btnComplete', me.createTopicBtn);
             }, [{
                 name : 'appAPIKey',
@@ -276,7 +276,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     }, function(res){
                         me.saveTopicComplete(me);
                     }, function(xhr, status, thrownError){
-                        alert('An error has occurred: '+xhr.responseText+'.');
+                        alert('An error has occurred'+(xhr.responseText ? ': '+xhr.responseText : '.'));
                     }, [{
                         name : 'appAPIKey',
                         val  : me.model.attributes.appAPIKey
@@ -288,7 +288,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     me.saveTopicComplete(me);
                 }
             }, function(xhr, status, thrownError){
-                alert('An error has occurred: '+xhr.responseText+'.');
+                alert('An error has occurred'+(xhr.responseText ? ': '+xhr.responseText : '.'));
                 me.options.eventPubSub.trigger('btnComplete', btn);
             }, [{
                 name : 'appAPIKey',
@@ -325,7 +325,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                         dom.remove();
                     });
                 }, function(xhr, status, thrownError){
-                    alert('An error has occurred: '+xhr.responseText+'.');
+                    alert('An error has occurred'+(xhr.responseText ? ': '+xhr.responseText : '.'));
                 }, [{
                     name : 'appAPIKey',
                     val  : me.model.attributes.appAPIKey
@@ -352,7 +352,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 msg.val('');
                 alert('message sent');
             }, function(xhr, status, thrownError){
-                alert('An error has occurred: '+xhr.responseText+'.');
+                alert('An error has occurred'+(xhr.responseText ? ': '+xhr.responseText : '.'));
             }, [{
                 name : 'appAPIKey',
                 val  : me.model.attributes.appAPIKey
