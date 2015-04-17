@@ -767,7 +767,7 @@ utils = {
         form.find('.alert-container').html('');
     },
     showError: function(dom, name, error, isTextOnly){
-        var parent = dom.find('input[name="'+name+'"]').closest('div');
+        var parent = dom.find('input[name="'+name+'"], textarea[name="'+name+'"]').closest('div');
         parent.addClass('has-error');
         var alert = (isTextOnly || 1 == 1) ? $('<div class="colortext colortext-danger">'+error+'</div>') : $('<div class="alert alert-danger" role="alert">'+error+'</div>');
 //        dom.find('.alert-container:first').html(alert);
@@ -786,6 +786,18 @@ utils = {
                     panel.height(panel.height()-24);
                     panel.removeClass('raised');
                 }
+            });
+        }, 5000);
+    },
+    showSuccess: function(dom, name, msg){
+        var parent = dom.find('input[name="'+name+'"], textarea[name="'+name+'"]').closest('div');
+        parent.removeClass('has-error');
+        var alert = $('<div class="colortext colortext-success">'+msg+'</div>');
+        parent.find('.colortext').remove();
+        parent.append(alert);
+        setTimeout(function(){
+            alert.fadeOut('slow', function(){
+                parent.find('.colortext').remove();
             });
         }, 5000);
     },

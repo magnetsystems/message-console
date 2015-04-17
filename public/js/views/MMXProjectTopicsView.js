@@ -344,13 +344,17 @@ define(['jquery', 'backbone'], function($, Backbone){
         publishTopic: function(){
             var me = this;
             var msg = this.modal.find('textarea');
+            var form = me.modal.find('.modal-body');
+            utils.resetError(form);
+            if(!$.trim(msg.val()).length)
+                return utils.showError(form, 'payload', 'You must enter a message to publish');
             AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(this.activeTopic.topic)+'/publish', 'POST', 'application/json', {
                 content     : msg.val(),
                 messageType : 'normal',
                 contentType : 'text'
             }, function(res, status, xhr){
                 msg.val('');
-                alert('message sent');
+                utils.showSuccess(form, 'payload', 'Your message has been sent!');
             }, function(xhr, status, thrownError){
                 alert('An error has occurred'+(xhr.responseText ? ': '+xhr.responseText : '.'));
             }, [{
