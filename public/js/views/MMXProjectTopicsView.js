@@ -98,6 +98,9 @@ define(['jquery', 'backbone'], function($, Backbone){
                 if(res && res.results){
                     for(var i=0;i<res.results.length;++i){
                         res.results[i].id = res.results[i].topic;
+                        if(res.results[i].creationDate) res.results[i].creationDate = moment(res.results[i].creationDate).format('lll');
+                        if(res.results[i].maxItems === -1) res.results[i].maxItems = 'unlimited';
+                        if(res.results[i].maxItems === 0) res.results[i].maxItems = 'non persistent';
                         res.results[i].checkbox = '<input type="checkbox" />';
                     }
                     me.topics = res.results;
@@ -155,6 +158,21 @@ define(['jquery', 'backbone'], function($, Backbone){
             {
                 label    : 'Subscribers',
                 property : 'subscriptionCount',
+                sortable : false
+            },
+            {
+                label    : 'Max Items',
+                property : 'maxItems',
+                sortable : false
+            },
+            {
+                label    : 'Publisher Type',
+                property : 'publisherType',
+                sortable : false
+            },
+            {
+                label    : 'Created',
+                property : 'creationDate',
                 sortable : false
             }
         ],
@@ -245,7 +263,6 @@ define(['jquery', 'backbone'], function($, Backbone){
             var template = _.template($('#CreateTopicView').html(), {
                 model : me.activeTopic
             });
-            me.updateTopicBtn.addClass('disabled');
             me.updateTopicModal.find('.modal-body').html(template);
             me.updateTopicModal.find('.pill-container').html(_.template($('#TagsListView').html(), {
                 tags : me.activeTopic.tags
@@ -254,7 +271,6 @@ define(['jquery', 'backbone'], function($, Backbone){
                 edit : true
             });
             me.updateTopicModal.find('.topic-tag-container .glyphicon-plus').click(function(){
-                me.updateTopicBtn.removeClass('disabled');
                 me.setTopicTag($(this));
             });
             me.updateTopicModal.modal('show');
