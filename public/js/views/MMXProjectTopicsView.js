@@ -36,7 +36,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click .repeater-header .glyphicon-plus': 'showCreateTopicModal'
         },
         toggleRow: function(e){
-            utils.toggleRow(this, $(e.currentTarget), 'topics', 'id');
+            utils.toggleRow(this, $(e.currentTarget), 'topics', 'topicName');
         },
         render: function(){
             var me = this;
@@ -97,7 +97,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 me.topics = [];
                 if(res && res.results){
                     for(var i=0;i<res.results.length;++i){
-                        res.results[i].id = res.results[i].topic;
+                        res.results[i].id = res.results[i].topicName;
                         if(res.results[i].creationDate) res.results[i].creationDate = moment(res.results[i].creationDate).format('lll');
                         if(res.results[i].maxItems === -1) res.results[i].maxItems = 'unlimited';
                         if(res.results[i].maxItems === 0) res.results[i].maxItems = 'non persistent';
@@ -142,7 +142,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             },
             {
                 label    : 'Topic Name',
-                property : 'topic',
+                property : 'topicName',
                 sortable : false
             },
             {
@@ -202,8 +202,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.newTopicModal.modal('show');
         },
         validateTopicModal: function(dom, obj, isEdit){
-            if($.trim(obj.topic).length < 1 && !isEdit){
-                utils.showError(dom, 'topic', 'Invalid Topic Name. Topic Name is a required field.');
+            if($.trim(obj.topicName).length < 1 && !isEdit){
+                utils.showError(dom, 'topicName', 'Invalid Topic Name. Topic Name is a required field.');
                 return false;
             }
             return true;
@@ -215,13 +215,12 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(!me.validateTopicModal(me.newTopicModal, obj))
                 return;
             me.options.eventPubSub.trigger('btnLoading', me.createTopicBtn);
-            obj.displayName = obj.topic;
             delete obj.tagName;
             delete obj.tags;
             var tags = utils.collect(me.newTopicModal.find('.topic-tag-container'));
             AJAX('apps/'+me.model.attributes.id+'/topics', 'POST', 'application/json', obj, function(res){
                 if(tags.tags && tags.tags.length){
-                    AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(obj.topic)+'/tags', 'POST', 'application/json', {
+                    AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(obj.topicName)+'/tags', 'POST', 'application/json', {
                         tags : tags.tags
                     }, function(res){
                         me.createTopicComplete(obj);
@@ -252,14 +251,14 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.list.repeater('render');
             Alerts.General.display({
                 title   : 'Topic Created',
-                content : 'A new topic with name of "'+obj.topic+'" has been created.'
+                content : 'A new topic with name of "'+obj.topicName+'" has been created.'
             });
         },
         showEditTopic: function(e){
             var me = this;
             if(!me.selectedElements.length) return;
-            var did = me.selectedElements.length ? me.selectedElements[0].topic : $(e.currentTarget).closest('tr').attr('did');
-            me.activeTopic = utils.getByAttr(me.topics, 'id', did)[0];
+            var did = me.selectedElements.length ? me.selectedElements[0].topicName : $(e.currentTarget).closest('tr').attr('did');
+            me.activeTopic = utils.getByAttr(me.topics, 'topicName', did)[0];
             var template = _.template($('#CreateTopicView').html(), {
                 model : me.activeTopic
             });
@@ -273,6 +272,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.updateTopicModal.find('.topic-tag-container .glyphicon-plus').click(function(){
                 me.setTopicTag($(this));
             });
+            me.updateTopicModal.find('.btn').removeClass('disabled');
             me.updateTopicModal.modal('show');
         },
         saveTopic: function(){
@@ -283,11 +283,11 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(!me.validateTopicModal(me.updateTopicModal, obj, true))
                 return;
             me.options.eventPubSub.trigger('btnLoading', btn);
-            AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(me.activeTopic.topic)+'/deleteTags', 'POST', 'application/json', {
+            AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(me.activeTopic.topicName)+'/deleteTags', 'POST', 'application/json', {
                 tags : me.activeTopic.tags
             }, function(res){
                 if(obj.tags && obj.tags.length){
-                    AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(me.activeTopic.topic)+'/tags', 'POST', 'application/json', {
+                    AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(me.activeTopic.topicName)+'/tags', 'POST', 'application/json', {
                         tags    : obj.tags
                     }, function(res){
                         me.saveTopicComplete(me);
@@ -319,20 +319,20 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.updateTopicModal.modal('hide');
             Alerts.General.display({
                 title   : 'Topic Updated',
-                content : 'The topic "'+me.activeTopic.topic+'" has been updated.'
+                content : 'The topic "'+me.activeTopic.topicName+'" has been updated.'
             });
             delete me.activeTopic;
         },
         deleteTopic: function(e){
             var me = this;
             if(!me.selectedElements.length) return;
-            var did = me.selectedElements[0].topic;
+            var did = me.selectedElements[0].topicName;
             Alerts.Confirm.display({
                 title   : 'Delete Topic',
                 content : 'The selected topic will be deleted. This can not be undone. Are you sure you want to continue?'
             }, function(){
                 AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(did), 'DELETE', 'application/json', null, function(res, status, xhr){
-                    utils.removeByAttr(me.topics, 'id', did);
+                    utils.removeByAttr(me.topics, 'topicName', did);
                     me.selectedElements = [];
                     var list = $(e.currentTarget).closest('.repeater');
                     var dom = list.find('.repeater-list-items tr[did="'+did+'"]');
@@ -351,9 +351,9 @@ define(['jquery', 'backbone'], function($, Backbone){
         showPublishModal: function(e){
             var me = this;
             if(!me.selectedElements.length) return;
-            var did = me.selectedElements[0].topic;
-            this.activeTopic = utils.getByAttr(this.topics, 'id', did)[0];
-            this.modal.find('span.mmx-topic-name-placeholder').text(this.activeTopic.topic);
+            var did = me.selectedElements[0].topicName;
+            this.activeTopic = utils.getByAttr(this.topics, 'topicName', did)[0];
+            this.modal.find('span.mmx-topic-name-placeholder').text(this.activeTopic.topicName);
             this.modal.find('textarea').val('');
             this.modal.modal('show');
         },
@@ -364,7 +364,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             utils.resetError(form);
             if(!$.trim(msg.val()).length)
                 return utils.showError(form, 'payload', 'You must enter a message to publish');
-            AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(this.activeTopic.topic)+'/publish', 'POST', 'application/json', {
+            AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(this.activeTopic.topicName)+'/publish', 'POST', 'application/json', {
                 content     : msg.val(),
                 messageType : 'normal',
                 contentType : 'text'
