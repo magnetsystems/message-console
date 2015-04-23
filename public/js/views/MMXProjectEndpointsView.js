@@ -104,7 +104,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             }
             var query = {};
             if(options.pageIndex !== 0) query.offset = options.pageIndex !== 0 ? (options.pageSize * options.pageIndex) : 1;
-            if(options.pageSize != 10) query.size = options.pageSize || 10;
+            query.size = options.pageSize || 10;
             if(params.searchby && (params.fromDt || params.toDt || params.search || options.search)) query.searchby = params.searchby;
             if(params.fromDt) query.value = new Date(params.fromDt.replace(/-/g, '/')).getTime() / 1000;
             if(params.toDt && params.toDt.length){
@@ -135,16 +135,16 @@ define(['jquery', 'backbone'], function($, Backbone){
                     me.endpoints = [];
                     me.users = [];
                     for(var i=0;i<res.results.length;++i){
-                        res.results[i].device.created = moment.unix(res.results[i].device.created / 1000).format('lll');
-                        if(res.results[i].device.updated) res.results[i].device.updated = moment.unix(res.results[i].device.updated / 1000).format('lll');
+                        res.results[i].device.created = moment(res.results[i].device.created).format('lll');
+                        if(res.results[i].device.updated) res.results[i].device.updated = moment(res.results[i].device.updated).format('lll');
                         res.results[i].device.nameEdited = res.results[i].device.name.substr(0, 30)+'...';
                         res.results[i].device.ownerIdEdited = res.results[i].device.ownerId.substr(0, 10)+'...';
                         res.results[i].device.osTypeEdited = '<i class="fa fa-2x fa-'+(res.results[i].device.osType == 'ANDROID' ? 'android' : 'apple')+'"></i>';
                         res.results[i].device.deviceIdEdited = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.deviceId.substr(0, 30)+'...</a>';
                         res.results[i].device.checkbox = '<input type="checkbox" />';
                         if(res.results[i].userEntity){
-                            if(res.results[i].userEntity.creationDate) res.results[i].userEntity.creationDate = moment.unix(res.results[i].userEntity.creationDate / 1000).format('lll');
-                            if(res.results[i].userEntity.modificationDate) res.results[i].userEntity.modificationDate = moment.unix(res.results[i].userEntity.modificationDate / 1000).format('lll');
+                            if(res.results[i].userEntity.creationDate) res.results[i].userEntity.creationDate = moment(res.results[i].userEntity.creationDate).format('lll');
+                            if(res.results[i].userEntity.modificationDate) res.results[i].userEntity.modificationDate = moment(res.results[i].userEntity.modificationDate).format('lll');
                         }
                         me.endpoints.push(res.results[i].device);
                         me.users.push(res.results[i].userEntity || null);

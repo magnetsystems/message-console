@@ -60,7 +60,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             this.list.repeater('render');
         },
         filters : {
-            displayName : {
+            topicName : {
                 title : 'Name',
                 type  : 'search'
             },

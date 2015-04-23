@@ -86,7 +86,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             }
             var query = {};
             if(options.pageIndex !== 0) query.offset = options.pageIndex !== 0 ? (options.pageSize * options.pageIndex) : 1;
-            if(options.pageSize != 10) query.size = options.pageSize || 10;
+            query.size = options.pageSize || 10;
             if(params.searchby && (params.fromDt || params.toDt || params.search || options.search)) query.searchby = params.searchby;
             if(params.fromDt) query.value = new Date(params.fromDt.replace(/-/g, '/')).getTime() / 1000;
             if(params.toDt && params.toDt.length){
@@ -132,6 +132,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             'WAKEUP_TIMEDOUT'    : 'Wake up timeout',
             'WAKEUP_SENT'        : 'Wake up sent',
             'DELIVERED'          : 'Delivered',
+            'PENDING'            : 'Pending',
             'RECEIVED'           : 'Received'
         },
         buildList: function(options, callback){
