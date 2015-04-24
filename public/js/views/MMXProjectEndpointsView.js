@@ -119,9 +119,9 @@ define(['jquery', 'backbone'], function($, Backbone){
                     sortorder : options.sortDirection,
                     index     : utils.getIndexByAttr(me.columns, 'property', options.sortProperty)
                 };
-                if(options.sortProperty == 'name') options.sortProperty = 'epname';
+                if(options.sortProperty == 'nameEdited') options.sortProperty = 'epname';
                 if(options.sortProperty == 'status') options.sortProperty = 'epstatus';
-                if(options.sortProperty == 'osType') options.sortProperty = 'epostype';
+                if(options.sortProperty == 'osTypeEdited') options.sortProperty = 'epostype';
                 query.sortby = options.sortProperty;
                 query.sortorder = options.sortDirection == 'asc' ? 'ASCENDING' : 'DESCENDING';
             }
@@ -166,12 +166,16 @@ define(['jquery', 'backbone'], function($, Backbone){
                 cb(res);
             }, function(xhr, status, thrownError){
                 cb();
-                alert(xhr.responseText);
+                alert(xhr.responseText || 'Server is not responding.');
             });
         },
         buildList: function(options, callback){
             var me = this;
             me.retrieve(options, function(res){
+                res = res || {
+                    total  : 0,
+                    offset : 0
+                };
                 var data = {
                     count   : res.total,
                     items   : me.endpoints,

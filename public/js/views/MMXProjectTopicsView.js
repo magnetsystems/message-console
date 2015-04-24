@@ -107,7 +107,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                 }
                 cb(res);
             }, function(xhr, status, thrownError){
-                alert('An error has occurred'+(xhr.responseText ? ': '+xhr.responseText : '.'));
+                cb();
+                alert(xhr.responseText || 'Server is not responding.');
             }, [{
                 name : 'appAPIKey',
                 val  : me.model.attributes.appAPIKey
@@ -116,6 +117,10 @@ define(['jquery', 'backbone'], function($, Backbone){
         buildList: function(options, callback){
             var me = this;
             me.retrieve(options, function(res){
+                res = res || {
+                    total  : 0,
+                    offset : 0
+                };
                 var data = {
                     count   : res.total,
                     items   : me.topics,
