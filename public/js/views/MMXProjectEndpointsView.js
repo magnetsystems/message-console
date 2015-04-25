@@ -141,7 +141,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                         res.results[i].device.ownerIdEdited = res.results[i].device.ownerId.substr(0, 10)+'...';
                         res.results[i].device.osTypeEdited = '<i class="fa fa-2x fa-'+(res.results[i].device.osType == 'ANDROID' ? 'android' : 'apple')+'"></i>';
                         res.results[i].device.deviceIdEdited = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.deviceId.substr(0, 30)+'...</a>';
-                        res.results[i].device.checkbox = '<input type="checkbox" />';
+                        if(res.results[i].device.status == 'ACTIVE') res.results[i].device.checkbox = '<input type="checkbox" />';
                         if(res.results[i].userEntity){
                             if(res.results[i].userEntity.creationDate) res.results[i].userEntity.creationDate = moment(res.results[i].userEntity.creationDate).format('lll');
                             if(res.results[i].userEntity.modificationDate) res.results[i].userEntity.modificationDate = moment(res.results[i].userEntity.modificationDate).format('lll');

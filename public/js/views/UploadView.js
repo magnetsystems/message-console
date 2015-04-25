@@ -11,12 +11,13 @@ define(['jquery', 'backbone', 'backbone', 'fileuploader'], function($, Backbone)
                 accepts = 'text/plain';
             }
             // create upload component
-            var uploader = new qq.FineUploader({
+            var uploader = new qq.FileUploader({
                 multiple                    : false,
                 maxConnections              : 1,
-                forceMultipart              : false,
+                forceMultipart              : true,
                 disableCancelForFormUploads : true,
                 autoUpload                  : true,
+                action                      : options.path,
                 element                     : document.getElementById(me.options.el.replace('#', '')),
                 text: {
                     uploadButton : me.options.buttonName ? me.options.buttonName : 'Upload'
@@ -31,29 +32,30 @@ define(['jquery', 'backbone', 'backbone', 'fileuploader'], function($, Backbone)
                     disableDefaultDropzone : true
                 },
                 validation: me.options.validation,
-                callbacks: {
-                    onComplete: function(id, filename, res){
+                onComplete: function(id, filename, res){
 //                        setTimeout(function(){
 //                            me.$el.find('.qq-upload-list li').hide('3000', function(){
 //                                $(this).remove();
 //                            });
 //                        }, 3000);
-                        me.options.eventPubSub.trigger('upload'+me.options.context+'Complete', {
-                            id       : id,
-                            filename : filename,
-                            params   : me.params,
-                            res      : res
-                        });
-                    }
+                    me.options.eventPubSub.trigger('upload'+me.options.context+'Complete', {
+                        id       : id,
+                        filename : filename,
+                        params   : me.params,
+                        res      : res
+                    });
+                },
+                onSubmit: function(id, filename){
+                    return (options.onSubmit || function(){})(uploader, id, filename);
                 }
             });
             me.params = options.params;
-            uploader.options.request.endpoint = options.path;
+            uploader._options.action = options.path;
             me.$el.find('.qq-upload-button').addClass('btn btn-primary');
             // bind upload event to set upload endpoint and upload files
             me.options.eventPubSub.bind('upload'+me.options.context, function(path, params){
                 me.params = params;
-                uploader.options.request.endpoint = path;
+                uploader._options.action = path;
                 uploader.uploadStoredFiles();
             });
         }

@@ -16,6 +16,13 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
                     });
                     $('#mmx-settings-apns-cert-file-upload').find('.qq-upload-list').html(me.certUploadedTmpl);
                 }else{
+                    if(params.res == 'invalid-password')
+                        return Alerts.Error.display({
+                            title   : 'Error Uploading Certificate',
+                            content : 'The APNS Password you entered did not match the uploaded APNS certificate. To upload an APNS ' +
+                                'certificate, you must set an APNS Password which corresponds with the certificate. For more information,' +
+                                ' visit the <a href="//identity.apple.com" target="_blank">Apple Push Certificates Portal</a>.'
+                        });
                     Alerts.Error.display({
                         title   : 'Error Uploading Certificate',
                         content : 'There was an error uploading the certificate. Please make sure you are uploading a valid APNS certificate.'
@@ -88,6 +95,7 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
             });
         },
         initCertUploader: function(){
+            var me = this;
             var container = '#mmx-settings-apns-cert-file-upload';
             var uploader = new UploadView({
                 el          : container,
@@ -98,7 +106,24 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
                     sizeLimit         : 500000
                 },
                 eventPubSub : this.options.eventPubSub,
-                path        : '/rest/apps/'+this.model.attributes.id+'/uploadAPNSCertificate'
+                path        : '/rest/apps/'+this.model.attributes.id+'/uploadAPNSCertificate',
+                onSubmit    : function(inst, id, filename){
+                    inst.setParams({
+                        apnsCertPassword : me.model.attributes.apnsCertPassword
+                    });
+                    var apnsPass = $.trim(me.$el.find('input[name="apnsCertPassword"]').val());
+                    me.model.set({
+                        apnsCertPassword : apnsPass
+                    });
+                    if(!apnsPass.length){
+                        Alerts.Error.display({
+                            title   : 'Error Uploading Certificate',
+                            content : 'To upload an APNS certificate, you must set an APNS Password which corresponds with the certificate.' +
+                                ' For more information, visit the <a href="//identity.apple.com" target="_blank">Apple Push Certificates Portal</a>.'
+                        });
+                        return false;
+                    }
+                }
             });
 //            $('<button id="mmx-settings-apns-cert-file-upload-btn" class="btn btn-primary" type="button" txt="Upload">Upload</button>').insertAfter(container+' .qq-upload-button');
             if(this.model.attributes.apnsCertUploaded){
@@ -121,10 +146,22 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
         deleteAPNSCertificate: function(e){
             e.preventDefault();
             var me = this;
-            AJAX('apps/'+me.model.attributes.id+'/deleteAPNSCertificate', 'DELETE', 'application/json', null, function(res, status, xhr){
-                $('#mmx-settings-apns-cert-file-upload').find('.qq-upload-list').html(me.noCertTmpl);
-            }, function(e){
-                alert(e.responseText);
+            Alerts.Confirm.display({
+                title   : 'Delete Certificate',
+                content : 'By deleting the APNS certificate iOS devices will no longer be able to send or receive push notifications.' +
+                    ' The APNS Password will also be removed. Are you sure you want to delete the APNS certificate?',
+                btns    : {
+                    yes : 'Delete Certificate',
+                    no  : 'Cancel'
+                }
+            }, function(){
+                AJAX('apps/'+me.model.attributes.id+'/deleteAPNSCertificate', 'DELETE', 'application/json', null, function(res, status, xhr){
+                    me.model.unset('apnsCertPassword');
+                    me.$el.find('input[name="apnsCertPassword"]').val('');
+                    $('#mmx-settings-apns-cert-file-upload').find('.qq-upload-list').html(me.noCertTmpl);
+                }, function(e){
+                    alert(e.responseText);
+                });
             });
         }
     });
