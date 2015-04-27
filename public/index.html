@@ -399,7 +399,12 @@
                             </div>
                             <div class="col-sm-6">
                                 <label>APNS Password</label>
-                                <input type="text" class="form-control" name="apnsCertPassword" placeholder="APNS Password" value="<%- model.attributes.apnsCertPassword %>" />
+                                <div class="toggling-password-input">
+                                    <span class="glyphicon glyphicon-eye-close hidden" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to hide the password value."></span>
+                                    <span class="glyphicon glyphicon-eye-open" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to display the password value."></span>
+                                    <input type="password" class="form-control" name="apnsCertPassword" placeholder="APNS Password" value="<%- model.attributes.apnsCertPassword %>" />
+                                </div>
+
                             </div>
                         </div>
                     </form>
