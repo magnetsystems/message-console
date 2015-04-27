@@ -4,6 +4,11 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
         initialize: function(options){
             var me = this;
             me.options = options;
+            me.uploadAPNSModal = $('#mmx-setapns-modal');
+            me.uploadAPNSBtn = $('#upload-apns-btn');
+            me.uploadAPNSBtn.click(function(){
+                me.uploadCertificate();
+            });
             me.options.eventPubSub.bind('initMMXProjectsettings', function(model){
                 me.model = model;
                 me.render();
@@ -11,26 +16,29 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
             });
             me.options.eventPubSub.bind('uploadAPNSCertFileComplete', function(params){
                 if(params.res.success){
+                    var pass = me.getAPNSCertPassword();
                     me.model.set({
                         apnsCertUploaded : true,
-                        apnsCertPassword : me.getAPNSCertPassword()
+                        apnsCertPassword : pass
                     });
+                    me.uploadAPNSModal.modal('hide');
                     $('#mmx-settings-apns-cert-file-upload').find('.qq-upload-list').html(me.certUploadedTmpl);
-                }else{
-                    Alerts.Error.display({
-                        title   : 'Error Uploading Certificate',
-                        content : 'The APNS Password you entered did not match the uploaded APNS certificate. To upload an APNS ' +
-                            'certificate, you must set an APNS Password which corresponds with the certificate. For more information,' +
-                            ' visit the <a href="//identity.apple.com" target="_blank">Apple Push Certificates Portal</a>.'
+                    $('#mmx-settings-apns-cert-status').find('.qq-upload-list').html(me.certUploadedTmpl).find('.remove-cert-btn').remove();
+//                    me.$el.find('input[name="apnsCertPassword"]').val(pass);
+                    Alerts.General.display({
+                        title   : 'APNS Certificate Uploaded',
+                        content : 'Your APNS certificate and APNS password have been updated successfully.'
                     });
+                }else{
+                    utils.showError(me.uploadAPNSModal, 'apnsCertPassword', 'The APNS Password you entered did not match the uploaded APNS certificate. ' +
+                        'To upload an APNS  certificate, you must set an APNS Password which corresponds with the certificate.');
                 }
-                me.options.eventPubSub.trigger('btnComplete', $('#mmx-settings-apns-cert-file-upload-btn'));
             });
         },
         events: {
             'click .controls button[did="save"]': 'saveProject',
             'click .controls button[did="delete"]': 'deleteProject',
-            'click #mmx-settings-apns-cert-file-upload-btn': 'uploadCertificate',
+            'click #mmx-apns-startupload-btn': 'showUploadCertificateModal',
             'click .remove-cert-btn': 'deleteAPNSCertificate'
         },
         render: function(){
@@ -46,6 +54,7 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
             if($.trim(obj.guestSecret).length < 1) return alert('Guest Access Secret is a required field.');
             if($.trim(obj.name).length < 1) return alert('App Name is a required field.');
             if(me.model.attributes.name != obj.name && me.options.opts.col.iwhere('name', obj.name).length) return alert('The App name you specified already exists. Please choose another name.');
+            delete obj.apnsCertPassword;
             AJAX('apps/'+me.model.attributes.id, 'PUT', 'application/json', obj, function(res, status, xhr){
                 me.model.set(obj);
                 for(var key in obj)
@@ -93,7 +102,7 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
         initCertUploader: function(){
             var me = this;
             var container = '#mmx-settings-apns-cert-file-upload';
-            var uploader = new UploadView({
+            me.uploader = new UploadView({
                 el          : container,
                 context     : 'APNSCertFile',
                 method      : 'POST',
@@ -103,44 +112,46 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
                 },
                 eventPubSub : this.options.eventPubSub,
                 path        : '/rest/apps/'+this.model.attributes.id+'/uploadAPNSCertificate',
-                onSubmit    : function(inst, id, filename){
-                    var pass = me.getAPNSCertPassword();
-                    inst.setParams({
-                        apnsCertPassword : pass
-                    });
-                    if(!pass.length){
-                        Alerts.Error.display({
-                            title   : 'Error Uploading Certificate',
-                            content : 'To upload an APNS certificate, you must set an APNS Password which corresponds with the certificate.' +
-                                ' For more information, visit the <a href="//identity.apple.com" target="_blank">Apple Push Certificates Portal</a>.'
-                        });
-                        return false;
-                    }
-                }
+                uploadButtonText : 'Select a file'
             });
-//            $('<button id="mmx-settings-apns-cert-file-upload-btn" class="btn btn-primary" type="button" txt="Upload">Upload</button>').insertAfter(container+' .qq-upload-button');
             if(this.model.attributes.apnsCertUploaded){
-                $(container).find('.qq-upload-list').html(this.certUploadedTmpl);
+                $('#mmx-settings-apns-cert-file-upload').find('.qq-upload-list').html(me.certUploadedTmpl);
+                $('#mmx-settings-apns-cert-status').find('.qq-upload-list').html(me.certUploadedTmpl).find('.remove-cert-btn').remove();
             }else{
-                $(container).find('.qq-upload-list').html(this.noCertTmpl);
+                $('#mmx-settings-apns-cert-file-upload').find('.qq-upload-list').html(me.noCertTmpl);
+                $('#mmx-settings-apns-cert-status').find('.qq-upload-list').html(me.noCertTmpl);
             }
         },
+        showUploadCertificateModal: function(){
+            var me = this;
+            me.uploadAPNSModal.find('input[name="apnsCertPassword"]').val(me.model.attributes.apnsCertPassword);
+            var removeCertBtn = me.uploadAPNSModal.find('.remove-cert-btn');
+            removeCertBtn.unbind('click').click(function(){
+                me.deleteAPNSCertificate();
+            });
+            me.uploadAPNSModal.modal('show');
+        },
         getAPNSCertPassword: function(){
-            return $.trim(this.$el.find('input[name="apnsCertPassword"]').val());
+            return $.trim(this.uploadAPNSModal.find('input[name="apnsCertPassword"]').val());
         },
         certUploadedTmpl : '<li class="qq-upload-success"><span class="qq-upload-file">certificate uploaded</span><button class="remove-cert-btn btn btn-sm"><span class="glyphicon glyphicon-remove"></span></button></li>',
         noCertTmpl : '<li class=" qq-upload-error"><span class="qq-upload-file">no certificate</span></li>',
-        uploadCertificate: function(e){
+        uploadCertificate: function(){
             var me = this;
-            var btn = $(e.currentTarget);
-            var file = btn.parent().find('.qq-upload-list > li > .qq-upload-file');
-            if(!file.length || file.text().indexOf('No Certificate Uploaded') != -1 || file.text().indexOf('Certificate Uploaded') != -1)
-                return false;
-            me.options.eventPubSub.trigger('btnLoading', btn);
-            me.options.eventPubSub.trigger('uploadAPNSCertFile', '/rest/apps/'+me.model.attributes.id+'/uploadAPNSCertificate');
+            utils.resetError(me.uploadAPNSModal);
+            var file = me.uploadAPNSModal.find('.qq-upload-list .qq-upload-file').text();
+            if(!$.trim(file).length || file.indexOf('no certificate') != -1)
+                return utils.showError(me.uploadAPNSModal, 'apnsCertificate', 'Please select an APNS certificate to upload.');
+            if(file.indexOf('certificate uploaded') != -1)
+                return utils.showError(me.uploadAPNSModal, 'apnsCertificate', 'An APNS certificate has already been uploaded.');
+            if(!$.trim(me.uploadAPNSModal.find('input[name="apnsCertPassword"]').val()).length){
+                return utils.showError(me.uploadAPNSModal, 'apnsCertPassword', 'APNS Password is required, and must match the APNS certificate.');
+            }
+            me.options.eventPubSub.trigger('uploadAPNSCertFile', '/rest/apps/'+me.model.attributes.id+'/uploadAPNSCertificate', {
+                apnsCertPassword : me.getAPNSCertPassword()
+            });
         },
-        deleteAPNSCertificate: function(e){
-            e.preventDefault();
+        deleteAPNSCertificate: function(){
             var me = this;
             Alerts.Confirm.display({
                 title   : 'Delete Certificate',
@@ -153,7 +164,8 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
             }, function(){
                 AJAX('apps/'+me.model.attributes.id+'/deleteAPNSCertificate', 'DELETE', 'application/json', null, function(res, status, xhr){
                     me.model.unset('apnsCertPassword');
-                    me.$el.find('input[name="apnsCertPassword"]').val('');
+//                    me.$el.find('input[name="apnsCertPassword"]').val('');
+                    me.uploadAPNSModal.find('input[name="apnsCertPassword"]').val('');
                     $('#mmx-settings-apns-cert-file-upload').find('.qq-upload-list').html(me.noCertTmpl);
                 }, function(e){
                     alert(e.responseText);

@@ -383,10 +383,17 @@
                     <form role="form">
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <label>Upload Certificate</label>
+                                <label>APNS Certificate</label>
                                 <div class="row-fluid">
                                     <div class="col-sm-12 no-padding">
-                                        <div id="mmx-settings-apns-cert-file-upload"></div>
+                                        <div id="mmx-settings-apns-cert-status">
+                                            <div class="qq-uploader">
+                                                <div id="mmx-apns-startupload-btn" class="btn btn-primary" style="position: relative; overflow: hidden; direction: ltr; float:right">
+                                                    Upload Certificate
+                                                </div>
+                                                <ul class="qq-upload-list"></ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -397,15 +404,15 @@
                                     <button class="btn btn-sm <% if(model.attributes.apnsCertProduction === true){ %>btn-primary active<% }else{ %>btn-default<% } %>" did="true" type="button">Production</button>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <label>APNS Password</label>
-                                <div class="toggling-password-input">
-                                    <span class="glyphicon glyphicon-eye-close hidden" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to hide the password value."></span>
-                                    <span class="glyphicon glyphicon-eye-open" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to display the password value."></span>
-                                    <input type="password" class="form-control" name="apnsCertPassword" placeholder="APNS Password" value="<%- model.attributes.apnsCertPassword %>" />
-                                </div>
-
-                            </div>
+                            <!--<div class="col-sm-6">-->
+                                <!--<label>APNS Password <span class="glyphicon glyphicon-info-sign" data-placement="top" data-toggle="tooltip" data-title="The APNS Password can only be set when uploading an APNS certificate."></span>-->
+                                <!--</label>-->
+                                <!--<div class="toggling-password-input">-->
+                                    <!--<span class="glyphicon glyphicon-eye-close hidden" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to hide the password value."></span>-->
+                                    <!--<span class="glyphicon glyphicon-eye-open" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to display the password value."></span>-->
+                                    <!--<input type="password" disabled="disabled" class="form-control" name="apnsCertPassword" placeholder="APNS Password" value="<%- model.attributes.apnsCertPassword %>" />-->
+                                <!--</div>-->
+                            <!--</div>-->
                         </div>
                     </form>
                 </div>
@@ -413,16 +420,16 @@
             <div class="form-group clearfix">
                 <span class="form-caption">DOWNLOAD CONFIGS</span>
                 <div class="well well-default clearfix">
-                        <div class="row-fluid">
-                            <div class="col-sm-6">
-                                <label>Android</label><br />
-                                <a href="/rest/apps/<%- model.attributes.id %>/sampleConfig?platform=android" class="btn btn-primary">Download .properties</a>
-                            </div>
-                            <div class="col-sm-6">
-                                <label>iOS</label><br />
-                                <a href="/rest/apps/<%- model.attributes.id %>/sampleConfig?platform=ios" class="btn btn-primary">Download .plist</a>
-                            </div>
+                    <div class="row-fluid">
+                        <div class="col-sm-6">
+                            <label>Android</label><br />
+                            <a href="/rest/apps/<%- model.attributes.id %>/sampleConfig?platform=android" class="btn btn-primary">Download .properties</a>
                         </div>
+                        <div class="col-sm-6">
+                            <label>iOS</label><br />
+                            <a href="/rest/apps/<%- model.attributes.id %>/sampleConfig?platform=ios" class="btn btn-primary">Download .plist</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1794,7 +1801,7 @@ pod 'MMX', '~> 0.2'</pre>
     <% } %>
 </script>
 
-<div id="general-alert" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="general-alert" class="modal fade" tabindex="1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -1809,7 +1816,7 @@ pod 'MMX', '~> 0.2'</pre>
     </div>
 </div>
 
-<div id="confirm-alert" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="confirm-alert" class="modal fade" tabindex="1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -1825,7 +1832,7 @@ pod 'MMX', '~> 0.2'</pre>
     </div>
 </div>
 
-<div id="error-alert" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="error-alert" class="modal fade" tabindex="1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -2035,6 +2042,44 @@ pod 'MMX', '~> 0.2'</pre>
             </div>
             <div class="modal-footer">
                 <button id="create-messaging-app-btn" type="button" class="btn btn-primary">Save</button>
+                <button data-dismiss="modal" type="button" class="btn btn-default">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mmx-setapns-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Upload APNS Certificate</h4>
+            </div>
+            <div  class="modal-body">
+                To upload an APNS certificate, you must first specify the APNS password which matches the certificate.
+                The certificate and password will be validated before the certificate is uploaded. For more information,
+                visit the <a href="//identity.apple.com" target="_blank">Apple Push Certificates Portal</a>.
+                <div class="form-group clearfix">
+                    <div class="col-sm-12">
+                        <label>APNS Certificate</label>
+                        <div class="row-fluid">
+                            <div class="col-sm-12 no-padding">
+                                <div id="mmx-settings-apns-cert-file-upload" name="apnsCertificate"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label>APNS Password</label>
+                        <div class="toggling-password-input">
+                            <span class="glyphicon glyphicon-eye-close hidden" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to hide the password value."></span>
+                            <span class="glyphicon glyphicon-eye-open" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to display the password value."></span>
+                            <input type="password" class="form-control" name="apnsCertPassword" placeholder="APNS Password" value="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="upload-apns-btn" type="button" class="btn btn-primary">Upload</button>
                 <button data-dismiss="modal" type="button" class="btn btn-default">Close</button>
             </div>
         </div>

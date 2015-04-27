@@ -16,7 +16,8 @@ define(['jquery', 'backbone', 'backbone', 'fileuploader'], function($, Backbone)
                 maxConnections              : 1,
                 forceMultipart              : true,
                 disableCancelForFormUploads : true,
-                autoUpload                  : true,
+                autoUpload                  : false,
+                uploadButtonText            : options.uploadButtonText || undefined,
                 action                      : options.path,
                 element                     : document.getElementById(me.options.el.replace('#', '')),
                 text: {
@@ -54,8 +55,8 @@ define(['jquery', 'backbone', 'backbone', 'fileuploader'], function($, Backbone)
             me.$el.find('.qq-upload-button').addClass('btn btn-primary');
             // bind upload event to set upload endpoint and upload files
             me.options.eventPubSub.bind('upload'+me.options.context, function(path, params){
-                me.params = params;
-                uploader._options.action = path;
+                me.params = params || {};
+                uploader.setParams(params);
                 uploader.uploadStoredFiles();
             });
         }

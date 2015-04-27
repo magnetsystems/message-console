@@ -767,7 +767,7 @@ utils = {
         form.find('.alert-container').html('');
     },
     showError: function(dom, name, error, isTextOnly){
-        var parent = dom.find('input[name="'+name+'"], textarea[name="'+name+'"]').closest('div');
+        var parent = dom.find('input[name="'+name+'"], textarea[name="'+name+'"], div[name="'+name+'"]').closest('div');
         parent.addClass('has-error');
         var alert = (isTextOnly || 1 == 1) ? $('<div class="colortext colortext-danger">'+error+'</div>') : $('<div class="alert alert-danger" role="alert">'+error+'</div>');
 //        dom.find('.alert-container:first').html(alert);
