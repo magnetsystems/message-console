@@ -800,12 +800,12 @@
     <div class="form-group clearfix">
         <div class="col-sm-<% if(typeof provisionDb === 'undefined' || provisionDb === 'true'){ %>6<% }else{ %>12<% } %>">
             <label>Password</label>
-            <input type="password" class="form-control" name="password" placeholder="Password" value="" />
+            <input type="password" maxlength="32" class="form-control" name="password" placeholder="Password" value="" />
         </div>
         <% if(typeof provisionDb === 'undefined' || provisionDb === 'true'){ %>
         <div class="col-sm-6">
             <label>Password (repeat)</label>
-            <input type="password" class="form-control" name="passwordVerify" placeholder="Password (repeat)" value="" />
+            <input type="password" maxlength="32" class="form-control" name="passwordVerify" placeholder="Password (repeat)" value="" />
         </div>
         <% } %>
     </div>

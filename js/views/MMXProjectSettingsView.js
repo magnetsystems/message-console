@@ -166,7 +166,7 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
                     me.model.unset('apnsCertPassword');
 //                    me.$el.find('input[name="apnsCertPassword"]').val('');
                     me.uploadAPNSModal.find('input[name="apnsCertPassword"]').val('');
-                    $('#mmx-settings-apns-cert-file-upload').find('.qq-upload-list').html(me.noCertTmpl);
+                    $('#mmx-settings-apns-cert-file-upload, #mmx-settings-apns-cert-status').find('.qq-upload-list').html(me.noCertTmpl);
                 }, function(e){
                     alert(e.responseText);
                 });
