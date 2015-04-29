@@ -935,7 +935,8 @@ utils = {
             return qs[1];
         }
     },
-    resetRows: function(repeater){
+    resetRows: function(view, repeater){
+        view.selectedElements = [];
         repeater.find('input[type="checkbox"]').attr('checked', false);
         repeater.find('.repeater-header .glyphicon.disableable').addClass('disabled');
         repeater.find('.repeater-header .fa.disableable').addClass('disabled');

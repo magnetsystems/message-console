@@ -1296,9 +1296,12 @@
                         <td>Verify the <b>res/raw/quickstart.properties</b> file match values for your app settings as shown in the <a href="#settings">Settings</a> menu.
                 <pre>
 appId=&lt;App ID&gt;
-apiKey=&lt;MMX API key&gt;
-gcmSenderId=&lt;GCM project/sender id&gt;
-guestSecret=&lt;Anonymous Access Secret&gt;</pre>
+apiKey=&lt;API key&gt;
+gcmSenderId=&lt;GCM sender id&gt;
+anonymousSecret=&lt;Anonymous Access Secret&gt;
+host=&lt;External Host Name&gt;
+port=5222
+domainName=mmx</pre>
                         </td>
                     </tr>
                     <tr>
@@ -1316,7 +1319,7 @@ guestSecret=&lt;Anonymous Access Secret&gt;</pre>
                     <tr>
                         <td class="numbering">5.</td>
                         <td>From the app, connect to Magnet Message using these connection settings:
-<pre>host:mmx-svr1.magnet.com
+<pre>host:&lt;External Host Name&gt;
 port: 5222</pre>
                             Optional if not using guest access:
 <pre>username: &lt;choose a new one, the user will be created upon first login&gt;

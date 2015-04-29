@@ -57,6 +57,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             });
         },
         refresh: function(){
+            utils.resetRows(this, this.list);
             this.list.repeater('render');
         },
         filters : {
@@ -318,8 +319,7 @@ define(['jquery', 'backbone'], function($, Backbone){
 
         },
         saveTopicComplete: function(me){
-            utils.resetRows(me.list);
-            me.selectedElements = [];
+            utils.resetRows(me, me.list);
             me.list.repeater('render');
             me.updateTopicModal.modal('hide');
             Alerts.General.display({
@@ -338,10 +338,9 @@ define(['jquery', 'backbone'], function($, Backbone){
             }, function(){
                 AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(did), 'DELETE', 'application/json', null, function(res, status, xhr){
                     utils.removeByAttr(me.topics, 'topicName', did);
-                    me.selectedElements = [];
                     var list = $(e.currentTarget).closest('.repeater');
                     var dom = list.find('.repeater-list-items tr[did="'+did+'"]');
-                    utils.resetRows(me.list);
+                    utils.resetRows(me, me.list);
                     dom.hide('slow', function(){
                         dom.remove();
                     });
