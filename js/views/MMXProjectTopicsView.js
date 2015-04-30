@@ -235,9 +235,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     }, [{
                         name : 'appAPIKey',
                         val  : me.model.attributes.appAPIKey
-                    }], {
-                        btn : me.createTopicBtn
-                    });
+                    }]);
                 }else{
                     me.options.eventPubSub.trigger('btnComplete', me.createTopicBtn);
                     me.createTopicComplete(obj);
@@ -248,7 +246,9 @@ define(['jquery', 'backbone'], function($, Backbone){
             }, [{
                 name : 'appAPIKey',
                 val  : me.model.attributes.appAPIKey
-            }]);
+            }], {
+                btn : me.createTopicBtn
+            });
         },
         createTopicComplete: function(obj){
             var me = this;
@@ -302,9 +302,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     }, [{
                         name : 'appAPIKey',
                         val  : me.model.attributes.appAPIKey
-                    }], {
-                        btn : me.updateTopicBtn
-                    });
+                    }]);
                 }else{
                     me.options.eventPubSub.trigger('btnComplete', btn);
                     me.saveTopicComplete(me);
@@ -315,7 +313,9 @@ define(['jquery', 'backbone'], function($, Backbone){
             }, [{
                 name : 'appAPIKey',
                 val  : me.model.attributes.appAPIKey
-            }]);
+            }], {
+                btn : me.updateTopicBtn
+            });
 
         },
         saveTopicComplete: function(me){

@@ -37,22 +37,21 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
             me.newAppModal.find('#create-messaging-app-btn').click(function(){
                 me.createMessagingApp();
             });
-            me.options.eventPubSub.bind('imposeAppLimit', function(){
-                if(me.options.opts.configs['cluster.max.apps'] > 0 && me.options.opts.configs['cluster.max.apps'] <= me.col.length){
-                    $('#mmx-maximum-apps-reached').show();
-                    $('#mmx-container .view-wrapper').css('margin-top', function(index, curValue){
-                        var curr = parseInt(curValue, 10);
-                        return (curr == 43 || curr == 78) ? (curr + 34) : curr + 'px';
-                    });
-                }else{
-                    $('#mmx-maximum-apps-reached').hide();
-                    $('#mmx-container .view-wrapper').css('margin-top', function(index, curValue){
-                        var curr = parseInt(curValue, 10);
-                        return (curr == 77 || curr == 112) ? (curr - 34) : curr + 'px';
-                    });
-                }
-            });
-
+//            me.options.eventPubSub.bind('imposeAppLimit', function(){
+//                if(me.options.opts.configs['cluster.max.apps'] > 0 && me.options.opts.configs['cluster.max.apps'] <= me.col.length){
+//                    $('#mmx-maximum-apps-reached').show();
+//                    $('#mmx-container .view-wrapper').css('margin-top', function(index, curValue){
+//                        var curr = parseInt(curValue, 10);
+//                        return (curr == 43 || curr == 78) ? (curr + 34) : curr + 'px';
+//                    });
+//                }else{
+//                    $('#mmx-maximum-apps-reached').hide();
+//                    $('#mmx-container .view-wrapper').css('margin-top', function(index, curValue){
+//                        var curr = parseInt(curValue, 10);
+//                        return (curr == 77 || curr == 112) ? (curr - 34) : curr + 'px';
+//                    });
+//                }
+//            });
         },
         events: {
             'click #create-messaging-app-modal': 'showCreateMessagingAppModal',

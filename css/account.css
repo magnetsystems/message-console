@@ -230,9 +230,20 @@ div.centered{margin:0 auto}
 .qq-upload-fail .qq-upload-file{display:none !important}
 .qq-upload-error .qq-upload-file{color:#888}
 
+@media only screen and (max-width:991px){
+    #breadcrumb .bc-title{font-size:13px;margin-top:4px}
+}
 @media only screen and (max-width:767px){
     #mmx-messages-list .dt-container .col-sm-6{padding:0}
     .vertical-line{display:block;visibility:hidden}
+    #mmx-container{padding-top:92px}
+    #user-navigation{position:relative;top:0;left:0;clear:both}
+    #user-navigation > div{float:left}
+    #mmx-contextual-doc-btn{display:none}
+    #user-navigation .separator, #user-navigation .separator{display:none !important}
+    .user-identity-section{margin:0}
+    #user-identity .fa-cog{display:none}
+    .view-wrapper{margin-top:76px}
 }
 
 @media only screen and (max-width:767px){

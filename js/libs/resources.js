@@ -45,6 +45,7 @@ var AJAX = function(loc, method, contentType, data, callback, failback, headers,
             callback(result, status, xhr);
         }
     }).fail(function(xhr, status, thrownError){
+            console.log(status, thrownError);
         if(xhr.status == 403 || xhr.status == 401 || xhr.status == 278){
             if(window.location.href.indexOf('/login') == -1){
                 Cookie.remove('magnet_auth');
@@ -57,6 +58,11 @@ var AJAX = function(loc, method, contentType, data, callback, failback, headers,
         }else if(xhr.responseText && xhr.responseText == 'connect-error'){
             Alerts.Error.display({
                 title   : 'Server Timeout',
+                content : 'The server is not responding right now. Please try again later.'
+            });
+        }else if(status == 'error'){
+            Alerts.Error.display({
+                title   : 'Server Not Responding',
                 content : 'The server is not responding right now. Please try again later.'
             });
         }else if(typeof failback === typeof Function){
