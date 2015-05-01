@@ -45,7 +45,6 @@ var AJAX = function(loc, method, contentType, data, callback, failback, headers,
             callback(result, status, xhr);
         }
     }).fail(function(xhr, status, thrownError){
-            console.log(status, thrownError);
         if(xhr.status == 403 || xhr.status == 401 || xhr.status == 278){
             if(window.location.href.indexOf('/login') == -1){
                 Cookie.remove('magnet_auth');
@@ -60,7 +59,7 @@ var AJAX = function(loc, method, contentType, data, callback, failback, headers,
                 title   : 'Server Timeout',
                 content : 'The server is not responding right now. Please try again later.'
             });
-        }else if(status == 'error'){
+        }else if(status == 'error' && !thrownError){
             Alerts.Error.display({
                 title   : 'Server Not Responding',
                 content : 'The server is not responding right now. Please try again later.'
@@ -773,11 +772,16 @@ utils = {
         form.find('.alert-container').html('');
     },
     showError: function(dom, name, error, isTextOnly){
-        var parent = dom.find('input[name="'+name+'"], textarea[name="'+name+'"], div[name="'+name+'"]').closest('div');
-        parent.addClass('has-error');
+        var parent = dom.find('input[name="'+name+'"], textarea[name="'+name+'"], div[name="'+name+'"]');
+        if(parent.length){
+            parent = parent.closest('div');
+            parent.addClass('has-error');
+            parent.find('.colortext').remove();
+        }else{
+            parent = dom.find('.alert-container');
+        }
         var alert = (isTextOnly || 1 == 1) ? $('<div class="colortext colortext-danger">'+error+'</div>') : $('<div class="alert alert-danger" role="alert">'+error+'</div>');
 //        dom.find('.alert-container:first').html(alert);
-        parent.find('.colortext').remove();
         parent.append(alert);
         if(dom.hasClass('pre-login-containers')){
             var panel = dom.find('.centered-wrapper > .panel');

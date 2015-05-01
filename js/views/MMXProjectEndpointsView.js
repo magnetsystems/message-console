@@ -361,7 +361,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             var input = me.sendMessageModal.find('.message-types > div[did="message"] textarea');
             var url = 'apps/'+me.model.attributes.id+'/endpoints/'+this.activeDevice.deviceId+'/message';
             if(!$.trim(input.val()).length)
-                return alert('Payload is required for sending a push notification');
+                return utils.showError(me.sendMessageModal, '', 'Payload is required for sending a message.');
             if(me.activeDevice && me.activeDevice.deviceId)
                 body.deviceId = me.activeDevice.deviceId;
             if($.trim(input.val()).length)
@@ -394,11 +394,15 @@ define(['jquery', 'backbone'], function($, Backbone){
             url += '/'+type;
             utils.resetError(me.sendMessageModal);
             AJAX(url, 'POST', 'application/x-www-form-urlencoded', body, function(res, status, xhr){
-                input.val('');
-                alert(type+' sent');
-                if(body.target.deviceIds.length) me.pollRecentMessages();
+                if(res.sentList.length){
+                    input.val('');
+                    alert(type+' sent');
+                    if(body.target.deviceIds.length) me.pollRecentMessages();
+                }else{
+                    utils.showError(me.sendMessageModal, '', 'Delivery Error: '+res.unsentList[0].message);
+                }
             }, function(xhr, status, thrownError){
-                utils.showError(me.sendMessageModal, '', type+' delivery error.');
+                utils.showError(me.sendMessageModal, '', type+' delivery error');
             }, [{
                 name : 'appAPIKey',
                 val  : me.model.attributes.appAPIKey

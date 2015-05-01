@@ -253,6 +253,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         createTopicComplete: function(obj){
             var me = this;
             me.newTopicModal.modal('hide');
+            utils.resetRows(me, me.list);
             me.topics.push(obj);
             me.list.repeater('render');
             Alerts.General.display({
@@ -374,9 +375,9 @@ define(['jquery', 'backbone'], function($, Backbone){
                 contentType : 'text'
             }, function(res, status, xhr){
                 msg.val('');
-                utils.showSuccess(form, 'payload', 'Your message has been sent!');
+                utils.showSuccess(form, 'payload', (xhr.responseText ? (xhr.responseJSON ? xhr.responseJSON.message : xhr.responseText) : ''));
             }, function(xhr, status, thrownError){
-                alert('An error has occurred'+(xhr.responseText ? ': '+xhr.responseText : '.'));
+                utils.showError(form, 'payload', (xhr.responseText ? (xhr.responseJSON ? xhr.responseJSON.message : xhr.responseText) : ''));
             }, [{
                 name : 'appAPIKey',
                 val  : me.model.attributes.appAPIKey
