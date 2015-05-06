@@ -182,19 +182,22 @@ define(['jquery', 'backbone'], function($, Backbone){
             e.preventDefault();
             var dom = $('#collapsible-menu-list > div > a.active');
             var activeView;
+            var baseUrl = 'https://www.magnet.com/documentation/1.0.1/';
             if(dom.length){
                 activeView = dom.attr('href').replace('#', '');
                 switch(activeView){
-                    case 'dashboard': window.open('/docs/latest/guide/messaging/The+Dashboard.html', '_blank'); break;
-                    case 'endpoints': window.open('/docs/latest/guide/messaging/Send+Test+Messages+to+Users.html', '_blank'); break;
-                    case 'messages': window.open('/docs/latest/guide/messaging/Message+Logs.html', '_blank'); break;
-                    case 'topics': window.open('/docs/latest/guide/messaging/Topic+Management.html', '_blank'); break;
-                    case 'quickstart': window.open('/docs/latest/guide/messaging/Establishing+Real-Time+Connection.html', '_blank'); break;
-                    case 'settings': window.open('/docs/latest/guide/messaging/Set+Up+Mobile+Messaging.html', '_blank'); break;
-                    default: window.open('/docs/latest/guide/messaging/index.html', '_blank');
+                    case 'dashboard': window.open(baseUrl+'message/guide/Messaging+Dashboard.php', '_blank'); break;
+                    case 'endpoints': window.open(baseUrl+'message/guide/View+Registered+Mobile+Devices.php', '_blank'); break;
+                    case 'users': window.open(baseUrl+'message/guide/Manage+Registered+Messaging+Users.php', '_blank'); break;
+                    case 'messages': window.open(baseUrl+'message/guide/View+Message+Log+and+Push+Message+Log.php', '_blank'); break;
+                    case 'notifications': window.open(baseUrl+'message/guide/View+Message+Log+and+Push+Message+Log.php', '_blank'); break;
+                    case 'topics': window.open(baseUrl+'message/guide/Managing+Topics.php', '_blank'); break;
+                    case 'quickstart': window.open(baseUrl+'message/guide/Getting+Started+with+the+Android+Quickstart+App.php', '_blank'); break;
+                    case 'settings': window.open(baseUrl+'message/guide/Set+Up+New+Magnet+Message+App.php', '_blank'); break;
+                    default: window.open(baseUrl+'message/guide/', '_blank');
                 }
             }else{
-                window.open('/docs/latest/guide/messaging/index.html', '_blank');
+                window.open(baseUrl+'message/guide/', '_blank');
             }
         },
         bindFeedbackButton: function(){

@@ -248,7 +248,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             if($.trim(obj.username.length) < 5 && !isEdit){
                 utils.showError(dom, 'username', 'Username must contain five or more characters.', true);
                 return false;
-            }else if(!/^[a-zA-Z0-9-_]+$/i.test(obj.username) && !isEdit){
+            }else if(!/^[a-zA-Z0-9-_.]+$/i.test(obj.username) && !isEdit){
                 utils.showError(dom, 'username', 'Username can only contain letters, numbers, - and _.', true);
                 return false;
             }else if($.trim(obj.password.length) < 1 && !isEdit){

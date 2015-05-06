@@ -61,6 +61,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 title : 'State',
                 type  : 'enum',
                 props : [
+                    {key:'PENDING', val:'PENDING'},
                     {key:'DELIVERY_ATTEMPTED', val:'DELIVERY_ATTEMPTED'},
                     {key:'WAKEUP_REQUIRED', val:'WAKEUP_REQUIRED'},
                     {key:'WAKEUP_TIMEDOUT', val:'WAKEUP_TIMEDOUT'},
