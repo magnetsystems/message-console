@@ -14,12 +14,14 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         startResetPassword: function(e){
             var me = this;
+            var btn = $(e.currentTarget);
             if(me.validate(me.$el) === true){
                 utils.resetError(me.$el);
                 var data = utils.collect(me.$el);
                 var re = /(?![\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})./g;
                 data.email = data.email.replace(re, '');
                 data.source = window.location.protocol+'//'+window.location.host;
+                me.options.eventPubSub.trigger('btnLoading', btn);
                 AJAX('/rest/forgotPassword', 'POST', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
                     me.$el.find('input').val('');
                     Alerts.General.display({
@@ -35,6 +37,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                         case 'email-recovery-disabled': msg = 'The password recovery feature has been disabled. Please contact your administrator to reset your password.'; break;
                     }
                     alert(msg);
+                }, null, {
+                    btn : btn
                 });
             }
         },

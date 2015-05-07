@@ -12,8 +12,9 @@ define(['jquery', 'backbone'], function($, Backbone){
         events: {
             'click #registration-btn': 'register'
         },
-        register: function(){
+        register: function(e){
             var me = this;
+            var btn = $(e.currentTarget);
             var re = /(?![\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})./g;
             me.$el.find('input[name="email"]').val(me.$el.find('input[name="email"]').val().replace(re, ''));
             if(me.validate(me.$el) === true){
@@ -21,6 +22,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 var data = utils.collect(me.$el);
                 data.companyName = 'magnet';
                 data.source = window.location.protocol+'//'+window.location.host;
+                me.options.eventPubSub.trigger('btnLoading', btn);
                 AJAX('/rest/startRegistration', 'POST', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
                     me.$el.find('input').val('');
                     var msg = {
@@ -40,6 +42,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                         default: msg = 'An error has occurred during registration. Please contact an administrator for assistance.'; break;
                     }
                     alert(msg);
+                }, null, {
+                    btn : btn
                 });
             }
         },

@@ -14,12 +14,14 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         resetPassword: function(e){
             var me = this;
+            var btn = $(e.currentTarget);
             var token = utils.getQuerystring('t');
             if(!token) return utils.showError(me.$el, '', 'Invalid password reset information. Try to copy and paste the url specified in the password reset email into your web browser.');
             if(me.validate(me.$el) === true){
                 utils.resetError(me.$el);
                 var data = utils.collect(me.$el);
                 data.passwordResetToken = token;
+                me.options.eventPubSub.trigger('btnLoading', btn);
                 AJAX('/rest/resetPassword', 'POST', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
                     me.$el.find('input').val('');
                     Backbone.history.navigate('#/login');
@@ -29,6 +31,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                     });
                 }, function(xhr, status, thrownError){
                     utils.showError(me.$el, '', xhr.responseText);
+                }, null, {
+                    btn : btn
                 });
             }
         },

@@ -13,8 +13,9 @@ define(['jquery', 'backbone'], function($, Backbone){
         events: {
             'click #completeregistration-btn': 'register'
         },
-        register: function(){
+        register: function(e){
             var me = this;
+            var btn = $(e.currentTarget);
             var token = utils.getQuerystring('t');
             if(!token) return utils.showError(me.$el, '', 'Invalid registration information. Have you already been approved? Please contact Magnet support for assistance');
             if(me.validate(me.$el) === true){
@@ -25,15 +26,16 @@ define(['jquery', 'backbone'], function($, Backbone){
                     tosDialog.modal('show');
                     $('#agree-to-tos').unbind('click').click(function(){
                         tosDialog.modal('hide');
-                        me.completeRegistration(token, data);
+                        me.completeRegistration(btn, token, data);
                     });
                 }else{
-                    me.completeRegistration(token, data);
+                    me.completeRegistration(btn, token, data);
                 }
             }
         },
-        completeRegistration: function(token, data){
+        completeRegistration: function(btn, token, data){
             var me = this;
+            me.options.eventPubSub.trigger('btnLoading', btn);
             AJAX('/rest/users/'+token+'/completeRegistration', 'POST', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
                 Backbone.history.navigate('#/login');
                 Alerts.General.display({
@@ -48,6 +50,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                     default: msg = 'A problem occurred. Have you already registered? \r\n If so, please click on the "Return to Login" link below and try logging in.'; break;
                 }
                 alert(msg);
+            }, null, {
+                btn : btn
             });
         },
         validate: function(dom){

@@ -277,7 +277,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 modal.find('.modal-body').html(_.template($('#MessagingDeviceDetailsTmpl').html(), {
                     device : me.endpoints[index],
                     user   : me.users[index],
-                    tags   : (res && res.length && res[0].deviceId === me.endpoints[index].deviceId && res[0].tags) ? res[0].tags : []
+                    tags   : (res && res.deviceId === me.endpoints[index].deviceId && res.tags) ? res.tags : []
                 }));
                 modal.modal('show');
             }, function(xhr, status, thrownError){
