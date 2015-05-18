@@ -170,7 +170,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         selectMMXView: function(e){
             var link = $(e.currentTarget);
             var view = link.attr('href');
-            if(view.indexOf('/docs/') != -1)
+            if(view.indexOf('/documentation/') != -1)
                 return;
             else
                 e.preventDefault();
