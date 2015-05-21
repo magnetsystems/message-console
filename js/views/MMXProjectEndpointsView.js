@@ -78,7 +78,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                 title : 'OS',
                 type  : 'enum',
                 props : [
-                    {key:'ANDROID', val:'ANDROID'}
+                    {key:'ANDROID', val:'ANDROID'},
+                    {key:'IOS', val:'IOS'}
                 ]
             }
         },

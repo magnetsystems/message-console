@@ -30,6 +30,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                         content : 'Your password has been reset successfully. '
                     });
                 }, function(xhr, status, thrownError){
+                    if(xhr.responseText == '"USER_DOES_NOT_EXIST"')
+                        xhr.responseText = 'Your account password has already been reset. Please try to login now.';
                     utils.showError(me.$el, '', xhr.responseText);
                 }, null, {
                     btn : btn
