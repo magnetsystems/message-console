@@ -36,7 +36,9 @@ var AJAX = function(loc, method, contentType, data, callback, failback, headers,
             params.btn.html(params.btn.attr('txt')).removeClass('disabled');
     }).done(function(result, status, xhr){
         if(xhr.status == 278){
-            if(window.location.href.indexOf('/login') == -1){
+            if(GLOBAL.serverType == 'hosted' && GLOBAL.authUrl){
+                window.location.href = GLOBAL.authUrl;
+            }else if(window.location.href.indexOf('/login') == -1){
                 Backbone.history.navigate('#/login');
             }else{
                 failback(xhr, status, result);
@@ -46,7 +48,9 @@ var AJAX = function(loc, method, contentType, data, callback, failback, headers,
         }
     }).fail(function(xhr, status, thrownError){
         if(xhr.status == 403 || xhr.status == 401 || xhr.status == 278){
-            if(window.location.href.indexOf('/login') == -1){
+            if(GLOBAL.serverType == 'hosted' && GLOBAL.authUrl){
+                window.location.href = GLOBAL.authUrl;
+            }else if(window.location.href.indexOf('/login') == -1){
                 Cookie.remove('magnet_auth');
                 $('#user-nav').addClass('hidden');
                 $('#user-nav-popover').attr('data-content', '');
@@ -376,7 +380,9 @@ HTTPRequest.prototype.call = function(loc, method, dataType, contentType, data, 
         }
     }).done(function(result, status, xhr){
         if(xhr.status == 278){
-            if(window.location.href.indexOf('/login') == -1){
+            if(GLOBAL.serverType == 'hosted' && GLOBAL.authUrl){
+                window.location.href = GLOBAL.authUrl;
+            }else if(window.location.href.indexOf('/login') == -1){
                 Cookie.remove('magnet_auth');
                 $('#user-nav').addClass('hidden');
                 $('#user-nav-popover').attr('data-content', '');
@@ -398,7 +404,9 @@ HTTPRequest.prototype.call = function(loc, method, dataType, contentType, data, 
             loc    : window.location.href
         };
         if(xhr.status == 403 || xhr.status == 401 || xhr.status == 278){
-            if(window.location.href.indexOf('/login') == -1){
+            if(GLOBAL.serverType == 'hosted' && GLOBAL.authUrl){
+                window.location.href = GLOBAL.authUrl;
+            }else if(window.location.href.indexOf('/login') == -1){
                 Cookie.remove('magnet_auth');
                 $('#user-nav').addClass('hidden');
                 $('#user-nav-popover').attr('data-content', '');

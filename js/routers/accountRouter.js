@@ -121,6 +121,10 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
                 if(res.serverType == 'single'){
                     $('.admin-only-item').remove();
                     $('.advanced-settings-view-link').removeClass('advanced-settings-view-link');
+                }else if(res.serverType == 'hosted'){
+                    GLOBAL.authUrl = res.authUrl;
+                    GLOBAL.serverType = res.serverType;
+                    $('#user-identity').attr('data-content', "<div class='user-navigation-menu clearfix'><a href='#' id='logout-btn'><i class='fa fa-2x fa-sign-out'></i> Sign Out</a></div>");
                 }
                 if(res.emailEnabled){
                     me.opts.emailEnabled = res.emailEnabled;
