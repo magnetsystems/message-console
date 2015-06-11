@@ -1,7 +1,7 @@
 
 /* HELPERS */
 var GLOBAL = {
-    baseUrl : '',
+    baseUrl : '/rest/',
     polling : false
 };
 
@@ -18,7 +18,7 @@ var AJAX = function(loc, method, contentType, data, callback, failback, headers,
     $.support.cors = true;
     $.ajax({
         type        : method,
-        url         : GLOBAL.baseUrl+(loc.charAt(0) == '/' ? loc : '/rest/'+loc),
+        url         : GLOBAL.baseUrl+loc,
         contentType : contentType,
         data        : dataStr,
         timeout     : 15000,
@@ -350,9 +350,7 @@ ModelConnector.prototype.chkSession = function(data, xhr){
 }
 
 // wrap jquery ajax function to reduce redundant code
-function HTTPRequest(baseUrl){
-    this.baseUrl = baseUrl;
-}
+function HTTPRequest(){}
 HTTPRequest.prototype.call = function(loc, method, dataType, contentType, data, callback, failback, headers){
     var me = this;
     var dataStr = null;
@@ -364,7 +362,7 @@ HTTPRequest.prototype.call = function(loc, method, dataType, contentType, data, 
     $.support.cors = true;
     $.ajax({
         type        : method,
-        url         : GLOBAL.baseUrl+((GLOBAL.baseUrl && loc.charAt(0) === '/') ? '': '/rest/')+loc,
+        url         : GLOBAL.baseUrl+loc,
         //dataType    : dataType,
         contentType : contentType,
         data        : dataStr,
@@ -392,7 +390,7 @@ HTTPRequest.prototype.call = function(loc, method, dataType, contentType, data, 
     }).fail(function(xhr, status, thrownError){
         me.stats = {
             method : method,
-            url    : me.baseUrl+loc,
+            url    : GLOBAL.baseUrl+loc,
             data   : dataStr,
             xhr    : xhr,
             status : status,
@@ -687,7 +685,7 @@ utils = {
         return str;
     },
     // collect project details from form fields into data object
-    collect : function(dom){
+    collect : function(dom, looseBooleans, skipEmptyStrings, convertNumericStrings){
         var obj = {}, me = this;
         dom.find('.btn-group:not(.disabled)').each(function(){
             obj[$(this).attr('did')] = $(this).find('button.btn-primary').attr('did');
@@ -714,11 +712,20 @@ utils = {
             obj[did].push($(this).text());
         });
         $.each(obj, function(name, val){
-            if(val === 'true'){
-                obj[name] = true;
+            if(!looseBooleans){
+                if(val === 'true'){
+                    obj[name] = true;
+                }
+                if(val === 'false'){
+                    obj[name] = false;
+                }
             }
-            if(val === 'false'){
-                obj[name] = false;
+            if(convertNumericStrings && obj[name] && $.trim(obj[name]) !== '' && me.isNumeric(obj[name])){
+                obj[name] = parseInt(obj[name]);
+            }
+            if(skipEmptyStrings){
+                if(obj[name] === '' || obj[name] === null)
+                    delete obj[name];
             }
         });
         return obj;
@@ -902,6 +909,12 @@ utils = {
     isValidEmail: function(e){
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(e);
+    },
+    isValidHost: function(str){
+        if(typeof str == 'number') str = str.toString();
+        str = str.replace('http://', '').replace('https://', '');
+        str = str.substr(0, (str.indexOf(':') === -1 ? str.length : str.indexOf(':')));
+        return /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/.test(str);
     },
     /**
      * Generate a GUID.

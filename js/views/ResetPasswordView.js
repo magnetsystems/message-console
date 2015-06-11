@@ -22,7 +22,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 var data = utils.collect(me.$el);
                 data.passwordResetToken = token;
                 me.options.eventPubSub.trigger('btnLoading', btn);
-                AJAX('/rest/resetPassword', 'POST', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
+                AJAX('resetPassword', 'POST', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
                     me.$el.find('input').val('');
                     Backbone.history.navigate('#/login');
                     Alerts.General.display({

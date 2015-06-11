@@ -40,7 +40,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 iframe.style.display = 'none';
                 document.body.appendChild(iframe);
             }
-            iframe.src = GLOBAL.baseUrl+'/rest/apps/'+this.model.attributes.id+'/sample?platform='+platformType;
+            iframe.src = GLOBAL.baseUrl+'apps/'+this.model.attributes.id+'/sample?platform='+platformType;
         },
         stopTour: function(){
             $('.tour').remove();

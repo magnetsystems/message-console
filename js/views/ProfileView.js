@@ -20,7 +20,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             'keyup .password-inputs input': 'validatePassword'
         },
         getProfile: function(cb){
-            AJAX('/rest/profile', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
+            AJAX('profile', 'GET', 'application/x-www-form-urlencoded', null, function(res, status, xhr){
                 cb(res);
             }, function(xhr, status, thrownError){
                 alert(xhr.responseText);
@@ -42,7 +42,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 });
             }
             delete data.userName;
-            AJAX('/rest/profile', 'PUT', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
+            AJAX('profile', 'PUT', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
                 me.$el.find('.password-inputs input').val('');
                 me.modal.modal('hide');
                 Alerts.General.display({

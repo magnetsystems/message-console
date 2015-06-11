@@ -76,7 +76,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         logout: function(e){
             e.preventDefault();
             this.options.eventPubSub.trigger('setHeaderNavigation');
-            AJAX('/rest/logout', 'POST', 'application/json', null, function(){
+            AJAX('logout', 'POST', 'application/json', null, function(){
                 Backbone.history.navigate('#/login');
             }, function(e){
                 Backbone.history.navigate('#/login');
@@ -268,7 +268,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                         loader.show();
                         $.ajax({
                             type        : 'POST',
-                            url         : GLOBAL.baseUrl+'/rest/submitFeedback',
+                            url         : GLOBAL.baseUrl+'submitFeedback',
                             data        : {
                                 fullname     : name.val(),
                                 type         : type.val(),

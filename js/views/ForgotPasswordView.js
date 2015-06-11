@@ -22,7 +22,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 data.email = data.email.replace(re, '');
                 data.source = window.location.protocol+'//'+window.location.host;
                 me.options.eventPubSub.trigger('btnLoading', btn);
-                AJAX('/rest/forgotPassword', 'POST', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
+                AJAX('forgotPassword', 'POST', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
                     me.$el.find('input').val('');
                     Alerts.General.display({
                         title   : 'Password Reset Email Sent',

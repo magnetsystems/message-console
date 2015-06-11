@@ -15,7 +15,7 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
             // establish event pub/sub 
             this.eventPubSub = _.extend({}, Backbone.Events);
             // init HTTP request methods
-            this.httpreq = new HTTPRequest('/rest/');
+            this.httpreq = new HTTPRequest();
             if(utils.detectIE())  $.ajaxSetup({cache:false});
             // init model connector for REST
             this.mc = new ModelConnector(this.httpreq);
@@ -23,7 +23,7 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
                 hasInit : false
             };
             utils.setIndexOf();
-            this.setState(function(){});
+            //this.setState(function(){});
             this.GLOBAL = {};
             // init site views
             var gv = new GlobalView({opts:this.opts, eventPubSub:this.eventPubSub});
@@ -39,17 +39,17 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
             Backbone.history.start();
         },
         routes: {
-            ''                  : 'messaging',
-            'login'             : 'login',
-            'register'          : 'register',
-            'complete-register' : 'completeRegister',
-            'forgot-password'   : 'forgotPassword',
-            'reset-password'    : 'resetPassword',
-            'messaging'         : 'messaging',
-            'messaging/:id'     : 'messaging',
+            ''                    : 'messaging',
+            'login'               : 'login',
+            'register'            : 'register',
+            'complete-register'   : 'completeRegister',
+            'forgot-password'     : 'forgotPassword',
+            'reset-password'      : 'resetPassword',
+            'messaging'           : 'messaging',
+            'messaging/:id'       : 'messaging',
             'messaging/:id/:view' : 'messaging',
-            'profile'           : 'profile',
-            '*notFound'         : 'messaging'
+            'profile'             : 'profile',
+            '*notFound'           : 'messaging'
         },
         login: function(callback){
             var me = this;
@@ -104,10 +104,7 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
         setState: function(cb){
             var me = this;
             if(me.opts.hasInit) return cb();
-            $.ajax({
-                type : 'GET',
-                url  : '/rest/status'
-            }).done(function(res){
+            AJAX('status', 'GET', 'application/json', null, function(res, status, xhr){
                 switch(res.platform){
                     case 'init': {
                         return window.location.href = '/wizard';
@@ -121,11 +118,20 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
                         break;
                     }
                 }
+                if(res.serverType == 'single'){
+                    $('.admin-only-item').remove();
+                    $('.advanced-settings-view-link').removeClass('advanced-settings-view-link');
+                }
                 if(res.emailEnabled){
                     me.opts.emailEnabled = res.emailEnabled;
                 }
                 me.opts.hasInit = true;
                 cb();
+            }, function(xhr){
+                if(xhr.status == 404 && GLOBAL.baseUrl != '/js/rest/'){
+                    GLOBAL.baseUrl = '/js/rest/';
+                    me.setState(cb);
+                }
             });
         },
         handleEmailDisabled: function(){

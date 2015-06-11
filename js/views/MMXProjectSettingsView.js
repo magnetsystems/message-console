@@ -111,7 +111,7 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
                     sizeLimit         : 500000
                 },
                 eventPubSub : this.options.eventPubSub,
-                path        : '/rest/apps/'+this.model.attributes.id+'/uploadAPNSCertificate',
+                path        : GLOBAL.baseUrl+'apps/'+this.model.attributes.id+'/uploadAPNSCertificate',
                 uploadButtonText : 'Select a file'
             });
             if(this.model.attributes.apnsCertUploaded){
@@ -147,7 +147,7 @@ define(['jquery', 'backbone', 'views/UploadView'], function($, Backbone, UploadV
             if(!$.trim(me.uploadAPNSModal.find('input[name="apnsCertPassword"]').val()).length){
                 return utils.showError(me.uploadAPNSModal, 'apnsCertPassword', 'APNS Password is required, and must match the APNS certificate.');
             }
-            me.options.eventPubSub.trigger('uploadAPNSCertFile', '/rest/apps/'+me.model.attributes.id+'/uploadAPNSCertificate', {
+            me.options.eventPubSub.trigger('uploadAPNSCertFile', GLOBAL.baseUrl+'apps/'+me.model.attributes.id+'/uploadAPNSCertificate', {
                 apnsCertPassword : me.getAPNSCertPassword()
             });
         },

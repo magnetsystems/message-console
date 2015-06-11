@@ -36,7 +36,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         completeRegistration: function(btn, token, data){
             var me = this;
             me.options.eventPubSub.trigger('btnLoading', btn);
-            AJAX('/rest/users/'+token+'/completeRegistration', 'POST', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
+            AJAX('users/'+token+'/completeRegistration', 'POST', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
                 Backbone.history.navigate('#/login');
                 Alerts.General.display({
                     title   : 'Registration Completed',

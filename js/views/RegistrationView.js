@@ -23,7 +23,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 data.companyName = 'magnet';
                 data.source = window.location.protocol+'//'+window.location.host;
                 me.options.eventPubSub.trigger('btnLoading', btn);
-                AJAX('/rest/startRegistration', 'POST', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
+                AJAX('startRegistration', 'POST', 'application/x-www-form-urlencoded', data, function(res, status, xhr){
                     me.$el.find('input').val('');
                     var msg = {
                         title   : 'Registration Submitted Successfully',

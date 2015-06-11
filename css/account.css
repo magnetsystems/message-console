@@ -109,6 +109,9 @@ div.centered{margin:0 auto}
 .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle){border-bottom-right-radius:0;border-top-right-radius:0}
 #mmx-settings .glyphicon-remove{cursor:pointer}
 
+/* mmx advanced */
+#mmx-advanced .form-group{margin:0}
+.advanced-settings-view-link{display:none !important}
 
 /* mmx test */
 #mmx-test .form-group .col-md-2 .button-group{margin-top:25px}

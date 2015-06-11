@@ -1,7 +1,9 @@
 define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView', 'views/MMXProjectUsersView', 'views/MMXProjectEndpointsView',
-    'views/MMXProjectSettingsView', 'views/MMXProjectMessagesView', 'views/MMXProjectNotificationsView', 'views/MMXProjectTopicsView', 'views/MMXProjectQuickstartView'],
+    'views/MMXProjectSettingsView', 'views/MMXProjectMessagesView', 'views/MMXProjectNotificationsView', 'views/MMXProjectTopicsView',
+    'views/MMXProjectQuickstartView', 'views/MMXAdvancedView'],
     function($, Backbone, AppModel, MMXProjectDashboardView, MMXProjectUsersView, MMXProjectEndpointsView,
-     MMXProjectSettingsView, MMXProjectMessagesView, MMXProjectNotificationsView, MMXProjectTopicsView, MMXProjectQuickstartView){
+     MMXProjectSettingsView, MMXProjectMessagesView, MMXProjectNotificationsView, MMXProjectTopicsView,
+     MMXProjectQuickstartView, MMXAdvancedView){
     var View = Backbone.View.extend({
         el: '#mmx-active-project-container',
         initialize: function(options){
@@ -15,6 +17,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
             var ppv = new MMXProjectNotificationsView(options);
             var ptv = new MMXProjectTopicsView(options);
             var pqv = new MMXProjectQuickstartView(options);
+            var av = new MMXAdvancedView(options);
             me.options = options;
             me.model = new AppModel();
             me.options.eventPubSub.bind('initMMXProject', function(params){

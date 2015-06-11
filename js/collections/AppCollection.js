@@ -3,6 +3,13 @@ define(["jquery", "backbone", "models/AppModel"], function($, Backbone, AppModel
         model: AppModel,
         urlRoot: 'apps',
         parse: function(res){
+            if(res.data){
+                for(var i=res.data.length;i--;){
+                    res.data[i].gcm = res.data[i].gcm || {};
+                    res.data[i].id = res.data[i].appId;
+                    res.data[i].magnetId = res.data[i].appId;
+                }
+            }
             return res.data;
         },
         iwhere: function(key, val){
