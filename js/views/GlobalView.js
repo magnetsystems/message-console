@@ -182,7 +182,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             e.preventDefault();
             var dom = $('#collapsible-menu-list > div > a.active');
             var activeView;
-            var baseUrl = 'https://www.magnet.com/documentation/message/latest/guide/';
+            var baseUrl = 'https://www.magnet.com/documentation/message/1.0.2/guide/';
             if(dom.length){
                 activeView = dom.attr('href').replace('#', '');
                 switch(activeView){
