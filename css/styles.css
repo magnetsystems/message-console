@@ -111,6 +111,7 @@ input.form-control, select.form-control{margin-bottom:5px}
 /* panels */
 .app-view > .panel, .centered-wrapper > .panel{border:solid 1px #aaa;width:90%;max-width:450px;height:300px;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;padding:10px 25px}
 #login-container .centered-wrapper > .panel, #messaging .centered-wrapper > .panel{height:270px}
+#loggedout-container .centered-wrapper > .panel{height:192px}
 #admin #login-container .centered-wrapper > .panel{height:220px}
 #register-container .centered-wrapper > .panel{height:290px}
 #forgotpassword-container .centered-wrapper > .panel{height:200px}

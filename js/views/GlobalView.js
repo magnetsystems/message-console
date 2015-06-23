@@ -51,6 +51,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         events: {
             'click .goBack': 'goBack',
             'click #logout-btn': 'logout',
+            'click #gotoauthurl-btn' : 'goToAuthUrl',
             'click #toggle-collapsible-menu': 'toggleCollapseMenu',
             'click .repeater-list-items td .glyphicon-plus': 'toggleRow',
             'click .repeater-list-items td .glyphicon-minus': 'toggleRow',
@@ -366,6 +367,11 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(utils.detectIE()){
                 $('#footer').css('position','relative').remove().appendTo($('.view-wrapper.fullpos'));
             }
+        },
+        goToAuthUrl: function(e){
+            e.preventDefault();
+            if(GLOBAL.serverType == 'hosted' && GLOBAL.authUrl)
+                window.location.href = GLOBAL.authUrl;
         }
     });
     return View;

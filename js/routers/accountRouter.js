@@ -53,7 +53,10 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
         },
         login: function(callback){
             var me = this;
-            me.eventPubSub.trigger('resetGlobalPages', 'login-container');
+            if(GLOBAL.serverType == 'hosted' && GLOBAL.authUrl)
+                me.eventPubSub.trigger('resetGlobalPages', 'loggedout-container');
+            else
+                me.eventPubSub.trigger('resetGlobalPages', 'login-container');
             me.eventPubSub.trigger('initLogin', callback);
         },
         register: function(callback){
