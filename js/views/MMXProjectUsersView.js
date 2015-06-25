@@ -316,7 +316,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                     xhr.responseText = 'A server error has occurred. Please check the server logs.';
                 }
                 alert(xhr.responseText);
-            }, null, {
+            }, [{
+                name : 'appAPIKey',
+                val  : me.model.attributes.appAPIKey
+            }], {
                 btn : btn
             });
         },
@@ -359,7 +362,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                 delete me.activeUser;
             }, function(xhr){
                 alert(xhr.responseText);
-            }, null, {
+            }, [{
+                name : 'appAPIKey',
+                val  : me.model.attributes.appAPIKey
+            }], {
                 btn : btn
             });
         },
@@ -403,7 +409,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                     });
                 }, function(xhr){
                     alert(xhr.responseText);
-                });
+                }, [{
+                    name : 'appAPIKey',
+                    val  : me.model.attributes.appAPIKey
+                }]);
             });
         },
         showSendMessageModal: function(e){
