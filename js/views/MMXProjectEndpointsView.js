@@ -297,7 +297,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             this.sendMessageModal.find('.message-push-history').html('');
             this.sendMessageModal.find('input[name="message-type"][value="message"]').prop('checked', true);
             if(!this.activeDevice.clientToken){
-                this.sendMessageModal.find('input[name="message-type"][value="push"]').closest('.radio').addClass('disabled');
+                this.sendMessageModal.find('input[name="message-type"][value="push"], input[name="message-type"][value="ping"]').closest('.radio').addClass('disabled');
                 pushActivated = false;
             }
             this.sendMessageModal.find('.user-placeholder').html('<b>User:</b> '+this.activeDevice.ownerId);

@@ -28,19 +28,19 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">
-                <img src="images/heading.png" />
+                <img src="images/heading_sandbox.png" />
                 <span class="project-name-holder"></span>
             </a>
         </div>
         <div id="user-nav" class="collapse navbar-collapse">
             <ul id="main-nav-menu" class="mmx-nav nav navbar-nav navbar-right" style="display:none">
-                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#dashboard">App Dashboard</a></li>
+                <li><a href="#quickstart">Getting Started</a></li>
                 <li><a href="#endpoints">Endpoints</a></li>
                 <li><a href="#users">Users</a></li>
                 <li><a href="#messages">Message Log</a></li>
                 <li><a href="#notifications">Push Log</a></li>
                 <li><a href="#topics">Topics</a></li>
-                <li><a href="#quickstart">Quickstart</a></li>
                 <li class="advanced-settings-view-link"><a href="#settings">Settings</a></li>
                 <li style="display:none"><a href="#advanced">Advanced</a></li>
                 <li><a href="//www.magnet.com/documentation/message/1.0.2/guide/" target="_blank">Documentation</a></li>
@@ -221,14 +221,21 @@
 
 <div id="mmx-container" class="app-view table-layout fullpos" style="display:none">
     <div id="collapsible-menu-list" class="table-cell" style="width:0;display:none">
+        <div class="same-line clearfix">
+            <button id="create-messaging-app-modal" class="same-line-button btn btn-primary glyphicon glyphicon-plus pull-right"></button>
+            <div class="same-line-control">
+                <select id="mmx-app-list" class="form-control"></select>
+            </div>
+        </div>
+        <hr />
         <div class="mmx-nav list-group">
-            <a class="list-group-item" href="#dashboard"><i class="fa fa-dashboard"></i>Dashboard</a>
+            <a class="list-group-item" href="#dashboard"><i class="fa fa-dashboard"></i>App Dashboard</a>
+            <a class="list-group-item" href="#quickstart"><i class="fa fa-desktop"></i>Getting Started</a>
             <a class="list-group-item" href="#endpoints"><i class="fa fa-list"></i>Endpoints</a>
             <a class="list-group-item" href="#users"><i class="fa fa-list"></i>Users</a>
             <a class="list-group-item" href="#messages"><i class="fa fa-area-chart"></i>Message Log</a>
             <a class="list-group-item" href="#notifications"><i class="fa fa-area-chart"></i>Push Log</a>
             <a class="list-group-item" href="#topics"><i class="fa fa-edit"></i>Topics</a>
-            <a class="list-group-item" href="#quickstart"><i class="fa fa-desktop"></i>Quickstart</a>
             <a class="list-group-item" href="#settings"><i class="fa fa-cog"></i>Settings</a>
             <a class="list-group-item advanced-settings-view-link" href="#advanced"><i class="fa fa-cogs"></i>Advanced</a>
             <a class="list-group-item" href="//www.magnet.com/documentation/message/1.0.2/guide/" target="_blank"><i class="fa fa-book"></i>Documentation</a>
@@ -243,10 +250,10 @@
                         <div class="bc-title"></div>
                     </div>
                 </div>
-                <div class="col-sm-6 same-line clearfix">
-                    <button id="create-messaging-app-modal" class="same-line-button btn btn-primary glyphicon glyphicon-plus"></button>
+                <div class="col-sm-6 same-line clearfix" style="display:none">
+                    <button id="create-messaging-app-modal2" class="same-line-button btn btn-primary glyphicon glyphicon-plus pull-right"></button>
                     <div class="same-line-control">
-                        <select id="mmx-app-list" class="form-control"></select>
+                        <select id="mmx-app-list2" class="form-control"></select>
                     </div>
                 </div>
             </div>
@@ -320,7 +327,7 @@
             <div class="form-group clearfix">
                 <label>App Name <span class="required">*</span></label>
                 <div class="controls">
-                    <input type="text" class="form-control" name="name" maxlength="40" value="<%- model.attributes.name %>">
+                    <input type="text" <% if(userType == 'preview'){ %>readonly="readonly"<% } %> class="form-control" name="name" maxlength="40" value="<%- model.attributes.name %>">
                 </div>
             </div>
             <div class="form-group clearfix">
@@ -345,7 +352,7 @@
             <div class="form-group clearfix">
                 <label>Anonymous Access Secret</label>
                 <div class="controls controls-grouped">
-                    <input type="text" class="form-control" name="guestSecret" value="<%- model.attributes.guestSecret || model.attributes.guestSecret %>">
+                    <input type="text" <% if(userType == 'preview'){ %>readonly="readonly"<% } %> class="form-control" name="guestSecret" value="<%- model.attributes.guestSecret || model.attributes.guestSecret %>">
                     <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="
                     Used for creating user account from the mobile device">
                     </span>
@@ -1286,160 +1293,82 @@
 
 <script id="MessagingQuickstartTmpl" type="text/template">
 
-    <p class="light">These step-by-step tutorials will help you configure and use messaging in your app.</p>
+    <div>
 
-    <div class="centered">
-        <div class="form-group">
-            <span>Choose your platform:</span><br />
-            <div class="btn-group btn-toggle clearfix" did="platform">
-                <button class="btn btn-sm btn-primary active" type="button" did="android">
-                    <i class="fa fa-2x fa-android"></i>
-                </button>
-                <button class="btn btn-sm btn-default" type="button" did="ios">
-                    <i class="fa fa-2x fa-apple"></i>
-                </button>
-            </div>
-        </div>
-        <div class="form-group">
-            <span>Choose your app type:</span><br />
-            <div class="btn-group btn-toggle clearfix" did="type">
-                <button class="btn same-width-button btn-sm btn-primary active" type="button" did="new">New App</button>
-                <button class="btn same-width-button btn-sm btn-default" type="button" did="existing">Existing App</button>
-            </div>
-        </div>
-    </div>
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#mmx-quickstart-android-new" aria-controls="mmx-quickstart-android-new" role="tab" data-toggle="tab">
+                <i class="fa fa-2x fa-android"></i>
+            </a></li>
+            <li role="presentation"><a href="#mmx-quickstart-ios-new" aria-controls="mmx-quickstart-ios-new" role="tab" data-toggle="tab">
+                <i class="fa fa-2x fa-apple"></i>
+            </a></li>
+        </ul>
 
-    <div role="tabpanel">
-        <div class="tab-content">
-
+        <div class="tab-content bordered">
             <div role="tabpanel" class="tab-pane active" id="mmx-quickstart-android-new">
-
-                <table class="table table-striped">
-                    <tr>
-                        <td></td>
-                        <td>
-                            <h4>Prerequisites</h4>
-                            <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">Install Android Studio</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="numbering">1.</td>
-                        <td>
-                            <a class="download-compiled-source" did="android" href="#">Download the Magnet Message Quickstart Android app</a> and import it into Android Studio.
-                        </td>
-                    </tr>
-                    <tr class="mmx-nav">
-                        <td class="numbering">2.</td>
-                        <td>Verify the configuration file, "res/raw/quickstart.properties" included in the project matches the values of your app settings as shown in the <a href="#settings">Settings</a> menu.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="numbering">3.</td>
-                        <td>Build and run the Android Quickstart App on Android emulator or mobile device.</td>
-                    </tr>
-                </table>
+                <ol class="mmx-nav">
+                    <li><a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">Install Android Studio</a></li>
+                    <li>Download the <a class="download-compiled-source" did="android" href="#">Quickstart Android App</a></li>
+                    <li>Import the App into Android Studio</li>
+                    <li>Check the configuration file, "res/raw/quickstart.properties", has imported the app settings
+                        from the settings tabs. You can download a new file from the <a href="#settings">Settings</a> tab at any time.</li>
+                    <li>Run the app. (either in the Android emulator or install the app on a device)</li>
+                    <li>Check out the actions below for next steps</li>
+                </ol>
             </div>
-
-            <div role="tabpanel" class="tab-pane" id="mmx-quickstart-android-existing">
-                <table class="table table-striped">
-                    <tr>
-                        <td></td>
-                        <td>
-                            <h4>Prerequisites</h4>
-                            <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">Install Android Studio</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="numbering">1.</td>
-                        <td>
-                            <p>Add the Magnet Message client library as a dependency to the Gradle build script as shown below:</p>
-<pre>repositories {
-    maven {
-        url "https://repo.magnet.com/artifactory/public"
-    }
-}
-dependencies {
-    compile ("com.magnet.mmx:magnet-mmx-client-android:1.0.2@aar") {
-        transitive=true
-    }
-}</pre>
-                        </td>
-                    </tr>
-                    <tr class="mmx-nav">
-                        <td class="numbering">2.</td>
-                        <td>Add your app settings as shown in the <a href="#settings">Settings</a> menu.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="numbering">3.</td>
-                        <td>Build and run your app on Android emulator or mobile device.</td>
-                    </tr>
-                </table>
-            </div>
-
             <div role="tabpanel" class="tab-pane" id="mmx-quickstart-ios-new">
-                <table class="table table-striped">
-                    <tr>
-                        <td></td>
-                        <td>
-                            <h4>Prerequisites</h4>
-                            <a href="https://developer.apple.com/xcode/downloads/" target="_blank">Install Xcode</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="numbering">1.</td>
-                        <td>
-                            <a class="download-compiled-source" did="ios" href="#">Download the Magnet Message Quickstart iOS app</a> and open <b>QuickStart.xcworkspace</b> in Xcode.
-                        </td>
-                    </tr>
-                    <tr class="mmx-nav">
-                        <td class="numbering">2.</td>
-                        <td>Verify the <b>Configurations.plist</b> file included in the project matches the values for your app settings as shown in the <a href="#settings">Settings</a> menu.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="numbering">3.</td>
-                        <td>Build and run the app in Xcode.
-                        </td>
-                    </tr>
-                </table>
+                <ol class="mmx-nav">
+                    <li><a href="https://developer.apple.com/xcode/downloads/" target="_blank">Install Xcode</a></li>
+                    <li>Download the <a class="download-compiled-source" did="ios" href="#">Quickstart iOS App</a></li>
+                    <li>Verify the "Configurations.plist" file included in the project matches the values for your
+                        app settings as shown in the <a href="#settings">Settings</a> tab.</li>
+                    <li>Build and run the app in Xcode. (either in the Simulator or install the app on a device)</li>
+                    <li>Check out the actions below for next steps</li>
+                </ol>
             </div>
-
-            <div role="tabpanel" class="tab-pane" id="mmx-quickstart-ios-existing">
-                <table class="table table-striped">
-                    <tr>
-                        <td></td>
-                        <td>
-                            <h4>Prerequisites</h4>
-                            <a href="https://developer.apple.com/xcode/downloads/" target="_blank">Install Xcode</a><br />
-                            <a href="http://cocoapods.org/" target="_blank">Install and set up CocoaPods</a> (<a href="//www.magnet.com/developer/ios/getting_started_ios/cocoapods-setup/" target="_blank">Set up instructions</a>)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="numbering">1.</td>
-                        <td>
-                            Add the following lines to your podfile.
-                            <pre>pod 'MMX', '~> 1.0.2'</pre>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="numbering">2.</td>
-                        <td>If you are using a Swift project you will need to add MMX.h to your bridging header.
-                            <pre>#import &lt;MMX.h&gt;</pre>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
         </div>
+
     </div>
 
-    <h4>More Actions</h4>
-    <div class="row-fluid">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  text-default well">
-            <h5>Learn More</h5>
-            <p>See the <a href="//www.magnet.com/documentation/message/1.0.2/guide/" target="_blank" title="Magnet Message Developer Guide">Magnet Message Developer Guide</a> to learn more about messaging capabilities.</p>
-            </p></div>
+    <h4>Next Steps</h4>
+
+    <div class="quickstart-next-steps row-fluid equal-height">
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    Using the Quickstart App
+                </div>
+                <div class="panel-body">
+                    The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny
+                    of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the
+                    valley of darkness, for he is truly his brother's keeper and the finder of lost children.
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    Take a Tour
+                </div>
+                <div class="panel-body">
+                    Learn about the different feature of Magnet's Sandbox.
+                    <div class="centered">
+                        <button class="btn btn-info btn-lg" disabled="disabled">Start Tour</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    Developer Guide
+                </div>
+                <div class="panel-body">
+                    <p>Need help? Want to learn more?</p>
+                    <p>Check out the <a href="//www.magnet.com/documentation/message/1.0.2/guide/" target="_blank" title="Magnet Message Developer Guide">developer guide</a></p>
+                </div>
+            </div>
+        </div>
     </div>
 
 </script>

@@ -128,6 +128,12 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
                     GLOBAL.authUrl = res.authUrl;
                     GLOBAL.serverType = res.serverType;
                     $('#user-identity').attr('data-content', "<div class='user-navigation-menu clearfix'><a href='#' id='logout-btn'><i class='fa fa-2x fa-sign-out'></i> Sign Out</a></div>");
+                    $('.placeholder-role').remove();
+                    $('.user-identity-section').css('margin-top', '7px');
+                    $('#user-identity .fa-cog').remove();
+                    $('#user-navigation .separator').remove();
+                    $('#user-identity .caret').css('margin-top', '13px').css('margin-right', '10px');
+                    $('#mmx-contextual-doc-btn').remove();
                 }
                 if(res.emailEnabled){
                     me.opts.emailEnabled = res.emailEnabled;

@@ -33,7 +33,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                 me.showCollapseMenu();
             });
             options.eventPubSub.bind('getUserProfile', function(callback){
-                me.getProfile(callback);
+                me.getProfile(function(){
+                    me.bootstrapRole();
+                    callback();
+                });
             });
             $('#user-identity').popover({
                 placement : 'bottom',
@@ -93,7 +96,8 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         hideCollapseMenu: function(params){
             var btn = $('#toggle-collapsible-menu');
-            $('#collapsible-menu-list a').hide('fast');
+            var list = $('#collapsible-menu-list');
+            list.find('a, hr, .same-line').hide('fast');
             $('#collapsible-menu-list').animate({
                 width  : '1px'
             }, 500, function(){
@@ -104,9 +108,10 @@ define(['jquery', 'backbone'], function($, Backbone){
             if($(window).width() < 786) return;
             var btn = $('#toggle-collapsible-menu');
             $('#collapsible-menu-list').animate({
-                width  : '200px'
+                width  : '240px'
             }, 500, function(){
-                $('#collapsible-menu-list a').show('fast');
+                var list = $('#collapsible-menu-list');
+                list.find('a, hr, .same-line').show('fast');
                 btn.removeClass('fa-arrow-circle-o-right').addClass('fa-arrow-circle-o-left');
             });
         },
@@ -372,6 +377,12 @@ define(['jquery', 'backbone'], function($, Backbone){
             e.preventDefault();
             if(GLOBAL.serverType == 'hosted' && GLOBAL.authUrl)
                 window.location.href = GLOBAL.authUrl;
+        },
+        bootstrapRole: function(){
+            if(this.options.opts.user.userType == 'preview'){
+                $('#create-messaging-app-modal, #create-messaging-app-modal2').css('visibility', 'hidden');
+                $('#mmx-settings .form-group input[name="name"]').attr('readonly', true);
+            }
         }
     });
     return View;

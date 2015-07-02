@@ -55,7 +55,9 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
         },
         events: {
             'click #create-messaging-app-modal': 'showCreateMessagingAppModal',
-            'change #mmx-app-list': 'onSelectApp'
+            'click #create-messaging-app-modal2': 'showCreateMessagingAppModal',
+            'change #mmx-app-list': 'onSelectApp',
+            'change #mmx-app-list2': 'onSelectApp2'
         },
         showCreateMessagingAppModal: function(){
             if(this.options.opts.tour) this.options.opts.tour.end();
@@ -66,7 +68,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
         getApps: function(cb, isSubView){
             var me = this;
             if(me.col.length && isSubView) return cb();
-            $('#mmx-app-list').html('');
+            $('#mmx-app-list, #mmx-app-list2').html('');
             me.col.fetch({
                success: function(){
                    cb();
@@ -89,7 +91,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
             });
         },
         renderAppList: function(id){
-            $('#mmx-app-list').html(_.template($('#MessagingAppsListView').html(), {
+            $('#mmx-app-list, #mmx-app-list2').html(_.template($('#MessagingAppsListView').html(), {
                 col : this.col.models
             }));
         },
@@ -116,7 +118,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
         },
         selectProject: function(id, view){
             $('#mmx-summary-container').hide();
-            $('#mmx-app-list').val(id);
+            $('#mmx-app-list, #mmx-app-list2').val(id);
             this.options.eventPubSub.trigger('initMMXProject', {
                 model : this.col.get(id),
                 view  : view
@@ -124,6 +126,10 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
         },
         onSelectApp: function(){
             var appId = $('#mmx-app-list').val();
+            if(appId) Backbone.history.navigate('#/messaging/'+appId);
+        },
+        onSelectApp2: function(){
+            var appId = $('#mmx-app-list2').val();
             if(appId) Backbone.history.navigate('#/messaging/'+appId);
         }
     });

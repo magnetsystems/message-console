@@ -32,10 +32,12 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
 //                    return (curr == 78 || curr == 112) ? (curr - 35) : curr + 'px';
 //                });
                 me.setTab(params.view || 'dashboard');
-                if(me.options.opts.newMMXUser === true){
-                    me.options.opts.newMMXUser = false;
-                    me.options.opts.tour = MMXInitialAppTour(params.model.attributes.id);
-                }
+                //if(me.options.opts.newMMXUser === true){
+                //    me.options.opts.newMMXUser = false;
+                //    me.options.opts.tour = MMXInitialAppTour(params.model.attributes.id);
+                //}
+                console.log(options);
+                $('#breadcrumb .same-line').hide();
                 if(me.options.opts.tour && params.view && params.view != 'quickstart'){
                     $('.tour').remove();
                     me.options.opts.tour.end();
