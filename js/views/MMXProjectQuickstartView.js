@@ -9,6 +9,9 @@ define(['jquery', 'backbone'], function($, Backbone){
                     title : 'Getting Started with '+model.attributes.name
                 });
                 me.model = model;
+                me.sampleId = 'Quickstart';
+                if(['quickstart', 'rpsls', 'soapbox'].indexOf(me.sampleId.toLowerCase()) != -1)
+                    me.sampleId = me.model.attributes.name;
                 me.render();
             });
         },
@@ -29,7 +32,8 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         render: function(){
             this.$el.html(_.template($('#MessagingQuickstartTmpl').html(), {
-                model : this.model
+                model   : this.model,
+                appName : this.sampleId
             }));
         },
         downloadCompiledSource: function(e){
@@ -43,7 +47,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 iframe.style.display = 'none';
                 document.body.appendChild(iframe);
             }
-            iframe.src = GLOBAL.baseUrl+'apps/'+this.model.attributes.id+'/sample?platform='+platformType;
+            iframe.src = GLOBAL.baseUrl+'apps/'+this.model.attributes.id+'/sample?platform='+platformType+'&sampleId='+this.sampleId.toLowerCase();
         },
         stopTour: function(){
             $('.tour').remove();

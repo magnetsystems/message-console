@@ -460,11 +460,11 @@
                     <div class="row-fluid">
                         <div class="col-sm-6">
                             <label>Android</label><br />
-                            <a href="/rest/apps/<%- model.attributes.id %>/sampleConfig?platform=android" class="btn btn-primary">Download .properties</a>
+                            <a href="/rest/apps/<%- model.attributes.id %>/sampleConfig?platform=android&sampleId=<%- appName %>" class="btn btn-primary">Download .properties</a>
                         </div>
                         <div class="col-sm-6">
                             <label>iOS</label><br />
-                            <a href="/rest/apps/<%- model.attributes.id %>/sampleConfig?platform=ios" class="btn btn-primary">Download .plist</a>
+                            <a href="/rest/apps/<%- model.attributes.id %>/sampleConfig?platform=ios&sampleId=<%- appName %>" class="btn btn-primary">Download .plist</a>
                         </div>
                     </div>
                 </div>
@@ -1308,9 +1308,9 @@
             <div role="tabpanel" class="tab-pane active" id="mmx-quickstart-android-new">
                 <ol class="mmx-nav">
                     <li><a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">Install Android Studio</a></li>
-                    <li>Download the <a class="download-compiled-source" did="android" href="#">Quickstart Android App</a></li>
+                    <li>Download the <a class="download-compiled-source" did="android" href="#"><%- appName %> Android App</a></li>
                     <li>Import the App into Android Studio</li>
-                    <li>Check the configuration file, "res/raw/quickstart.properties", has imported the app settings
+                    <li>Check the configuration file, "res/raw/<%- appName.toLowerCase() %>.properties", has imported the app settings
                         from the settings tabs. You can download a new file from the <a href="#settings">Settings</a> tab at any time.</li>
                     <li>Run the app. (either in the Android emulator or install the app on a device)</li>
                     <li>Check out the actions below for next steps</li>
@@ -1319,7 +1319,7 @@
             <div role="tabpanel" class="tab-pane" id="mmx-quickstart-ios-new">
                 <ol class="mmx-nav">
                     <li><a href="https://developer.apple.com/xcode/downloads/" target="_blank">Install Xcode</a></li>
-                    <li>Download the <a class="download-compiled-source" did="ios" href="#">Quickstart iOS App</a></li>
+                    <li>Download the <a class="download-compiled-source" did="ios" href="#"><%- appName %> iOS App</a></li>
                     <li>Verify the "Configurations.plist" file included in the project matches the values for your
                         app settings as shown in the <a href="#settings">Settings</a> tab.</li>
                     <li>Build and run the app in Xcode. (either in the Simulator or install the app on a device)</li>
@@ -1336,7 +1336,7 @@
         <div class="col-md-4">
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    Using the Quickstart App
+                    Using the <%- appName %> App
                 </div>
                 <div class="panel-body">
                     The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny
