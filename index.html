@@ -28,7 +28,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">
-                <img src="images/heading_sandbox.png" />
+                <img src="images/heading.png" />
                 <span class="project-name-holder"></span>
             </a>
         </div>
@@ -386,7 +386,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
+        <div id="mmx-settings-push-settings-container" class="col-sm-6">
             <div class="form-group clearfix">
                 <span class="form-caption">GCM</span>
                 <div class="well well-default clearfix">
@@ -454,6 +454,8 @@
                     </form>
                 </div>
             </div>
+        </div>
+        <div id="mmx-settings-configs-container" class="col-sm-6">
             <div class="form-group clearfix">
                 <span class="form-caption">DOWNLOAD CONFIGS</span>
                 <div class="well well-default clearfix">
@@ -1293,7 +1295,7 @@
 
 <script id="MessagingQuickstartTmpl" type="text/template">
 
-    <div>
+    <div id="mmx-quickstart-container">
 
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#mmx-quickstart-android-new" aria-controls="mmx-quickstart-android-new" role="tab" data-toggle="tab">
@@ -1306,24 +1308,30 @@
 
         <div class="tab-content bordered">
             <div role="tabpanel" class="tab-pane active" id="mmx-quickstart-android-new">
+                <h4>Prerequisites</h4>
+                <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">Install Android Studio</a>
+
+                <h4>Build the App:</h4>
                 <ol class="mmx-nav">
-                    <li><a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">Install Android Studio</a></li>
-                    <li>Download the <a class="download-compiled-source" did="android" href="#"><%- appName %> Android App</a></li>
-                    <li>Import the App into Android Studio</li>
-                    <li>Check the configuration file, "res/raw/<%- appName.toLowerCase() %>.properties", has imported the app settings
-                        from the settings tabs. You can download a new file from the <a href="#settings">Settings</a> tab at any time.</li>
-                    <li>Run the app. (either in the Android emulator or install the app on a device)</li>
-                    <li>Check out the actions below for next steps</li>
+                    <li>Download the <a class="download-compiled-source" did="android" href="#">Magnet Message <%- appName %> Android App</a>
+                        and import it into Android Studio.</li>
+                    <li>Download the configuration file "<%- appName.toLowerCase() %>.properties" from the <a href="#settings">Settings</a>
+                        menu of the Magnet Message web interface and place it in the "&lt;project root&gt;/app/src/main/res/raw" folder.</li>
+                    <li>Build/install the <%- appName %> Android app on an emulator or Android device.</li>
+                    <li>Check out the actions below for next steps.</li>
                 </ol>
             </div>
             <div role="tabpanel" class="tab-pane" id="mmx-quickstart-ios-new">
+                <h4>Prerequisites</h4>
+                <a href="https://developer.apple.com/xcode/downloads/" target="_blank">Install Xcode</a>
+
+                <h4>Build the App:</h4>
                 <ol class="mmx-nav">
-                    <li><a href="https://developer.apple.com/xcode/downloads/" target="_blank">Install Xcode</a></li>
-                    <li>Download the <a class="download-compiled-source" did="ios" href="#"><%- appName %> iOS App</a></li>
-                    <li>Verify the "Configurations.plist" file included in the project matches the values for your
-                        app settings as shown in the <a href="#settings">Settings</a> tab.</li>
-                    <li>Build and run the app in Xcode. (either in the Simulator or install the app on a device)</li>
-                    <li>Check out the actions below for next steps</li>
+                    <li>Download the <a class="download-compiled-source" did="ios" href="#">Magnet Message <%- appName %> iOS App</a> and open the project in Xcode.</li>
+                    <li>Download the configuration file. "Configurations.plist" from the <a href="#settings">Settings</a>
+                        menu of the Magnet Message web interface and place it in the "&lt;project root&gt;/<%- appName %>/" folder.</li>
+                    <li>Build and run the app in the simulator or on a mobile device.</li>
+                    <li>Check out the actions below for next steps.</li>
                 </ol>
             </div>
         </div>
@@ -1339,9 +1347,32 @@
                     Using the <%- appName %> App
                 </div>
                 <div class="panel-body">
-                    The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny
-                    of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the
-                    valley of darkness, for he is truly his brother's keeper and the finder of lost children.
+                    <% if(appName == 'Quickstart'){ %>
+                    <ol>
+                        <li>Upon launch, the app will connect to your server as “QuickstartUser1".</li>
+                        <li>Press the send button and your device will send a message to yourself using the in-app messaging functionality.</li>
+                        <li>You should be able to send and receive in-app messages on your mobile device (or emulator/simulator).</li>
+                        <li>There are bots that will automatically respond to your message to simulate more users.</li>
+                    </ol>
+                    <% } %>
+                    <% if(appName == 'RPSLS'){ %>
+                    <ol>
+                        <li>Upon launch, the app will connect you automatically.</li>
+                        <li>Press the find Opponent button to see a list of players.</li>
+                        <li>Select a player and press the Invite button to send the opponent a request to play.</li>
+                        <li>Select one of the 5 options.</li>
+                        <li>See who won and who lost.</li>
+                    </ol>
+                    <% } %>
+                    <% if(appName == 'Soapbox'){ %>
+                    <ol>
+                        <li>Upon launch, the app will connect you automatically.</li>
+                        <li>Enter what you want for your username and password. Pressing login will save this information.</li>
+                        <li>Enter a message and Press the send button to send a message to yourself using the in-app messaging functionality.</li>
+                        <li>You should be able to send and receive in-app messages on your mobile device (or emulator/simulator).</li>
+                        <li>There are bots that will automatically respond to your message to simulate more users.</li>
+                    </ol>
+                    <% } %>
                 </div>
             </div>
         </div>
@@ -1351,9 +1382,9 @@
                     Take a Tour
                 </div>
                 <div class="panel-body">
-                    Learn about the different feature of Magnet's Sandbox.
+                    Learn about the different features of Magnet Message.
                     <div class="centered">
-                        <button class="btn btn-info btn-lg" disabled="disabled">Start Tour</button>
+                        <button id="mmx-start-console-tour" class="btn btn-info btn-lg">Start Tour</button>
                     </div>
                 </div>
             </div>

@@ -10,7 +10,7 @@ h5{font-weight:bold;font-size:13px;line-height:14px;margin-top:20px}
 pre{background-color:#efefef;border:1px solid rgba(0, 0, 0, 0.15);border-radius:0;font-size:12px;padding:7px}
 .button-group{margin:15px 0}
 .btn{border-radius:6px}
-.btn.btn-primary{border:solid 1px #0a394f;background-color:#036285}
+.btn.btn-primary{border:solid 1px #5e9959;background-color:#6cba66}
 /*.btn.disabled{background:#a9b2b8;border-color:#a9b2b8;opacity:1}*/
 .general-padding{padding:15px}
 .padding-sm{padding:7px 0}
@@ -42,6 +42,8 @@ pre{background-color:#efefef;border:1px solid rgba(0, 0, 0, 0.15);border-radius:
 #collapsible-menu-list .list-group-item.section{padding:5px 15px 7px}
 #collapsible-menu-list .list-group-item:hover{background:#efefef;color:#777}
 #collapsible-menu-list .list-group-item.active{background:#e0e0e0;color:#555}
+.tour-backdrop{opacity:0.55}
+.tour-tour-4-element{z-index:2000 !important}
 
 /* MAIN MENU */
 body > .navbar .container-fluid{padding-right:0}
@@ -64,7 +66,7 @@ body > .navbar .container-fluid{padding-right:0}
 html, body{background:#efefef;height:100%}
 .label, .navbar, .nav-tabs.two > li > a, .nav-tabs.three > li > a, .nav-tabs.four > li > a, .nav-tabs.five > li > a, .alert, .panel, .panel-group .panel{border-radius:0}
 #main-nav-menu > li > a{border-left: 1px solid #8c8c8c;font-size:15px}
-#breadcrumb{background:#fafbfc;color:#aaa;font-weight:300;font-size:22px;min-height:42px;position:absolute;width:100%;padding:4px 0px}
+#breadcrumb{background:#fafbfc;color:#aaa;font-weight:300;font-size:22px;min-height:42px;position:absolute;width:100%;padding:4px 0;top:0;left:0}
 #breadcrumb i, #breadcrumb .bc-title{float:left}
 #toggle-collapsible-menu{cursor:pointer;margin-right:10px;margin-top:4px}
 #collapsible-menu-list span a{text-indent:17px}

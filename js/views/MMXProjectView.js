@@ -32,20 +32,14 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
 //                    return (curr == 78 || curr == 112) ? (curr - 35) : curr + 'px';
 //                });
                 me.setTab(params.view || 'dashboard');
-                //if(me.options.opts.newMMXUser === true){
-                //    me.options.opts.newMMXUser = false;
-                //    me.options.opts.tour = MMXInitialAppTour(params.model.attributes.id);
-                //}
-                console.log(options);
                 $('#breadcrumb .same-line').hide();
-                if(me.options.opts.tour && params.view && params.view != 'quickstart'){
-                    $('.tour').remove();
-                    me.options.opts.tour.end();
-                }
                 me.options.eventPubSub.trigger('showCollapsibleMenu', {
                     mmxView : true
                 });
             });
+        },
+        events: {
+            'click #mmx-start-console-tour' : 'startMMXConsoleTour'
         },
         setTab: function(view){
             $('.mmx-nav a').removeClass('active');
@@ -59,6 +53,10 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
         },
         toUpper: function(str){
             return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+        },
+        startMMXConsoleTour: function(e){
+            e.preventDefault();
+            this.options.opts.tour = MMXMessagingTour(this.model.attributes.appId);
         }
     });
     return View;

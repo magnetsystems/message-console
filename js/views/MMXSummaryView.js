@@ -14,14 +14,11 @@ define(['jquery', 'backbone'], function($, Backbone){
                 me.render([]);
                 $('#breadcrumb .same-line').show();
                 $('#mmx-summary-container').show('fast');
+                me.options.opts.firstLogin = false;
                 if(!params.col.length && !me.options.opts.newMMXUser){
-                    me.options.opts.firstLogin = false;
                     return me.options.opts.tour = MMXNoAppTour();
-                }else{
-                    me.options.opts.firstLogin = false;
                 }
                 if(me.options.opts.newMMXUser === true){
-                    me.options.opts.newMMXUser = false;
                     var model = params.col.where({
                         name : 'Quickstart'
                     });

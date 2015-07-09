@@ -379,9 +379,15 @@ define(['jquery', 'backbone'], function($, Backbone){
                 window.location.href = GLOBAL.authUrl;
         },
         bootstrapRole: function(){
+            $('.placeholder-role').hide();
+            $('.user-identity-section').css('margin-top', '7px');
             if(this.options.opts.user.userType == 'preview'){
                 $('#create-messaging-app-modal, #create-messaging-app-modal2').css('visibility', 'hidden');
                 $('#mmx-settings .form-group input[name="name"]').attr('readonly', true);
+            }
+            if(this.options.opts.user.userType == 'admin'){
+                $('.placeholder-role').show();
+                $('.user-identity-section').css('margin-top', '0');
             }
         }
     });

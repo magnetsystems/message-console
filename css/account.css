@@ -2,21 +2,21 @@ div.centered{margin:0 auto}
 .no-padding{padding:0}
 .tour .btn{margin-bottom:11px}
 .toggling-password-input{position:relative}
-.toggling-password-input .glyphicon{cursor:pointer;color:#036285;display:block;font-size:20px;position:absolute;right:8px;top:8px;z-index:100}
+.toggling-password-input .glyphicon{cursor:pointer;color:#6cba66;display:block;font-size:20px;position:absolute;right:8px;top:8px;z-index:100}
 .colortext-info{color:#30708F}
 .colortext-danger{color:#a94442}
 .colortext-success{color:#449D44}
 .alert-container div.colortext{padding:3px 12px;font-size:11px;display:block;margin-top:-2px}
 .navbar.navbar-default .navbar-brand{padding:13px 0 0 17px;color:#8c8c8c;font-size:17px}
-.navbar.navbar-default .navbar-brand img{margin-right:-6px;margin-top:-6px;max-width:160px}
+.navbar.navbar-default .navbar-brand img{margin-right:-6px;margin-top:-12px;max-width:160px}
 
 /* user navigation */
 #user-navigation{position:absolute;right:0;top:7px;color:#aaa}
-#user-navigation .fa{color:#aaa;margin-top:5px}
+#user-navigation .fa{color:#fff;opacity:.7;margin-top:5px}
 #user-navigation .caret{color:#aaa;border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid}
 #user-navigation .action{cursor:pointer;outline:none}
 #user-navigation .fa-question-circle{margin-right:8px}
-#user-navigation .separator{width:1px;height:35px;background-color:#aaa}
+#user-navigation .separator{width:1px;height:35px;background-color:#fff;opacity:.7}
 #user-navigation > div{margin:0 6px;float:right}
 #user-navigation .popover-content{padding:0}
 .user-navigation-menu hr{margin:3px 0}
@@ -29,10 +29,11 @@ div.centered{margin:0 auto}
 #user-identity .caret, #page-select .caret{margin-top:-9px;color:#fff;opacity:.7}
 .page-selector{color:#fff;opacity:.7}
 .user-identity-section{margin:0 10px;text-align:right;color:#fff;opacity:.7}
-.user-identity-section .placeholder-role{color:#777}
+.user-identity-section .placeholder-role{color:#fff;opacity:.7}
 #page-select .page-selector{margin-top:7px;height:35px}
 #page-select .page-selector .caret{margin-top:0}
 .divide > div{float:right}
+#create-messaging-app-modal{margin-left:5px}
 
 /* overloads */
 #messaging .view-wrapper{padding:0 20px}
@@ -52,7 +53,7 @@ div.centered{margin:0 auto}
 #messaging .same-line button, #breadcrumb .same-line button{float:left;margin-right:5px}
 #messaging .same-line .same-line-control, #breadcrumb .same-line .same-line-control{overflow:hidden;min-width:140px}
 #messaging .radio.disabled label{opacity:.4}
-#messaging .btn.btn-primary{border:solid 1px #0a394f;background-color:#036285}
+#messaging .btn.btn-primary{border:solid 1px #3c8535;background-color:#6cba66}
 #messaging .label, .nav-tabs.two > li > a, #messaging .nav-tabs.three > li > a, #messaging .nav-tabs.four > li > a, #messaging .alert, #messaging .panel, #messaging .panel-group .panel{border-radius:4px}
 #messaging .repeater-header input.form-control, #messaging .repeater-header select.form-control{margin-bottom:5px;border-radius:4px}
 #messaging .app-view{background:#d9d9d9}

@@ -555,6 +555,202 @@ function MMXInitialAppTour(appId){
     return tour;
 }
 
+function pollUntilExists(sel, cb, failures){
+    var dom = $(sel);
+    failures = failures || 0;
+    if(failures > 16) return cb('timeout');
+    if(dom.length) return cb();
+    setTimeout(function(){
+        pollUntilExists(sel, cb, ++failures);
+    }, 500);
+}
+
+function MMXFirstTimeUserTour(){
+    var tour = new Tour({
+        storage : false,
+        orphan  : true,
+        backdropPadding : 8,
+        steps : [
+            {
+                element   : "#mmx-quickstart-container",
+                title     : "Welcome to your Magnet Sandbox!",
+                content   : "We made some sample apps for you. Follow the instructions here to learn how to send and receive messages using the Quickstart sample app.",
+                placement : "bottom",
+                backdrop  : true,
+                onNext    : function(){
+                    return;
+                },
+                template  : "<div class='popover tour'>\
+                    <div class='arrow'></div>\
+                <div class='popover-content'></div>\
+                <div class='popover-navigation'>\
+                    <button class='btn btn-primary' data-role='end'>Close</button>\
+                </div>\
+            </div>"
+            }
+        ]});
+    setTimeout(function(){
+        tour.init();
+        tour.start();
+    }, 1200);
+    return tour;
+}
+
+function MMXMessagingTour(appId){
+    var tour = new Tour({
+        storage : false,
+        orphan  : true,
+        backdropPadding : 4,
+        steps : [
+            {
+                element   : "#mmx-endpoints-list tr:eq(1)",
+                content   : "Here you can see the endpoints associated with your app.",
+                placement : "bottom",
+                backdrop  : true,
+                onNext    : function(){
+                    return;
+                },
+                template  : "<div class='popover tour'>\
+                    <div class='arrow'></div>\
+                <div class='popover-content'></div>\
+                <div class='popover-navigation'>\
+                    <button class='btn btn-primary' data-role='next'>Next »</button>\
+                </div>\
+            </div>"
+            },
+            {
+                element   : "#mmx-endpoints-list button[did='actions-sendmessage']",
+                content   : "Select a device and press the send message button to send that device a message from the server.",
+                placement : "bottom",
+                backdrop  : true,
+                onNext    : function(){
+                    Backbone.history.navigate('#/messaging/'+appId+'/users');
+                    var deferred = $.Deferred();
+                    pollUntilExists('#mmx-users-list tr:eq(1)', function(){
+                        deferred.resolve();
+                    });
+                    return deferred;
+                },
+                template  : "<div class='popover tour'>\
+                    <div class='arrow'></div>\
+                <div class='popover-content'></div>\
+                <div class='popover-navigation'>\
+                    <button class='btn btn-primary' data-role='next'>Next »</button>\
+                </div>\
+            </div>"
+            },
+            {
+                element   : "#mmx-users-list tr:eq(1)",
+                content   : "Here you see users of your application.",
+                placement : "bottom",
+                backdrop  : true,
+                onNext    : function(){
+                    return;
+                },
+                template  : "<div class='popover tour'>\
+                    <div class='arrow'></div>\
+                <div class='popover-content'></div>\
+                <div class='popover-navigation'>\
+                    <button class='btn btn-primary' data-role='next'>Next »</button>\
+                </div>\
+            </div>"
+            },
+            {
+                element   : "#mmx-users-list .repeater-icon-controls",
+                content   : "You can add, edit and delete users from the tool bar",
+                placement : "bottom",
+                backdrop  : true,
+                onNext    : function(){
+                    Backbone.history.navigate('#/messaging/'+appId+'/messages');
+                    var deferred = $.Deferred();
+                    pollUntilExists("#collapsible-menu-list .mmx-nav a[href='#messages']", function(){
+                        deferred.resolve();
+                    });
+                    return deferred;
+                },
+                template  : "<div class='popover tour'>\
+                    <div class='arrow'></div>\
+                <div class='popover-content'></div>\
+                <div class='popover-navigation'>\
+                    <button class='btn btn-primary' data-role='next'>Next »</button>\
+                </div>\
+            </div>"
+            },
+            {
+                element   : "#collapsible-menu-list .mmx-nav a[href='#messages']",
+                content   : "Here you see the log of messages sent in your app.",
+                placement : "right",
+                backdrop  : true,
+                onNext    : function(){
+                    return;
+                },
+                template  : "<div class='popover tour'>\
+                    <div class='arrow'></div>\
+                <div class='popover-content'></div>\
+                <div class='popover-navigation'>\
+                    <button class='btn btn-primary' data-role='next'>Next »</button>\
+                </div>\
+            </div>"
+            },
+            {
+                element   : "#mmx-messages-list .repeater-list-items tbody tr:eq(1)",
+                content   : "You can see the state of the message as well as other statistics about who is sending and receiving messages.",
+                placement : "bottom",
+                backdrop  : true,
+                onNext    : function(){
+                    Backbone.history.navigate('#/messaging/'+appId+'/settings');
+                    var deferred = $.Deferred();
+                    pollUntilExists('#mmx-settings #mmx-settings-push-settings-container', function(){
+                        deferred.resolve();
+                    });
+                    return deferred;
+                },
+                template  : "<div class='popover tour'>\
+                    <div class='arrow'></div>\
+                <div class='popover-content'></div>\
+                <div class='popover-navigation'>\
+                    <button class='btn btn-primary' data-role='next'>Next »</button>\
+                </div>\
+            </div>"
+            },
+            {
+                element   : "#mmx-settings #mmx-settings-push-settings-container",
+                content   : "You can extend the app by adding Push notifications with a GCM ID and Key (Android) or an APNS Certificate (iOS).",
+                placement : "left",
+                backdrop  : true,
+                onNext    : function(){
+                    return;
+                },
+                template  : "<div class='popover tour'>\
+                    <div class='arrow'></div>\
+                <div class='popover-content'></div>\
+                <div class='popover-navigation'>\
+                    <button class='btn btn-primary' data-role='next'>Next »</button>\
+                </div>\
+            </div>"
+            },
+            {
+                element   : "#mmx-settings #mmx-settings-configs-container",
+                content   : "You can also download a file containing messaging configurations for your mobile app.",
+                placement : "left",
+                backdrop  : true,
+                template  : "<div class='popover tour'>\
+                    <div class='arrow'></div>\
+                <div class='popover-content'></div>\
+                <div class='popover-navigation'>\
+                    <button class='btn btn-primary' data-role='end'>End tour</button>\
+                </div>\
+            </div>"
+            }
+        ]});
+    Backbone.history.navigate('#/messaging/'+appId+'/endpoints');
+    pollUntilExists('#mmx-endpoints-list tr:eq(1)', function(){
+        tour.init();
+        tour.start();
+    });
+    return tour;
+}
+
 
 // utility functions
 timer = {

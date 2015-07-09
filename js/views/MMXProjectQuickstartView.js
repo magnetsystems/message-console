@@ -13,11 +13,15 @@ define(['jquery', 'backbone'], function($, Backbone){
                 if(['quickstart', 'rpsls', 'soapbox'].indexOf(me.sampleId.toLowerCase()) != -1)
                     me.sampleId = me.model.attributes.name;
                 me.render();
+                if(me.options.opts.newMMXUser === true){
+                    me.options.opts.newMMXUser = false;
+                    me.options.opts.tour = MMXFirstTimeUserTour(model.attributes.appId);
+                }
             });
         },
         events : {
             'click .download-compiled-source': 'downloadCompiledSource',
-            'click .nav-tabs li a': 'stopTour',
+            //'click .nav-tabs li a': 'stopTour',
             'click .centered .btn' : 'selectQuickstartView'
 
         },
