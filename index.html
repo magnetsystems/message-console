@@ -1347,14 +1347,6 @@
                     Using the <%- appName %> App
                 </div>
                 <div class="panel-body">
-                    <% if(appName == 'Quickstart'){ %>
-                    <ol>
-                        <li>Upon launch, the app will connect to your server as “QuickstartUser1".</li>
-                        <li>Press the send button and your device will send a message to yourself using the in-app messaging functionality.</li>
-                        <li>You should be able to send and receive in-app messages on your mobile device (or emulator/simulator).</li>
-                        <li>There are bots that will automatically respond to your message to simulate more users.</li>
-                    </ol>
-                    <% } %>
                     <% if(appName == 'RPSLS'){ %>
                     <ol>
                         <li>Upon launch, the app will connect you automatically.</li>
@@ -1363,12 +1355,18 @@
                         <li>Select one of the 5 options.</li>
                         <li>See who won and who lost.</li>
                     </ol>
-                    <% } %>
-                    <% if(appName == 'Soapbox'){ %>
+                    <% }else if(appName == 'Soapbox'){ %>
                     <ol>
                         <li>Upon launch, the app will connect you automatically.</li>
                         <li>Enter what you want for your username and password. Pressing login will save this information.</li>
                         <li>Enter a message and Press the send button to send a message to yourself using the in-app messaging functionality.</li>
+                        <li>You should be able to send and receive in-app messages on your mobile device (or emulator/simulator).</li>
+                        <li>There are bots that will automatically respond to your message to simulate more users.</li>
+                    </ol>
+                    <% }else{ %>
+                    <ol>
+                        <li>Upon launch, the app will connect to your server as “QuickstartUser1".</li>
+                        <li>Press the send button and your device will send a message to yourself using the in-app messaging functionality.</li>
                         <li>You should be able to send and receive in-app messages on your mobile device (or emulator/simulator).</li>
                         <li>There are bots that will automatically respond to your message to simulate more users.</li>
                     </ol>
