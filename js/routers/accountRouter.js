@@ -124,6 +124,7 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
                 if(res.serverType == 'single'){
                     $('.admin-only-item').remove();
                     $('.advanced-settings-view-link').removeClass('advanced-settings-view-link');
+                    $('#brand-logo-normal').show();
                 }else if(res.serverType == 'hosted'){
                     GLOBAL.authUrl = res.authUrl;
                     GLOBAL.serverType = res.serverType;
@@ -131,7 +132,10 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
                     $('#user-identity .fa-cog').remove();
                     $('#user-navigation .separator').remove();
                     $('#user-identity .caret').css('margin-top', '13px').css('margin-right', '10px');
+                    $('#brand-logo-sandbox').show();
                     $('#mmx-contextual-doc-btn').remove();
+                }else{
+                    $('#brand-logo-normal').show();
                 }
                 if(res.emailEnabled){
                     me.opts.emailEnabled = res.emailEnabled;

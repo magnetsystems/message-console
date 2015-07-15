@@ -78,6 +78,8 @@ div.centered{margin:0 auto}
 #mmx-active-project-container .nav-tabs > li{margin-bottom:-1px}
 #mmx-active-project-container .nav > li > a{padding:10px 25px}
 #mmx-active-project-container .nav-tabs > li.active > a{border-color:#aaa #aaa transparent}
+#brand-logo-normal{display:none}
+#brand-logo-sandbox{display:none}
 
 /* mmx summary */
 #mmx-active-project-container .repeater-list-header td, #mmx-active-project-container .repeater-list-items td{border-left:0}

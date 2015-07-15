@@ -143,6 +143,7 @@ input.form-control, select.form-control{margin-bottom:5px}
 .panel-success .panel-body{padding:8px;color:#666}
 
 /* alert */
+.modal{z-index:2000}
 #general-alert .modal-body, #error-alert .modal-body{word-wrap:break-word}
 #general-alert, #confirm-alert, #error-alert{z-index:1500}
 #error-alert textarea{min-height:120px}
