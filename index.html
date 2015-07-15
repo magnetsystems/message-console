@@ -429,7 +429,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <label>APNS Server Type</label>
                                 <div class="btn-group btn-toggle clearfix" did="apnsCertProduction">
                                     <button class="btn btn-sm <% if(typeof model.attributes.apnsCertProduction == 'undefined' || model.attributes.apnsCertProduction === false){ %>btn-primary active<% }else{ %>btn-default<% } %>" did="false" type="button">Sandbox</button>
@@ -460,11 +460,11 @@
                 <span class="form-caption">DOWNLOAD CONFIGS</span>
                 <div class="well well-default clearfix">
                     <div class="row-fluid">
-                        <div class="col-sm-6">
+                        <div class="col-lg-6">
                             <label>Android</label><br />
                             <a href="/rest/apps/<%- model.attributes.id %>/sampleConfig?platform=android&sampleId=<%- appName %>" class="btn btn-primary">Download .properties</a>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-lg-6">
                             <label>iOS</label><br />
                             <a href="/rest/apps/<%- model.attributes.id %>/sampleConfig?platform=ios&sampleId=<%- appName %>" class="btn btn-primary">Download .plist</a>
                         </div>
