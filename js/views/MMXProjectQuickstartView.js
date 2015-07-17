@@ -6,13 +6,10 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.options = options;
             me.options.eventPubSub.bind('initMMXProjectquickstart', function(model){
                 me.options.eventPubSub.trigger('updateBreadcrumb', {
-                    title : 'Getting Started with '+(['Quickstart', 'RPSLS', 'Soapbox'].indexOf(model.attributes.name) != -1 ? model.attributes.name : 'Quickstart')
+                    title : 'Getting Started with '+model.attributes.name
                 });
                 me.model = model;
-                if(['quickstart', 'rpsls', 'soapbox'].indexOf(model.attributes.name.toLowerCase()) != -1)
-                    me.sampleId = model.attributes.name;
-                else
-                    me.sampleId = 'Quickstart';
+                me.sampleId = model.attributes.name;
                 me.render();
                 if(me.options.opts.newMMXUser === true){
                     me.options.opts.newMMXUser = false;

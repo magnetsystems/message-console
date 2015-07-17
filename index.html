@@ -44,7 +44,7 @@
                 <li><a href="#topics">Topics</a></li>
                 <li class="advanced-settings-view-link"><a href="#settings">Settings</a></li>
                 <li style="display:none"><a href="#advanced">Advanced</a></li>
-                <li><a href="//www.magnet.com/documentation/message/1.0.2/guide/" target="_blank">Documentation</a></li>
+                <li><a href="//docs.magnet.com/message/overview/" target="_blank">Documentation</a></li>
             </ul>
         </div>
         <div id="user-navigation" style="display:none">
@@ -239,7 +239,7 @@
             <a class="list-group-item" href="#topics"><i class="fa fa-edit"></i>Topics</a>
             <a class="list-group-item" href="#settings"><i class="fa fa-cog"></i>Settings</a>
             <a class="list-group-item advanced-settings-view-link" href="#advanced"><i class="fa fa-cogs"></i>Advanced</a>
-            <a class="list-group-item" href="//www.magnet.com/documentation/message/1.0.2/guide/" target="_blank"><i class="fa fa-book"></i>Documentation</a>
+            <a class="list-group-item" href="//docs.magnet.com/message/overview/" target="_blank"><i class="fa fa-book"></i>Documentation</a>
         </div>
     </div>
     <div class="table-cell">
@@ -404,7 +404,7 @@
                         </div>
                         <div class="form-group clearfix">
                             <div class="col-sm-12">
-                                <a href="//www.magnet.com/documentation/message/1.0.2/guide/Set+Up+GCM+Service+for+Messaging.php" target="_blank">How to set up GCM for messaging</a>
+                                <a href="//docs.magneteng.com/message/messaging-web-interface/set-up-new-app/set-up-gcm-service-for-messaging/" target="_blank">How to set up GCM for messaging</a>
                             </div>
                         </div>
                     </form>
@@ -449,7 +449,7 @@
                         </div>
                         <div class="form-group clearfix">
                             <div class="col-sm-12">
-                                <a href="//www.magnet.com/documentation/message/1.0.2/guide/Set+Up+APNS+for+Messaging.php" target="_blank">How to set up APNS for messaging</a>
+                                <a href="//docs.magneteng.com/message/messaging-web-interface/set-up-new-app/set-up-apns-for-messaging/" target="_blank">How to set up APNS for messaging</a>
                             </div>
                         </div>
                     </form>
@@ -1309,6 +1309,7 @@
 
         <div class="tab-content bordered">
             <div role="tabpanel" class="tab-pane active" id="mmx-quickstart-android-new">
+            <% if(appName == 'Quickstart' || appName == 'Soapbox' || appName == 'RPSLS'){ %>
                 <h4>Prerequisites</h4>
                 <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">Install Android Studio</a>
 
@@ -1316,24 +1317,57 @@
                 <ol class="mmx-nav">
                     <li>Download the <a class="download-compiled-source" did="android" href="#">Magnet Message <%- appName %> Android App</a>
                         and import it into Android Studio.</li>
-                    <li>Download the configuration file "<%- appName.toLowerCase() %>.properties" from the <a href="#settings">Settings</a>
-                        menu of the Magnet Message web interface and place it in the "&lt;project root&gt;/app/src/main/res/raw" folder.</li>
                     <li>Build/install the <%- appName %> Android app on an emulator or Android device.</li>
                     <li>Check out the actions below for next steps.</li>
                 </ol>
+            <% }else{ %>
+                <h4>Prerequisites</h4>
+                <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">Install Android Studio</a>
+
+                <h4>Build the App:</h4>
+                <ol class="mmx-nav">
+                    <li>Add the Magnet Message client library as a dependency to the Gradle build script as shown below:</p>
+<pre>repositories {
+    maven {
+        url "https://repo.magnet.com/artifactory/public"
+    }
+}
+dependencies {
+    compile ("com.magnet.mmx:magnet-mmx-client-android:${ANDROID_CLIENT_VERSION}@aar") {
+        transitive=true
+    }
+}</pre></li>
+                    <li>Download the configuration file "<%- appName.toLowerCase() %>.properties" from the <a href="#settings">Settings</a>
+                        menu of the Magnet Message web interface and place it in the "&lt;project root&gt;/app/src/main/res/raw" folder.</li>
+                    <li>Build and run your app on Android emulator or mobile device.</li>
+                </ol>
+            <% } %>
             </div>
             <div role="tabpanel" class="tab-pane" id="mmx-quickstart-ios-new">
+            <% if(appName == 'Quickstart' || appName == 'Soapbox' || appName == 'RPSLS'){ %>
                 <h4>Prerequisites</h4>
                 <a href="https://developer.apple.com/xcode/downloads/" target="_blank">Install Xcode</a>
 
                 <h4>Build the App:</h4>
                 <ol class="mmx-nav">
                     <li>Download the <a class="download-compiled-source" did="ios" href="#">Magnet Message <%- appName %> iOS App</a> and open the project in Xcode.</li>
-                    <li>Download the configuration file. "Configurations.plist" from the <a href="#settings">Settings</a>
-                        menu of the Magnet Message web interface and place it in the "&lt;project root&gt;/<%- appName %>/" folder.</li>
                     <li>Build and run the app in the simulator or on a mobile device.</li>
                     <li>Check out the actions below for next steps.</li>
                 </ol>
+            <% }else{ %>
+                <h4>Prerequisites</h4>
+                <a href="https://developer.apple.com/xcode/downloads/" target="_blank">Install Xcode</a>
+
+                <h4>Build the App:</h4>
+                <ol class="mmx-nav">
+                    <li>Add the following lines to your podfile.
+                        <pre>pod 'MMX', '~> 1.1.0'</pre></li>
+                    <li>Download the configuration file "Configurations.plist" from the <a href="#settings">Settings</a>
+                        menu of the Magnet Message web interface and place it into the project folder.</li>
+                    <li>If you are using a Swift project you will need to add MMX.h to your bridging header.
+                        <pre>#import &lt;MMX.h&gt;</pre></li>
+                </ol>
+            <% } %>
             </div>
         </div>
 
@@ -1395,7 +1429,7 @@
                 </div>
                 <div class="panel-body">
                     <p>Need help? Want to learn more?</p>
-                    <p>Check out the <a href="//www.magnet.com/documentation/message/1.0.2/guide/" target="_blank" title="Magnet Message Developer Guide">developer guide</a></p>
+                    <p>Check out the <a href="//docs.magnet.com/message/overview/" target="_blank" title="Magnet Message Developer Guide">developer guide</a></p>
                 </div>
             </div>
         </div>
