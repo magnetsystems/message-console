@@ -64,7 +64,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click #mmx-contextual-doc-btn': 'viewContextualDocs',
             'click .show-profile-btn': 'showProfile',
             'click .btn-toggle button': 'toggleSwitch',
-            'click .toggling-password-input .glyphicon': 'togglePasswordContainer'
+            'click .toggling-password-input span': 'togglePasswordContainer'
         },
         goBack: function(e){
             e.preventDefault();
@@ -176,7 +176,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         selectMMXView: function(e){
             var link = $(e.currentTarget);
             var view = link.attr('href');
-            if(view.indexOf('/documentation/') != -1)
+            if(view.indexOf('/documentation/') != -1 || view.indexOf('docs.magnet.com') != -1)
                 return;
             else
                 e.preventDefault();
@@ -360,11 +360,11 @@ define(['jquery', 'backbone'], function($, Backbone){
             var icon = $(e.currentTarget);
             var parent = icon.closest('.toggling-password-input');
             icon.addClass('hidden');
-            if(icon.hasClass('glyphicon-eye-open')){
-                parent.find('.glyphicon-eye-close').removeClass('hidden');
+            if(icon.hasClass('password-view')){
+                parent.find('.password-hide').removeClass('hidden');
                 parent.find('input').attr('type', 'text');
             }else{
-                parent.find('.glyphicon-eye-open').removeClass('hidden');
+                parent.find('.password-view').removeClass('hidden');
                 parent.find('input').attr('type', 'password');
             }
         },

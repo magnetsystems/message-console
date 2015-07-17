@@ -30,10 +30,10 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click input[type="checkbox"]': 'toggleRow',
             'click .mmx-topic-list-refresh-btn': 'refresh',
             'change .repeater-header-left select[name="searchby"]': 'changeSearchBy',
-            'click .repeater-header .glyphicon-envelope': 'showPublishModal',
-            'click .repeater-header .glyphicon-trash': 'deleteTopic',
-            'click .repeater-header .glyphicon-pencil': 'showEditTopic',
-            'click .repeater-header .glyphicon-plus': 'showCreateTopicModal'
+            'click .repeater-header .mmx-topics-publish-btn': 'showPublishModal',
+            'click .repeater-header .mmx-topics-delete-btn': 'deleteTopic',
+            'click .repeater-header .mmx-topics-edit-btn': 'showEditTopic',
+            'click .repeater-header .mmx-topics-add-btn': 'showCreateTopicModal'
         },
         toggleRow: function(e){
             utils.toggleRow(this, $(e.currentTarget), 'topics', 'topicName');

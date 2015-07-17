@@ -1162,11 +1162,10 @@ utils = {
             return qs[1];
         }
     },
-    resetRows: function(view, repeater){
-        view.selectedElements = [];
+    resetRows: function(repeater){
         repeater.find('input[type="checkbox"]').attr('checked', false);
-        repeater.find('.repeater-header .glyphicon.disableable').addClass('disabled');
-        repeater.find('.repeater-header .fa.disableable').addClass('disabled');
+        repeater.find('.repeater-icon-controls span.disableable').addClass('disabled');
+        repeater.find('.repeater-icon-controls .fa.disableable').addClass('disabled');
     },
     toggleRow: function(view, checkbox, type, property){
         var parent = checkbox.closest('tbody');
@@ -1184,14 +1183,14 @@ utils = {
     },
     toggleActions: function(selectedElements, list){
         if(selectedElements.length){
-            list.find('.repeater-header .glyphicon.disableable').removeClass('disabled');
-            list.find('.repeater-header .fa.disableable').removeClass('disabled');
+            list.find('.repeater-icon-controls span.disableable').removeClass('disabled');
+            list.find('.repeater-icon-controls .fa.disableable').removeClass('disabled');
             if(selectedElements.length > 1){
 
             }
         }else{
-            list.find('.repeater-header .glyphicon.disableable').addClass('disabled');
-            list.find('.repeater-header .fa.disableable').addClass('disabled');
+            list.find('.repeater-icon-controls span.disableable').addClass('disabled');
+            list.find('.repeater-icon-controls .fa.disableable').addClass('disabled');
         }
     },
     formatTableHeader: function(parent, len){

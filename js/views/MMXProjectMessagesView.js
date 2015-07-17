@@ -119,7 +119,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     for(var i=0;i<res.results.length;++i){
                         if(res.results[i].queuedAt) res.results[i].queuedAt = moment(res.results[i].queuedAt).format('lll');
                         if(res.results[i].deliveryAckAt) res.results[i].deliveryAckAt = moment(res.results[i].deliveryAckAt).format('lll');
-                        res.results[i].state = '<img src="images/dashboard/mmx_state_'+res.results[i].state+'.png" data-toggle="tooltip" data-placement="right" title="'+me.deliveryStates[res.results[i].state]+'" />';
+                        res.results[i].state = '<img src="images/icons/mmx_state_'+res.results[i].state+'.png" data-toggle="tooltip" data-placement="right" title="'+me.deliveryStates[res.results[i].state]+'" />';
                     }
                 }
                 cb(res);

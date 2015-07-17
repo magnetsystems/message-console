@@ -2,7 +2,7 @@ div.centered{margin:0 auto}
 .no-padding{padding:0}
 .tour .btn{margin-bottom:11px}
 .toggling-password-input{position:relative}
-.toggling-password-input .glyphicon{cursor:pointer;color:#6cba66;display:block;font-size:20px;position:absolute;right:8px;top:8px;z-index:100}
+.toggling-password-input span{cursor:pointer;color:#6cba66;display:block;font-size:20px;position:absolute;right:8px;top:-3px;z-index:100}
 .colortext-info{color:#30708F}
 .colortext-danger{color:#a94442}
 .colortext-success{color:#449D44}
@@ -59,6 +59,7 @@ div.centered{margin:0 auto}
 #messaging .app-view{background:#d9d9d9}
 #messaging .required{color:#ff0000;font-size:16px}
 #messaging #user-nav-menu{display:block}
+#messaging #collapsible-menu-list .list-group-item img{width:32px}
 
 /* MMX CONTENT VIEW */
 #breadcrumb{padding:4px 0}
@@ -91,7 +92,7 @@ div.centered{margin:0 auto}
 
 /* mmx dashboard */
 #mmx-dashboard .mmx-dashboard-item{margin-top:30px}
-.mmx-dashboard-item img{max-width:78px}
+.mmx-dashboard-item img{max-width:56px}
 .mmx-dashboard-item > hr{margin:0 0 10px 0;border-color:#ddd}
 .mmx-dashboard-item > .media{margin:1px 0 0 0;max-width:700px}
 .mmx-dashboard-item .media-body{padding:0;position:relative}
@@ -158,12 +159,12 @@ div.centered{margin:0 auto}
 /* mmx users */
 .generic-control-container{position:relative}
 .repeater-icon-controls{position:absolute;top:0;left:0}
-.repeater-icon-controls .glyphicon{font-size:19px;color:#008CBA;margin:5px 9px 0 0;cursor:pointer}
-.repeater-icon-controls .glyphicon.disabled{color:#bbb;cursor:text}
+.repeater-icon-controls span{font-size:19px;color:#008CBA;cursor:pointer}
+.repeater-icon-controls span.disabled{color:#bbb;cursor:text;opacity:.2}
 .repeater-icon-controls .fa{color:#008CBA;margin:6px 9px 0 0;cursor:pointer}
 .repeater-icon-controls .fa.disabled{color:#bbb}
-#mmx-users .messaging-list .repeater-header-left{padding-left:98px}
-#mmx-topics .messaging-list .repeater-header-left{padding-left:128px}
+#mmx-users .messaging-list .repeater-header-left{padding-left:141px}
+#mmx-topics .messaging-list .repeater-header-left{padding-left:182px}
 
 /* quickstart */
 #mmx-quickstart > h4{margin-top:24px;color:#aaa;font-weight:300}

@@ -37,8 +37,8 @@ define(['jquery', 'backbone'], function($, Backbone){
         events: {
 //            'click .sendmessage': 'showSendMessageModal',
             'click #mmx-users-show-create-modal': 'showCreateUser',
-            'click .repeater-header .glyphicon-pencil': 'showEditUser',
-            'click .repeater-header .glyphicon-trash': 'removeUser',
+            'click .repeater-header .mmx-users-edit-btn': 'showEditUser',
+            'click .repeater-header .mmx-users-delete-btn': 'removeUser',
 //            'click .repeater-header .fa-lock': 'lockUser',
 //            'click .repeater-header .fa-unlock-alt': 'unlockUser',
             'change .repeater-header-left select[name="searchby"]': 'changeSearchBy',

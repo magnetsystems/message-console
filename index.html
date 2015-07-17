@@ -230,16 +230,16 @@
         </div>
         <hr />
         <div class="mmx-nav list-group">
-            <a class="list-group-item" href="#dashboard"><i class="fa fa-dashboard"></i>App Dashboard</a>
-            <a class="list-group-item" href="#quickstart"><i class="fa fa-desktop"></i>Getting Started</a>
-            <a class="list-group-item" href="#endpoints"><i class="fa fa-list"></i>Endpoints</a>
-            <a class="list-group-item" href="#users"><i class="fa fa-list"></i>Users</a>
-            <a class="list-group-item" href="#messages"><i class="fa fa-area-chart"></i>Message Log</a>
-            <a class="list-group-item" href="#notifications"><i class="fa fa-area-chart"></i>Push Log</a>
-            <a class="list-group-item" href="#topics"><i class="fa fa-edit"></i>Topics</a>
-            <a class="list-group-item" href="#settings"><i class="fa fa-cog"></i>Settings</a>
-            <a class="list-group-item advanced-settings-view-link" href="#advanced"><i class="fa fa-cogs"></i>Advanced</a>
-            <a class="list-group-item" href="//docs.magnet.com/message/overview/" target="_blank"><i class="fa fa-book"></i>Documentation</a>
+            <a class="list-group-item" href="#dashboard"><img src="/images/icons/nav_dashboard.png" />App Dashboard</a>
+            <a class="list-group-item" href="#quickstart"><img src="/images/icons/nav_gettingstarted.png" />Getting Started</a>
+            <a class="list-group-item" href="#endpoints"><img src="/images/icons/nav_endpoints.png" />Endpoints</a>
+            <a class="list-group-item" href="#users"><img src="/images/icons/nav_users.png" />Users</a>
+            <a class="list-group-item" href="#messages"><img src="/images/icons/nav_logs.png" />Message Log</a>
+            <a class="list-group-item" href="#notifications"><img src="/images/icons/nav_logs.png" />Push Log</a>
+            <a class="list-group-item" href="#topics"><img src="/images/icons/nav_topics.png" />Topics</a>
+            <a class="list-group-item" href="#settings"><img src="/images/icons/nav_settings.png" />Settings</a>
+            <a class="list-group-item advanced-settings-view-link" href="#advanced"><img src="/images/icons/nav_settings.png" />Advanced</a>
+            <a class="list-group-item" href="//docs.magnet.com/message/overview/" target="_blank"><img src="/images/icons/nav_docs.png" />Documentation</a>
         </div>
     </div>
     <div class="table-cell">
@@ -486,7 +486,7 @@
     <div did="<%- model.attributes.id %>" class="mmx-dashboard-item">
         <div class="media">
             <a class="pull-left" href="#">
-                <img src="images/dashboard/delivered_messages.png" alt="delivered messages">
+                <img src="/images/icons/dash_confirmed.png" alt="delivered messages">
             </a>
             <div class="media-body">
                 <h4 class="media-heading">Messages Delivered in the last 7 days: <%- statistics.delivered.total %></h4>
@@ -507,7 +507,7 @@
         </div>
         <div class="media">
             <a class="pull-left" href="#">
-                <img src="images/dashboard/pending_messages.png" alt="pending messages">
+                <img src="images/icons/dash_pending.png" alt="pending messages">
             </a>
             <div class="media-body">
                 <h4 class="media-heading">Messages Pending in the last 7 days:  <%- statistics.pending.total %></h4>
@@ -529,7 +529,7 @@
         <hr />
         <div class="media clearfix">
             <a class="pull-left" href="#">
-                <img src="images/dashboard/userdevices.png" alt="user and devices">
+                <img src="images/icons/dash_devicesreg.png" alt="user and devices">
             </a>
             <div class="media-body">
                 <h4 class="media-heading">Devices Registered</h4>
@@ -724,9 +724,15 @@
                 <div class="generic-control-container">
                     <div class="repeater-icon-controls">
                         <div class="btn-group repeater-views" data-toggle="buttons">
-                            <span id="mmx-users-show-create-modal" class="glyphicon glyphicon-plus" data-placement="bottom" data-toggle="tooltip" data-title="Add User"></span>
-                            <span class="glyphicon glyphicon-pencil disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Edit User"></span>
-                            <span class="glyphicon glyphicon-trash disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Delete User"></span>
+                            <span id="mmx-users-show-create-modal" class="mmx-users-add-btn" data-placement="bottom" data-toggle="tooltip" data-title="Add User">
+                                <img src="images/icons/tb_add.png" />
+                            </span>
+                            <span class="mmx-users-edit-btn disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Edit User">
+                                <img src="images/icons/tb_edit.png" />
+                            </span>
+                            <span class="mmx-users-delete-btn disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Delete User">
+                                <img src="images/icons/tb_delete.png" />
+                            </span>
                             <!--<span class="fa fa-2x fa-lock disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Lock User"></span>-->
                             <!--<span class="fa fa-2x fa-unlock-alt disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Unlock User"></span>-->
                         </div>
@@ -1190,10 +1196,18 @@
                 <div class="generic-control-container">
                     <div class="repeater-icon-controls">
                         <div class="btn-group repeater-views" data-toggle="buttons">
-                            <span id="mmx-topics-show-create-modal" class="glyphicon glyphicon-plus" data-placement="bottom" data-toggle="tooltip" data-title="Add Topic"></span>
-                            <span class="glyphicon glyphicon-pencil disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Edit Topic"></span>
-                            <span class="glyphicon glyphicon-envelope disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Publish Message"></span>
-                            <span class="glyphicon glyphicon-trash disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Delete Topic"></span>
+                            <span id="mmx-topics-show-create-modal" class="mmx-topics-add-btn" data-placement="bottom" data-toggle="tooltip" data-title="Add Topic">
+                                <img src="images/icons/tb_add.png" />
+                            </span>
+                            <span class="mmx-topics-edit-btn disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Edit Topic">
+                                <img src="images/icons/tb_edit.png" />
+                            </span>
+                            <span class="mmx-topics-publish-btn disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Publish Message">
+                                <img src="images/icons/tb_sendmessage.png" />
+                            </span>
+                            <span class="mmx-topics-delete-btn disabled disableable" data-placement="bottom" data-toggle="tooltip" data-title="Delete Topic">
+                                <img src="images/icons/tb_delete.png" />
+                            </span>
                         </div>
                     </div>
                     <div class="repeater-header-left">
@@ -2094,8 +2108,12 @@ dependencies {
                     <div class="col-sm-12">
                         <label>APNS Password</label>
                         <div class="toggling-password-input">
-                            <span class="glyphicon glyphicon-eye-close hidden" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to hide the password value."></span>
-                            <span class="glyphicon glyphicon-eye-open" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to display the password value."></span>
+                            <span class="password-hide hidden" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to hide the password value.">
+                                <img src="/images/icons/password_hide.png" />
+                            </span>
+                            <span class="password-view" title="" data-placement="top" data-toggle="tooltip" data-title="Click the eye to display the password value.">
+                                <img src="/images/icons/password_view.png" />
+                            </span>
                             <input type="password" class="form-control" name="apnsCertPassword" placeholder="APNS Password" value="" />
                         </div>
                     </div>
