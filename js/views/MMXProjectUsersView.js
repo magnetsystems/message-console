@@ -64,7 +64,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             });
         },
         refresh: function(){
-            utils.resetRows(this, this.list);
+            utils.resetRows(this.list);
             this.list.repeater('render');
         },
         filters : {

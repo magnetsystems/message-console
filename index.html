@@ -223,7 +223,9 @@
 <div id="mmx-container" class="app-view table-layout fullpos" style="display:none">
     <div id="collapsible-menu-list" class="table-cell" style="width:0;display:none">
         <div class="same-line clearfix">
-            <button id="create-messaging-app-modal" class="same-line-button btn btn-primary glyphicon glyphicon-plus pull-right"></button>
+            <button id="create-messaging-app-modal" class="same-line-button btn btn-primary icon pull-right">
+                <img src="images/icons/tb_add_white.png" />
+            </button>
             <div class="same-line-control">
                 <select id="mmx-app-list" class="form-control"></select>
             </div>
@@ -247,12 +249,14 @@
             <div class="row-fluid">
                 <div class="col-sm-6 clearfix">
                     <div class="padding-sm">
-                        <i id="toggle-collapsible-menu" class="fa fa-lg fa-arrow-circle-o-left" style="display:none"></i>
+                        <img id="toggle-collapsible-menu" class="menu-is-open" src="images/icons/gen_to_close_nav.png" style="display:none" />
                         <div class="bc-title"></div>
                     </div>
                 </div>
                 <div class="col-sm-6 same-line clearfix" style="display:none">
-                    <button id="create-messaging-app-modal2" class="same-line-button btn btn-primary glyphicon glyphicon-plus pull-right"></button>
+                    <button id="create-messaging-app-modal2" class="same-line-button btn btn-primary icon pull-right">
+                        <img src="images/icons/tb_add_white.png" />
+                    </button>
                     <div class="same-line-control">
                         <select id="mmx-app-list2" class="form-control"></select>
                     </div>
@@ -567,7 +571,7 @@
                             <div class="col-sm-6 same-line">
                                 <button did="actions-sendmessage" class="same-line-button btn btn-primary disabled">Send Message</button>
                                 <!--<button did="actions-deleterow" class="same-line-button btn btn-danger disabled">Delete</button>-->
-                                <button class="search-btn same-line-button btn btn-primary">Refresh</button>
+                                <button class="search-btn same-line-button btn btn-primary icon"> <img src="images/icons/tb_refresh_white.png" /></button>
                                 <div class="same-line-control">
                                     <select class="form-control" name="searchby">
                                         <option>Select a search filter</option>
@@ -739,7 +743,7 @@
                     </div>
                     <div class="repeater-header-left">
                         <div class="col-sm-4 same-line">
-                            <button class="mmx-user-list-refresh-btn same-line-button btn btn-primary">Refresh</button>
+                            <button class="mmx-user-list-refresh-btn same-line-button btn btn-primary icon"> <img src="images/icons/tb_refresh_white.png" /></button>
                             <div class="same-line-control">
                                 <select class="form-control" name="searchby">
                                     <option>Select a search filter</option>
@@ -938,7 +942,7 @@
             <div class="clearfix">
                 <div class="repeater-header-left">
                     <div class="col-sm-4 same-line">
-                        <button class="mmx-messagelist-refresh-btn same-line-button btn btn-primary">Refresh</button>
+                        <button class="mmx-messagelist-refresh-btn same-line-button btn btn-primary icon"> <img src="images/icons/tb_refresh_white.png" /></button>
                         <div class="same-line-control">
                             <select class="form-control" name="searchby">
                                 <option>Select a search filter</option>
@@ -1039,7 +1043,7 @@
             <div class="clearfix">
                 <div class="repeater-header-left">
                     <div class="col-sm-4 same-line">
-                        <button class="mmx-messagelist-refresh-btn same-line-button btn btn-primary">Refresh</button>
+                        <button class="mmx-messagelist-refresh-btn same-line-button btn btn-primary icon"> <img src="images/icons/tb_refresh_white.png" /></button>
                         <div class="same-line-control">
                             <select class="form-control" name="searchby">
                                 <option>Select a search filter</option>
@@ -1212,7 +1216,7 @@
                     </div>
                     <div class="repeater-header-left">
                         <div class="col-sm-4 same-line">
-                            <button class="mmx-topic-list-refresh-btn same-line-button btn btn-primary">Refresh</button>
+                            <button class="mmx-topic-list-refresh-btn same-line-button btn btn-primary icon"> <img src="images/icons/tb_refresh_white.png" /></button>
                             <div class="same-line-control">
                                 <select class="form-control" name="searchby">
                                     <option>Select a search filter</option>
@@ -1426,24 +1430,31 @@ dependencies {
         <div class="col-md-4">
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    Take a Tour
+                    Ready for More
                 </div>
                 <div class="panel-body">
                     Learn about the different features of Magnet Message.
                     <div class="centered">
                         <button id="mmx-start-console-tour" class="btn btn-info btn-lg">Start Tour</button>
                     </div>
+                    <p>Press the "<img src="images/icons/tb_add.png" />" button and start creating more apps!</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    Developer Guide
+                    Learn More
                 </div>
                 <div class="panel-body">
-                    <p>Need help? Want to learn more?</p>
-                    <p>Check out the <a href="//docs.magnet.com/message/overview/" target="_blank" title="Magnet Message Developer Guide">developer guide</a></p>
+                    <p>Need help? Want to learn more? Here are some helpful links:</p>
+                    <p><a href="//docs.magnet.com/message/overview/features/" target="_blank">Features</a></p>
+                    <p><a href="//docs.magnet.com/message/overview/" target="_blank">Developer Guide</a></p>
+                    <p><a href="//helpcenter.magnet.com/hc/en-us" target="_blank">Help Center</a></p>
+                    <% if(typeof status != 'undefined' && status.serverType == 'hosted'){ %>
+                    <p class="hosted-messaging-item">When you are ready, <a href="//www.magnet.com/developer/magnet-message/downloads/" target="_blank">download and install</a>
+                        the Magnet Message server locally so you can start building your own apps!</p>
+                    <% } %>
                 </div>
             </div>
         </div>
@@ -1582,7 +1593,7 @@ dependencies {
                 </div>
             </div>
         </div>
-        <div class="advsearch-refresh btn btn-primary">Refresh</div>
+        <div class="advsearch-refresh btn btn-primary icon"> <img src="images/icons/tb_refresh_white.png" /></div>
     </div>
 </script>
 

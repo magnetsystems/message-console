@@ -84,7 +84,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             }
         },
         refresh: function(){
-            utils.resetRows(this, this.list);
+            utils.resetRows(this.list);
             this.$el.find('.repeater-search .same-line-button[did^="action"]').addClass('disabled');
             var params = utils.collect(this.$el.find('.repeater-header'));
             if(this.validate(params))

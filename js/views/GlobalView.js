@@ -88,7 +88,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         toggleCollapseMenu: function(){
             var btn = $('#toggle-collapsible-menu');
-            if(btn.hasClass('fa-arrow-circle-o-left')){
+            if(btn.hasClass('menu-is-open')){
                 this.hideCollapseMenu();
             }else{
                 this.showCollapseMenu();
@@ -101,7 +101,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             $('#collapsible-menu-list').animate({
                 width  : '1px'
             }, 500, function(){
-                btn.removeClass('fa-arrow-circle-o-left').addClass('fa-arrow-circle-o-right');
+                btn.attr('src', 'images/icons/gen_to_open_nav.png');
+                btn.removeClass('menu-is-open').addClass('menu-is-closed');
             });
         },
         showCollapseMenu: function(){
@@ -112,7 +113,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             }, 500, function(){
                 var list = $('#collapsible-menu-list');
                 list.find('a, hr, .same-line').show('fast');
-                btn.removeClass('fa-arrow-circle-o-right').addClass('fa-arrow-circle-o-left');
+                btn.attr('src', 'images/icons/gen_to_close_nav.png');
+                btn.removeClass('menu-is-closed').addClass('menu-is-open');
             });
         },
         resetMainView: function(domId){
@@ -176,7 +178,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         selectMMXView: function(e){
             var link = $(e.currentTarget);
             var view = link.attr('href');
-            if(view.indexOf('/documentation/') != -1 || view.indexOf('docs.magnet.com') != -1)
+            if(view == '#' || view && (view.indexOf('/documentation/') != -1 || view.indexOf('docs.magnet.com') != -1))
                 return;
             else
                 e.preventDefault();

@@ -35,7 +35,8 @@ define(['jquery', 'backbone'], function($, Backbone){
         render: function(){
             this.$el.html(_.template($('#MessagingQuickstartTmpl').html(), {
                 model   : this.model,
-                appName : this.sampleId
+                appName : this.sampleId,
+                status  : this.options.opts.serverStatus
             }));
         },
         downloadCompiledSource: function(e){

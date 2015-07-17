@@ -1,4 +1,4 @@
-div.centered{margin:0 auto}
+div.centered{margin:0 auto 16px}
 .no-padding{padding:0}
 .tour .btn{margin-bottom:11px}
 .toggling-password-input{position:relative}
@@ -54,6 +54,7 @@ div.centered{margin:0 auto}
 #messaging .same-line .same-line-control, #breadcrumb .same-line .same-line-control{overflow:hidden;min-width:140px}
 #messaging .radio.disabled label{opacity:.4}
 #messaging .btn.btn-primary{border:solid 1px #3c8535;background-color:#6cba66}
+#messaging .btn.btn-primary.icon{padding:3px 6px}
 #messaging .label, .nav-tabs.two > li > a, #messaging .nav-tabs.three > li > a, #messaging .nav-tabs.four > li > a, #messaging .alert, #messaging .panel, #messaging .panel-group .panel{border-radius:4px}
 #messaging .repeater-header input.form-control, #messaging .repeater-header select.form-control{margin-bottom:5px;border-radius:4px}
 #messaging .app-view{background:#d9d9d9}

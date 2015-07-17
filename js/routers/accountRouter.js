@@ -134,9 +134,11 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
                     $('#user-identity .caret').css('margin-top', '13px').css('margin-right', '10px');
                     $('#brand-logo-sandbox').show();
                     $('#mmx-contextual-doc-btn').remove();
+                    $('.hosted-messaging-item').removeClass('hidden');
                 }else{
                     $('#brand-logo-normal').show();
                 }
+                me.opts.serverStatus = res;
                 if(res.emailEnabled){
                     me.opts.emailEnabled = res.emailEnabled;
                 }

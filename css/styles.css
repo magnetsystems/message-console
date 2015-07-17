@@ -67,8 +67,8 @@ html, body{background:#efefef;height:100%}
 .label, .navbar, .nav-tabs.two > li > a, .nav-tabs.three > li > a, .nav-tabs.four > li > a, .nav-tabs.five > li > a, .alert, .panel, .panel-group .panel{border-radius:0}
 #main-nav-menu > li > a{border-left: 1px solid #8c8c8c;font-size:15px}
 #breadcrumb{background:#fafbfc;color:#aaa;font-weight:300;font-size:22px;min-height:42px;position:absolute;width:100%;padding:4px 0;top:0;left:0}
-#breadcrumb i, #breadcrumb .bc-title{float:left}
-#toggle-collapsible-menu{cursor:pointer;margin-right:10px;margin-top:4px}
+#breadcrumb img, #breadcrumb .bc-title{float:left}
+#toggle-collapsible-menu{cursor:pointer;margin-right:10px;margin-top:-6px}
 #collapsible-menu-list span a{text-indent:17px}
 #collapsible-menu-list .list-group div a{text-indent:17px}
 .app-view{background:#efefef}
