@@ -39,6 +39,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 list_noItemsHTML : '',
                 stretchHeight    : false
             });
+            me.list.find('.tooltipped-ctrl').tooltip();
         },
         filters : {
             sent : {

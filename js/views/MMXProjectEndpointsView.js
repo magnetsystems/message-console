@@ -55,6 +55,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 list_selectable  : false,
                 list_noItemsHTML : ''
             });
+            this.list.find('.tooltipped-ctrl').tooltip();
             this.selectedEndpoints = [];
         },
         filters : {

@@ -62,6 +62,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 list_noItemsHTML : '',
                 stretchHeight    : false
             });
+            me.list.find('.tooltipped-ctrl').tooltip();
         },
         refresh: function(){
             utils.resetRows(this.list);
