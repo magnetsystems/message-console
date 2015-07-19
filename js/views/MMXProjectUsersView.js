@@ -353,7 +353,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(!$.trim(obj.password).length) delete obj.password;
             me.options.eventPubSub.trigger('btnLoading', btn);
             AJAX('apps/'+me.model.attributes.id+'/users/'+obj.username, 'PUT', 'application/json', obj, function(){
-                utils.resetRows(me, me.list);
+                utils.resetRows(me.list);
                 me.list.repeater('render');
                 me.updateUserModal.modal('hide');
                 Alerts.General.display({
@@ -375,7 +375,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(!me.selectedElements.length) return;
             var did = me.selectedElements[0].username;
             AJAX('apps/'+me.model.attributes.id+'/users/'+did+'/deactivate', 'POST', 'application/json', null, function(res){
-                utils.resetRows(me, me.list);
+                utils.resetRows(me.list);
                 me.list.repeater('render');
             }, function(xhr){
                 alert(xhr.responseText);
@@ -386,7 +386,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(!me.selectedElements.length) return;
             var did = me.selectedElements[0].username;
             AJAX('apps/'+me.model.attributes.id+'/users/'+did+'/activate', 'POST', 'application/json', null, function(res){
-                utils.resetRows(me, me.list);
+                utils.resetRows(me.list);
                 me.list.repeater('render');
             }, function(xhr){
                 alert(xhr.responseText);
@@ -404,7 +404,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     utils.removeByAttr(me.users, 'username', did);
                     var list = $(e.currentTarget).closest('.repeater');
                     var dom = list.find('.repeater-list-items tr[did="'+did+'"]');
-                    utils.resetRows(me, me.list);
+                    utils.resetRows(me.list);
                     dom.hide('slow', function(){
                         dom.remove();
                     });
