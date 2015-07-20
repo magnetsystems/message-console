@@ -620,7 +620,7 @@ function MMXMessagingTour(appId){
             },
             {
                 element   : "#mmx-endpoints-list button[did='actions-sendmessage']",
-                content   : "Select a device and press the send message button to send that device a message from the server.",
+                content   : "Select a device from the list and press the send message button to send that device a message from the server.",
                 placement : "bottom",
                 backdrop  : true,
                 onNext    : function(){

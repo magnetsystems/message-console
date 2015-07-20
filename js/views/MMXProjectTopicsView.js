@@ -58,7 +58,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.list.find('.tooltipped-ctrl').tooltip();
         },
         refresh: function(){
-            utils.resetRows(this, this.list);
+            utils.resetRows(this.list);
             this.list.repeater('render');
         },
         filters : {
@@ -254,7 +254,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         createTopicComplete: function(obj){
             var me = this;
             me.newTopicModal.modal('hide');
-            utils.resetRows(me, me.list);
+            utils.resetRows(me.list);
             me.topics.push(obj);
             me.list.repeater('render');
             Alerts.General.display({
@@ -321,7 +321,7 @@ define(['jquery', 'backbone'], function($, Backbone){
 
         },
         saveTopicComplete: function(me){
-            utils.resetRows(me, me.list);
+            utils.resetRows(me.list);
             me.list.repeater('render');
             me.updateTopicModal.modal('hide');
             Alerts.General.display({
@@ -342,7 +342,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     utils.removeByAttr(me.topics, 'topicName', did);
                     var list = $(e.currentTarget).closest('.repeater');
                     var dom = list.find('.repeater-list-items tr[did="'+did+'"]');
-                    utils.resetRows(me, me.list);
+                    utils.resetRows(me.list);
                     dom.hide('slow', function(){
                         dom.remove();
                     });
