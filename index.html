@@ -357,7 +357,7 @@
             <div class="form-group clearfix">
                 <label>Anonymous Access Secret</label>
                 <div class="controls controls-grouped">
-                    <input type="text" <% if(userType == 'preview'){ %>readonly="readonly"<% } %> class="form-control" name="guestSecret" value="<%- model.attributes.guestSecret || model.attributes.guestSecret %>">
+                    <input type="text" <% if(userType == 'preview' || (typeof serverType != 'undefined' && serverType == 'hosted')){ %>readonly="readonly"<% } %> class="form-control" name="guestSecret" value="<%- model.attributes.guestSecret || model.attributes.guestSecret %>">
                     <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="
                     Used for creating user account from the mobile device">
                     </span>
