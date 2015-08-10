@@ -142,7 +142,13 @@ define(['jquery', 'backbone'], function($, Backbone){
                         if(res.results[i].device.updated) res.results[i].device.updated = moment(res.results[i].device.updated).format('lll');
                         res.results[i].device.nameEdited = res.results[i].device.name.substr(0, 30)+'...';
                         res.results[i].device.ownerIdEdited = res.results[i].device.ownerId.substr(0, 10)+'...';
-                        res.results[i].device.osTypeEdited = '<i class="fa fa-2x fa-'+(res.results[i].device.osType == 'ANDROID' ? 'android' : 'apple')+'"></i>';
+                        var osType;
+                        switch(res.results[i].device.osType){
+                            case 'ANDROID' : osType = 'android'; break;
+                            case 'IOS' : osType = 'apple'; break;
+                            default : osType = 'desktop'; break;
+                        }
+                        res.results[i].device.osTypeEdited = '<i class="fa fa-2x fa-'+osType+'"></i>';
                         res.results[i].device.deviceIdEdited = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.deviceId.substr(0, 30)+'...</a>';
                         if(res.results[i].device.status == 'ACTIVE') res.results[i].device.checkbox = '<input type="checkbox" />';
                         if(res.results[i].userEntity){

@@ -1351,7 +1351,7 @@
     }
 }
 dependencies {
-    compile ("com.magnet.mmx:magnet-mmx-client-android:1.4.0-SNAPSHOT@aar") {
+    compile ("com.magnet.mmx:magnet-mmx-client-android:<%- version %>@aar") {
         transitive=true
     }
 }</pre></li>
@@ -1380,7 +1380,7 @@ dependencies {
                 <h4>Build the App:</h4>
                 <ol class="mmx-nav">
                     <li>Add the following lines to your podfile.
-                        <pre>pod 'MMX', '~> 1.1.0'</pre></li>
+                        <pre>pod 'MMX', '~> <%- version.replace('-SNAPSHOT', '').replace('-RELEASE') %>'</pre></li>
                     <li>Download the configuration file "Configurations.plist" from the <a href="#settings">Settings</a>
                         menu of the Magnet Message web interface and place it into the project folder.</li>
                     <li>If you are using a Swift project you will need to add MMX.h to your bridging header.
