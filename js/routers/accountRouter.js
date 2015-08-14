@@ -54,7 +54,7 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
         login: function(callback){
             var me = this;
             if(GLOBAL.serverType == 'hosted' && GLOBAL.authUrl)
-                me.eventPubSub.trigger('resetGlobalPages', 'loggedout-container');
+                window.location.href = GLOBAL.authUrl.substring(0, GLOBAL.authUrl.indexOf('/', 8)) + '/sign-in/';
             else
                 me.eventPubSub.trigger('resetGlobalPages', 'login-container');
             me.eventPubSub.trigger('initLogin', callback);
