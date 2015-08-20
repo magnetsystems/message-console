@@ -35,8 +35,8 @@
         </div>
         <div id="user-nav" class="collapse navbar-collapse">
             <ul id="main-nav-menu" class="mmx-nav nav navbar-nav navbar-right" style="display:none">
-                <li><a href="#dashboard">App Dashboard</a></li>
                 <li><a href="#quickstart">Getting Started</a></li>
+                <li><a href="#dashboard">App Dashboard</a></li>
                 <li><a href="#endpoints">Endpoints</a></li>
                 <li><a href="#users">Users</a></li>
                 <li><a href="#messages">Message Log</a></li>
@@ -232,8 +232,8 @@
         </div>
         <hr />
         <div class="mmx-nav list-group">
-            <a class="list-group-item" href="#dashboard"><img src="/images/icons/nav_dashboard.png" />App Dashboard</a>
             <a class="list-group-item" href="#quickstart"><img src="/images/icons/nav_gettingstarted.png" />Getting Started</a>
+            <a class="list-group-item" href="#dashboard"><img src="/images/icons/nav_dashboard.png" />App Dashboard</a>
             <a class="list-group-item" href="#endpoints"><img src="/images/icons/nav_endpoints.png" />Endpoints</a>
             <a class="list-group-item" href="#users"><img src="/images/icons/nav_users.png" />Users</a>
             <a class="list-group-item" href="#messages"><img src="/images/icons/nav_logs.png" />Message Log</a>
@@ -1355,7 +1355,7 @@ dependencies {
         transitive=true
     }
 }</pre></li>
-                    <li>Download the configuration file "<%- appName.toLowerCase() %>.properties" from the <a href="#settings">Settings</a>
+                    <li>Download the configuration file "<a href="/rest/apps/<%- model.attributes.id %>/sampleConfig?platform=android&sampleId=<%- appName.toLowerCase() %>"><%- appName.toLowerCase() %>.properties</a>" from the <a href="#settings">Settings</a>
                         menu of the Magnet Message web interface and place it in the "&lt;project root&gt;/app/src/main/res/raw" folder.</li>
                     <li>Build and run your app on Android emulator or mobile device.</li>
                 </ol>
@@ -1381,7 +1381,7 @@ dependencies {
                 <ol class="mmx-nav">
                     <li>Add the following lines to your podfile.
                         <pre>pod 'MMX', '~> <%- version.replace('-SNAPSHOT', '').replace('-RELEASE') %>'</pre></li>
-                    <li>Download the configuration file "Configurations.plist" from the <a href="#settings">Settings</a>
+                    <li>Download the configuration file "<a href="/rest/apps/<%- model.attributes.id %>/sampleConfig?platform=ios&sampleId=<%- appName.toLowerCase() %>">Configurations.plist</a>" from the <a href="#settings">Settings</a>
                         menu of the Magnet Message web interface and place it into the project folder.</li>
                     <li>If you are using a Swift project you will need to add MMX.h to your bridging header.
                         <pre>#import &lt;MMX.h&gt;</pre></li>
@@ -1403,26 +1403,30 @@ dependencies {
                 <div class="panel-body">
                     <% if(appName == 'RPSLS'){ %>
                     <ol>
-                        <li>Upon launch, the app will connect you automatically.</li>
-                        <li>Press the find Opponent button to see a list of players.</li>
-                        <li>Select a player and press the Invite button to send the opponent a request to play.</li>
-                        <li>Select one of the 5 options.</li>
-                        <li>See who won and who lost.</li>
+                        <li>Upon launch, enter your desired username and password. Pressing login will connect and register this user to the server.</li>
+                        <li>Press the Find Opponent button to see a list of players.</li>
+                        <li>There is a bot (player_bot) that will automatically respond as an opponent when requested to play.</li>
+                        <li>To use player_bot, invite the bot from the list and begin the game.</li>
+                        <li>Select one of the 5 options and see who won or lost.</li>
                     </ol>
                     <% }else if(appName == 'Soapbox'){ %>
                     <ol>
-                        <li>Upon launch, the app will connect you automatically.</li>
-                        <li>Enter what you want for your username and password. Pressing login will save this information.</li>
-                        <li>Enter a message and Press the send button to send a message to yourself using the in-app messaging functionality.</li>
-                        <li>You should be able to send and receive in-app messages on your mobile device (or emulator/simulator).</li>
-                        <li>There are bots that will automatically respond to your message to simulate more users.</li>
+                        <li>Upon launch, enter the desired username and password. Pressing login will connect and register this user to the server.</li>
+                        <li>You will automatically become subscribed to the topic "company_announcements".</li>
+                        <li>Click on "company_announcements" under subscription.</li>
+                        <li>Create a message and press the send button. A message will be sent to yourself as a subscribed user.</li>
+                        <li>To unsubscribe to the topic, select the icon in the upper right corner of the app then choose unsubscribe.</li>
+                        <li>To subscribe to another available topic, choose "lunch_buddies" found under the main screen.</li>
+                        <li><b>On Android Only</b>, select the share icon in the upper right corner of the app and choose subscribe.</li>
+                        <li>Create a message and press the send button. A message will be sent to yourself as a subscribed user.</li>
                     </ol>
                     <% }else{ %>
                     <ol>
-                        <li>Upon launch, the app will connect to your server as “QuickstartUser1".</li>
-                        <li>Press the send button and your device will send a message to yourself using the in-app messaging functionality.</li>
-                        <li>You should be able to send and receive in-app messages on your mobile device (or emulator/simulator).</li>
-                        <li>There are bots that will automatically respond to your message to simulate more users.</li>
+                        <li>Upon launch, the app will register and connect to your server as "QuickstartUser1".</li>
+                        <li>Press the send button and a message will be sent to yourself using the in-app messaging functionality.</li>
+                        <li>There are bots (echo_bot & amazing_bot) that will automatically respond to your message to simulate more users.</li>
+                        <li>To use the bots, select the icon in the upper right corner of the app, choose a bot and send a message.</li>
+                        <li>Echo_bot will echo back the same message that is sent while amazing_bot will respond with the message "this is simply amazing".</li>
                     </ol>
                     <% } %>
                 </div>

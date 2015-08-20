@@ -178,7 +178,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         selectMMXView: function(e){
             var link = $(e.currentTarget);
             var view = link.attr('href');
-            if(view == '#' || view && (view.indexOf('/documentation/') != -1 || view.indexOf('docs.magnet.com') != -1))
+            if(view == '#' || view && (view.indexOf('/documentation/') != -1 || view.indexOf('docs.magnet.com') != -1) || view.indexOf('/rest/') != -1)
                 return;
             else
                 e.preventDefault();

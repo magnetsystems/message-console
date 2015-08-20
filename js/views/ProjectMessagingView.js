@@ -109,7 +109,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'collections/AppCollection', 'v
                     me.options.opts.appCount = me.col.length;
                     me.options.eventPubSub.trigger('imposeAppLimit');
                     me.newAppModal.modal('hide');
-                    Backbone.history.navigate('#/messaging/'+model.attributes.id);
+                    Backbone.history.navigate('#/messaging/'+model.attributes.id+'/quickstart');
                 },
                 error: function(e){
                     alert('The App name you specified already exists. Please choose another name.');
