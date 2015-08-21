@@ -1316,6 +1316,24 @@
 
     <div id="mmx-quickstart-container">
 
+        <p>
+            <% if(appName == 'RPSLS'){ %>
+            This app is a different way to think about messaging. We wanted to show message passing in a cool and interesting way.
+            Use message-passing and publish/subscribe APIs to send a players selections and see who wins. See more about
+            <a href="https://www.magnet.com/developer/samples/rock-paper-scissors-lizard-spock/" target="_blank">Rock Paper Scissors Lizard Spock</a>.
+            <% }else if(appName == 'Soapbox'){ %>
+            This app is an example of a standard one-to-many messaging application for the real world. Soapbox leverages topic functionality to
+            provide a channel for people to communicate effectively by publishing/subscribing/receiving simple messages against a pre-configured
+            set of topics or topics they choose to create. See more about <a href="https://www.magnet.com/developer/samples/soapbox/" target="_blank">Soapbox</a>.
+            <% }else if(appName == 'Quickstart'){ %>
+            This app is to get you started and familiar with messaging in a few simple steps.
+            See our in-depth getting started for  <a href="https://docs.magnet.com/message/android/getting_started_android/" target="_blank">Android</a>
+            and  <a href="https://docs.magnet.com/message/ios/getting_started_ios/" target="_blank">iOS</a> in our docs.
+            <% }else{ %>
+            Follow the instructions below to integrate Magnet Message into your app.
+            <% } %>
+        </p>
+
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#mmx-quickstart-android-new" aria-controls="mmx-quickstart-android-new" role="tab" data-toggle="tab">
                 <i class="fa fa-2x fa-android"></i>
@@ -1331,7 +1349,7 @@
                 <h4>Prerequisites</h4>
                 <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">Install Android Studio</a>
 
-                <h4>Build the App:</h4>
+                <h4>Build the App</h4>
                 <ol class="mmx-nav">
                     <li>Download the <a class="download-compiled-source" did="android" href="#" onclick="(typeof ga !== 'undefined' ? ga : function(){})('send', 'event', 'DL <%- appName %>', 'Yes');">Magnet Message <%- appName %> Android App</a>
                         and import it into Android Studio.</li>
@@ -1342,7 +1360,7 @@
                 <h4>Prerequisites</h4>
                 <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">Install Android Studio</a>
 
-                <h4>Build the App:</h4>
+                <h4>Build the App</h4>
                 <ol class="mmx-nav">
                     <li>Add the Magnet Message client library as a dependency to the Gradle build script as shown below:</p>
 <pre>repositories {
@@ -1357,16 +1375,50 @@ dependencies {
 }</pre></li>
                     <li>Download the configuration file "<a href="/rest/apps/<%- model.attributes.id %>/sampleConfig?platform=android&sampleId=<%- appName.toLowerCase() %>"><%- appName.toLowerCase() %>.properties</a>" from the <a href="#settings">Settings</a>
                         menu of the Magnet Message web interface and place it in the "&lt;project root&gt;/app/src/main/res/raw" folder.</li>
-                    <li>Build and run your app on Android emulator or mobile device.</li>
                 </ol>
+            <% } %>
+            <% if(appName == 'RPSLS'){ %>
+            <h4>Using the <%- appName %> App</h4>
+            <ol>
+                <li>Upon launch, enter your desired username and password. Pressing login will connect and register this user to the server.</li>
+                <li>Press the Find Opponent button to see a list of players.</li>
+                <li>There is a bot (player_bot) that will automatically respond as an opponent when requested to play.</li>
+                <li>To use player_bot, invite the bot from the list and begin the game.</li>
+                <li>Select one of the 5 options and see who won or lost.</li>
+            </ol>
+            <% }else if(appName == 'Soapbox'){ %>
+            <h4>Using the <%- appName %> App</h4>
+            <ol>
+                <li>Upon launch, enter the desired username and password. Pressing login will connect and register this user to the server.</li>
+                <li>You will automatically become subscribed to the topic "company_announcements".</li>
+                <li>Click on "company_announcements" under subscription.</li>
+                <li>Create a message and press the send button. A message will be sent to yourself as a subscribed user.</li>
+                <li>To unsubscribe to the topic, select the icon in the upper right corner of the app then choose unsubscribe.</li>
+                <li>To subscribe to another available topic, choose "lunch_buddies" found under the main screen.</li>
+                <li>Create a message and press the send button. A message will be sent to yourself as a subscribed user.</li>
+            </ol>
+            <% }else if(appName == 'Quickstart'){ %>
+            <h4>Using the <%- appName %> App</h4>
+            <ol>
+                <li>Upon launch, the app will register and connect to your server as "QuickstartUser1".</li>
+                <li>Press the send button and a message will be sent to yourself using the in-app messaging functionality.</li>
+                <li>There are bots (echo_bot & amazing_bot) that will automatically respond to your message to simulate more users.</li>
+                <li>To use the bots, select the icon in the upper right corner of the app, choose a bot and send a message.</li>
+                <li>Echo_bot will echo back the same message that is sent while amazing_bot will respond with the message "this is simply amazing".</li>
+            </ol>
+            <% }else{ %>
+            <h4>More Information</h4>
+            View the instructions at <a href="https://docs.magnet.com/message/android/add-a-new-app-android/" target="_blank">Creating your First App</a> to learn how to use messaging features. The <b>Useful Recipes</b> section
+            below include links to tutorials and code samples for the most commonly used features.
             <% } %>
             </div>
             <div role="tabpanel" class="tab-pane" id="mmx-quickstart-ios-new">
             <% if(appName == 'Quickstart' || appName == 'Soapbox' || appName == 'RPSLS'){ %>
                 <h4>Prerequisites</h4>
-                <a href="https://developer.apple.com/xcode/downloads/" target="_blank">Install Xcode</a>
+                <a href="https://developer.apple.com/xcode/downloads/" target="_blank">Install Xcode</a><br />
+                <a href="https://cocoapods.org/" target="_blank">Install CocoaPods</a> (See the "Getting Started" guide for more information)
 
-                <h4>Build the App:</h4>
+                <h4>Build the App</h4>
                 <ol class="mmx-nav">
                     <li>Download and unzip <a class="download-compiled-source" did="ios" href="#">Magnet Message <%- appName %> iOS App</a>.</li>
                     <li>Open the <%- appName %>.xcworkspace file in Xcode.</li>
@@ -1375,9 +1427,10 @@ dependencies {
                 </ol>
             <% }else{ %>
                 <h4>Prerequisites</h4>
-                <a href="https://developer.apple.com/xcode/downloads/" target="_blank">Install Xcode</a>
+                <a href="https://developer.apple.com/xcode/downloads/" target="_blank">Install Xcode</a><br />
+                <a href="https://cocoapods.org/" target="_blank">Install CocoaPods</a> (See the "Getting Started" guide for more information)
 
-                <h4>Build the App:</h4>
+                <h4>Build the App</h4>
                 <ol class="mmx-nav">
                     <li>Add the following lines to your podfile.
                         <pre>pod 'MMX', '~> <%- version.replace('-SNAPSHOT', '').replace('-RELEASE') %>'</pre></li>
@@ -1386,6 +1439,41 @@ dependencies {
                     <li>If you are using a Swift project you will need to add MMX.h to your bridging header.
                         <pre>#import &lt;MMX.h&gt;</pre></li>
                 </ol>
+            <% } %>
+            <% if(appName == 'RPSLS'){ %>
+            <h4>Using the <%- appName %> App</h4>
+            <ol>
+                <li>Upon launch, enter your desired username and password. Pressing login will connect and register this user to the server.</li>
+                <li>Press the Find Opponent button to see a list of players.</li>
+                <li>There is a bot (player_bot) that will automatically respond as an opponent when requested to play.</li>
+                <li>To use player_bot, invite the bot from the list and begin the game.</li>
+                <li>Select one of the 5 options and see who won or lost.</li>
+            </ol>
+            <% }else if(appName == 'Soapbox'){ %>
+            <h4>Using the <%- appName %> App</h4>
+            <ol>
+                <li>Upon launch, enter the desired username and password. Pressing login will connect and register this user to the server.</li>
+                <li>You will automatically become subscribed to the topic "company_announcements".</li>
+                <li>Click on "company_announcements" under subscription.</li>
+                <li>Create a message and press the send button. A message will be sent to yourself as a subscribed user.</li>
+                <li>To unsubscribe to the topic, select the icon in the upper right corner of the app then choose unsubscribe.</li>
+                <li>To subscribe to another available topic, choose "lunch_buddies" found under the main screen.</li>
+                <li>Select the share icon in the upper right corner of the app and choose subscribe.</li>
+                <li>Create a message and press the send button. A message will be sent to yourself as a subscribed user.</li>
+            </ol>
+            <% }else if(appName == 'Quickstart'){ %>
+            <h4>Using the <%- appName %> App</h4>
+            <ol>
+                <li>Upon launch, the app will register and connect to your server as "QuickstartUser1".</li>
+                <li>Press the send button and a message will be sent to yourself using the in-app messaging functionality.</li>
+                <li>There are bots (echo_bot & amazing_bot) that will automatically respond to your message to simulate more users.</li>
+                <li>To use the bots, select the icon in the upper right corner of the app, choose a bot and send a message.</li>
+                <li>Echo_bot will echo back the same message that is sent while amazing_bot will respond with the message "this is simply amazing".</li>
+            </ol>
+            <% }else{ %>
+            <h4>More Information</h4>
+                View the instructions at <a href="https://docs.magnet.com/message/ios/add-a-new-app-ios/" target="_blank">Creating your First App</a> to learn how to use messaging features. The <b>Useful Recipes</b> section
+                below include links to tutorials and code samples for the most commonly used features.
             <% } %>
             </div>
         </div>
@@ -1398,37 +1486,28 @@ dependencies {
         <div class="col-md-4">
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    Using the <%- appName %> App
+                    Useful Recipes
                 </div>
                 <div class="panel-body">
-                    <% if(appName == 'RPSLS'){ %>
-                    <ol>
-                        <li>Upon launch, enter your desired username and password. Pressing login will connect and register this user to the server.</li>
-                        <li>Press the Find Opponent button to see a list of players.</li>
-                        <li>There is a bot (player_bot) that will automatically respond as an opponent when requested to play.</li>
-                        <li>To use player_bot, invite the bot from the list and begin the game.</li>
-                        <li>Select one of the 5 options and see who won or lost.</li>
-                    </ol>
-                    <% }else if(appName == 'Soapbox'){ %>
-                    <ol>
-                        <li>Upon launch, enter the desired username and password. Pressing login will connect and register this user to the server.</li>
-                        <li>You will automatically become subscribed to the topic "company_announcements".</li>
-                        <li>Click on "company_announcements" under subscription.</li>
-                        <li>Create a message and press the send button. A message will be sent to yourself as a subscribed user.</li>
-                        <li>To unsubscribe to the topic, select the icon in the upper right corner of the app then choose unsubscribe.</li>
-                        <li>To subscribe to another available topic, choose "lunch_buddies" found under the main screen.</li>
-                        <li><b>On Android Only</b>, select the share icon in the upper right corner of the app and choose subscribe.</li>
-                        <li>Create a message and press the send button. A message will be sent to yourself as a subscribed user.</li>
-                    </ol>
-                    <% }else{ %>
-                    <ol>
-                        <li>Upon launch, the app will register and connect to your server as "QuickstartUser1".</li>
-                        <li>Press the send button and a message will be sent to yourself using the in-app messaging functionality.</li>
-                        <li>There are bots (echo_bot & amazing_bot) that will automatically respond to your message to simulate more users.</li>
-                        <li>To use the bots, select the icon in the upper right corner of the app, choose a bot and send a message.</li>
-                        <li>Echo_bot will echo back the same message that is sent while amazing_bot will respond with the message "this is simply amazing".</li>
-                    </ol>
-                    <% } %>
+
+                    <ul class="android-resource">
+                        <li><a href="https://docs.magnet.com/message/android/add-a-new-app-android/#initialize">Initialize the SDK</a></li>
+                        <li><a href="https://docs.magnet.com/message/android/add-a-new-app-android/#register">Register User</a></li>
+                        <li><a href="https://docs.magnet.com/message/android/add-a-new-app-android/#login">Login User</a></li>
+                        <li><a href="https://docs.magnet.com/message/android/add-a-new-app-android/#get-current-user">Get Current User</a></li>
+                        <li><a href="https://docs.magnet.com/message/android/add-a-new-app-android/#find-users">Send a Message</a></li>
+                        <li><a href="https://docs.magnet.com/message/android/add-a-new-app-android/#receive">Receiving Messages</a></li>
+                        <li><a href="https://docs.magnet.com/message/android/add-a-new-app-android/#wakeup">Wakeup With GCM</a></li>
+                    </ul>
+                    <ul class="ios-resource hidden">
+                        <li><a href="https://docs.magnet.com/message/ios/add-a-new-app-ios/#initialize">Initialize the SDK</a></li>
+                        <li><a href="https://docs.magnet.com/message/ios/add-a-new-app-ios/#register">Register User</a></li>
+                        <li><a href="https://docs.magnet.com/message/ios/add-a-new-app-ios/#login">Login User</a></li>
+                        <li><a href="https://docs.magnet.com/message/ios/add-a-new-app-ios/#get-current-user">Get Current User</a></li>
+                        <li><a href="https://docs.magnet.com/message/ios/add-a-new-app-ios/#find-users">Send a Message</a></li>
+                        <li><a href="https://docs.magnet.com/message/ios/add-a-new-app-ios/#receive">Receiving Messages</a></li>
+                        <li><a href="https://docs.magnet.com/message/ios/add-a-new-app-ios/#wakeup">Wakeup With GCM</a></li>
+                    </ul>
                 </div>
             </div>
         </div>

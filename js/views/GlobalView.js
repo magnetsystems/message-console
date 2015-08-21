@@ -190,27 +190,28 @@ define(['jquery', 'backbone'], function($, Backbone){
             e.preventDefault();
             var dom = $('#collapsible-menu-list > div > a.active');
             var activeView;
-            var baseUrl = 'https://www.magnet.com/documentation/message/1.0.2/guide/';
-            if(dom.length){
-                activeView = dom.attr('href').replace('#', '');
-                switch(activeView){
-                    case 'dashboard': window.open(baseUrl+'Messaging+Dashboard.php', '_blank'); break;
-                    case 'endpoints': window.open(baseUrl+'View+Registered+Mobile+Devices.php', '_blank'); break;
-                    case 'users': window.open(baseUrl+'Manage+Registered+Messaging+Users.php', '_blank'); break;
-                    case 'messages': window.open(baseUrl+'View+Message+Log+and+Push+Message+Log.php', '_blank'); break;
-                    case 'notifications': window.open(baseUrl+'View+Message+Log+and+Push+Message+Log.php', '_blank'); break;
-                    case 'topics': window.open(baseUrl+'Managing+Topics.php', '_blank'); break;
-                    case 'quickstart':
-                        var platform = $('#mmx-quickstart div[did="platform"] button[class~="active"]').attr('did');
-                        platform = platform == 'ios' ? 'iOS' : 'Android';
-                        window.open(baseUrl+'Getting+Started+with+the+'+platform+'+QuickStart+App.php', '_blank');
-                        break;
-                    case 'settings': window.open(baseUrl+'Set+Up+New+Magnet+Message+App.php', '_blank'); break;
-                    default: window.open(baseUrl, '_blank');
-                }
-            }else{
-                window.open(baseUrl, '_blank');
-            }
+            var baseUrl = 'https://docs.magnet.com';
+            window.open(baseUrl, '_blank');
+            //if(dom.length){
+            //    activeView = dom.attr('href').replace('#', '');
+            //    switch(activeView){
+            //        case 'dashboard': window.open(baseUrl+'Messaging+Dashboard.php', '_blank'); break;
+            //        case 'endpoints': window.open(baseUrl+'View+Registered+Mobile+Devices.php', '_blank'); break;
+            //        case 'users': window.open(baseUrl+'Manage+Registered+Messaging+Users.php', '_blank'); break;
+            //        case 'messages': window.open(baseUrl+'View+Message+Log+and+Push+Message+Log.php', '_blank'); break;
+            //        case 'notifications': window.open(baseUrl+'View+Message+Log+and+Push+Message+Log.php', '_blank'); break;
+            //        case 'topics': window.open(baseUrl+'Managing+Topics.php', '_blank'); break;
+            //        case 'quickstart':
+            //            var platform = $('#mmx-quickstart div[did="platform"] button[class~="active"]').attr('did');
+            //            platform = platform == 'ios' ? 'iOS' : 'Android';
+            //            window.open(baseUrl+'Getting+Started+with+the+'+platform+'+QuickStart+App.php', '_blank');
+            //            break;
+            //        case 'settings': window.open(baseUrl+'Set+Up+New+Magnet+Message+App.php', '_blank'); break;
+            //        default: window.open(baseUrl, '_blank');
+            //    }
+            //}else{
+            //    window.open(baseUrl, '_blank');
+            //}
         },
         bindFeedbackButton: function(){
             $('#leave-feedback-container').show();

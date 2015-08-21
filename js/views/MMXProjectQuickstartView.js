@@ -20,6 +20,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         events : {
             'click .download-compiled-source': 'downloadCompiledSource',
             //'click .nav-tabs li a': 'stopTour',
+            'click .nav-tabs li a': 'togglePlatformResources',
             'click .centered .btn' : 'selectQuickstartView'
 
         },
@@ -39,6 +40,17 @@ define(['jquery', 'backbone'], function($, Backbone){
                 status  : this.options.opts.serverStatus,
                 version : GLOBAL.version
             }));
+        },
+        togglePlatformResources: function(e){
+            var link = $(e.currentTarget).attr('href');
+            console.log(link);
+            if(link.indexOf('android') != -1){
+                this.$el.find('.android-resource').removeClass('hidden');
+                this.$el.find('.ios-resource').addClass('hidden');
+            }else{
+                this.$el.find('.android-resource').addClass('hidden');
+                this.$el.find('.ios-resource').removeClass('hidden');
+            }
         },
         downloadCompiledSource: function(e){
             e.preventDefault();
