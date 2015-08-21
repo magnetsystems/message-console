@@ -32,7 +32,7 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
 //                    return (curr == 78 || curr == 112) ? (curr - 35) : curr + 'px';
 //                });
                 if(['Quickstart', 'RPSLS', 'Soapbox'].indexOf(me.model.attributes.name) != -1){
-                    params.view = 'quickstart';
+                    params.view = params.view || 'quickstart';
                 }
                 me.setTab(params.view || 'dashboard');
                 $('#breadcrumb .same-line').hide();
