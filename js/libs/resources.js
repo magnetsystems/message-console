@@ -2,7 +2,7 @@
 /* HELPERS */
 var GLOBAL = {
     baseUrl : '/rest/',
-    version : '1.4.0-SNAPSHOT' || '',
+    version : '1.5.6' || '',
     polling : false
 };
 
@@ -573,7 +573,7 @@ function MMXFirstTimeUserTour(){
         backdropPadding : 8,
         steps : [
             {
-                element   : "#mmx-quickstart-container",
+                element   : "#mmx-quickstart-container .tab-pane.active",
                 title     : "Welcome to your Magnet Sandbox!",
                 content   : "We made some sample apps for you. Follow the instructions here to learn how to send and receive messages using the Quickstart sample app.",
                 placement : "bottom",
