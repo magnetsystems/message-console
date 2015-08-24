@@ -148,7 +148,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 sortable : false
             },
             {
-                label    : 'Topic Name',
+                label    : 'Channel Name',
                 property : 'topicName',
                 sortable : false
             },
@@ -210,7 +210,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         validateTopicModal: function(dom, obj, isEdit){
             if($.trim(obj.topicName).length < 1 && !isEdit){
-                utils.showError(dom, 'topicName', 'Invalid Topic Name. Topic Name is a required field.');
+                utils.showError(dom, 'topicName', 'Invalid Channel Name. Channel Name is a required field.');
                 return false;
             }
             return true;
@@ -258,8 +258,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.topics.push(obj);
             me.list.repeater('render');
             Alerts.General.display({
-                title   : 'Topic Created',
-                content : 'A new topic with name of "'+obj.topicName+'" has been created.'
+                title   : 'Channel Created',
+                content : 'A new channel with name of "'+obj.topicName+'" has been created.'
             });
         },
         showEditTopic: function(e){
@@ -325,8 +325,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.list.repeater('render');
             me.updateTopicModal.modal('hide');
             Alerts.General.display({
-                title   : 'Topic Updated',
-                content : 'The topic "'+me.activeTopic.topicName+'" has been updated.'
+                title   : 'Channel Updated',
+                content : 'The channel "'+me.activeTopic.topicName+'" has been updated.'
             });
             delete me.activeTopic;
         },
@@ -335,8 +335,8 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(!me.selectedElements.length) return;
             var did = me.selectedElements[0].topicName;
             Alerts.Confirm.display({
-                title   : 'Delete Topic',
-                content : 'The selected topic will be deleted. This can not be undone. Are you sure you want to continue?'
+                title   : 'Delete Channel',
+                content : 'The selected channel will be deleted. This can not be undone. Are you sure you want to continue?'
             }, function(){
                 AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(did), 'DELETE', 'application/json', null, function(res, status, xhr){
                     utils.removeByAttr(me.topics, 'topicName', did);
