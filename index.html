@@ -41,7 +41,7 @@
                 <li><a href="#users">Users</a></li>
                 <li><a href="#messages">Message Log</a></li>
                 <li><a href="#notifications">Push Log</a></li>
-                <li><a href="#topics">Topics</a></li>
+                <li><a href="#topics">Channels</a></li>
                 <li class="advanced-settings-view-link"><a href="#settings">Settings</a></li>
                 <li style="display:none"><a href="#advanced">Advanced</a></li>
                 <li><a href="//docs.magnet.com/message/overview/" target="_blank">Documentation</a></li>
@@ -238,7 +238,7 @@
             <a class="list-group-item" href="#users"><img src="/images/icons/nav_users.png" />Users</a>
             <a class="list-group-item" href="#messages"><img src="/images/icons/nav_logs.png" />Message Log</a>
             <a class="list-group-item" href="#notifications"><img src="/images/icons/nav_logs.png" />Push Log</a>
-            <a class="list-group-item" href="#topics"><img src="/images/icons/nav_topics.png" />Topics</a>
+            <a class="list-group-item" href="#topics"><img src="/images/icons/nav_topics.png" />Channels</a>
             <a class="list-group-item" href="#settings"><img src="/images/icons/nav_settings.png" />Settings</a>
             <a class="list-group-item advanced-settings-view-link" href="#advanced"><img src="/images/icons/nav_settings.png" />Advanced</a>
             <a class="list-group-item" href="//docs.magnet.com/message/overview/" target="_blank"><img src="/images/icons/nav_docs.png" />Documentation</a>
@@ -1144,7 +1144,7 @@
         <div class="col-sm-12">
             <label>Name <span class="required">*</span></label>
             <div class="controls">
-                <input type="text" class="form-control" name="topicName" maxlength="50" placeholder="The name of your new topic" <% if(typeof model != 'undefined'){ %>disabled="disabled"<% } %> value="<%- typeof model != 'undefined' ? model.topicName : '' %>" />
+                <input type="text" class="form-control" name="topicName" maxlength="50" placeholder="The name of your new channel" <% if(typeof model != 'undefined'){ %>disabled="disabled"<% } %> value="<%- typeof model != 'undefined' ? model.topicName : '' %>" />
             </div>
         </div>
     </div>
@@ -1152,7 +1152,7 @@
         <div class="col-sm-12">
             <label>Description</label>
             <div class="controls">
-                <input type="text" class="form-control" name="description" maxlength="100" placeholder="A description of your topic" <% if(typeof model != 'undefined'){ %>disabled="disabled"<% } %> value="<%- typeof model != 'undefined' ? model.description : ''  %>" />
+                <input type="text" class="form-control" name="description" maxlength="100" placeholder="A description of your channel" <% if(typeof model != 'undefined'){ %>disabled="disabled"<% } %> value="<%- typeof model != 'undefined' ? model.description : ''  %>" />
             </div>
         </div>
     </div>
@@ -1200,16 +1200,16 @@
                 <div class="generic-control-container">
                     <div class="repeater-icon-controls">
                         <div class="btn-group repeater-views" data-toggle="buttons">
-                            <span id="mmx-topics-show-create-modal" class="mmx-topics-add-btn tooltipped-ctrl" data-placement="bottom" data-toggle="tooltip" data-title="Add Topic">
+                            <span id="mmx-topics-show-create-modal" class="mmx-topics-add-btn tooltipped-ctrl" data-placement="bottom" data-toggle="tooltip" data-title="Add Channel">
                                 <img src="images/icons/tb_add.png" />
                             </span>
-                            <span class="mmx-topics-edit-btn disabled disableable tooltipped-ctrl" data-placement="bottom" data-toggle="tooltip" data-title="Edit Topic">
+                            <span class="mmx-topics-edit-btn disabled disableable tooltipped-ctrl" data-placement="bottom" data-toggle="tooltip" data-title="Edit Channel">
                                 <img src="images/icons/tb_edit.png" />
                             </span>
                             <span class="mmx-topics-publish-btn disabled disableable tooltipped-ctrl" data-placement="bottom" data-toggle="tooltip" data-title="Publish Message">
                                 <img src="images/icons/tb_sendmessage.png" />
                             </span>
-                            <span class="mmx-topics-delete-btn disabled disableable tooltipped-ctrl" data-placement="bottom" data-toggle="tooltip" data-title="Delete Topic">
+                            <span class="mmx-topics-delete-btn disabled disableable tooltipped-ctrl" data-placement="bottom" data-toggle="tooltip" data-title="Delete Channel">
                                 <img src="images/icons/tb_delete.png" />
                             </span>
                         </div>
@@ -1322,9 +1322,9 @@
             Use message-passing and publish/subscribe APIs to send a players selections and see who wins. See more about
             <a href="https://www.magnet.com/developer/samples/rock-paper-scissors-lizard-spock/" target="_blank">Rock Paper Scissors Lizard Spock</a>.
             <% }else if(appName == 'Soapbox'){ %>
-            This app is an example of a standard one-to-many messaging application for the real world. Soapbox leverages topic functionality to
+            This app is an example of a standard one-to-many messaging application for the real world. Soapbox leverages channel functionality to
             provide a channel for people to communicate effectively by publishing/subscribing/receiving simple messages against a pre-configured
-            set of topics or topics they choose to create. See more about <a href="https://www.magnet.com/developer/samples/soapbox/" target="_blank">Soapbox</a>.
+            set of channels or channels they choose to create. See more about <a href="https://www.magnet.com/developer/samples/soapbox/" target="_blank">Soapbox</a>.
             <% }else if(appName == 'Quickstart'){ %>
             This app is to get you started and familiar with messaging in a few simple steps.
             See our in-depth getting started for  <a href="https://docs.magnet.com/message/android/getting_started_android/" target="_blank">Android</a>
@@ -1390,11 +1390,11 @@ dependencies {
             <h4>Using the <%- appName %> App</h4>
             <ol>
                 <li>Upon launch, enter the desired username and password. Pressing login will connect and register this user to the server.</li>
-                <li>You will automatically become subscribed to the topic "company_announcements".</li>
+                <li>You will automatically become subscribed to the channel "company_announcements".</li>
                 <li>Click on "company_announcements" under subscription.</li>
                 <li>Create a message and press the send button. A message will be sent to yourself as a subscribed user.</li>
-                <li>To unsubscribe to the topic, select the icon in the upper right corner of the app then choose unsubscribe.</li>
-                <li>To subscribe to another available topic, choose "lunch_buddies" found under the main screen.</li>
+                <li>To unsubscribe to the channel, select the icon in the upper right corner of the app then choose unsubscribe.</li>
+                <li>To subscribe to another available channel, choose "lunch_buddies" found under the main screen.</li>
                 <li>Create a message and press the send button. A message will be sent to yourself as a subscribed user.</li>
             </ol>
             <% }else if(appName == 'Quickstart'){ %>
@@ -1453,11 +1453,11 @@ dependencies {
             <h4>Using the <%- appName %> App</h4>
             <ol>
                 <li>Upon launch, enter the desired username and password. Pressing login will connect and register this user to the server.</li>
-                <li>You will automatically become subscribed to the topic "company_announcements".</li>
+                <li>You will automatically become subscribed to the channel "company_announcements".</li>
                 <li>Click on "company_announcements" under subscription.</li>
                 <li>Create a message and press the send button. A message will be sent to yourself as a subscribed user.</li>
-                <li>To unsubscribe to the topic, select the icon in the upper right corner of the app then choose unsubscribe.</li>
-                <li>To subscribe to another available topic, choose "lunch_buddies" found under the main screen.</li>
+                <li>To unsubscribe to the channel, select the icon in the upper right corner of the app then choose unsubscribe.</li>
+                <li>To subscribe to another available channel, choose "lunch_buddies" found under the main screen.</li>
                 <li>Select the share icon in the upper right corner of the app and choose subscribe.</li>
                 <li>Create a message and press the send button. A message will be sent to yourself as a subscribed user.</li>
             </ol>
@@ -2106,7 +2106,7 @@ dependencies {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">New Topic</h4>
+                <h4 class="modal-title">New Channel</h4>
             </div>
             <div  class="modal-body"></div>
             <div class="modal-footer">
@@ -2122,7 +2122,7 @@ dependencies {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Edit Topic</h4>
+                <h4 class="modal-title">Edit Channel</h4>
             </div>
             <div class="modal-body clearfix"></div>
             <div class="modal-footer">
@@ -2138,7 +2138,7 @@ dependencies {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Publish a message to topic <span class="mmx-topic-name-placeholder"></span></h4>
+                <h4 class="modal-title">Publish a message to channel <span class="mmx-topic-name-placeholder"></span></h4>
             </div>
             <div class="modal-body">
                 <textarea name="payload" class="form-control" placeholder="Payload"></textarea>

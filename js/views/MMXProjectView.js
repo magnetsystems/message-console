@@ -49,8 +49,9 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
             $('.mmx-nav a[href="#'+view+'"]').addClass('active');
             this.$el.find('.tab-pane').removeClass('active');
             this.$el.find('#mmx-'+view).addClass('active');
+            var title = $('#collapsible-menu-list a[href="#'+view+'"]').text();
             this.options.eventPubSub.trigger('updateBreadcrumb', {
-                title : this.toUpper(view)+(view == 'dashboard' ? ' for '+this.model.attributes.name : '')
+                title : title+(view == 'dashboard' ? ' for '+this.model.attributes.name : '')
             });
             this.options.eventPubSub.trigger('initMMXProject'+view, this.model);
         },
