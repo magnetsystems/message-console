@@ -55,6 +55,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 list_selectable  : false,
                 list_noItemsHTML : ''
             });
+            this.list.find('.tooltipped-ctrl').tooltip();
             this.selectedEndpoints = [];
         },
         filters : {
@@ -84,7 +85,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             }
         },
         refresh: function(){
-            utils.resetRows(this, this.list);
+            utils.resetRows(this.list);
             this.$el.find('.repeater-search .same-line-button[did^="action"]').addClass('disabled');
             var params = utils.collect(this.$el.find('.repeater-header'));
             if(this.validate(params))
@@ -141,7 +142,13 @@ define(['jquery', 'backbone'], function($, Backbone){
                         if(res.results[i].device.updated) res.results[i].device.updated = moment(res.results[i].device.updated).format('lll');
                         res.results[i].device.nameEdited = res.results[i].device.name.substr(0, 30)+'...';
                         res.results[i].device.ownerIdEdited = res.results[i].device.ownerId.substr(0, 10)+'...';
-                        res.results[i].device.osTypeEdited = '<i class="fa fa-2x fa-'+(res.results[i].device.osType == 'ANDROID' ? 'android' : 'apple')+'"></i>';
+                        var osType;
+                        switch(res.results[i].device.osType){
+                            case 'ANDROID' : osType = 'android'; break;
+                            case 'IOS' : osType = 'apple'; break;
+                            default : osType = 'desktop'; break;
+                        }
+                        res.results[i].device.osTypeEdited = '<i class="fa fa-2x fa-'+osType+'"></i>';
                         res.results[i].device.deviceIdEdited = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.deviceId.substr(0, 30)+'...</a>';
                         if(res.results[i].device.status == 'ACTIVE') res.results[i].device.checkbox = '<input type="checkbox" />';
                         if(res.results[i].userEntity){
@@ -297,7 +304,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             this.sendMessageModal.find('.message-push-history').html('');
             this.sendMessageModal.find('input[name="message-type"][value="message"]').prop('checked', true);
             if(!this.activeDevice.clientToken){
-                this.sendMessageModal.find('input[name="message-type"][value="push"]').closest('.radio').addClass('disabled');
+                this.sendMessageModal.find('input[name="message-type"][value="push"], input[name="message-type"][value="ping"]').closest('.radio').addClass('disabled');
                 pushActivated = false;
             }
             this.sendMessageModal.find('.user-placeholder').html('<b>User:</b> '+this.activeDevice.ownerId);

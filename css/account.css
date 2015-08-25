@@ -1,22 +1,22 @@
-div.centered{margin:0 auto}
+div.centered{margin:0 auto 16px}
 .no-padding{padding:0}
 .tour .btn{margin-bottom:11px}
 .toggling-password-input{position:relative}
-.toggling-password-input .glyphicon{cursor:pointer;color:#036285;display:block;font-size:20px;position:absolute;right:8px;top:8px;z-index:100}
+.toggling-password-input span{cursor:pointer;color:#6cba66;display:block;font-size:20px;position:absolute;right:8px;top:-3px;z-index:100}
 .colortext-info{color:#30708F}
 .colortext-danger{color:#a94442}
 .colortext-success{color:#449D44}
 .alert-container div.colortext{padding:3px 12px;font-size:11px;display:block;margin-top:-2px}
 .navbar.navbar-default .navbar-brand{padding:13px 0 0 17px;color:#8c8c8c;font-size:17px}
-.navbar.navbar-default .navbar-brand img{margin-right:-6px;margin-top:-11px;max-width:160px}
+.navbar.navbar-default .navbar-brand img{margin-right:-6px;margin-top:-12px;max-width:160px}
 
 /* user navigation */
 #user-navigation{position:absolute;right:0;top:7px;color:#aaa}
-#user-navigation .fa{color:#aaa;margin-top:5px}
+#user-navigation .fa{color:#fff;opacity:.7;margin-top:5px}
 #user-navigation .caret{color:#aaa;border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid}
 #user-navigation .action{cursor:pointer;outline:none}
 #user-navigation .fa-question-circle{margin-right:8px}
-#user-navigation .separator{width:1px;height:35px;background-color:#aaa}
+#user-navigation .separator{width:1px;height:35px;background-color:#fff;opacity:.7}
 #user-navigation > div{margin:0 6px;float:right}
 #user-navigation .popover-content{padding:0}
 .user-navigation-menu hr{margin:3px 0}
@@ -26,12 +26,14 @@ div.centered{margin:0 auto}
 .user-navigation-menu a:hover, .user-navigation-menu a:active{outline:none;background-color:#008bcc;color:#fff}
 .user-navigation-menu a:hover i, .user-navigation-menu a:active i{color:#fff !important}
 .user-navigation-menu a.fulldim{height:40px;padding:5px 8px 8px;line-height:28px;text-align:center;width:120px;;border:none;border-radius:4px}
-#user-identity .caret{margin-top:-9px}
-.user-identity-section{margin:0 10px;text-align:right}
-.user-identity-section .placeholder-role{color:#777}
+#user-identity .caret, #page-select .caret{margin-top:-9px;color:#fff;opacity:.7}
+.page-selector{color:#fff;opacity:.7}
+.user-identity-section{margin:0 10px;text-align:right;color:#fff;opacity:.7}
+.user-identity-section .placeholder-role{color:#fff;opacity:.7}
 #page-select .page-selector{margin-top:7px;height:35px}
 #page-select .page-selector .caret{margin-top:0}
 .divide > div{float:right}
+#create-messaging-app-modal{margin-left:5px}
 
 /* overloads */
 #messaging .view-wrapper{padding:0 20px}
@@ -51,12 +53,14 @@ div.centered{margin:0 auto}
 #messaging .same-line button, #breadcrumb .same-line button{float:left;margin-right:5px}
 #messaging .same-line .same-line-control, #breadcrumb .same-line .same-line-control{overflow:hidden;min-width:140px}
 #messaging .radio.disabled label{opacity:.4}
-#messaging .btn.btn-primary{border:solid 1px #0a394f;background-color:#036285}
+#messaging .btn.btn-primary{border:solid 1px #3c8535;background-color:#6cba66}
+#messaging .btn.btn-primary.icon{padding:3px 6px}
 #messaging .label, .nav-tabs.two > li > a, #messaging .nav-tabs.three > li > a, #messaging .nav-tabs.four > li > a, #messaging .alert, #messaging .panel, #messaging .panel-group .panel{border-radius:4px}
 #messaging .repeater-header input.form-control, #messaging .repeater-header select.form-control{margin-bottom:5px;border-radius:4px}
 #messaging .app-view{background:#d9d9d9}
 #messaging .required{color:#ff0000;font-size:16px}
 #messaging #user-nav-menu{display:block}
+#messaging #collapsible-menu-list .list-group-item img{width:32px}
 
 /* MMX CONTENT VIEW */
 #breadcrumb{padding:4px 0}
@@ -67,15 +71,17 @@ div.centered{margin:0 auto}
 #mmx-container .view-wrapper{padding:0;margin-top:43px;background:#d9d9d9}
 .mmx-global-alert{padding:6px;margin-bottom:0}
 .mmx-global-alert .fa{margin:0 8px}
-#mmx-active-project-container{border-radius:0;background:#fff;overflow-y:scroll}
+#mmx-active-project-container{border-radius:0;background:#f5f7fa;overflow-y:scroll;border-top:solid 1px #ccc}
 #mmx-active-project-container .tab-content{padding:4px 15px 15px 15px}
 #mmx-active-project-container .tab-content .tab-pane{background:none;margin-top:10px}
 #mmx-active-project-container .controls{text-align:left}
 #mmx-active-project-container .col-md-6 .controls{line-height:89px}
 #mmx-active-project-container .nav-tabs{border-bottom:1px solid #aaa}
 #mmx-active-project-container .nav-tabs > li{margin-bottom:-1px}
-#mmx-active-project-container .nav > li > a{padding:10px 33px}
+#mmx-active-project-container .nav > li > a{padding:10px 25px}
 #mmx-active-project-container .nav-tabs > li.active > a{border-color:#aaa #aaa transparent}
+#brand-logo-normal{display:none}
+#brand-logo-sandbox{display:none}
 
 /* mmx summary */
 #mmx-active-project-container .repeater-list-header td, #mmx-active-project-container .repeater-list-items td{border-left:0}
@@ -87,7 +93,7 @@ div.centered{margin:0 auto}
 
 /* mmx dashboard */
 #mmx-dashboard .mmx-dashboard-item{margin-top:30px}
-.mmx-dashboard-item img{max-width:78px}
+.mmx-dashboard-item img{max-width:56px}
 .mmx-dashboard-item > hr{margin:0 0 10px 0;border-color:#ddd}
 .mmx-dashboard-item > .media{margin:1px 0 0 0;max-width:700px}
 .mmx-dashboard-item .media-body{padding:0;position:relative}
@@ -154,16 +160,15 @@ div.centered{margin:0 auto}
 /* mmx users */
 .generic-control-container{position:relative}
 .repeater-icon-controls{position:absolute;top:0;left:0}
-.repeater-icon-controls .glyphicon{font-size:19px;color:#008CBA;margin:5px 9px 0 0;cursor:pointer}
-.repeater-icon-controls .glyphicon.disabled{color:#bbb;cursor:text}
+.repeater-icon-controls span{font-size:19px;color:#008CBA;cursor:pointer}
+.repeater-icon-controls span.disabled{color:#bbb;cursor:text;opacity:.2}
 .repeater-icon-controls .fa{color:#008CBA;margin:6px 9px 0 0;cursor:pointer}
 .repeater-icon-controls .fa.disabled{color:#bbb}
-#mmx-users .messaging-list .repeater-header-left{padding-left:98px}
-#mmx-topics .messaging-list .repeater-header-left{padding-left:128px}
+#mmx-users .messaging-list .repeater-header-left{padding-left:141px}
+#mmx-topics .messaging-list .repeater-header-left{padding-left:182px}
 
 /* quickstart */
-#mmx-quickstart > h4{margin-left:15px;margin-right:15px}
-#mmx-quickstart .row-fluid{margin:0 15px}
+#mmx-quickstart > h4{margin-top:24px;color:#aaa;font-weight:300}
 #mmx-quickstart .row-fluid .well{padding:0 15px;border:1px solid #aaa;border-radius:0;box-shadow:none}
 #mmx-quickstart .centered{text-align:center}
 #mmx-quickstart .centered .form-group{margin-bottom:6px}
@@ -172,13 +177,22 @@ div.centered{margin:0 auto}
 #mmx-quickstart .centered .form-group .btn-sm{padding:7px 20px}
 #mmx-quickstart .btn-group{display:inline-block}
 #mmx-quickstart .same-width-button{width:100px}
-#mmx-quickstart .tab-content{border:none;margin:0;padding:0 15px 15px}
-#mmx-quickstart .tab-pane{margin:0 !important;border:solid 1px #aaa}
+/*#mmx-quickstart .tab-content{border:none;margin:0;padding:0 15px 15px}*/
+/*#mmx-quickstart .tab-pane{margin:0 !important;border:solid 1px #aaa}*/
 #mmx-quickstart .table{margin-bottom:0}
 #mmx-quickstart .numbering{font-size:25px;text-indent:15px}
 #mmx-quickstart .text{margin-top:20px}
 #mmx-quickstart .table-striped tr:nth-child(2n+0) > td{background:#e3e3e3}
 .download-compiled-source{text-decoration:underline}
+.quickstart-next-steps .col-md-4{padding-left:0}
+#mmx-quickstart .tab-content.bordered{border:solid 1px #ccc;border-top:none;padding:15px;border-bottom-left-radius:4px;border-bottom-right-radius:4px}
+#mmx-quickstart .nav-tabs{border-bottom:solid 1px #ccc}
+#mmx-quickstart .nav-tabs > li{margin-right:4px}
+#mmx-quickstart .nav-tabs > li a{border:1px solid #ccc;background:#f7f7f7}
+#mmx-quickstart .nav > li > a{padding:8px 24px;color:#aaa}
+#mmx-quickstart .nav-tabs > li.active > a{color:#666;border-color:#ccc #ccc transparent}
+#mmx-quickstart ol > li{margin-bottom:8px}
+#mmx-quickstart .panel-success .panel-body .btn-info{margin-top:15px}
 
 /* profile */
 #messaging #profile-container{background:#EFEFEF}

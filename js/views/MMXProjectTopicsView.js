@@ -30,10 +30,10 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click input[type="checkbox"]': 'toggleRow',
             'click .mmx-topic-list-refresh-btn': 'refresh',
             'change .repeater-header-left select[name="searchby"]': 'changeSearchBy',
-            'click .repeater-header .glyphicon-envelope': 'showPublishModal',
-            'click .repeater-header .glyphicon-trash': 'deleteTopic',
-            'click .repeater-header .glyphicon-pencil': 'showEditTopic',
-            'click .repeater-header .glyphicon-plus': 'showCreateTopicModal'
+            'click .repeater-header .mmx-topics-publish-btn': 'showPublishModal',
+            'click .repeater-header .mmx-topics-delete-btn': 'deleteTopic',
+            'click .repeater-header .mmx-topics-edit-btn': 'showEditTopic',
+            'click .repeater-header .mmx-topics-add-btn': 'showCreateTopicModal'
         },
         toggleRow: function(e){
             utils.toggleRow(this, $(e.currentTarget), 'topics', 'topicName');
@@ -55,9 +55,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                 list_noItemsHTML : '',
                 stretchHeight    : false
             });
+            me.list.find('.tooltipped-ctrl').tooltip();
         },
         refresh: function(){
-            utils.resetRows(this, this.list);
+            utils.resetRows(this.list);
             this.list.repeater('render');
         },
         filters : {
@@ -147,7 +148,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 sortable : false
             },
             {
-                label    : 'Topic Name',
+                label    : 'Channel Name',
                 property : 'topicName',
                 sortable : false
             },
@@ -209,7 +210,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         validateTopicModal: function(dom, obj, isEdit){
             if($.trim(obj.topicName).length < 1 && !isEdit){
-                utils.showError(dom, 'topicName', 'Invalid Topic Name. Topic Name is a required field.');
+                utils.showError(dom, 'topicName', 'Invalid Channel Name. Channel Name is a required field.');
                 return false;
             }
             return true;
@@ -253,12 +254,12 @@ define(['jquery', 'backbone'], function($, Backbone){
         createTopicComplete: function(obj){
             var me = this;
             me.newTopicModal.modal('hide');
-            utils.resetRows(me, me.list);
+            utils.resetRows(me.list);
             me.topics.push(obj);
             me.list.repeater('render');
             Alerts.General.display({
-                title   : 'Topic Created',
-                content : 'A new topic with name of "'+obj.topicName+'" has been created.'
+                title   : 'Channel Created',
+                content : 'A new channel with name of "'+obj.topicName+'" has been created.'
             });
         },
         showEditTopic: function(e){
@@ -320,12 +321,12 @@ define(['jquery', 'backbone'], function($, Backbone){
 
         },
         saveTopicComplete: function(me){
-            utils.resetRows(me, me.list);
+            utils.resetRows(me.list);
             me.list.repeater('render');
             me.updateTopicModal.modal('hide');
             Alerts.General.display({
-                title   : 'Topic Updated',
-                content : 'The topic "'+me.activeTopic.topicName+'" has been updated.'
+                title   : 'Channel Updated',
+                content : 'The channel "'+me.activeTopic.topicName+'" has been updated.'
             });
             delete me.activeTopic;
         },
@@ -334,14 +335,14 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(!me.selectedElements.length) return;
             var did = me.selectedElements[0].topicName;
             Alerts.Confirm.display({
-                title   : 'Delete Topic',
-                content : 'The selected topic will be deleted. This can not be undone. Are you sure you want to continue?'
+                title   : 'Delete Channel',
+                content : 'The selected channel will be deleted. This can not be undone. Are you sure you want to continue?'
             }, function(){
                 AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(did), 'DELETE', 'application/json', null, function(res, status, xhr){
                     utils.removeByAttr(me.topics, 'topicName', did);
                     var list = $(e.currentTarget).closest('.repeater');
                     var dom = list.find('.repeater-list-items tr[did="'+did+'"]');
-                    utils.resetRows(me, me.list);
+                    utils.resetRows(me.list);
                     dom.hide('slow', function(){
                         dom.remove();
                     });

@@ -10,7 +10,7 @@ h5{font-weight:bold;font-size:13px;line-height:14px;margin-top:20px}
 pre{background-color:#efefef;border:1px solid rgba(0, 0, 0, 0.15);border-radius:0;font-size:12px;padding:7px}
 .button-group{margin:15px 0}
 .btn{border-radius:6px}
-.btn.btn-primary{border:solid 1px #0a394f;background-color:#036285}
+.btn.btn-primary{border:solid 1px #5e9959;background-color:#6cba66}
 /*.btn.disabled{background:#a9b2b8;border-color:#a9b2b8;opacity:1}*/
 .general-padding{padding:15px}
 .padding-sm{padding:7px 0}
@@ -29,17 +29,25 @@ pre{background-color:#efefef;border:1px solid rgba(0, 0, 0, 0.15);border-radius:
 .req{color:#c20000}
 .red{font-weight:bold;color:#C9302C}
 .green{font-weight:bold;color:#449D44}
-#collapsible-menu-list{width:200px;background:#243b45;border-radius:0}
-#collapsible-menu-list .list-group-item{display:block}
+.centered{margin:15px auto}
+#collapsible-menu-list{width:240px;background:#fff;border-radius:0;border-right:solid 1px #ccc}
+#collapsible-menu-list{margin:0 10px}
+#collapsible-menu-list hr{border-top:solid 1px #ddd;margin:12px 10px}
+#collapsible-menu-list .same-line{margin-top:14px}
+#collapsible-menu-list .same-line-control{margin-left:11px}
+#collapsible-menu-list .same-line button{margin-right:8px !important}
+#collapsible-menu-list .list-group-item{display:block;margin-right:2px}
 #collapsible-menu-list .list-group-item i{margin-right:6px}
-#collapsible-menu-list .list-group-item{border-radius:0;border:none;background:#243b45;color:#aaa;padding:8px 15px 11px}
+#collapsible-menu-list .list-group-item{border-radius:0;border:none;background:#fff;color:#777;padding:8px 15px 11px}
 #collapsible-menu-list .list-group-item.section{padding:5px 15px 7px}
-#collapsible-menu-list .list-group-item:hover{background:#18303b;color:#ccc}
-#collapsible-menu-list .list-group-item.active{background:#001c26;color:#fff}
+#collapsible-menu-list .list-group-item:hover{background:#efefef;color:#777}
+#collapsible-menu-list .list-group-item.active{background:#e0e0e0;color:#555}
+.tour-backdrop{opacity:0.55}
+.tour-tour-4-element{z-index:2000 !important}
 
 /* MAIN MENU */
 body > .navbar .container-fluid{padding-right:0}
-.navbar.navbar-default{background:#1a1a1a;z-index:80;border:none}
+.navbar.navbar-default{background:#36bbe3;z-index:80;border:none}
 .navbar.navbar-default .navbar-brand{padding:13px 0 0;color:#8c8c8c;font-size:17px}
 .navbar.navbar-default .navbar-brand img{margin-right:-6px;margin-top:-4px;max-width:100px}
 .navbar.navbar-default .alert{margin:6px 0 6px;padding:7px 35px 7px 15px}
@@ -58,9 +66,9 @@ body > .navbar .container-fluid{padding-right:0}
 html, body{background:#efefef;height:100%}
 .label, .navbar, .nav-tabs.two > li > a, .nav-tabs.three > li > a, .nav-tabs.four > li > a, .nav-tabs.five > li > a, .alert, .panel, .panel-group .panel{border-radius:0}
 #main-nav-menu > li > a{border-left: 1px solid #8c8c8c;font-size:15px}
-#breadcrumb{background:#002c3d;color:#fff;font-size:17px;min-height:42px;padding:4px 0x}
-#breadcrumb i, #breadcrumb .bc-title{float:left}
-#toggle-collapsible-menu{cursor:pointer;margin-right:10px;margin-top:4px}
+#breadcrumb{background:#fafbfc;color:#aaa;font-weight:300;font-size:22px;min-height:42px;position:absolute;width:100%;padding:4px 0;top:0;left:0}
+#breadcrumb img, #breadcrumb .bc-title{float:left}
+#toggle-collapsible-menu{cursor:pointer;margin-right:10px;margin-top:-6px}
 #collapsible-menu-list span a{text-indent:17px}
 #collapsible-menu-list .list-group div a{text-indent:17px}
 .app-view{background:#efefef}
@@ -111,6 +119,7 @@ input.form-control, select.form-control{margin-bottom:5px}
 /* panels */
 .app-view > .panel, .centered-wrapper > .panel{border:solid 1px #aaa;width:90%;max-width:450px;height:300px;position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;padding:10px 25px}
 #login-container .centered-wrapper > .panel, #messaging .centered-wrapper > .panel{height:270px}
+#loggedout-container .centered-wrapper > .panel{height:192px}
 #admin #login-container .centered-wrapper > .panel{height:220px}
 #register-container .centered-wrapper > .panel{height:290px}
 #forgotpassword-container .centered-wrapper > .panel{height:200px}
@@ -121,9 +130,20 @@ input.form-control, select.form-control{margin-bottom:5px}
 .panel-heading{font-weight:bold}
 .panel-containers{margin:0 20px}
 .panel-containers > .panel{overflow-y:scroll;height:auto;width:100%;max-width:100%;margin-top:72px;margin-bottom:30px;border:solid 1px #aaa;bord-bottom:none}
-.panel-title .btn{float:right;margin:-6px -9px 0px 14px}
+.equal-height, .equal-height > div[class*='col-'] {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex:1 1 auto;
+}
+.panel-success{width:100%;min-width:200px}
+.panel-success .panel-heading{background:#6cba66;font-size:18px;color:#fff;text-align:center;padding:5px 0;font-weight:300}
+.panel-success .panel-body{padding:8px;color:#666}
 
 /* alert */
+.modal{z-index:2000}
 #general-alert .modal-body, #error-alert .modal-body{word-wrap:break-word}
 #general-alert, #confirm-alert, #error-alert{z-index:1500}
 #error-alert textarea{min-height:120px}
@@ -437,6 +457,7 @@ ul.project-menu li.active a, ul.project-menu li.active a:hover, ul.project-menu 
     .form-group > div{clear:both}
     #page-container #breadcrumb{font-size:15px}
     #page-container #breadcrumb .bc-title span{display:none}
+    .equal-height{flex:auto;display:block}
 }
 @media only screen and (max-width:767px){
     .centered-wrapper > .panel > h4{font-size:18px}

@@ -33,7 +33,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                 me.showCollapseMenu();
             });
             options.eventPubSub.bind('getUserProfile', function(callback){
-                me.getProfile(callback);
+                me.getProfile(function(){
+                    me.bootstrapRole();
+                    callback();
+                });
             });
             $('#user-identity').popover({
                 placement : 'bottom',
@@ -51,6 +54,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         events: {
             'click .goBack': 'goBack',
             'click #logout-btn': 'logout',
+            'click #gotoauthurl-btn' : 'goToAuthUrl',
             'click #toggle-collapsible-menu': 'toggleCollapseMenu',
             'click .repeater-list-items td .glyphicon-plus': 'toggleRow',
             'click .repeater-list-items td .glyphicon-minus': 'toggleRow',
@@ -60,7 +64,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             'click #mmx-contextual-doc-btn': 'viewContextualDocs',
             'click .show-profile-btn': 'showProfile',
             'click .btn-toggle button': 'toggleSwitch',
-            'click .toggling-password-input .glyphicon': 'togglePasswordContainer'
+            'click .toggling-password-input span': 'togglePasswordContainer'
         },
         goBack: function(e){
             e.preventDefault();
@@ -84,7 +88,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         toggleCollapseMenu: function(){
             var btn = $('#toggle-collapsible-menu');
-            if(btn.hasClass('fa-arrow-circle-o-left')){
+            if(btn.hasClass('menu-is-open')){
                 this.hideCollapseMenu();
             }else{
                 this.showCollapseMenu();
@@ -92,21 +96,25 @@ define(['jquery', 'backbone'], function($, Backbone){
         },
         hideCollapseMenu: function(params){
             var btn = $('#toggle-collapsible-menu');
-            $('#collapsible-menu-list a').hide('fast');
+            var list = $('#collapsible-menu-list');
+            list.find('a, hr, .same-line').hide('fast');
             $('#collapsible-menu-list').animate({
                 width  : '1px'
             }, 500, function(){
-                btn.removeClass('fa-arrow-circle-o-left').addClass('fa-arrow-circle-o-right');
+                btn.attr('src', 'images/icons/gen_to_open_nav.png');
+                btn.removeClass('menu-is-open').addClass('menu-is-closed');
             });
         },
         showCollapseMenu: function(){
             if($(window).width() < 786) return;
             var btn = $('#toggle-collapsible-menu');
             $('#collapsible-menu-list').animate({
-                width  : '200px'
+                width  : '240px'
             }, 500, function(){
-                $('#collapsible-menu-list a').show('fast');
-                btn.removeClass('fa-arrow-circle-o-right').addClass('fa-arrow-circle-o-left');
+                var list = $('#collapsible-menu-list');
+                list.find('a, hr, .same-line').show('fast');
+                btn.attr('src', 'images/icons/gen_to_close_nav.png');
+                btn.removeClass('menu-is-closed').addClass('menu-is-open');
             });
         },
         resetMainView: function(domId){
@@ -170,7 +178,7 @@ define(['jquery', 'backbone'], function($, Backbone){
         selectMMXView: function(e){
             var link = $(e.currentTarget);
             var view = link.attr('href');
-            if(view.indexOf('/documentation/') != -1)
+            if(view == '#' || view && (view.indexOf('/documentation/') != -1 || view.indexOf('docs.magnet.com') != -1) || view.indexOf('/rest/') != -1)
                 return;
             else
                 e.preventDefault();
@@ -182,23 +190,28 @@ define(['jquery', 'backbone'], function($, Backbone){
             e.preventDefault();
             var dom = $('#collapsible-menu-list > div > a.active');
             var activeView;
-            var baseUrl = 'https://www.magnet.com/documentation/message/1.0.2/guide/';
-            if(dom.length){
-                activeView = dom.attr('href').replace('#', '');
-                switch(activeView){
-                    case 'dashboard': window.open(baseUrl+'Messaging+Dashboard.php', '_blank'); break;
-                    case 'endpoints': window.open(baseUrl+'View+Registered+Mobile+Devices.php', '_blank'); break;
-                    case 'users': window.open(baseUrl+'Manage+Registered+Messaging+Users.php', '_blank'); break;
-                    case 'messages': window.open(baseUrl+'View+Message+Log+and+Push+Message+Log.php', '_blank'); break;
-                    case 'notifications': window.open(baseUrl+'View+Message+Log+and+Push+Message+Log.php', '_blank'); break;
-                    case 'topics': window.open(baseUrl+'Managing+Topics.php', '_blank'); break;
-                    case 'quickstart': window.open(baseUrl+'Getting+Started+with+the+Android+Quickstart+App.php', '_blank'); break;
-                    case 'settings': window.open(baseUrl+'Set+Up+New+Magnet+Message+App.php', '_blank'); break;
-                    default: window.open(baseUrl, '_blank');
-                }
-            }else{
-                window.open(baseUrl, '_blank');
-            }
+            var baseUrl = 'https://docs.magnet.com';
+            window.open(baseUrl, '_blank');
+            //if(dom.length){
+            //    activeView = dom.attr('href').replace('#', '');
+            //    switch(activeView){
+            //        case 'dashboard': window.open(baseUrl+'Messaging+Dashboard.php', '_blank'); break;
+            //        case 'endpoints': window.open(baseUrl+'View+Registered+Mobile+Devices.php', '_blank'); break;
+            //        case 'users': window.open(baseUrl+'Manage+Registered+Messaging+Users.php', '_blank'); break;
+            //        case 'messages': window.open(baseUrl+'View+Message+Log+and+Push+Message+Log.php', '_blank'); break;
+            //        case 'notifications': window.open(baseUrl+'View+Message+Log+and+Push+Message+Log.php', '_blank'); break;
+            //        case 'topics': window.open(baseUrl+'Managing+Topics.php', '_blank'); break;
+            //        case 'quickstart':
+            //            var platform = $('#mmx-quickstart div[did="platform"] button[class~="active"]').attr('did');
+            //            platform = platform == 'ios' ? 'iOS' : 'Android';
+            //            window.open(baseUrl+'Getting+Started+with+the+'+platform+'+QuickStart+App.php', '_blank');
+            //            break;
+            //        case 'settings': window.open(baseUrl+'Set+Up+New+Magnet+Message+App.php', '_blank'); break;
+            //        default: window.open(baseUrl, '_blank');
+            //    }
+            //}else{
+            //    window.open(baseUrl, '_blank');
+            //}
         },
         bindFeedbackButton: function(){
             $('#leave-feedback-container').show();
@@ -350,17 +363,34 @@ define(['jquery', 'backbone'], function($, Backbone){
             var icon = $(e.currentTarget);
             var parent = icon.closest('.toggling-password-input');
             icon.addClass('hidden');
-            if(icon.hasClass('glyphicon-eye-open')){
-                parent.find('.glyphicon-eye-close').removeClass('hidden');
+            if(icon.hasClass('password-view')){
+                parent.find('.password-hide').removeClass('hidden');
                 parent.find('input').attr('type', 'text');
             }else{
-                parent.find('.glyphicon-eye-open').removeClass('hidden');
+                parent.find('.password-view').removeClass('hidden');
                 parent.find('input').attr('type', 'password');
             }
         },
         initIE: function(){
             if(utils.detectIE()){
                 $('#footer').css('position','relative').remove().appendTo($('.view-wrapper.fullpos'));
+            }
+        },
+        goToAuthUrl: function(e){
+            e.preventDefault();
+            if(GLOBAL.serverType == 'hosted' && GLOBAL.authUrl)
+                window.location.href = GLOBAL.authUrl;
+        },
+        bootstrapRole: function(){
+            $('.placeholder-role').hide();
+            $('.user-identity-section').css('margin-top', '7px');
+            if(this.options.opts.user.userType == 'preview'){
+                //$('#create-messaging-app-modal, #create-messaging-app-modal2').css('visibility', 'hidden');
+                $('#mmx-settings .form-group input[name="name"]').attr('readonly', true);
+            }
+            if(this.options.opts.user.userType == 'admin'){
+                $('.placeholder-role').show();
+                $('.user-identity-section').css('margin-top', '0');
             }
         }
     });

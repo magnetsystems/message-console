@@ -37,8 +37,8 @@ define(['jquery', 'backbone'], function($, Backbone){
         events: {
 //            'click .sendmessage': 'showSendMessageModal',
             'click #mmx-users-show-create-modal': 'showCreateUser',
-            'click .repeater-header .glyphicon-pencil': 'showEditUser',
-            'click .repeater-header .glyphicon-trash': 'removeUser',
+            'click .repeater-header .mmx-users-edit-btn': 'showEditUser',
+            'click .repeater-header .mmx-users-delete-btn': 'removeUser',
 //            'click .repeater-header .fa-lock': 'lockUser',
 //            'click .repeater-header .fa-unlock-alt': 'unlockUser',
             'change .repeater-header-left select[name="searchby"]': 'changeSearchBy',
@@ -62,9 +62,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                 list_noItemsHTML : '',
                 stretchHeight    : false
             });
+            me.list.find('.tooltipped-ctrl').tooltip();
         },
         refresh: function(){
-            utils.resetRows(this, this.list);
+            utils.resetRows(this.list);
             this.list.repeater('render');
         },
         filters : {
@@ -248,7 +249,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             if($.trim(obj.username.length) < 5 && !isEdit){
                 utils.showError(dom, 'username', 'Username must contain five or more characters.', true);
                 return false;
-            }else if(!/^[a-zA-Z0-9-_.]+$/i.test(obj.username) && !isEdit){
+            }else if(!/^[a-zA-Z0-9-_.@]+$/i.test(obj.username) && !isEdit){
                 utils.showError(dom, 'username', 'Username can only contain letters, numbers, - and _.', true);
                 return false;
             }else if($.trim(obj.password.length) < 1 && !isEdit){
@@ -316,7 +317,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                     xhr.responseText = 'A server error has occurred. Please check the server logs.';
                 }
                 alert(xhr.responseText);
-            }, null, {
+            }, [{
+                name : 'appAPIKey',
+                val  : me.model.attributes.appAPIKey
+            }], {
                 btn : btn
             });
         },
@@ -349,7 +353,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(!$.trim(obj.password).length) delete obj.password;
             me.options.eventPubSub.trigger('btnLoading', btn);
             AJAX('apps/'+me.model.attributes.id+'/users/'+obj.username, 'PUT', 'application/json', obj, function(){
-                utils.resetRows(me, me.list);
+                utils.resetRows(me.list);
                 me.list.repeater('render');
                 me.updateUserModal.modal('hide');
                 Alerts.General.display({
@@ -359,7 +363,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                 delete me.activeUser;
             }, function(xhr){
                 alert(xhr.responseText);
-            }, null, {
+            }, [{
+                name : 'appAPIKey',
+                val  : me.model.attributes.appAPIKey
+            }], {
                 btn : btn
             });
         },
@@ -368,7 +375,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(!me.selectedElements.length) return;
             var did = me.selectedElements[0].username;
             AJAX('apps/'+me.model.attributes.id+'/users/'+did+'/deactivate', 'POST', 'application/json', null, function(res){
-                utils.resetRows(me, me.list);
+                utils.resetRows(me.list);
                 me.list.repeater('render');
             }, function(xhr){
                 alert(xhr.responseText);
@@ -379,7 +386,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             if(!me.selectedElements.length) return;
             var did = me.selectedElements[0].username;
             AJAX('apps/'+me.model.attributes.id+'/users/'+did+'/activate', 'POST', 'application/json', null, function(res){
-                utils.resetRows(me, me.list);
+                utils.resetRows(me.list);
                 me.list.repeater('render');
             }, function(xhr){
                 alert(xhr.responseText);
@@ -397,13 +404,16 @@ define(['jquery', 'backbone'], function($, Backbone){
                     utils.removeByAttr(me.users, 'username', did);
                     var list = $(e.currentTarget).closest('.repeater');
                     var dom = list.find('.repeater-list-items tr[did="'+did+'"]');
-                    utils.resetRows(me, me.list);
+                    utils.resetRows(me.list);
                     dom.hide('slow', function(){
                         dom.remove();
                     });
                 }, function(xhr){
                     alert(xhr.responseText);
-                });
+                }, [{
+                    name : 'appAPIKey',
+                    val  : me.model.attributes.appAPIKey
+                }]);
             });
         },
         showSendMessageModal: function(e){

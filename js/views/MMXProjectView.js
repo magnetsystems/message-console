@@ -31,32 +31,36 @@ define(['jquery', 'backbone', 'models/AppModel', 'views/MMXProjectDashboardView'
 //                    var curr = parseInt(curValue, 10);
 //                    return (curr == 78 || curr == 112) ? (curr - 35) : curr + 'px';
 //                });
+                if(['Quickstart', 'RPSLS', 'Soapbox'].indexOf(me.model.attributes.name) != -1){
+                    params.view = params.view || 'quickstart';
+                }
                 me.setTab(params.view || 'dashboard');
-                if(me.options.opts.newMMXUser === true){
-                    me.options.opts.newMMXUser = false;
-                    me.options.opts.tour = MMXInitialAppTour(params.model.attributes.id);
-                }
-                if(me.options.opts.tour && params.view && params.view != 'quickstart'){
-                    $('.tour').remove();
-                    me.options.opts.tour.end();
-                }
+                $('#breadcrumb .same-line').hide();
                 me.options.eventPubSub.trigger('showCollapsibleMenu', {
                     mmxView : true
                 });
             });
+        },
+        events: {
+            'click #mmx-start-console-tour' : 'startMMXConsoleTour'
         },
         setTab: function(view){
             $('.mmx-nav a').removeClass('active');
             $('.mmx-nav a[href="#'+view+'"]').addClass('active');
             this.$el.find('.tab-pane').removeClass('active');
             this.$el.find('#mmx-'+view).addClass('active');
+            var title = $('#collapsible-menu-list a[href="#'+view+'"]').text();
             this.options.eventPubSub.trigger('updateBreadcrumb', {
-                title : this.toUpper(view)+(view == 'dashboard' ? ' for '+this.model.attributes.name : '')
+                title : title+(view == 'dashboard' ? ' for '+this.model.attributes.name : '')
             });
             this.options.eventPubSub.trigger('initMMXProject'+view, this.model);
         },
         toUpper: function(str){
             return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+        },
+        startMMXConsoleTour: function(e){
+            e.preventDefault();
+            this.options.opts.tour = MMXMessagingTour(this.model.attributes.appId);
         }
     });
     return View;

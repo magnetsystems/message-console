@@ -53,7 +53,10 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
         },
         login: function(callback){
             var me = this;
-            me.eventPubSub.trigger('resetGlobalPages', 'login-container');
+            if(GLOBAL.serverType == 'hosted' && GLOBAL.authUrl)
+                window.location.href = GLOBAL.authUrl.substring(0, GLOBAL.authUrl.indexOf('/', 8)) + '/sandbox-logout/';
+            else
+                me.eventPubSub.trigger('resetGlobalPages', 'login-container');
             me.eventPubSub.trigger('initLogin', callback);
         },
         register: function(callback){
@@ -121,11 +124,21 @@ define(['jquery', 'backbone','views/AlertGeneralView','views/AlertConfirmView','
                 if(res.serverType == 'single'){
                     $('.admin-only-item').remove();
                     $('.advanced-settings-view-link').removeClass('advanced-settings-view-link');
+                    $('#brand-logo-normal').show();
                 }else if(res.serverType == 'hosted'){
                     GLOBAL.authUrl = res.authUrl;
                     GLOBAL.serverType = res.serverType;
                     $('#user-identity').attr('data-content', "<div class='user-navigation-menu clearfix'><a href='#' id='logout-btn'><i class='fa fa-2x fa-sign-out'></i> Sign Out</a></div>");
+                    $('#user-identity .fa-cog').remove();
+                    $('#user-navigation .separator').remove();
+                    $('#user-identity .caret').css('margin-top', '13px').css('margin-right', '10px');
+                    $('#brand-logo-sandbox').show();
+                    $('#mmx-contextual-doc-btn').remove();
+                    $('.hosted-messaging-item').removeClass('hidden');
+                }else{
+                    $('#brand-logo-normal').show();
                 }
+                me.opts.serverStatus = res;
                 if(res.emailEnabled){
                     me.opts.emailEnabled = res.emailEnabled;
                 }
