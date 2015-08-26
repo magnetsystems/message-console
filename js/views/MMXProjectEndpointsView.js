@@ -18,8 +18,13 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.sendMessageModal.find('.message-types button[did="message"]').click(function(){
                 me.sendMessage($(this));
             });
-            me.sendMessageModal.find('.message-types button[did!="message"]').click(function(){
+            me.sendMessageModal.find('.message-types button[did="ping"], .message-types button[did="notification"]').click(function(){
                 me.sendNotification($(this));
+            });
+            me.sendMessageModal.find('.send-message-container').html(_.template($('#SendMessageContainerTmpl').html()));
+            me.sendMessageModalPairs = me.sendMessageModal.find('.send-message-pairs');
+            me.sendMessageModal.find('.send-message-addpair-btn').click(function(){
+                me.sendMessageModalPairs.append(_.template($('#SendMessageKVPTmpl').html()));
             });
             $.fn.datepicker.defaults = {
                 date : new Date(),
@@ -313,7 +318,24 @@ define(['jquery', 'backbone'], function($, Backbone){
             utils.resetError(this.sendMessageModal);
             this.sendMessageModal.find('.message-types > div').addClass('hidden');
             this.sendMessageModal.find('.message-types > div[did="message"]').removeClass('hidden');
+            var requiredPairNames = [];
+            switch(this.model.attributes.name){
+                case 'Quickstart' : requiredPairNames = ['textContent']; break;
+            }
+            if(!requiredPairNames.length){
+                this.sendMessageModalPairs.html(_.template($('#SendMessageKVPTmpl').html()));
+            }else{
+                this.sendMessageModalPairs.html(_.template($('#SendMessageKVPListTmpl').html(), {
+                    requiredNames   : requiredPairNames,
+                    renderSingleKVP : this.renderSingleKVP
+                }));
+            }
             this.sendMessageModal.modal('show');
+        },
+        renderSingleKVP: function(key){
+            return _.template($('#SendMessageKVPTmpl').html(), {
+                key : key
+            });
         },
         getRecentMessages: function(cb, isFirstCall){
             var me = this;
@@ -360,23 +382,26 @@ define(['jquery', 'backbone'], function($, Backbone){
         sendMessage: function(){
             var me = this;
             var body = {
-                receipt : true,
-                metadata : {
-                    'content-type'     : 'text',
-                    'content-encoding' : 'simple'
-                }
+                receipt  : true,
+                metadata : {}
             };
-            var input = me.sendMessageModal.find('.message-types > div[did="message"] textarea');
+            var params = {};
+            me.sendMessageModalPairs.find('.form-group').each(function(){
+                var key = $(this).find('input[name="key"]').val();
+                var val = $(this).find('input[name="val"]').val();
+                if($.trim(key).length && $.trim(key).length){
+                    params[key] = val;
+                }
+            });
+            if($.isEmptyObject(params))
+                return utils.showError(me.sendMessageModal, '', 'Message is empty. Please fill out at least one name value pair.');
+            body.metadata = params;
+            //var input = me.sendMessageModal.find('.message-types > div[did="message"] textarea');
             var url = 'apps/'+me.model.attributes.id+'/endpoints/'+this.activeDevice.deviceId+'/message';
-            if(!$.trim(input.val()).length)
-                return utils.showError(me.sendMessageModal, '', 'Payload is required for sending a message.');
             if(me.activeDevice && me.activeDevice.deviceId)
                 body.deviceId = me.activeDevice.deviceId;
-            if($.trim(input.val()).length)
-                body.content = input.val();
             utils.resetError(me.sendMessageModal);
             AJAX(url, 'POST', 'application/json', body, function(res, status, xhr){
-                input.val('');
                 alert('message sent');
             }, function(xhr, status, thrownError){
                 utils.showError(me.sendMessageModal, '', 'Delivery Error: '+xhr.responseText);

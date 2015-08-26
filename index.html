@@ -2090,11 +2090,11 @@ dependencies {
                         <div class="message-push-history"></div>
                     </div>
                     <div did="message" class="hidden">
-                        <p>The message will be sent through the Magnet MMX hosted service to:<br />
+                        <p>A message consisting of name-value pairs will be sent through the messaging service to:<br />
                             <span class="user-placeholder"></span><br />
                             <span class="device-placeholder"></span>
                         </p>
-                        <textarea name="payload" class="form-control" placeholder="Payload"></textarea>
+                        <div class="send-message-container"></div>
                         <button did="message" type="button" class="btn btn-primary">Send Message</button>
                     </div>
                 </div>
@@ -2106,6 +2106,34 @@ dependencies {
         </div>
     </div>
 </div>
+
+<script id="SendMessageContainerTmpl" type="text/template">
+    <div class="clearfix">
+        <button type="button" class="send-message-addpair-btn btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span> Add Row</button>
+        <p>Add more name-value pairs by clicking the "<b><span class="glyphicon glyphicon-plus"></span> Add Row</b>" button. A preview of your message will be shown below.</p>
+    </div>
+    <div class="send-message-pairs"></div>
+</script>
+
+<script id="SendMessageKVPListTmpl" type="text/template">
+    <% _.each(requiredNames, function(val, key){ %>
+        <%= renderSingleKVP(val) %>
+    <% }); %>
+</script>
+
+<script id="SendMessageKVPTmpl" type="text/template">
+    <div class="alert alert-success fade in clearfix">
+        <div class="form-group">
+            <div class="col-md-3">
+                <input name="key" type="text" class="form-control" placeholder="Name" <% if(typeof key != 'undefined'){ %>readonly="readonly" value="<%- key %>"<% } %>  />
+            </div>
+            <div class="col-md-9">
+                <input name="val" type="text" class="form-control" placeholder="Value"  />
+            </div>
+        </div>
+        <% if(typeof key == 'undefined'){ %><span class="glyphicon glyphicon-remove" data-dismiss="alert"></span><% } %>
+    </div>
+</script>
 
 <div id="mmx-create-topic-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -2147,7 +2175,7 @@ dependencies {
                 <h4 class="modal-title">Publish a message to channel <span class="mmx-topic-name-placeholder"></span></h4>
             </div>
             <div class="modal-body">
-                <textarea name="payload" class="form-control" placeholder="Payload"></textarea>
+                <div class="send-message-container"></div>
                 <span class="alert-container"></span>
             </div>
             <div class="modal-footer">
