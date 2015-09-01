@@ -406,7 +406,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 //content     : msg.val(),
                 //messageType : 'normal',
                 //contentType : 'text',
-                metadata    : params
+                messageContent : params
             }, function(res, status, xhr){
                 utils.showSuccess(form, 'payload', (xhr.responseText ? (xhr.responseJSON ? xhr.responseJSON.message : xhr.responseText) : ''));
             }, function(xhr, status, thrownError){
