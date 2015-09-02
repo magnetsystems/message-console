@@ -382,8 +382,8 @@ define(['jquery', 'backbone'], function($, Backbone){
         sendMessage: function(){
             var me = this;
             var body = {
-                receipt        : true,
-                messageContent : {}
+                receipt : true,
+                content : {}
             };
             var params = {};
             me.sendMessageModalPairs.find('.form-group').each(function(){
@@ -395,7 +395,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             });
             if($.isEmptyObject(params))
                 return utils.showError(me.sendMessageModal, '', 'Message is empty. Please fill out at least one name value pair.');
-            body.messageContent = params;
+            body.content = params;
             //var input = me.sendMessageModal.find('.message-types > div[did="message"] textarea');
             var url = 'apps/'+me.model.attributes.id+'/endpoints/'+this.activeDevice.deviceId+'/message';
             if(me.activeDevice && me.activeDevice.deviceId)
