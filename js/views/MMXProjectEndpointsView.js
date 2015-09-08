@@ -145,8 +145,9 @@ define(['jquery', 'backbone'], function($, Backbone){
                     for(var i=0;i<res.results.length;++i){
                         res.results[i].device.created = moment(res.results[i].device.created).format('lll');
                         if(res.results[i].device.updated) res.results[i].device.updated = moment(res.results[i].device.updated).format('lll');
-                        res.results[i].device.nameEdited = res.results[i].device.name.substr(0, 30)+'...';
-                        res.results[i].device.ownerIdEdited = res.results[i].device.ownerId.substr(0, 10)+'...';
+                        res.results[i].device.nameEdited = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.name+'</a>';
+                        res.results[i].device.ownerIdEdited = res.results[i].device.ownerId;
+                        res.results[i].device.pushEnabled = res.results[i].device.clientToken != null ? 'YES' : 'NO';
                         var osType;
                         switch(res.results[i].device.osType){
                             case 'ANDROID' : osType = 'android'; break;
@@ -154,7 +155,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                             default : osType = 'desktop'; break;
                         }
                         res.results[i].device.osTypeEdited = '<i class="fa fa-2x fa-'+osType+'"></i>';
-                        res.results[i].device.deviceIdEdited = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.deviceId.substr(0, 30)+'...</a>';
+                        //res.results[i].device.deviceIdEdited = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.deviceId.substr(0, 30)+'...</a>';
                         if(res.results[i].device.status == 'ACTIVE') res.results[i].device.checkbox = '<input type="checkbox" />';
                         if(res.results[i].userEntity){
                             if(res.results[i].userEntity.creationDate) res.results[i].userEntity.creationDate = moment(res.results[i].userEntity.creationDate).format('lll');
@@ -229,15 +230,20 @@ define(['jquery', 'backbone'], function($, Backbone){
                 property : 'checkbox',
                 sortable : false
             },
-            {
-                label    : 'Device Id',
-                property : 'deviceIdEdited',
-                sortable : false
-            },
+            //{
+            //    label    : 'Device Id',
+            //    property : 'deviceIdEdited',
+            //    sortable : false
+            //},
             {
                 label    : 'Device Name',
                 property : 'nameEdited',
                 sortable : true
+            },
+            {
+                label    : 'User Id',
+                property : 'ownerIdEdited',
+                sortable : false
             },
             {
                 label    : 'OS',
@@ -245,19 +251,14 @@ define(['jquery', 'backbone'], function($, Backbone){
                 sortable : true
             },
             {
-                label    : 'Token',
-                property : 'tokenType',
+                label    : 'Push Enabled',
+                property : 'pushEnabled',
                 sortable : false
             },
             {
                 label    : 'Status',
                 property : 'status',
                 sortable : true
-            },
-            {
-                label    : 'User Id',
-                property : 'ownerIdEdited',
-                sortable : false
             }
         ],
         changeSearchBy: function(e){

@@ -130,6 +130,9 @@ div.centered{margin:0 auto 16px}
 #mmx-endpoints .repeater-list-items tr.head td{font-weight:700;border-bottom:1px solid #ddd;padding:8px;background:#F9F9F9}
 #mmx-sendmessage-modal .modal-body button{margin-top:10px;margin-bottom:10px}
 #mmx-sendmessage-modal .message-push-history .table{font-size:12px}
+.modal .alert-success{position:relative;padding:6px 10px 2px;margin-bottom:2px}
+.modal .alert-success .glyphicon{position:absolute;top:15px;right:6px;cursor:pointer}
+.modal .send-message-addpair-btn{margin:7px}
 .mmx-endpoints-showdetails-modal-btn{text-decoration:underline}
 #mmx-device-showdetails-modal dd{word-wrap:break-word}
 #mmx-device-showdetails-modal .label{font-size:92%;font-weight:500}
