@@ -408,9 +408,9 @@ define(['jquery', 'backbone'], function($, Backbone){
                 //contentType : 'text',
                 content       : params
             }, function(res, status, xhr){
-                utils.showSuccess(form, 'payload', (xhr.responseText ? (xhr.responseJSON ? xhr.responseJSON.message : xhr.responseText) : ''));
+                alert((xhr.responseText ? (xhr.responseJSON ? xhr.responseJSON.message : xhr.responseText) : ''));
             }, function(xhr, status, thrownError){
-                utils.showError(form, 'payload', (xhr.responseText ? (xhr.responseJSON ? xhr.responseJSON.message : xhr.responseText) : ''));
+                alert((xhr.responseText ? (xhr.responseJSON ? xhr.responseJSON.message : xhr.responseText) : ''));
             }, [{
                 name : 'appAPIKey',
                 val  : me.model.attributes.appAPIKey
