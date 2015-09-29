@@ -25,6 +25,11 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.modal.find('#mmx-publishtopic-btn').click(function(){
                 me.publishTopic();
             });
+            me.modal.find('.send-message-container').html(_.template($('#SendMessageContainerTmpl').html()));
+            me.sendMessageModalPairs = me.modal.find('.send-message-pairs');
+            me.modal.find('.send-message-addpair-btn').click(function(){
+                me.sendMessageModalPairs.append(_.template($('#SendMessageKVPTmpl').html()));
+            });
         },
         events : {
             'click input[type="checkbox"]': 'toggleRow',
@@ -361,24 +366,51 @@ define(['jquery', 'backbone'], function($, Backbone){
             this.activeTopic = utils.getByAttr(this.topics, 'topicName', did)[0];
             this.modal.find('span.mmx-topic-name-placeholder').text(this.activeTopic.topicName);
             this.modal.find('textarea').val('');
+            var requiredPairNames = [];
+            switch(this.model.attributes.name){
+                case 'Soapbox'    : requiredPairNames = ['content']; break;
+            }
+            if(!requiredPairNames.length){
+                this.sendMessageModalPairs.html(_.template($('#SendMessageKVPTmpl').html()));
+            }else{
+                this.sendMessageModalPairs.html(_.template($('#SendMessageKVPListTmpl').html(), {
+                    requiredNames   : requiredPairNames,
+                    renderSingleKVP : this.renderSingleKVP
+                }));
+            }
             this.modal.modal('show');
+        },
+        renderSingleKVP: function(key){
+            return _.template($('#SendMessageKVPTmpl').html(), {
+                key : key
+            });
         },
         publishTopic: function(){
             var me = this;
-            var msg = this.modal.find('textarea');
+            //var msg = this.modal.find('textarea');
             var form = me.modal.find('.modal-body');
             utils.resetError(form);
-            if(!$.trim(msg.val()).length)
-                return utils.showError(form, 'payload', 'You must enter a message to publish');
+            //if(!$.trim(msg.val()).length)
+            //    return utils.showError(form, 'payload', 'You must enter a message to publish');
+            var params = {};
+            me.sendMessageModalPairs.find('.form-group').each(function(){
+                var key = $(this).find('input[name="key"]').val();
+                var val = $(this).find('input[name="val"]').val();
+                if($.trim(key).length && $.trim(key).length){
+                    params[key] = val;
+                }
+            });
+            if($.isEmptyObject(params))
+                return utils.showError(me.modal, '', 'Message is empty. Please fill out at least one name value pair.');
             AJAX('apps/'+me.model.attributes.id+'/topics/'+encodeURIComponent(this.activeTopic.topicName)+'/publish', 'POST', 'application/json', {
-                content     : msg.val(),
-                messageType : 'normal',
-                contentType : 'text'
+                //content     : msg.val(),
+                //messageType : 'normal',
+                //contentType : 'text',
+                content       : params
             }, function(res, status, xhr){
-                msg.val('');
-                utils.showSuccess(form, 'payload', (xhr.responseText ? (xhr.responseJSON ? xhr.responseJSON.message : xhr.responseText) : ''));
+                alert((xhr.responseText ? (xhr.responseJSON ? xhr.responseJSON.message : xhr.responseText) : ''));
             }, function(xhr, status, thrownError){
-                utils.showError(form, 'payload', (xhr.responseText ? (xhr.responseJSON ? xhr.responseJSON.message : xhr.responseText) : ''));
+                alert((xhr.responseText ? (xhr.responseJSON ? xhr.responseJSON.message : xhr.responseText) : ''));
             }, [{
                 name : 'appAPIKey',
                 val  : me.model.attributes.appAPIKey

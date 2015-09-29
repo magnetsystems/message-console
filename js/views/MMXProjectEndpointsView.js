@@ -18,8 +18,13 @@ define(['jquery', 'backbone'], function($, Backbone){
             me.sendMessageModal.find('.message-types button[did="message"]').click(function(){
                 me.sendMessage($(this));
             });
-            me.sendMessageModal.find('.message-types button[did!="message"]').click(function(){
+            me.sendMessageModal.find('.message-types button[did="ping"], .message-types button[did="notification"]').click(function(){
                 me.sendNotification($(this));
+            });
+            me.sendMessageModal.find('.send-message-container').html(_.template($('#SendMessageContainerTmpl').html()));
+            me.sendMessageModalPairs = me.sendMessageModal.find('.send-message-pairs');
+            me.sendMessageModal.find('.send-message-addpair-btn').click(function(){
+                me.sendMessageModalPairs.append(_.template($('#SendMessageKVPTmpl').html()));
             });
             $.fn.datepicker.defaults = {
                 date : new Date(),
@@ -140,8 +145,9 @@ define(['jquery', 'backbone'], function($, Backbone){
                     for(var i=0;i<res.results.length;++i){
                         res.results[i].device.created = moment(res.results[i].device.created).format('lll');
                         if(res.results[i].device.updated) res.results[i].device.updated = moment(res.results[i].device.updated).format('lll');
-                        res.results[i].device.nameEdited = res.results[i].device.name.substr(0, 30)+'...';
-                        res.results[i].device.ownerIdEdited = res.results[i].device.ownerId.substr(0, 10)+'...';
+                        res.results[i].device.nameEdited = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.name+'</a>';
+                        res.results[i].device.ownerIdEdited = res.results[i].device.ownerId;
+                        res.results[i].device.pushEnabled = res.results[i].device.clientToken != null ? 'YES' : 'NO';
                         var osType;
                         switch(res.results[i].device.osType){
                             case 'ANDROID' : osType = 'android'; break;
@@ -149,7 +155,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                             default : osType = 'desktop'; break;
                         }
                         res.results[i].device.osTypeEdited = '<i class="fa fa-2x fa-'+osType+'"></i>';
-                        res.results[i].device.deviceIdEdited = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.deviceId.substr(0, 30)+'...</a>';
+                        //res.results[i].device.deviceIdEdited = '<a href="#" class="mmx-endpoints-showdetails-modal-btn">'+res.results[i].device.deviceId.substr(0, 30)+'...</a>';
                         if(res.results[i].device.status == 'ACTIVE') res.results[i].device.checkbox = '<input type="checkbox" />';
                         if(res.results[i].userEntity){
                             if(res.results[i].userEntity.creationDate) res.results[i].userEntity.creationDate = moment(res.results[i].userEntity.creationDate).format('lll');
@@ -224,15 +230,20 @@ define(['jquery', 'backbone'], function($, Backbone){
                 property : 'checkbox',
                 sortable : false
             },
-            {
-                label    : 'Device Id',
-                property : 'deviceIdEdited',
-                sortable : false
-            },
+            //{
+            //    label    : 'Device Id',
+            //    property : 'deviceIdEdited',
+            //    sortable : false
+            //},
             {
                 label    : 'Device Name',
                 property : 'nameEdited',
                 sortable : true
+            },
+            {
+                label    : 'User Id',
+                property : 'ownerIdEdited',
+                sortable : false
             },
             {
                 label    : 'OS',
@@ -240,19 +251,14 @@ define(['jquery', 'backbone'], function($, Backbone){
                 sortable : true
             },
             {
-                label    : 'Token',
-                property : 'tokenType',
+                label    : 'Push Enabled',
+                property : 'pushEnabled',
                 sortable : false
             },
             {
                 label    : 'Status',
                 property : 'status',
                 sortable : true
-            },
-            {
-                label    : 'User Id',
-                property : 'ownerIdEdited',
-                sortable : false
             }
         ],
         changeSearchBy: function(e){
@@ -313,7 +319,24 @@ define(['jquery', 'backbone'], function($, Backbone){
             utils.resetError(this.sendMessageModal);
             this.sendMessageModal.find('.message-types > div').addClass('hidden');
             this.sendMessageModal.find('.message-types > div[did="message"]').removeClass('hidden');
+            var requiredPairNames = [];
+            switch(this.model.attributes.name){
+                case 'Quickstart' : requiredPairNames = ['textContent']; break;
+            }
+            if(!requiredPairNames.length){
+                this.sendMessageModalPairs.html(_.template($('#SendMessageKVPTmpl').html()));
+            }else{
+                this.sendMessageModalPairs.html(_.template($('#SendMessageKVPListTmpl').html(), {
+                    requiredNames   : requiredPairNames,
+                    renderSingleKVP : this.renderSingleKVP
+                }));
+            }
             this.sendMessageModal.modal('show');
+        },
+        renderSingleKVP: function(key){
+            return _.template($('#SendMessageKVPTmpl').html(), {
+                key : key
+            });
         },
         getRecentMessages: function(cb, isFirstCall){
             var me = this;
@@ -361,22 +384,25 @@ define(['jquery', 'backbone'], function($, Backbone){
             var me = this;
             var body = {
                 receipt : true,
-                metadata : {
-                    'content-type'     : 'text',
-                    'content-encoding' : 'simple'
-                }
+                content : {}
             };
-            var input = me.sendMessageModal.find('.message-types > div[did="message"] textarea');
+            var params = {};
+            me.sendMessageModalPairs.find('.form-group').each(function(){
+                var key = $(this).find('input[name="key"]').val();
+                var val = $(this).find('input[name="val"]').val();
+                if($.trim(key).length && $.trim(key).length){
+                    params[key] = val;
+                }
+            });
+            if($.isEmptyObject(params))
+                return utils.showError(me.sendMessageModal, '', 'Message is empty. Please fill out at least one name value pair.');
+            body.content = params;
+            //var input = me.sendMessageModal.find('.message-types > div[did="message"] textarea');
             var url = 'apps/'+me.model.attributes.id+'/endpoints/'+this.activeDevice.deviceId+'/message';
-            if(!$.trim(input.val()).length)
-                return utils.showError(me.sendMessageModal, '', 'Payload is required for sending a message.');
             if(me.activeDevice && me.activeDevice.deviceId)
                 body.deviceId = me.activeDevice.deviceId;
-            if($.trim(input.val()).length)
-                body.content = input.val();
             utils.resetError(me.sendMessageModal);
             AJAX(url, 'POST', 'application/json', body, function(res, status, xhr){
-                input.val('');
                 alert('message sent');
             }, function(xhr, status, thrownError){
                 utils.showError(me.sendMessageModal, '', 'Delivery Error: '+xhr.responseText);

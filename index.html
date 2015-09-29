@@ -1348,6 +1348,9 @@
             <% if(appName == 'Quickstart' || appName == 'Soapbox' || appName == 'RPSLS'){ %>
                 <h4>Prerequisites</h4>
                 <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">Install Android Studio</a>
+                <br/>
+                Confirm that you have installed the latest versions of the Android libraries listed
+                    <a target="_blank" href="https://docs.magnet.com/message/android/getting_started_android/#dependencies">here</a>
 
                 <h4>Build the App</h4>
                 <ol class="mmx-nav">
@@ -1359,6 +1362,9 @@
             <% }else{ %>
                 <h4>Prerequisites</h4>
                 <a href="http://developer.android.com/sdk/installing/studio.html" target="_blank">Install Android Studio</a>
+                <br/>
+                Confirm that you have installed the latest versions of the Android libraries listed
+                <a target="_blank" href="https://docs.magnet.com/message/android/getting_started_android/#dependencies">here</a>
 
                 <h4>Build the App</h4>
                 <ol class="mmx-nav">
@@ -1408,15 +1414,14 @@ dependencies {
             </ol>
             <% }else{ %>
             <h4>More Information</h4>
-            View the instructions at <a href="https://docs.magnet.com/message/android/add-a-new-app-android/" target="_blank">Creating your First App</a> to learn how to use messaging features. The <b>Useful Recipes</b> section
+            View the instructions at <a href="https://docs.magnet.com/message/android/creating-your-first-app-android/" target="_blank">Creating your First App</a> to learn how to use messaging features. The <b>Useful Recipes</b> section
             below include links to tutorials and code samples for the most commonly used features.
             <% } %>
             </div>
             <div role="tabpanel" class="tab-pane" id="mmx-quickstart-ios-new">
             <% if(appName == 'Quickstart' || appName == 'Soapbox' || appName == 'RPSLS'){ %>
                 <h4>Prerequisites</h4>
-                <a href="https://developer.apple.com/xcode/downloads/" target="_blank">Install Xcode</a><br />
-                <a href="https://cocoapods.org/" target="_blank">Install CocoaPods</a> (See the "Getting Started" guide for more information)
+                <a href="https://developer.apple.com/xcode/downloads/" target="_blank">Install Xcode</a>
 
                 <h4>Build the App</h4>
                 <ol class="mmx-nav">
@@ -1472,7 +1477,7 @@ dependencies {
             </ol>
             <% }else{ %>
             <h4>More Information</h4>
-                View the instructions at <a href="https://docs.magnet.com/message/ios/add-a-new-app-ios/" target="_blank">Creating your First App</a> to learn how to use messaging features. The <b>Useful Recipes</b> section
+                View the instructions at <a href="https://docs.magnet.com/message/ios/creating-your-first-app-ios/" target="_blank">Creating your First App</a> to learn how to use messaging features. The <b>Useful Recipes</b> section
                 below include links to tutorials and code samples for the most commonly used features.
             <% } %>
             </div>
@@ -1495,7 +1500,7 @@ dependencies {
                         <li><a target="_blank" href="https://docs.magnet.com/message/android/creating-your-first-app-android/#register">Register User</a></li>
                         <li><a target="_blank" href="https://docs.magnet.com/message/android/creating-your-first-app-android/#login">Login User</a></li>
                         <li><a target="_blank" href="https://docs.magnet.com/message/android/creating-your-first-app-android/#get-current-user">Get Current User</a></li>
-                        <li><a target="_blank" href="https://docs.magnet.com/message/android/creating-your-first-app-android/#find-users">Send a Message</a></li>
+                        <li><a target="_blank" href="https://docs.magnet.com/message/android/creating-your-first-app-android/#create-and-send">Send a Message</a></li>
                         <li><a target="_blank" href="https://docs.magnet.com/message/android/creating-your-first-app-android/#receive">Receiving Messages</a></li>
                         <li><a target="_blank" href="https://docs.magnet.com/message/android/creating-your-first-app-android/#delivery-confirm">Delivery Confirmations</a>
                         <li><a target="_blank" href="https://docs.magnet.com/message/android/creating-your-first-app-android/#wakeup">Wakeup With GCM</a></li>
@@ -1507,12 +1512,12 @@ dependencies {
                         <li><a target="_blank" href="https://docs.magnet.com/message/ios/creating-your-first-app-ios/#register">Register User</a></li>
                         <li><a target="_blank" href="https://docs.magnet.com/message/ios/creating-your-first-app-ios/#login">Login User</a></li>
                         <li><a target="_blank" href="https://docs.magnet.com/message/ios/creating-your-first-app-ios/#get-current-user">Get Current User</a></li>
-                        <li><a target="_blank" href="https://docs.magnet.com/message/ios/creating-your-first-app-ios/#user-content-get-the-users-you-want-to-send-a-message-to">Send a Message</a></li>
+                        <li><a target="_blank" href="https://docs.magnet.com/message/ios/creating-your-first-app-ios/#create-and-send">Send a Message</a></li>
                         <li><a target="_blank" href="https://docs.magnet.com/message/ios/creating-your-first-app-ios/#receive">Receiving Messages</a></li>
                         <li><a target="_blank" href="https://docs.magnet.com/message/ios/creating-your-first-app-ios/#delivery-confirm">Delivery Confirmations</a>
-                        <li><a target="_blank" href="https://docs.magnet.com/message/ios/creating-your-first-app-ios/#wakeup">Wakeup With GCM</a></li>
+                        <li><a target="_blank" href="https://docs.magnet.com/message/ios/creating-your-first-app-ios/#wakeup">Wakeup With APNS</a></li>
                         <li><a target="_blank" href="https://docs.magnet.com/message/ios/creating-a-public-forum-ios/">Creating a Public Forum</a></li>
-                        <li><a target="_blank" href="https://docs.magnet.com/message/ios/creating-a-private-discussion-group/">Creating a Private Discussion</a></li>
+                        <li><a target="_blank" href="https://docs.magnet.com/message/ios/creating-a-private-discussion-group-ios/">Creating a Private Discussion</a></li>
                     </ul>
                 </div>
             </div>
@@ -2084,11 +2089,11 @@ dependencies {
                         <div class="message-push-history"></div>
                     </div>
                     <div did="message" class="hidden">
-                        <p>The message will be sent through the Magnet MMX hosted service to:<br />
+                        <p>A message consisting of name-value pairs will be sent through the messaging service to:<br />
                             <span class="user-placeholder"></span><br />
                             <span class="device-placeholder"></span>
                         </p>
-                        <textarea name="payload" class="form-control" placeholder="Payload"></textarea>
+                        <div class="send-message-container"></div>
                         <button did="message" type="button" class="btn btn-primary">Send Message</button>
                     </div>
                 </div>
@@ -2100,6 +2105,34 @@ dependencies {
         </div>
     </div>
 </div>
+
+<script id="SendMessageContainerTmpl" type="text/template">
+    <div class="clearfix">
+        <button type="button" class="send-message-addpair-btn btn btn-primary pull-right"><span class="glyphicon glyphicon-plus"></span> Add Row</button>
+        <p>Add more name-value pairs by clicking the "<b><span class="glyphicon glyphicon-plus"></span> Add Row</b>" button. A preview of your message will be shown below.</p>
+    </div>
+    <div class="send-message-pairs"></div>
+</script>
+
+<script id="SendMessageKVPListTmpl" type="text/template">
+    <% _.each(requiredNames, function(val, key){ %>
+        <%= renderSingleKVP(val) %>
+    <% }); %>
+</script>
+
+<script id="SendMessageKVPTmpl" type="text/template">
+    <div class="alert alert-success fade in clearfix">
+        <div class="form-group">
+            <div class="col-md-3">
+                <input name="key" type="text" class="form-control" placeholder="Name" <% if(typeof key != 'undefined'){ %>readonly="readonly" value="<%- key %>"<% } %>  />
+            </div>
+            <div class="col-md-9">
+                <input name="val" type="text" class="form-control" placeholder="Value"  />
+            </div>
+        </div>
+        <% if(typeof key == 'undefined'){ %><span class="glyphicon glyphicon-remove" data-dismiss="alert"></span><% } %>
+    </div>
+</script>
 
 <div id="mmx-create-topic-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -2141,7 +2174,7 @@ dependencies {
                 <h4 class="modal-title">Publish a message to channel <span class="mmx-topic-name-placeholder"></span></h4>
             </div>
             <div class="modal-body">
-                <textarea name="payload" class="form-control" placeholder="Payload"></textarea>
+                <div class="send-message-container"></div>
                 <span class="alert-container"></span>
             </div>
             <div class="modal-footer">
