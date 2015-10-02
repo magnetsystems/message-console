@@ -40,6 +40,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 stretchHeight    : false
             });
             me.list.find('.tooltipped-ctrl').tooltip();
+            me.refreshBtn = me.$el.find('.mmx-messagelist-refresh-btn');
         },
         filters : {
             messageid : {
@@ -76,6 +77,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             utils.changeSearchBy(this, $(e.currentTarget).val());
         },
         refresh: function(){
+            this.refreshBtn.addClass('disabled');
             this.list.repeater('render');
         },
         retrieve: function(options, cb){
@@ -173,6 +175,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                         });
                     }
                     $('#mmx-messages-list').find('img').tooltip();
+                    me.refreshBtn.removeClass('disabled');
                 }, 20);
                 callback(data);
             });

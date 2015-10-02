@@ -61,8 +61,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                 stretchHeight    : false
             });
             me.list.find('.tooltipped-ctrl').tooltip();
+            me.refreshBtn = me.$el.find('.mmx-topic-list-refresh-btn');
         },
         refresh: function(){
+            this.refreshBtn.addClass('disabled');
             utils.resetRows(this.list);
             this.list.repeater('render');
         },
@@ -142,6 +144,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 setTimeout(function(){
                     $('#mmx-topics-list .repeater-list-header tr').addClass('head').detach().prependTo('#mmx-topics-list .repeater-list-items tbody');
                     $('#mmx-topics-list .repeater-list-items tr td:nth-child(1)').css('width', '30px');
+                    me.refreshBtn.removeClass('disabled');
                 }, 20);
                 callback(data);
             });

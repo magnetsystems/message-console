@@ -62,6 +62,7 @@ define(['jquery', 'backbone'], function($, Backbone){
             });
             this.list.find('.tooltipped-ctrl').tooltip();
             this.selectedEndpoints = [];
+            this.refreshBtn = this.$el.find('.search-btn');
         },
         filters : {
             epname : {
@@ -89,7 +90,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                 ]
             }
         },
-        refresh: function(){
+        refresh: function(e){
+            this.refreshBtn.addClass('disabled');
             utils.resetRows(this.list);
             this.$el.find('.repeater-search .same-line-button[did^="action"]').addClass('disabled');
             var params = utils.collect(this.$el.find('.repeater-header'));
@@ -202,7 +204,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                 data.end = data.start + options.pageSize;
                 data.end = (data.end <= data.count) ? data.end : data.count;
                 data.start = data.start + 1;
-                setTimeout(function(){
+                setInterval(function(){
                     $('#mmx-endpoints-list .repeater-list-header tr').addClass('head').detach().prependTo('#mmx-endpoints-list .repeater-list-items tbody');
                     if(!$.isEmptyObject(me.sorts)){
                         $('#mmx-endpoints-list .repeater-list-items tbody tr:first td').each(function(i){
@@ -220,7 +222,8 @@ define(['jquery', 'backbone'], function($, Backbone){
                     }
                     $('#mmx-endpoints-list .repeater-list-items tr td:nth-child(1)').css('width', '30px');
                     $('#mmx-endpoints-list .repeater-list-items tr td:nth-child(2), #mmx-endpoints-list .repeater-list-items tr td:nth-child(3)').css('width', '30%');
-                }, 20);
+                    me.refreshBtn.removeClass('disabled');
+                }, 30);
                 callback(data);
             });
         },

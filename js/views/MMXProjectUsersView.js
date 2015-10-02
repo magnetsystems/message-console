@@ -63,8 +63,10 @@ define(['jquery', 'backbone'], function($, Backbone){
                 stretchHeight    : false
             });
             me.list.find('.tooltipped-ctrl').tooltip();
+            me.refreshBtn = me.$el.find('.mmx-user-list-refresh-btn');
         },
         refresh: function(){
+            this.refreshBtn.addClass('disabled');
             utils.resetRows(this.list);
             this.list.repeater('render');
         },
@@ -178,6 +180,7 @@ define(['jquery', 'backbone'], function($, Backbone){
                     }
                     $('#mmx-users-list .repeater-list-items tr td:nth-child(1)').css('width', '30px');
                     $('#mmx-users-list').find('img').tooltip();
+                    me.refreshBtn.removeClass('disabled');
                 }, 20);
                 callback(data);
             });
