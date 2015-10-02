@@ -2,7 +2,7 @@
 /* HELPERS */
 var GLOBAL = {
     baseUrl : '/rest/',
-    version : '1.9.1' || '',
+    version : '1.10.3' || '',
     polling : false
 };
 
